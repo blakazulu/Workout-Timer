@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-family-base);
     background: #0a0a0a;
     color: var(--text-primary);
     min-height: 100vh;
@@ -195,12 +195,13 @@ body::after {
     justify-content: center;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .header h1 {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-extra-bold);
+    font-family: var(--font-family-display);
+    font-size: clamp(24px, 8vw, var(--font-size-lg));
+    font-weight: var(--font-weight-bold);
     background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -208,7 +209,8 @@ body::after {
     background-size: 200% 200%;
     animation: gradientFlow 4s ease infinite;
     filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.5));
-    letter-spacing: 2px;
+    letter-spacing: clamp(1px, 0.5vw, var(--letter-spacing-wide));
+    white-space: nowrap;
 }
 
 @keyframes gradientFlow {

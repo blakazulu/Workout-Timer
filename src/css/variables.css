@@ -39,20 +39,23 @@
     --radius-xxl: 20px;
 
     /* Typography */
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-base: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-display: 'Orbitron', 'Rajdhani', monospace;
     --font-size-xxs: 11px;
     --font-size-xs: 14px;
     --font-size-sm: 16px;
     --font-size-md: 18px;
-    --font-size-lg: 32px;
-    --font-size-xl: 72px;
+    --font-size-lg: 36px;
+    --font-size-xl: 80px;
 
-    --font-weight-normal: 600;
+    --font-weight-normal: 500;
+    --font-weight-medium: 600;
     --font-weight-bold: 700;
     --font-weight-extra-bold: 800;
     --font-weight-black: 900;
 
-    --letter-spacing: 1px;
+    --letter-spacing: 2px;
+    --letter-spacing-wide: 4px;
 
     /* Transitions */
     --transition-fast: 0.2s;
