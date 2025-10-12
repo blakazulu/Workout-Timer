@@ -7,9 +7,9 @@ import { $ } from '../utils/dom.js'
 import { saveSongToHistory } from './storage.js'
 
 export class YouTubePlayer {
-  constructor(containerId) {
-    this.containerId = containerId
-    this.container = $(containerId)
+  constructor(elementId) {
+    this.elementId = elementId
+    this.element = $(elementId)
     this.player = null
     this.currentVideoId = null
     this.isReady = false
@@ -105,20 +105,28 @@ export class YouTubePlayer {
    * @returns {Promise<boolean>} Success status
    */
   async loadVideo(url) {
-    const videoId = this.extractVideoId(url)
+    console.log('🎬 loadVideo called with URL:', url)
 
-    if (!videoId || !this.container) {
+    const videoId = this.extractVideoId(url)
+    console.log('📹 Extracted video ID:', videoId)
+
+    if (!videoId || !this.element) {
+      console.error('❌ Invalid video ID or player element missing')
       this.showError('Invalid YouTube URL. Please use a valid youtube.com or youtu.be link.')
       return false
     }
 
+    console.log('⏳ Showing loading overlay...')
     this.showLoading()
 
     try {
       // Wait for API to load
+      console.log('⏳ Waiting for YouTube API...')
       await this.waitForAPI()
+      console.log('✅ YouTube API ready')
 
       if (!window.YT || !window.YT.Player) {
+        console.error('❌ YouTube API not available')
         this.showError('YouTube API failed to load. Check your connection.')
         return false
       }
@@ -128,14 +136,31 @@ export class YouTubePlayer {
 
       // Destroy existing player
       if (this.player) {
+        console.log('🗑️ Destroying existing player...')
         this.player.destroy()
+        this.player = null
       }
 
-      // Clear container and prepare for player
-      this.container.innerHTML = '<div id="youtube-player-iframe"></div>'
+      console.log('🎮 Creating new YouTube player with element ID:', this.element.id)
+      console.log('📦 Player config:', {
+        videoId,
+        elementId: this.element.id,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+          loop: 1,
+          playlist: videoId,
+          enablejsapi: 1
+        }
+      })
 
-      // Create new player
-      this.player = new window.YT.Player('youtube-player-iframe', {
+      // Create player using the element ID
+      // The YouTube API will replace the div with an iframe
+      this.player = new window.YT.Player(this.element.id, {
         videoId: videoId,
         playerVars: {
           autoplay: 0,
@@ -145,7 +170,8 @@ export class YouTubePlayer {
           showinfo: 0,
           fs: 0,
           loop: 1,
-          playlist: videoId
+          playlist: videoId,
+          enablejsapi: 1
         },
         events: {
           onReady: (event) => this.onPlayerReady(event),
@@ -154,8 +180,23 @@ export class YouTubePlayer {
         }
       })
 
+      console.log('✅ YouTube Player constructor called successfully')
+
+      // Set a timeout to hide loading overlay if player doesn't respond
+      const loadingTimeout = setTimeout(() => {
+        console.warn('⚠️ Loading timeout reached! Player did not respond.')
+        if (this.loadingOverlay) {
+          this.loadingOverlay.classList.add('hidden')
+          console.log('🔻 Loading overlay hidden by timeout')
+        }
+      }, 15000) // 15 second timeout
+
+      // Store timeout so we can clear it in onPlayerReady
+      this._loadingTimeout = loadingTimeout
+
       return true
     } catch (error) {
+      console.error('❌ Error in loadVideo:', error)
       this.showError('Failed to load YouTube video. Check your connection.')
       console.error('YouTube load error:', error)
       return false
@@ -166,37 +207,55 @@ export class YouTubePlayer {
    * Player ready callback
    */
   onPlayerReady(event) {
+    console.log('🎉 onPlayerReady called!')
     this.isReady = true
-    console.log('YouTube player ready')
+
+    // Clear loading timeout
+    if (this._loadingTimeout) {
+      clearTimeout(this._loadingTimeout)
+      console.log('✅ Loading timeout cleared')
+    }
 
     // Hide loading overlay
+    console.log('🔻 Hiding loading overlay...')
     if (this.loadingOverlay) {
       this.loadingOverlay.classList.add('hidden')
+      console.log('✅ Loading overlay hidden')
+    } else {
+      console.warn('⚠️ Loading overlay element not found')
     }
 
     // Hide background image when video is loaded
     const backgroundImage = document.querySelector('.background-image')
     if (backgroundImage) {
       backgroundImage.classList.add('hidden')
+      console.log('✅ Background image hidden')
     }
 
     // Get video data
+    console.log('📊 Getting video data...')
     try {
       const videoData = this.player.getVideoData()
       this.videoTitle = videoData.title || 'YouTube Music'
       this.videoAuthor = videoData.author || 'Unknown Artist'
       this.videoId = videoData.video_id || this.currentVideoId
+      console.log('✅ Video data:', { title: this.videoTitle, author: this.videoAuthor, id: this.videoId })
     } catch (error) {
+      console.error('❌ Error getting video data:', error)
       this.videoTitle = 'YouTube Music'
       this.videoAuthor = 'Unknown Artist'
       this.videoId = this.currentVideoId
     }
 
     // Show music controls
+    console.log('🎛️ Showing music controls...')
     this.showMusicControls()
 
     // Mute by default for autoplay policies
+    console.log('🔇 Muting player...')
     event.target.mute()
+
+    console.log('✅ Player setup complete!')
   }
 
   /**
@@ -211,14 +270,39 @@ export class YouTubePlayer {
    * Player error callback
    */
   onPlayerError(event) {
-    console.error('YouTube player error:', event.data)
-    
+    console.error('❌ YouTube player error event:', event)
+    console.error('❌ Error code:', event.data)
+
+    // Clear loading timeout
+    if (this._loadingTimeout) {
+      clearTimeout(this._loadingTimeout)
+      console.log('✅ Loading timeout cleared (error)')
+    }
+
+    // Error codes:
+    // 2 - Invalid parameter
+    // 5 - HTML5 player error
+    // 100 - Video not found or private
+    // 101/150 - Video owner doesn't allow embedding
+
+    const errorMessages = {
+      2: 'Invalid video parameter',
+      5: 'HTML5 player error',
+      100: 'Video not found or is private',
+      101: 'Video owner has disabled embedding',
+      150: 'Video owner has disabled embedding'
+    }
+
+    const errorMessage = errorMessages[event.data] || 'Failed to play video. It may be restricted or unavailable.'
+    console.error('❌ Error message:', errorMessage)
+
     // Hide loading overlay
+    console.log('🔻 Hiding loading overlay due to error...')
     if (this.loadingOverlay) {
       this.loadingOverlay.classList.add('hidden')
     }
-    
-    this.showError('Failed to play video. It may be restricted or unavailable.')
+
+    this.showError(errorMessage)
   }
 
   /**
@@ -520,11 +604,6 @@ export class YouTubePlayer {
     if (this.loadingOverlay) {
       this.loadingOverlay.classList.remove('hidden')
     }
-    
-    // Also show loading in container for fallback
-    if (this.container) {
-      this.container.innerHTML = '<div class="youtube-loading">Loading video...</div>'
-    }
   }
 
   /**
@@ -536,11 +615,10 @@ export class YouTubePlayer {
     if (this.loadingOverlay) {
       this.loadingOverlay.classList.add('hidden')
     }
-    
-    if (this.container) {
-      this.container.innerHTML = `<div class="youtube-error">${message}</div>`
-      setTimeout(() => this.clear(), 3000)
-    }
+
+    // Show error message to user (you can enhance this with a toast notification)
+    console.error('YouTube Error:', message)
+    alert(message)
   }
 
   /**
@@ -554,8 +632,16 @@ export class YouTubePlayer {
       this.player.destroy()
       this.player = null
     }
-    if (this.container) {
-      this.container.innerHTML = ''
+
+    // The YouTube API will have replaced our div with an iframe
+    // We need to recreate the div element
+    if (this.element) {
+      const parent = this.element.parentNode
+      const newDiv = document.createElement('div')
+      newDiv.id = this.element.id
+      newDiv.className = this.element.className
+      parent.replaceChild(newDiv, this.element)
+      this.element = newDiv
     }
 
     // Show background image again when video is cleared
@@ -577,12 +663,12 @@ let youtubePlayer = null
 
 /**
  * Initialize YouTube player
- * @param {string} containerId - Container element ID
+ * @param {string} elementId - Container element ID (will be replaced with iframe by YouTube API)
  * @returns {YouTubePlayer}
  */
-export function initYouTube(containerId = '#youtube-player') {
+export function initYouTube(elementId = '#youtube-player-iframe') {
   if (!youtubePlayer) {
-    youtubePlayer = new YouTubePlayer(containerId)
+    youtubePlayer = new YouTubePlayer(elementId)
   }
   return youtubePlayer
 }

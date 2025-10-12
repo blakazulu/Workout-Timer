@@ -36,7 +36,7 @@ async function loadYouTubeModule() {
   if (!youtubeModule) {
     console.log('Lazy loading YouTube module...')
     const module = await import('./modules/youtube.js')
-    youtubeModule = module.initYouTube('#youtube-player')
+    youtubeModule = module.initYouTube('#youtube-player-iframe')
   }
   return youtubeModule
 }
