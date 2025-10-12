@@ -37,14 +37,19 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
+  <!-- Google Fonts (async loaded, non-blocking, optimized weights) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@500;600;700;800&display=swap">
+  </noscript>
 
-  <!-- Phosphor Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
+  <!-- Phosphor Icons (async loaded, non-blocking) -->
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  </noscript>
 
   <title>CYCLE</title>
 
@@ -160,13 +165,13 @@
     <div class="music-info">
       <span class="music-title" id="musicTitle">No song loaded</span>
       <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
-        <i class="ph ph-info"></i>
+        <i class="ph-bold ph-info"></i>
       </button>
     </div>
     <div class="music-player">
       <button class="music-btn" id="musicPlayPauseBtn">
-        <i class="play-icon ph-fill ph-play"></i>
-        <i class="pause-icon hidden ph-fill ph-pause"></i>
+        <i class="play-icon ph-bold ph-play"></i>
+        <i class="pause-icon hidden ph-bold ph-pause"></i>
       </button>
       <div class="music-progress">
         <span class="music-time" id="musicCurrentTime">0:00</span>
@@ -272,35 +277,35 @@
   <div class="mood-popover-content">
     <div class="mood-tags">
       <button class="mood-tag" data-query="beast mode workout music">
-        <i class="mood-icon ph-fill ph-barbell"></i>
+        <i class="mood-icon ph-bold ph-barbell"></i>
         <span>Beast Mode</span>
       </button>
       <button class="mood-tag" data-query="intense workout music">
-        <i class="mood-icon ph-fill ph-fire"></i>
+        <i class="mood-icon ph-bold ph-fire"></i>
         <span>Intense</span>
       </button>
       <button class="mood-tag" data-query="energetic workout music">
-        <i class="mood-icon ph-fill ph-lightning"></i>
+        <i class="mood-icon ph-bold ph-lightning"></i>
         <span>Energetic</span>
       </button>
       <button class="mood-tag" data-query="power workout music">
-        <i class="mood-icon ph-fill ph-lightning-slash"></i>
+        <i class="mood-icon ph-bold ph-lightning-slash"></i>
         <span>Power</span>
       </button>
       <button class="mood-tag" data-query="aggressive workout music">
-        <i class="mood-icon ph-fill ph-fire-simple"></i>
+        <i class="mood-icon ph-bold ph-fire-simple"></i>
         <span>Aggressive</span>
       </button>
       <button class="mood-tag" data-query="pump up workout music">
-        <i class="mood-icon ph-fill ph-heartbeat"></i>
+        <i class="mood-icon ph-bold ph-heartbeat"></i>
         <span>Pump Up</span>
       </button>
       <button class="mood-tag" data-query="focus workout music">
-        <i class="mood-icon ph-fill ph-crosshair"></i>
+        <i class="mood-icon ph-bold ph-crosshair"></i>
         <span>Focus</span>
       </button>
       <button class="mood-tag" data-query="motivational workout music">
-        <i class="mood-icon ph-fill ph-rocket-launch"></i>
+        <i class="mood-icon ph-bold ph-rocket-launch"></i>
         <span>Motivated</span>
       </button>
     </div>
