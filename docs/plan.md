@@ -155,8 +155,8 @@ npm install - done
 
 #### 2. Install PWA Plugin
 ```bash
-npm install -D vite-plugin-pwa
-npm install workbox-window
+npm install -D vite-plugin-pwa - done
+npm install workbox-window - done
 ```
 
 #### 3. Configure vite.config.js
