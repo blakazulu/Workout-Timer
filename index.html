@@ -94,20 +94,20 @@
 
                 <!-- Three-way Toggle -->
                 <div class="music-mode-toggle">
-                    <button class="mode-toggle-btn active" data-mode="link">
+                    <button class="mode-toggle-btn active" id="linkModeBtn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                         </svg>
                         <span>Link</span>
                     </button>
-                    <button class="mode-toggle-btn" data-mode="mood">
+                    <button class="mode-toggle-btn" popovertarget="moodPopover">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                         </svg>
                         <span>Mood</span>
                     </button>
-                    <button class="mode-toggle-btn" data-mode="genre">
+                    <button class="mode-toggle-btn" popovertarget="genrePopover">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 18V5l12-2v13"></path>
                             <circle cx="6" cy="18" r="3"></circle>
@@ -117,86 +117,10 @@
                     </button>
                 </div>
 
-                <!-- Link Mode -->
-                <div class="music-mode-content active" data-mode-content="link">
-                    <div class="youtube-controls">
-                        <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
-                        <button id="loadYoutubeBtn">Load</button>
-                    </div>
-                </div>
-
-                <!-- Mood Mode -->
-                <div class="music-mode-content" data-mode-content="mood">
-                    <div class="mood-tags">
-                        <button class="mood-tag" data-query="beast mode workout music">
-                            <span class="mood-icon">💪</span>
-                            <span>Beast Mode</span>
-                        </button>
-                        <button class="mood-tag" data-query="intense workout music">
-                            <span class="mood-icon">🔥</span>
-                            <span>Intense</span>
-                        </button>
-                        <button class="mood-tag" data-query="energetic gym music">
-                            <span class="mood-icon">⚡</span>
-                            <span>Energetic</span>
-                        </button>
-                        <button class="mood-tag" data-query="power workout music">
-                            <span class="mood-icon">💥</span>
-                            <span>Power</span>
-                        </button>
-                        <button class="mood-tag" data-query="aggressive workout music">
-                            <span class="mood-icon">😤</span>
-                            <span>Aggressive</span>
-                        </button>
-                        <button class="mood-tag" data-query="pump up workout music">
-                            <span class="mood-icon">🏋️</span>
-                            <span>Pump Up</span>
-                        </button>
-                        <button class="mood-tag" data-query="focus workout music">
-                            <span class="mood-icon">🎯</span>
-                            <span>Focus</span>
-                        </button>
-                        <button class="mood-tag" data-query="motivational gym music">
-                            <span class="mood-icon">🚀</span>
-                            <span>Motivated</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Genre Mode -->
-                <div class="music-mode-content" data-mode-content="genre">
-                    <div class="genre-tags">
-                        <button class="genre-tag" data-query="EDM workout music mix">
-                            <span>EDM</span>
-                        </button>
-                        <button class="genre-tag" data-query="rock workout music">
-                            <span>Rock</span>
-                        </button>
-                        <button class="genre-tag" data-query="hip hop gym music">
-                            <span>Hip Hop</span>
-                        </button>
-                        <button class="genre-tag" data-query="metal workout music">
-                            <span>Metal</span>
-                        </button>
-                        <button class="genre-tag" data-query="trap workout music">
-                            <span>Trap</span>
-                        </button>
-                        <button class="genre-tag" data-query="dubstep gym music">
-                            <span>Dubstep</span>
-                        </button>
-                        <button class="genre-tag" data-query="hardstyle workout music">
-                            <span>Hardstyle</span>
-                        </button>
-                        <button class="genre-tag" data-query="techno workout music">
-                            <span>Techno</span>
-                        </button>
-                        <button class="genre-tag" data-query="phonk workout music">
-                            <span>Phonk</span>
-                        </button>
-                        <button class="genre-tag" data-query="drum and bass workout">
-                            <span>DnB</span>
-                        </button>
-                    </div>
+                <!-- Link Mode (always visible) -->
+                <div class="youtube-controls">
+                    <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
+                    <button id="loadYoutubeBtn">Load</button>
                 </div>
             </div>
 
@@ -249,6 +173,102 @@
         </div>
         <div class="history-content" id="historyContent">
             <div class="history-empty">No songs played yet</div>
+        </div>
+    </div>
+
+    <!-- Mood Popover -->
+    <div popover id="moodPopover" class="mood-popover">
+        <div class="mood-popover-header">
+            <h3>Select Mood</h3>
+            <button class="mood-popover-close" popovertarget="moodPopover" popovertargetaction="hide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mood-popover-content">
+            <div class="mood-tags">
+                <button class="mood-tag" data-query="beast mode workout music">
+                    <span class="mood-icon">💪</span>
+                    <span>Beast Mode</span>
+                </button>
+                <button class="mood-tag" data-query="intense workout music">
+                    <span class="mood-icon">🔥</span>
+                    <span>Intense</span>
+                </button>
+                <button class="mood-tag" data-query="energetic gym music">
+                    <span class="mood-icon">⚡</span>
+                    <span>Energetic</span>
+                </button>
+                <button class="mood-tag" data-query="power workout music">
+                    <span class="mood-icon">💥</span>
+                    <span>Power</span>
+                </button>
+                <button class="mood-tag" data-query="aggressive workout music">
+                    <span class="mood-icon">😤</span>
+                    <span>Aggressive</span>
+                </button>
+                <button class="mood-tag" data-query="pump up workout music">
+                    <span class="mood-icon">🏋️</span>
+                    <span>Pump Up</span>
+                </button>
+                <button class="mood-tag" data-query="focus workout music">
+                    <span class="mood-icon">🎯</span>
+                    <span>Focus</span>
+                </button>
+                <button class="mood-tag" data-query="motivational gym music">
+                    <span class="mood-icon">🚀</span>
+                    <span>Motivated</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Genre Popover -->
+    <div popover id="genrePopover" class="genre-popover">
+        <div class="genre-popover-header">
+            <h3>Select Genre</h3>
+            <button class="genre-popover-close" popovertarget="genrePopover" popovertargetaction="hide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="genre-popover-content">
+            <div class="genre-tags">
+                <button class="genre-tag" data-query="EDM workout music mix">
+                    <span>EDM</span>
+                </button>
+                <button class="genre-tag" data-query="rock workout music">
+                    <span>Rock</span>
+                </button>
+                <button class="genre-tag" data-query="hip hop gym music">
+                    <span>Hip Hop</span>
+                </button>
+                <button class="genre-tag" data-query="metal workout music">
+                    <span>Metal</span>
+                </button>
+                <button class="genre-tag" data-query="trap workout music">
+                    <span>Trap</span>
+                </button>
+                <button class="genre-tag" data-query="dubstep gym music">
+                    <span>Dubstep</span>
+                </button>
+                <button class="genre-tag" data-query="hardstyle workout music">
+                    <span>Hardstyle</span>
+                </button>
+                <button class="genre-tag" data-query="techno workout music">
+                    <span>Techno</span>
+                </button>
+                <button class="genre-tag" data-query="phonk workout music">
+                    <span>Phonk</span>
+                </button>
+                <button class="genre-tag" data-query="drum and bass workout">
+                    <span>DnB</span>
+                </button>
+            </div>
         </div>
     </div>
 
