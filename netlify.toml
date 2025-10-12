@@ -28,8 +28,8 @@
     # Referrer Policy - YouTube needs this for analytics and embed validation
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-    # Permissions Policy - allow autoplay for YouTube
-    Permissions-Policy = "autoplay=(self https://www.youtube.com https://www.youtube-nocookie.com), fullscreen=(self https://www.youtube.com https://www.youtube-nocookie.com), picture-in-picture=(self https://www.youtube.com https://www.youtube-nocookie.com)"
+    # Permissions Policy - allow autoplay for YouTube (URLs must be quoted)
+    Permissions-Policy = "autoplay=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), picture-in-picture=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\")"
 
 [[headers]]
   for = "/sw.js"

@@ -1,0 +1,1 @@
+- when you create a fix md file or summery it should be created in the docs/fixes folder
