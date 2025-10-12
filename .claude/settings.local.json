@@ -11,7 +11,8 @@
       "Bash(node:*)",
       "Bash(command -v:*)",
       "Bash(command:*)",
-      "Bash(sharp:*)"
+      "Bash(sharp:*)",
+      "WebFetch(domain:phosphoricons.com)"
     ],
     "deny": [],
     "ask": []
