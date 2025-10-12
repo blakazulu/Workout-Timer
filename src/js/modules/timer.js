@@ -9,7 +9,7 @@ import { getAudio } from './audio.js'
 export class Timer {
   constructor(options = {}) {
     this.duration = options.duration || 30
-    this.alertTime = options.alertTime || 5
+    this.alertTime = options.alertTime || 3
     this.repetitions = options.repetitions || 3
     this.restTime = options.restTime || 10
     this.currentTime = 0
@@ -61,8 +61,8 @@ export class Timer {
       this.startBtn.textContent = 'PAUSE'
       addClass(this.settings, 'hidden')
 
-      // Play YouTube video if loaded (only during work, not rest)
-      if (this.youtube && !this.isResting) {
+      // Play YouTube video if loaded
+      if (this.youtube) {
         this.youtube.play()
       }
     } else {
@@ -117,8 +117,8 @@ export class Timer {
     if (this.currentTime > 0) {
       this.currentTime--
 
-      // Play alert beep during work time countdown (not during rest)
-      if (!this.isResting && this.currentTime <= this.alertTime && this.currentTime > 0) {
+      // Play alert beep during countdown (both work and rest)
+      if (this.currentTime <= this.alertTime && this.currentTime > 0) {
         this.audio.playAlert()
       }
 
@@ -131,11 +131,6 @@ export class Timer {
         this.currentRep++
         this.currentTime = this.duration
         this.updateDisplay()
-        
-        // Resume YouTube video for next rep
-        if (this.youtube) {
-          this.youtube.play()
-        }
       } else if (this.currentRep < this.repetitions) {
         // Work period ended, more reps to go - start rest
         this.audio.playComplete()
@@ -144,11 +139,7 @@ export class Timer {
           this.isResting = true
           this.currentTime = this.restTime
           this.updateDisplay()
-          
-          // Pause YouTube during rest
-          if (this.youtube) {
-            this.youtube.pause()
-          }
+          // Music continues playing during rest
         } else {
           // No rest time, go directly to next rep
           this.currentRep++
@@ -182,22 +173,25 @@ export class Timer {
       this.repCounter.textContent = 'Ready'
     }
 
-    // Update alert state (only during work, not rest)
-    if (!this.isResting && this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning) {
+    // Update alert state (during both work and rest in final seconds)
+    if (this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning) {
       addClass(this.timerDisplay, 'alert')
       addClass(this.timerValue, 'warning')
+      // Alert overrides rest mode visual
+      removeClass(this.timerDisplay, 'resting')
+      removeClass(this.timerValue, 'rest-mode')
     } else {
       removeClass(this.timerDisplay, 'alert')
       removeClass(this.timerValue, 'warning')
-    }
-    
-    // Add rest visual indicator
-    if (this.isResting && this.isRunning) {
-      addClass(this.timerDisplay, 'resting')
-      addClass(this.timerValue, 'rest-mode')
-    } else {
-      removeClass(this.timerDisplay, 'resting')
-      removeClass(this.timerValue, 'rest-mode')
+      
+      // Add rest visual indicator (only when not in alert state)
+      if (this.isResting && this.isRunning) {
+        addClass(this.timerDisplay, 'resting')
+        addClass(this.timerValue, 'rest-mode')
+      } else {
+        removeClass(this.timerDisplay, 'resting')
+        removeClass(this.timerValue, 'rest-mode')
+      }
     }
   }
 }

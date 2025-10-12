@@ -6,7 +6,7 @@ const STORAGE_KEY = 'workout-timer-settings'
 
 const DEFAULT_SETTINGS = {
   duration: 30,
-  alertTime: 5,
+  alertTime: 3,
   repetitions: 3,
   restTime: 10
 }
