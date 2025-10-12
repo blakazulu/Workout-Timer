@@ -385,11 +385,12 @@
     border-radius: var(--radius-lg);
     color: #00ffc8;
     font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: all var(--transition-fast);
     white-space: nowrap;
     box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+    flex-shrink: 0;
 }
 
 .btn-install:hover {
