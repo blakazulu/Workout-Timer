@@ -1,0 +1,63 @@
+/* CSS Variables */
+:root {
+    /* Colors */
+    --color-primary: #ff5722;
+    --color-primary-gradient-start: #ff5722;
+    --color-primary-gradient-end: #ff006e;
+    --color-accent: #ff6b6b;
+    --color-warning: #ff006e;
+    --color-alert: #ff1744;
+
+    /* Backgrounds */
+    --bg-dark-primary: #121212;
+    --bg-dark-secondary: #1a1a1a;
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --bg-glass-dark: rgba(0, 0, 0, 0.3);
+    --bg-youtube: rgba(255, 87, 34, 0.05);
+
+    /* Borders */
+    --border-primary: rgba(255, 87, 34, 0.3);
+    --border-alert: #ff006e;
+
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-xxl: 40px;
+
+    /* Border Radius */
+    --radius-sm: 5px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 15px;
+    --radius-xxl: 20px;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-xxs: 11px;
+    --font-size-xs: 14px;
+    --font-size-sm: 16px;
+    --font-size-md: 18px;
+    --font-size-lg: 32px;
+    --font-size-xl: 72px;
+
+    --font-weight-normal: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+    --font-weight-black: 900;
+
+    --letter-spacing: 1px;
+
+    /* Transitions */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.5s;
+
+    /* Effects */
+    --backdrop-blur: 10px;
+}

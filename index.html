@@ -1,13 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>workout-timer-pro</title>
-  </head>
-  <body>
-    <div id="app"></div>
+    <title>Workout Timer Pro</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>WORKOUT TIMER</h1>
+            <button class="btn-install" id="installBtn" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Install App
+            </button>
+        </div>
+
+        <div class="timer-display" id="timerDisplay">
+            <div class="timer-value" id="timerValue">00:00</div>
+            <div class="rep-counter" id="repCounter">Ready</div>
+            <div class="gesture-hint">Double tap to start • Swipe down to reset</div>
+        </div>
+
+        <div class="settings" id="settings">
+            <div class="youtube-section">
+                <label>YouTube Music (Optional)</label>
+                <div class="youtube-controls">
+                    <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
+                    <button id="loadYoutubeBtn">Load</button>
+                </div>
+                <div id="youtube-player"></div>
+            </div>
+
+            <div class="setting-group">
+                <label>Duration (seconds)</label>
+                <input type="number" id="duration" value="30" min="5" max="3600">
+            </div>
+
+            <div class="setting-group">
+                <label>Alert Time (seconds)</label>
+                <input type="number" id="alertTime" value="5" min="1" max="60">
+            </div>
+
+            <div class="setting-group">
+                <label>Repetitions</label>
+                <input type="number" id="repetitions" value="3" min="1" max="99">
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-start" id="startBtn">START</button>
+            <button class="btn btn-reset" id="resetBtn">RESET</button>
+        </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
 </html>

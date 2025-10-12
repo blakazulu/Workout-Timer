@@ -1,0 +1,220 @@
+/* Component Styles */
+@import './variables.css';
+
+/* Timer Display */
+.timer-display {
+    background: var(--bg-glass);
+    backdrop-filter: blur(var(--backdrop-blur));
+    border: 2px solid var(--border-primary);
+    border-radius: var(--radius-xxl);
+    padding: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.timer-display.alert {
+    animation: pulse var(--transition-medium) infinite;
+    border-color: var(--border-alert);
+}
+
+.timer-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-black);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.timer-value.warning {
+    color: var(--color-warning);
+}
+
+.rep-counter {
+    font-size: var(--font-size-md);
+    color: var(--color-accent);
+    font-weight: var(--font-weight-normal);
+}
+
+.gesture-hint {
+    font-size: var(--font-size-xxs);
+    color: var(--text-primary);
+    opacity: 0.4;
+    margin-top: var(--spacing-sm);
+    text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .gesture-hint {
+        display: none;
+    }
+}
+
+/* Settings Panel */
+.settings {
+    background: var(--bg-glass);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.settings.hidden {
+    display: none;
+}
+
+.setting-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    opacity: 0.8;
+}
+
+.setting-group input {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-glass-dark);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--font-size-md);
+    outline: none;
+}
+
+.setting-group input:focus {
+    border-color: var(--color-primary);
+}
+
+/* YouTube Section */
+.youtube-section {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--bg-youtube);
+    border-radius: var(--radius-lg);
+}
+
+.youtube-section label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    opacity: 0.8;
+}
+
+.youtube-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.youtube-controls input {
+    flex: 1;
+    padding: var(--spacing-sm);
+    background: var(--bg-glass-dark);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    outline: none;
+}
+
+.youtube-controls button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-primary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: var(--font-weight-normal);
+}
+
+#youtube-player {
+    margin-top: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.youtube-loading,
+.youtube-error {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+}
+
+.youtube-loading {
+    background: rgba(255, 87, 34, 0.1);
+    color: var(--color-primary);
+}
+
+.youtube-error {
+    background: rgba(255, 0, 110, 0.1);
+    color: var(--color-alert);
+}
+
+/* Control Buttons */
+.controls {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.btn {
+    flex: 1;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing);
+    transition: transform var(--transition-fast);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-start {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: var(--text-primary);
+}
+
+.btn-reset {
+    background: linear-gradient(135deg, var(--color-warning), var(--color-alert));
+    color: var(--text-primary);
+}
+
+/* Install Button */
+.btn-install {
+    display: none;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(255, 87, 34, 0.2);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-normal);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btn-install:hover {
+    background: rgba(255, 87, 34, 0.3);
+    border-color: var(--color-primary);
+}
+
+.btn-install:active {
+    transform: scale(0.98);
+}
+
+.btn-install svg {
+    width: 16px;
+    height: 16px;
+}
