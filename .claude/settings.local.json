@@ -13,7 +13,12 @@
       "Bash(command:*)",
       "Bash(sharp:*)",
       "WebFetch(domain:phosphoricons.com)",
-      "Read(//mnt/c/**)"
+      "Read(//mnt/c/**)",
+      "mcp__netlify__netlify-user-services-reader",
+      "mcp__netlify__netlify-team-services-reader",
+      "Bash(netlify:*)",
+      "mcp__netlify__netlify-project-services-reader",
+      "mcp__netlify__netlify-deploy-services-reader"
     ],
     "deny": [],
     "ask": []
