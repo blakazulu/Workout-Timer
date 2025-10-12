@@ -59,7 +59,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/bg.png');
+    background-image: url('/bg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -89,12 +89,13 @@ body::after {
     opacity: 0.4;
 }
 
-/* Glowing light sweep effect */
-.background-grid::after {
+/* Dual light sweep effect - Left sweep */
+.background-grid::before {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 30%;
     height: 100%;
     background: radial-gradient(
@@ -105,7 +106,28 @@ body::after {
         transparent 70%
     );
     filter: blur(20px);
-    animation: lightSweep 8s ease-in-out infinite;
+    animation: lightSweepLeft 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Dual light sweep effect - Right sweep */
+.background-grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0, 255, 200, 0.6) 0%,
+        rgba(0, 255, 200, 0.3) 30%,
+        rgba(0, 255, 200, 0.1) 50%,
+        transparent 70%
+    );
+    filter: blur(20px);
+    animation: lightSweepRight 8s ease-in-out infinite;
     pointer-events: none;
 }
 

@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'bg.png', 'icons/*.png', 'icons/*.svg'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'bg.webp', 'icons/*.png', 'icons/*.svg'],
       manifest: {
         name: 'CYCLE',
         short_name: 'CYCLE',

@@ -29,7 +29,7 @@ cycle/
 │   │   ├── icon-192x192.png
 │   │   ├── icon-384x384.png
 │   │   └── icon-512x512.png
-│   ├── bg.png
+│   ├── bg.pwa
 │   ├── robots.txt
 │   └── favicon.ico
 ├── src/
@@ -168,7 +168,7 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'bg.png', 'icons/*.png'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'bg.pwa', 'icons/*.png'],
       manifest: {
         name: 'Workout Timer Pro',
         short_name: 'Workout Timer',
@@ -544,7 +544,7 @@ cycle/
 │   │   ├── icon-384x384.png ✅
 │   │   ├── icon-512x512.png ✅
 │   │   └── icon.svg ✅
-│   ├── bg.png ✅
+│   ├── bg.webp ✅
 │   └── robots.txt ✅
 │   (favicon: using icon.svg via link tag - no .ico needed)
 ├── src/
