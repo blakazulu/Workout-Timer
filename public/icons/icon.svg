@@ -1,20 +1,29 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <!-- Define the neon glow filter -->
   <defs>
-    <filter id="neon-glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="glow-cyan-arc" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00ffc8" flood-opacity="0.8"/>
+    </filter>
+    <filter id="glow-pink-arc" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ff0096" flood-opacity="0.8"/>
     </filter>
   </defs>
 
-  <!-- Dark Background -->
+  <!-- Background -->
   <rect width="64" height="64" rx="12" fill="#0a0a0a"/>
 
-  <!-- Stylized 'W' Letterform -->
-  <path d="M12 18 L22 46 L32 26 L42 46 L52 18"
+  <!-- Outer Cyan Arc (Work Phase) -->
+  <path d="M12 52 A 20 20 0 1 1 52 12"
         stroke="#00ffc8"
-        stroke-width="6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke-width="7"
         fill="none"
-        filter="url(#neon-glow-cyan)"/>
+        stroke-linecap="round"
+        filter="url(#glow-cyan-arc)"/>
+
+  <!-- Inner Pink Arc (Rest/Alert Phase) -->
+  <path d="M18 46 A 14 14 0 1 1 46 18"
+        stroke="#ff0096"
+        stroke-width="7"
+        fill="none"
+        stroke-linecap="round"
+        filter="url(#glow-pink-arc)"/>
 </svg>

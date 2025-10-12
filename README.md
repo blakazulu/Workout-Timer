@@ -1,4 +1,4 @@
-# Workout Timer Pro
+# CYCLE
 
 A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, YouTube background music, and an immersive cyberpunk aesthetic.
 

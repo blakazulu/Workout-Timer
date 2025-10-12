@@ -1,8 +1,8 @@
-# Workout Timer Pro - Vite PWA Implementation Plan
+# CYCLE - Vite PWA Implementation Plan
 
 ## Project Overview
 
-**Workout Timer Pro** is a Progressive Web App designed to help users manage their workout sessions with precision timing. The app features customizable timers, repetition tracking, audio/visual alerts, and optional YouTube music integration for an enhanced workout experience.
+**CYCLE** is a Progressive Web App designed to help users manage their workout sessions with precision timing. The app features customizable timers, repetition tracking, audio/visual alerts, and YouTube music integration with mood/genre selection for an enhanced workout experience.
 
 ### Key Features
 - Configurable workout timer with custom durations
@@ -18,7 +18,7 @@
 ## Perfect Folder Tree Structure
 
 ```
-workout-timer-pro/
+cycle/
 ├── public/
 │   ├── icons/
 │   │   ├── icon-72x72.png
@@ -148,8 +148,8 @@ API and utilities reference:
 
 #### 1. Initialize Vite Vanilla JS Project
 ```bash
-npm create vite@latest workout-timer-pro -- --template vanilla - done
-cd workout-timer-pro - done
+npm create vite@latest cycle -- --template vanilla - done
+cd cycle - done
 npm install - done
 ```
 
@@ -391,32 +391,192 @@ function showInstallButton() {
 4. ✅ Set up folder structure
 
 ### Phase 2: Code Organization ✅ COMPLETED
-1. ✅ Move HTML to `index.html`
-2. ✅ Extract inline styles to separate CSS files (variables, global, components, animations)
-3. ✅ Split JavaScript into ES6 modules (timer, audio, youtube, storage)
-4. ✅ Create utility modules for reusable functions (dom, time)
-5. ✅ Implement localStorage for settings persistence
+1. ✅ Move HTML to `index.html` (enhanced with advanced features)
+2. ✅ Extract inline styles to separate CSS files:
+   - ✅ variables.css (1,639 bytes) - CSS custom properties
+   - ✅ global.css (5,897 bytes) - Base styles and resets
+   - ✅ components.css (38,817 bytes) - Component-specific styles
+   - ✅ animations.css (2,280 bytes) - Keyframes and transitions
+3. ✅ Split JavaScript into ES6 modules:
+   - ✅ timer.js (264 lines) - Timer class with work/rest cycles
+   - ✅ audio.js (132 lines) - AudioManager with Web Audio API
+   - ✅ youtube.js (686 lines) - YouTubePlayer with progress tracking
+   - ✅ storage.js (206 lines) - localStorage with song history
+4. ✅ Create utility modules:
+   - ✅ dom.js - DOM helper functions ($, addClass, etc.)
+   - ✅ time.js - Time formatting utilities (formatTime)
+   - ✅ gestures.js (135 lines) - Touch gesture handler for mobile
+   - ✅ song_fetcher.js - Music library integration
+5. ✅ Implement localStorage for settings persistence and song history
+6. ✅ Create main.js entry point with CSS imports
+7. ✅ Implement app.js (719 lines) with PWA registration and event handling
 
-### Phase 3: PWA Implementation
-1. Create web app manifest (via vite-plugin-pwa)
-2. Generate app icons (all sizes)
-3. Configure service worker caching
-4. Implement update notifications
-5. Test offline functionality
+### Phase 3: PWA Implementation ✅ COMPLETED
+1. ✅ Create web app manifest (via vite-plugin-pwa) - DONE
+2. ✅ Generate app icons (9 PNG sizes + SVG: 72x72 to 512x512) - DONE
+3. ✅ Configure service worker caching (Workbox with YouTube runtime cache) - DONE
+4. ✅ Implement update notifications (onNeedRefresh, onOfflineReady) - DONE
+5. ✅ Install prompt UI implemented - DONE
+6. ✅ Created public/robots.txt for search engine indexing - DONE
+7. ✅ Favicon configured (using icon.svg, no .ico needed for modern browsers) - DONE
+8. ⚠️ Test offline functionality - NEEDS TESTING
 
-### Phase 4: Enhancement
-1. Add install prompt UI
-2. Add loading states and error handling
-3. Implement vibration API for mobile alerts
-4. Add touch gestures for mobile UX
-5. Optimize performance (code splitting, lazy loading)
+### Phase 4: Enhancement ⚡ MOSTLY COMPLETED
+1. ✅ Add install prompt UI (beforeinstallprompt handling)
+2. ✅ Add loading states for YouTube (loading overlay)
+3. ❌ Implement vibration API for mobile alerts - NOT IMPLEMENTED
+4. ✅ Add touch gestures for mobile UX (double tap, swipe down)
+5. ✅ Optimize performance (lazy loading YouTube module, code splitting)
+6. ✅ Keyboard shortcuts (Space to start/pause, R to reset)
+7. ✅ Music controls with progress bar and seeking
+8. ✅ Song history tracking (recent + most played tabs)
+9. ✅ Mood/Genre selection system with popover UI
+10. ✅ Rest time feature (between repetitions)
+11. ✅ Volume ducking during countdown alerts
+12. ✅ Enhanced UI with Phosphor Icons
+13. ✅ Gesture hints for mobile users
 
-### Phase 5: Testing & Deployment
-1. Test on multiple devices and browsers
-2. Run Lighthouse PWA audit
-3. Test offline functionality thoroughly
-4. Test update mechanism
-5. Deploy to static hosting (Netlify, Vercel, GitHub Pages)
+### Phase 5: Testing & Deployment ❌ NOT STARTED
+1. ❌ Test on multiple devices and browsers
+2. ❌ Run Lighthouse PWA audit (target: 90+ score)
+3. ❌ Test offline functionality thoroughly
+4. ❌ Test update mechanism
+5. ❌ Deploy to static hosting (Netlify, Vercel, GitHub Pages)
+6. ❌ Test PWA installation on iOS Safari
+7. ❌ Test PWA installation on Android Chrome
+8. ❌ Verify service worker caching behavior
+9. ❌ Performance audit (bundle size, load times)
+
+---
+
+## Additional Features Implemented (Beyond Original Plan)
+
+The following features were implemented that exceed the original project scope:
+
+### Music Library System
+- **Mood-based selection**: 8 mood presets (Beast Mode, Intense, Energetic, Power, Aggressive, Pump Up, Focus, Motivated)
+- **Genre-based selection**: 10 genres (EDM, Rock, Hip Hop, Metal, Trap, Dubstep, Hardstyle, Techno, Phonk, DnB)
+- **Curated playlists**: Pre-configured workout music library with metadata
+- **Three-way toggle UI**: Link/Mood/Genre switching system
+
+### Song History & Tracking
+- **Song history storage**: Tracks recently played songs with metadata
+- **Most played tracking**: Play count for each song
+- **History popover UI**: Two tabs (Recent / Most Played) with thumbnails
+- **Thumbnail caching**: YouTube thumbnail display in history
+
+### Advanced YouTube Integration
+- **Progress bar with seeking**: Click to seek functionality
+- **Music info tooltips**: Popover with song details
+- **Volume ducking**: Automatic volume reduction during countdown alerts
+- **Play/pause controls**: Dedicated music control buttons
+- **Loading overlay**: Visual feedback during video loading
+- **Auto-play sync**: Music starts/stops with timer
+
+### Rest Timer Feature
+- **Configurable rest time**: 0-300 seconds between reps
+- **Visual rest indicator**: Different UI state during rest periods
+- **Continuous music playback**: Music continues during rest
+- **REST label**: Clear indication of rest vs work mode
+
+### Enhanced Mobile UX
+- **Touch gestures**: Double tap to start, swipe down to reset
+- **Gesture hints**: On-screen hints for mobile users
+- **Responsive popovers**: Multiple popover UI components
+- **Mobile-optimized controls**: Touch-friendly button sizes
+
+### Advanced UI/UX
+- **Phosphor Icons**: Modern icon system integration
+- **Animated backgrounds**: Floating orbs, scanlines, vignette effects
+- **Glassmorphism**: Backdrop blur effects
+- **Custom fonts**: Orbitron and Rajdhani font families
+- **Keyboard shortcuts**: Space (start/pause), R (reset)
+- **Auto-save settings**: Settings persist on change
+
+### Data Management
+- **music-library.js**: Centralized music data structure
+- **song_fetcher.js**: Music query and retrieval system
+- **Enhanced storage.js**: Song history with play counts and timestamps
+
+---
+
+## Current Project Status
+
+### Completion Summary
+- **Phase 1 (Setup)**: ✅ 100% Complete
+- **Phase 2 (Code Organization)**: ✅ 100% Complete
+- **Phase 3 (PWA Implementation)**: ✅ 100% Complete (needs offline testing)
+- **Phase 4 (Enhancement)**: ⚡ 92% Complete (missing Vibration API - optional)
+- **Phase 5 (Testing & Deployment)**: ❌ 0% Complete
+
+### What's Working
+- ✅ Timer with work/rest cycles
+- ✅ Audio alerts (Web Audio API)
+- ✅ YouTube integration with controls
+- ✅ Music library with mood/genre selection
+- ✅ Song history tracking
+- ✅ Touch gestures for mobile
+- ✅ Keyboard shortcuts
+- ✅ PWA service worker registration
+- ✅ Install prompt handling
+- ✅ Settings persistence
+- ✅ Responsive design
+
+### What Needs Work
+- ⚠️ Offline functionality testing
+- ⚠️ PWA audit (Lighthouse score)
+- ⚠️ Cross-browser testing
+- ⚠️ Mobile device testing
+- ❌ Vibration API implementation (optional)
+- ❌ Production deployment
+
+### File Structure (Current)
+```
+cycle/
+├── public/
+│   ├── icons/
+│   │   ├── icon-72x72.png ✅
+│   │   ├── icon-96x96.png ✅
+│   │   ├── icon-128x128.png ✅
+│   │   ├── icon-144x144.png ✅
+│   │   ├── icon-152x152.png ✅
+│   │   ├── icon-192x192.png ✅
+│   │   ├── icon-384x384.png ✅
+│   │   ├── icon-512x512.png ✅
+│   │   └── icon.svg ✅
+│   ├── bg.png ✅
+│   └── robots.txt ✅
+│   (favicon: using icon.svg via link tag - no .ico needed)
+├── src/
+│   ├── css/
+│   │   ├── global.css ✅
+│   │   ├── variables.css ✅
+│   │   ├── components.css ✅
+│   │   └── animations.css ✅
+│   ├── js/
+│   │   ├── modules/
+│   │   │   ├── timer.js ✅ (264 lines)
+│   │   │   ├── audio.js ✅ (132 lines)
+│   │   │   ├── youtube.js ✅ (686 lines)
+│   │   │   └── storage.js ✅ (206 lines)
+│   │   ├── utils/
+│   │   │   ├── dom.js ✅
+│   │   │   ├── time.js ✅
+│   │   │   ├── gestures.js ✅ (135 lines)
+│   │   │   └── song_fetcher.js ✅
+│   │   ├── data/
+│   │   │   ├── music-library.js ✅
+│   │   │   └── workout_music.json ✅
+│   │   └── app.js ✅ (719 lines)
+│   └── main.js ✅
+├── docs/
+│   └── plan.md ✅ (this file)
+├── index.html ✅
+├── vite.config.js ✅
+├── package.json ✅
+├── README.md ✅
+└── .gitignore ✅
+```
 
 ---
 
@@ -676,6 +836,84 @@ A successful implementation will achieve:
 
 ---
 
-**Last Updated**: 2025-10-12
-**Version**: 2.0
-**Status**: Planning Phase - Vanilla JS Approach
+## Next Steps & Recommendations
+
+### Immediate Actions (High Priority)
+1. ✅ **PWA assets complete**:
+   - ✅ public/robots.txt created (allows all search engine indexing)
+   - ✅ Favicon configured (icon.svg via link tag, no .ico needed)
+
+2. **Implement Vibration API** (optional but nice for mobile):
+   ```javascript
+   // Add to timer.js during countdown alerts
+   if ('vibrate' in navigator) {
+     navigator.vibrate(100) // 100ms pulse
+   }
+   ```
+
+3. **Test in development**:
+   - Run `npm run dev` and test all features
+   - Test timer accuracy over multiple reps
+   - Test YouTube integration with various URLs
+   - Test music library mood/genre selection
+   - Verify localStorage persistence
+   - Test touch gestures on mobile device or DevTools
+
+### Testing Phase (Required before deployment)
+1. **PWA Audit**:
+   - Build production: `npm run build` (Note: User config disables build, may need to enable)
+   - Run Lighthouse PWA audit
+   - Target score: 90+ across all categories
+
+2. **Cross-Browser Testing**:
+   - Chrome/Edge (Chromium)
+   - Firefox
+   - Safari (macOS)
+   - Safari (iOS) - Critical for PWA
+   - Samsung Internet (Android)
+
+3. **Offline Testing**:
+   - Install PWA on device
+   - Disconnect network
+   - Test core timer functionality
+   - Verify cached assets load
+   - Test settings persistence
+
+4. **Performance Testing**:
+   - Check bundle size (target: <100KB JS)
+   - Measure Time to Interactive (<3s target)
+   - Measure First Contentful Paint (<1.5s target)
+   - Test on throttled 3G network
+
+### Deployment Phase
+1. **Prepare for deployment**:
+   - Enable build command (currently disabled in user config)
+   - Test production build locally with `npm run preview`
+   - Verify service worker in production mode
+
+2. **Deploy to hosting** (choose one):
+   - **Vercel**: `vercel deploy` (recommended, zero config)
+   - **Netlify**: Drag & drop dist folder or connect git
+   - **GitHub Pages**: Configure gh-pages branch deployment
+
+3. **Post-deployment verification**:
+   - Test PWA installation from production URL
+   - Verify HTTPS is working (required for PWA)
+   - Test update mechanism with new deployment
+   - Verify YouTube iframe works on hosted domain
+
+### Optional Enhancements (Future)
+- Add validation.js utility module (currently not created)
+- Implement background sync for workout history
+- Add export/import settings feature
+- Create workout presets
+- Add dark/light theme toggle
+- Implement sharing features
+- Add statistics dashboard
+- Create onboarding tutorial
+
+---
+
+**Last Updated**: 2025-10-12 (Status Analysis)
+**Version**: 2.1
+**Status**: Development Complete - Testing Phase Required

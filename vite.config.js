@@ -7,9 +7,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'bg.png', 'icons/*.png', 'icons/*.svg'],
       manifest: {
-        name: 'Workout Timer Pro',
-        short_name: 'Workout Timer',
-        description: 'Professional workout timer with repetition tracking',
+        name: 'CYCLE',
+        short_name: 'CYCLE',
+        description: 'Professional workout timer with repetition tracking and music',
         theme_color: '#ff5722',
         background_color: '#121212',
         display: 'standalone',

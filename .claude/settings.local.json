@@ -12,7 +12,8 @@
       "Bash(command -v:*)",
       "Bash(command:*)",
       "Bash(sharp:*)",
-      "WebFetch(domain:phosphoricons.com)"
+      "WebFetch(domain:phosphoricons.com)",
+      "Read(//mnt/c/**)"
     ],
     "deny": [],
     "ask": []

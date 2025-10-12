@@ -1,251 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
 
-    <!-- Phosphor Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
 
-    <title>Workout Timer Pro</title>
+  <title>CYCLE</title>
 </head>
 <body>
-    <!-- Animated Background Elements -->
-    <div class="background-image"></div>
-    <div class="background-grid"></div>
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
-    <div class="floating-orb"></div>
-    <div class="floating-orb"></div>
-    <div class="floating-orb"></div>
+<!-- Animated Background Elements -->
+<div class="background-image"></div>
+<div class="background-grid"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="floating-orb"></div>
+<div class="floating-orb"></div>
+<div class="floating-orb"></div>
 
-    <!-- YouTube Background Video -->
-    <div id="youtube-player-iframe" class="youtube-background"></div>
+<!-- YouTube Background Video -->
+<div id="youtube-player-iframe" class="youtube-background"></div>
 
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay hidden">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading video...</div>
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay hidden">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading video...</div>
+</div>
+
+<div class="container">
+  <div class="header">
+    <h1 class="app-title">
+      <img src="/icons/icon.svg" alt="CYCLE" class="app-icon">
+      <span>CYCLE</span>
+    </h1>
+    <button class="btn-install" id="installBtn" style="display: none;">
+      <i class="ph-bold ph-download-simple"></i>
+      Install App
+    </button>
+  </div>
+
+  <div class="timer-display hidden" id="timerDisplay">
+    <div class="timer-value" id="timerValue">00:00</div>
+    <div class="rep-counter" id="repCounter">Ready</div>
+    <div class="gesture-hint">Double tap to start • Swipe down to reset</div>
+  </div>
+
+  <!-- YouTube Music Controls -->
+  <div class="music-controls hidden" id="musicControls">
+    <div class="music-info">
+      <span class="music-title" id="musicTitle">No song loaded</span>
+      <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
+        <i class="ph ph-info"></i>
+      </button>
+    </div>
+    <div class="music-player">
+      <button class="music-btn" id="musicPlayPauseBtn">
+        <i class="play-icon ph-fill ph-play"></i>
+        <i class="pause-icon hidden ph-fill ph-pause"></i>
+      </button>
+      <div class="music-progress">
+        <span class="music-time" id="musicCurrentTime">0:00</span>
+        <div class="progress-bar-container" id="progressBarContainer">
+          <div class="progress-bar-bg"></div>
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+          <div class="progress-bar-handle" id="progressBarHandle"></div>
+        </div>
+        <span class="music-time" id="musicDuration">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings" id="settings">
+    <div class="youtube-section">
+      <div class="youtube-header">
+        <label>Workout Music</label>
+        <button id="historyBtn" class="btn-history" popovertarget="historyPopover" title="Song History">
+          <i class="ph-bold ph-clock-counter-clockwise"></i>
+        </button>
+      </div>
+
+      <!-- Three-way Toggle -->
+      <div class="music-mode-toggle">
+        <button class="mode-toggle-btn active" id="linkModeBtn">
+          <i class="ph-bold ph-youtube-logo"></i>
+          <span>Link</span>
+        </button>
+        <button class="mode-toggle-btn" popovertarget="moodPopover">
+          <i class="ph-bold ph-smiley"></i>
+          <span>Mood</span>
+        </button>
+        <button class="mode-toggle-btn" popovertarget="genrePopover">
+          <i class="ph-bold ph-music-notes"></i>
+          <span>Genre</span>
+        </button>
+      </div>
+
+      <!-- Link Mode (always visible) -->
+      <div class="youtube-controls">
+        <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
+        <button id="loadYoutubeBtn"><i class="ph-bold ph-magnifying-glass"></i></button>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <h1>WORKOUT TIMER</h1>
-            <button class="btn-install" id="installBtn" style="display: none;">
-                <i class="ph-bold ph-download-simple"></i>
-                Install App
-            </button>
-        </div>
+    <div class="settings-grid">
+      <div class="setting-group">
+        <label>Duration (seconds)</label>
+        <input type="number" id="duration" value="30" min="5" max="3600">
+      </div>
 
-        <div class="timer-display hidden" id="timerDisplay">
-            <div class="timer-value" id="timerValue">00:00</div>
-            <div class="rep-counter" id="repCounter">Ready</div>
-            <div class="gesture-hint">Double tap to start • Swipe down to reset</div>
-        </div>
+      <div class="setting-group">
+        <label>Alert Time (seconds)</label>
+        <input type="number" id="alertTime" value="3" min="1" max="60">
+      </div>
 
-        <!-- YouTube Music Controls -->
-        <div class="music-controls hidden" id="musicControls">
-            <div class="music-info">
-                <span class="music-title" id="musicTitle">No song loaded</span>
-                <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
-                    <i class="ph ph-info"></i>
-                </button>
-            </div>
-            <div class="music-player">
-                <button class="music-btn" id="musicPlayPauseBtn">
-                    <i class="play-icon ph-fill ph-play"></i>
-                    <i class="pause-icon hidden ph-fill ph-pause"></i>
-                </button>
-                <div class="music-progress">
-                    <span class="music-time" id="musicCurrentTime">0:00</span>
-                    <div class="progress-bar-container" id="progressBarContainer">
-                        <div class="progress-bar-bg"></div>
-                        <div class="progress-bar-fill" id="progressBarFill"></div>
-                        <div class="progress-bar-handle" id="progressBarHandle"></div>
-                    </div>
-                    <span class="music-time" id="musicDuration">0:00</span>
-                </div>
-            </div>
-        </div>
+      <div class="setting-group">
+        <label>Repetitions</label>
+        <input type="number" id="repetitions" value="3" min="1" max="99">
+      </div>
 
-        <div class="settings" id="settings">
-            <div class="youtube-section">
-                <div class="youtube-header">
-                    <label>Workout Music</label>
-                    <button id="historyBtn" class="btn-history" popovertarget="historyPopover" title="Song History">
-                        <i class="ph-bold ph-clock-counter-clockwise"></i>
-                    </button>
-                </div>
-
-                <!-- Three-way Toggle -->
-                <div class="music-mode-toggle">
-                    <button class="mode-toggle-btn active" id="linkModeBtn">
-                        <i class="ph-bold ph-youtube-logo"></i>
-                        <span>Link</span>
-                    </button>
-                    <button class="mode-toggle-btn" popovertarget="moodPopover">
-                        <i class="ph-bold ph-smiley"></i>
-                        <span>Mood</span>
-                    </button>
-                    <button class="mode-toggle-btn" popovertarget="genrePopover">
-                        <i class="ph-bold ph-music-notes"></i>
-                        <span>Genre</span>
-                    </button>
-                </div>
-
-                <!-- Link Mode (always visible) -->
-                <div class="youtube-controls">
-                    <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
-                    <button id="loadYoutubeBtn"><i class="ph-bold ph-magnifying-glass"></i></button>
-                </div>
-            </div>
-
-            <div class="settings-grid">
-                <div class="setting-group">
-                    <label>Duration (seconds)</label>
-                    <input type="number" id="duration" value="30" min="5" max="3600">
-                </div>
-
-                <div class="setting-group">
-                    <label>Alert Time (seconds)</label>
-                    <input type="number" id="alertTime" value="3" min="1" max="60">
-                </div>
-
-                <div class="setting-group">
-                    <label>Repetitions</label>
-                    <input type="number" id="repetitions" value="3" min="1" max="99">
-                </div>
-
-                <div class="setting-group">
-                    <label>Rest Time (seconds)</label>
-                    <input type="number" id="restTime" value="10" min="0" max="300">
-                </div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <button class="btn btn-start" id="startBtn">START</button>
-            <button class="btn btn-reset" id="resetBtn">RESET</button>
-        </div>
+      <div class="setting-group">
+        <label>Rest Time (seconds)</label>
+        <input type="number" id="restTime" value="10" min="0" max="300">
+      </div>
     </div>
+  </div>
 
-    <!-- Music Tooltip (popover) -->
-    <div popover id="musicTooltip" class="music-tooltip"></div>
+  <div class="controls">
+    <button class="btn btn-start" id="startBtn">START</button>
+    <button class="btn btn-reset" id="resetBtn">RESET</button>
+  </div>
+</div>
 
-    <!-- Song History (popover) -->
-    <div popover id="historyPopover" class="history-popover">
-        <div class="history-header">
-            <h3>Song History</h3>
-            <button class="history-close" popovertarget="historyPopover" popovertargetaction="hide">
-                <i class="ph-bold ph-x"></i>
-            </button>
-        </div>
-        <div class="history-tabs">
-            <button class="history-tab active" data-tab="recent">Recent</button>
-            <button class="history-tab" data-tab="top">Most Played</button>
-        </div>
-        <div class="history-content" id="historyContent">
-            <div class="history-empty">No songs played yet</div>
-        </div>
+<!-- Music Tooltip (popover) -->
+<div popover id="musicTooltip" class="music-tooltip"></div>
+
+<!-- Song History (popover) -->
+<div popover id="historyPopover" class="history-popover">
+  <div class="history-header">
+    <h3>Song History</h3>
+    <button class="history-close" popovertarget="historyPopover" popovertargetaction="hide">
+      <i class="ph-bold ph-x"></i>
+    </button>
+  </div>
+  <div class="history-tabs">
+    <button class="history-tab active" data-tab="recent">Recent</button>
+    <button class="history-tab" data-tab="top">Most Played</button>
+  </div>
+  <div class="history-content" id="historyContent">
+    <div class="history-empty">No songs played yet</div>
+  </div>
+</div>
+
+<!-- Mood Popover -->
+<div popover id="moodPopover" class="mood-popover">
+  <div class="mood-popover-header">
+    <h3>Select Mood</h3>
+    <button class="mood-popover-close" popovertarget="moodPopover" popovertargetaction="hide">
+      <i class="ph-bold ph-x"></i>
+    </button>
+  </div>
+  <div class="mood-popover-content">
+    <div class="mood-tags">
+      <button class="mood-tag" data-query="beast mode workout music">
+        <i class="mood-icon ph-fill ph-barbell"></i>
+        <span>Beast Mode</span>
+      </button>
+      <button class="mood-tag" data-query="intense workout music">
+        <i class="mood-icon ph-fill ph-fire"></i>
+        <span>Intense</span>
+      </button>
+      <button class="mood-tag" data-query="energetic workout music">
+        <i class="mood-icon ph-fill ph-lightning"></i>
+        <span>Energetic</span>
+      </button>
+      <button class="mood-tag" data-query="power workout music">
+        <i class="mood-icon ph-fill ph-lightning-slash"></i>
+        <span>Power</span>
+      </button>
+      <button class="mood-tag" data-query="aggressive workout music">
+        <i class="mood-icon ph-fill ph-fire-simple"></i>
+        <span>Aggressive</span>
+      </button>
+      <button class="mood-tag" data-query="pump up workout music">
+        <i class="mood-icon ph-fill ph-heartbeat"></i>
+        <span>Pump Up</span>
+      </button>
+      <button class="mood-tag" data-query="focus workout music">
+        <i class="mood-icon ph-fill ph-crosshair"></i>
+        <span>Focus</span>
+      </button>
+      <button class="mood-tag" data-query="motivational workout music">
+        <i class="mood-icon ph-fill ph-rocket-launch"></i>
+        <span>Motivated</span>
+      </button>
     </div>
+  </div>
+</div>
 
-    <!-- Mood Popover -->
-    <div popover id="moodPopover" class="mood-popover">
-        <div class="mood-popover-header">
-            <h3>Select Mood</h3>
-            <button class="mood-popover-close" popovertarget="moodPopover" popovertargetaction="hide">
-                <i class="ph-bold ph-x"></i>
-            </button>
-        </div>
-        <div class="mood-popover-content">
-            <div class="mood-tags">
-                <button class="mood-tag" data-query="beast mode workout music">
-                    <i class="mood-icon ph-fill ph-barbell"></i>
-                    <span>Beast Mode</span>
-                </button>
-                <button class="mood-tag" data-query="intense workout music">
-                    <i class="mood-icon ph-fill ph-fire"></i>
-                    <span>Intense</span>
-                </button>
-                <button class="mood-tag" data-query="energetic workout music">
-                    <i class="mood-icon ph-fill ph-lightning"></i>
-                    <span>Energetic</span>
-                </button>
-                <button class="mood-tag" data-query="power workout music">
-                    <i class="mood-icon ph-fill ph-lightning-slash"></i>
-                    <span>Power</span>
-                </button>
-                <button class="mood-tag" data-query="aggressive workout music">
-                    <i class="mood-icon ph-fill ph-fire-simple"></i>
-                    <span>Aggressive</span>
-                </button>
-                <button class="mood-tag" data-query="pump up workout music">
-                    <i class="mood-icon ph-fill ph-heartbeat"></i>
-                    <span>Pump Up</span>
-                </button>
-                <button class="mood-tag" data-query="focus workout music">
-                    <i class="mood-icon ph-fill ph-crosshair"></i>
-                    <span>Focus</span>
-                </button>
-                <button class="mood-tag" data-query="motivational workout music">
-                    <i class="mood-icon ph-fill ph-rocket-launch"></i>
-                    <span>Motivated</span>
-                </button>
-            </div>
-        </div>
+<!-- Genre Popover -->
+<div popover id="genrePopover" class="genre-popover">
+  <div class="genre-popover-header">
+    <h3>Select Genre</h3>
+    <button class="genre-popover-close" popovertarget="genrePopover" popovertargetaction="hide">
+      <i class="ph-bold ph-x"></i>
+    </button>
+  </div>
+  <div class="genre-popover-content">
+    <div class="genre-tags">
+      <button class="genre-tag" data-query="edm workout music">
+        <span>EDM</span>
+      </button>
+      <button class="genre-tag" data-query="rock workout music">
+        <span>Rock</span>
+      </button>
+      <button class="genre-tag" data-query="hip hop workout music">
+        <span>Hip Hop</span>
+      </button>
+      <button class="genre-tag" data-query="metal workout music">
+        <span>Metal</span>
+      </button>
+      <button class="genre-tag" data-query="trap workout music">
+        <span>Trap</span>
+      </button>
+      <button class="genre-tag" data-query="dubstep workout music">
+        <span>Dubstep</span>
+      </button>
+      <button class="genre-tag" data-query="hardstyle workout music">
+        <span>Hardstyle</span>
+      </button>
+      <button class="genre-tag" data-query="techno workout music">
+        <span>Techno</span>
+      </button>
+      <button class="genre-tag" data-query="phonk workout music">
+        <span>Phonk</span>
+      </button>
+      <button class="genre-tag" data-query="drum and bass workout music">
+        <span>DnB</span>
+      </button>
     </div>
+  </div>
+</div>
 
-    <!-- Genre Popover -->
-    <div popover id="genrePopover" class="genre-popover">
-        <div class="genre-popover-header">
-            <h3>Select Genre</h3>
-            <button class="genre-popover-close" popovertarget="genrePopover" popovertargetaction="hide">
-                <i class="ph-bold ph-x"></i>
-            </button>
-        </div>
-        <div class="genre-popover-content">
-            <div class="genre-tags">
-                <button class="genre-tag" data-query="edm workout music">
-                    <span>EDM</span>
-                </button>
-                <button class="genre-tag" data-query="rock workout music">
-                    <span>Rock</span>
-                </button>
-                <button class="genre-tag" data-query="hip hop workout music">
-                    <span>Hip Hop</span>
-                </button>
-                <button class="genre-tag" data-query="metal workout music">
-                    <span>Metal</span>
-                </button>
-                <button class="genre-tag" data-query="trap workout music">
-                    <span>Trap</span>
-                </button>
-                <button class="genre-tag" data-query="dubstep workout music">
-                    <span>Dubstep</span>
-                </button>
-                <button class="genre-tag" data-query="hardstyle workout music">
-                    <span>Hardstyle</span>
-                </button>
-                <button class="genre-tag" data-query="techno workout music">
-                    <span>Techno</span>
-                </button>
-                <button class="genre-tag" data-query="phonk workout music">
-                    <span>Phonk</span>
-                </button>
-                <button class="genre-tag" data-query="drum and bass workout music">
-                    <span>DnB</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="/src/main.js"></script>
+<script type="module" src="/src/main.js"></script>
 </body>
 </html>

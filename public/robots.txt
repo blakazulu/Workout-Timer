@@ -1,0 +1,8 @@
+# CYCLE - Robot Exclusion Protocol
+# Allow all search engines to index the app
+
+User-agent: *
+Allow: /
+
+# Sitemap (optional - uncomment and update URL when deployed)
+# Sitemap: https://your-domain.com/sitemap.xml

@@ -65,7 +65,7 @@ function init() {
   setupHistory()
   setupMusicModeToggle()
 
-  console.log('Workout Timer Pro initialized')
+  console.log('CYCLE initialized')
 }
 
 /**

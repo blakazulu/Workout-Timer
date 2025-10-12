@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Workout Timer Pro** is a Progressive Web App (PWA) for managing workout sessions with precision timing, built using Vite and vanilla JavaScript. The app features customizable timers, repetition tracking, audio/visual alerts, and optional YouTube music integration.
+**CYCLE** is a Progressive Web App (PWA) for managing workout sessions with precision timing, built using Vite and vanilla JavaScript. The app features customizable timers, repetition tracking, audio/visual alerts, and YouTube music integration with mood/genre selection.
 
 ## Development Commands
 

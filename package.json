@@ -1,7 +1,7 @@
 {
-  "name": "workout-timer-pro",
+  "name": "cycle",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,6 +13,7 @@
     "vite-plugin-pwa": "^1.0.3"
   },
   "dependencies": {
+    "sharp": "^0.34.4",
     "workbox-window": "^7.3.0"
   },
   "optionalDependencies": {
