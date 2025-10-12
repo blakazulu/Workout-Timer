@@ -1,12 +1,12 @@
 /**
  * Music Library - Verified Workout Music Collection
- * 
+ *
  * This module loads curated, verified YouTube workout music organized by moods and genres.
  * All links have been verified to work and match their descriptions.
  */
 
 // Import the song data
-import songData from './workout_music.json'
+import songData from "./workout_music.json";
 
 /**
  * Get playlists for a mood
@@ -14,7 +14,7 @@ import songData from './workout_music.json'
  * @returns {Array} Array of playlist objects with title, url, thumbnail, duration, artist
  */
 export function getMoodPlaylists(query) {
-  return songData[query] || []
+  return songData[query] || [];
 }
 
 /**
@@ -23,7 +23,7 @@ export function getMoodPlaylists(query) {
  * @returns {Array} Array of song objects with title, url, thumbnail, duration, artist
  */
 export function getGenreSongs(query) {
-  return songData[query] || []
+  return songData[query] || [];
 }
 
 /**
@@ -33,16 +33,16 @@ export function getGenreSongs(query) {
  */
 export function isMoodQuery(query) {
   const moodKeys = [
-    'beast mode workout music',
-    'intense workout music',
-    'energetic workout music',
-    'power workout music',
-    'aggressive workout music',
-    'pump up workout music',
-    'focus workout music',
-    'motivational workout music'
-  ]
-  return moodKeys.includes(query)
+    "beast mode workout music",
+    "intense workout music",
+    "energetic workout music",
+    "power workout music",
+    "aggressive workout music",
+    "pump up workout music",
+    "focus workout music",
+    "motivational workout music"
+  ];
+  return moodKeys.includes(query);
 }
 
 /**
@@ -51,15 +51,15 @@ export function isMoodQuery(query) {
  */
 export function getAllMoods() {
   return [
-    'beast mode workout music',
-    'intense workout music',
-    'energetic workout music',
-    'power workout music',
-    'aggressive workout music',
-    'pump up workout music',
-    'focus workout music',
-    'motivational workout music'
-  ]
+    "beast mode workout music",
+    "intense workout music",
+    "energetic workout music",
+    "power workout music",
+    "aggressive workout music",
+    "pump up workout music",
+    "focus workout music",
+    "motivational workout music"
+  ];
 }
 
 /**
@@ -68,15 +68,15 @@ export function getAllMoods() {
  */
 export function getAllGenres() {
   return [
-    'edm workout music',
-    'rock workout music',
-    'hip hop workout music',
-    'metal workout music',
-    'trap workout music',
-    'dubstep workout music',
-    'hardstyle workout music',
-    'techno workout music',
-    'phonk workout music',
-    'drum and bass workout music'
-  ]
+    "edm workout music",
+    "rock workout music",
+    "hip hop workout music",
+    "metal workout music",
+    "trap workout music",
+    "dubstep workout music",
+    "hardstyle workout music",
+    "techno workout music",
+    "phonk workout music",
+    "drum and bass workout music"
+  ];
 }

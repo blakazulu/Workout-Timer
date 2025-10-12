@@ -1,66 +1,66 @@
 /* CSS Variables */
 :root {
-    /* Colors */
-    --color-primary: #ff5722;
-    --color-primary-gradient-start: #ff5722;
-    --color-primary-gradient-end: #ff006e;
-    --color-accent: #ff6b6b;
-    --color-warning: #ff006e;
-    --color-alert: #ff1744;
+  /* Colors */
+  --color-accent: #ff6b6b;
+  --border-alert: #ff006e;
+  --color-alert: #ff1744;
+  --backdrop-blur: 10px;
+  --bg-dark-primary: #121212;
+  --bg-dark-secondary: #1a1a1a;
 
-    /* Backgrounds */
-    --bg-dark-primary: #121212;
-    --bg-dark-secondary: #1a1a1a;
-    --bg-glass: rgba(255, 255, 255, 0.05);
-    --bg-glass-dark: rgba(0, 0, 0, 0.3);
-    --bg-youtube: rgba(255, 87, 34, 0.05);
+  /* Backgrounds */
+  --font-family-base: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-display: 'Orbitron', 'Rajdhani', monospace;
+  --transition-fast: 0.2s;
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --bg-glass-dark: rgba(0, 0, 0, 0.3);
 
-    /* Borders */
-    --border-primary: rgba(255, 87, 34, 0.3);
-    --border-alert: #ff006e;
+  /* Borders */
+  --radius-lg: 10px;
+  --spacing-lg: 20px;
 
-    /* Text */
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.8);
+  /* Text */
+  --radius-md: 8px;
+  --spacing-md: 15px;
 
-    /* Spacing */
-    --spacing-xs: 8px;
-    --spacing-sm: 10px;
-    --spacing-md: 15px;
-    --spacing-lg: 20px;
-    --spacing-xl: 30px;
-    --spacing-xxl: 40px;
+  /* Spacing */
+  --transition-medium: 0.5s;
+  --border-primary: rgba(255, 87, 34, 0.3);
+  --color-primary: #ff5722;
+  --text-primary: #ffffff;
+  --color-primary-gradient-end: #ff006e;
+  --color-primary-gradient-start: #ff5722;
 
-    /* Border Radius */
-    --radius-sm: 5px;
-    --radius-md: 8px;
-    --radius-lg: 10px;
-    --radius-xl: 15px;
-    --radius-xxl: 20px;
+  /* Border Radius */
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --font-size-lg: 36px;
+  --font-size-md: 18px;
+  --font-size-sm: 16px;
+  --font-size-xl: 80px;
 
-    /* Typography */
-    --font-family-base: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-family-display: 'Orbitron', 'Rajdhani', monospace;
-    --font-size-xxs: 11px;
-    --font-size-xs: 14px;
-    --font-size-sm: 16px;
-    --font-size-md: 18px;
-    --font-size-lg: 36px;
-    --font-size-xl: 80px;
+  /* Typography */
+  --font-size-xs: 14px;
+  --font-size-xxs: 11px;
+  --radius-sm: 5px;
+  --spacing-sm: 10px;
+  --letter-spacing: 2px;
+  --letter-spacing-wide: 4px;
+  --color-warning: #ff006e;
+  --font-weight-black: 900;
 
-    --font-weight-normal: 500;
-    --font-weight-medium: 600;
-    --font-weight-bold: 700;
-    --font-weight-extra-bold: 800;
-    --font-weight-black: 900;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-medium: 600;
+  --font-weight-normal: 500;
+  --radius-xl: 15px;
 
-    --letter-spacing: 2px;
-    --letter-spacing-wide: 4px;
+  --spacing-xl: 30px;
+  --spacing-xs: 8px;
 
-    /* Transitions */
-    --transition-fast: 0.2s;
-    --transition-medium: 0.5s;
+  /* Transitions */
+  --radius-xxl: 20px;
+  --spacing-xxl: 40px;
 
-    /* Effects */
-    --backdrop-blur: 10px;
+  /* Effects */
+  --bg-youtube: rgba(255, 87, 34, 0.05);
 }

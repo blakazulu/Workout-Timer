@@ -5,25 +5,25 @@ The `song_fetcher.js` script automatically fetches and curates workout music fro
 ## Features
 
 - **Smart Filtering**: Only includes videos that are:
-  - 30+ minutes long
-  - Have 10,000+ views
-  - Are not live streams or upcoming premieres
-  - Have visible like counts
+    - 30+ minutes long
+    - Have 10,000+ views
+    - Are not live streams or upcoming premieres
+    - Have visible like counts
 
 - **Intelligent Caching**:
-  - Caches results for 30 days to minimize API usage
-  - Only refreshes stale categories
-  - Stores metadata in `workout_music_cache.json`
+    - Caches results for 30 days to minimize API usage
+    - Only refreshes stale categories
+    - Stores metadata in `workout_music_cache.json`
 
 - **Quota Management**:
-  - Stays within 9,000 units per day (YouTube's default is 10,000)
-  - Estimates costs: search = 100 units, videos = 1 unit
-  - Rate limiting with 250ms delay between requests
+    - Stays within 9,000 units per day (YouTube's default is 10,000)
+    - Estimates costs: search = 100 units, videos = 1 unit
+    - Rate limiting with 250ms delay between requests
 
 - **Error Handling**:
-  - Automatic retry with exponential backoff (2s, 4s, 6s)
-  - Distinguishes between client errors (don't retry) and server errors (retry)
-  - Comprehensive logging with emoji indicators
+    - Automatic retry with exponential backoff (2s, 4s, 6s)
+    - Distinguishes between client errors (don't retry) and server errors (retry)
+    - Comprehensive logging with emoji indicators
 
 ## Setup
 
@@ -65,8 +65,8 @@ YT_API_KEY=your_actual_youtube_api_key_here
 1. Go to your Netlify site dashboard
 2. Site settings → Environment variables
 3. Add variable:
-   - Key: `YT_API_KEY`
-   - Value: Your YouTube API key
+    - Key: `YT_API_KEY`
+    - Value: Your YouTube API key
 
 ## Usage
 
@@ -94,6 +94,7 @@ dotenv -e .env node src/js/utils/song_fetcher.js
 The script runs automatically every **Sunday at 2 AM UTC** via GitHub Actions.
 
 The workflow:
+
 1. Checks out the repository
 2. Installs Node.js 18
 3. Runs the song fetcher
@@ -158,12 +159,13 @@ Edit the `categories` object (lines 38-133) to add/remove categories.
 ### GitHub Actions fails to push
 
 - Ensure GitHub Actions has write permissions:
-  - Settings → Actions → General → Workflow permissions
-  - Select "Read and write permissions"
+    - Settings → Actions → General → Workflow permissions
+    - Select "Read and write permissions"
 
 ## Cost Estimates
 
 With default settings (20 categories, 10 videos each):
+
 - ~20 searches × 100 units = 2,000 units
 - ~200 video details × 1 unit = 200 units
 - **Total**: ~2,200 units per full refresh (well within 9,000 limit)

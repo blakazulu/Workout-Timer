@@ -8,7 +8,7 @@
  * @returns {Element|null}
  */
 export function $(selector) {
-  return document.querySelector(selector)
+  return document.querySelector(selector);
 }
 
 /**
@@ -17,7 +17,7 @@ export function $(selector) {
  * @returns {NodeList}
  */
 export function $$(selector) {
-  return document.querySelectorAll(selector)
+  return document.querySelectorAll(selector);
 }
 
 /**
@@ -27,7 +27,7 @@ export function $$(selector) {
  */
 export function addClass(element, className) {
   if (element) {
-    element.classList.add(className)
+    element.classList.add(className);
   }
 }
 
@@ -38,7 +38,7 @@ export function addClass(element, className) {
  */
 export function removeClass(element, className) {
   if (element) {
-    element.classList.remove(className)
+    element.classList.remove(className);
   }
 }
 
@@ -49,7 +49,7 @@ export function removeClass(element, className) {
  */
 export function toggleClass(element, className) {
   if (element) {
-    element.classList.toggle(className)
+    element.classList.toggle(className);
   }
 }
 
@@ -60,5 +60,5 @@ export function toggleClass(element, className) {
  * @returns {boolean}
  */
 export function hasClass(element, className) {
-  return element ? element.classList.contains(className) : false
+  return element ? element.classList.contains(className) : false;
 }

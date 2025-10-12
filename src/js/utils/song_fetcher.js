@@ -2,7 +2,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath} from "node:url";
 
 // Get directory name for ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -32,7 +32,7 @@ const RATE = {
   dailyBudgetUnits: 9000,        // stop before 10,000 default quota
   // Cost estimates: search.list = 100 units, videos.list = 1 unit.
   // (Matches Google’s published table; tweak if your project differs.)
-  costs: { search: 100, videos: 1 }
+  costs: {search: 100, videos: 1}
 };
 
 // ---------- CATEGORY QUERIES ----------
@@ -135,7 +135,9 @@ const categories = {
 // ---------- UTILS ----------
 const delay = ms => new Promise(r => setTimeout(r, ms));
 
-function nowIso() { return new Date().toISOString(); }
+function nowIso() {
+  return new Date().toISOString();
+}
 
 function daysAgoIso(days) {
   const d = new Date();
@@ -185,7 +187,7 @@ async function ytGet(url, params, costTag, retries = 3) {
   return withPacing(cost, async () => {
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
-        const usp = new URLSearchParams({ key: API_KEY, ...params });
+        const usp = new URLSearchParams({key: API_KEY, ...params});
         const r = await fetch(`${url}?${usp.toString()}`);
 
         if (!r.ok) {
@@ -319,17 +321,17 @@ async function fetchCategory(categoryName, queries) {
 // ---------- CACHE ----------
 function loadCache() {
   if (!fs.existsSync(CACHE_FILE)) {
-    return { _meta: { version: 1, createdAt: nowIso(), lastRunAt: null }, categories: {} };
+    return {_meta: {version: 1, createdAt: nowIso(), lastRunAt: null}, categories: {}};
   }
   try {
     const raw = fs.readFileSync(CACHE_FILE, "utf-8");
     const data = JSON.parse(raw);
     // ensure shape
-    if (!data._meta) data._meta = { version: 1, createdAt: nowIso(), lastRunAt: null };
+    if (!data._meta) data._meta = {version: 1, createdAt: nowIso(), lastRunAt: null};
     if (!data.categories) data.categories = {};
     return data;
   } catch {
-    return { _meta: { version: 1, createdAt: nowIso(), lastRunAt: null }, categories: {} };
+    return {_meta: {version: 1, createdAt: nowIso(), lastRunAt: null}, categories: {}};
   }
 }
 
@@ -349,14 +351,14 @@ function categoryIsStale(catObj) {
 
 function stripPrivateFieldsForOutput(items) {
   // drop _fetchedAt in final app JSON
-  return items.map(({ _fetchedAt, ...rest }) => rest);
+  return items.map(({_fetchedAt, ...rest}) => rest);
 }
 
 // ---------- MAIN ----------
 async function main() {
   // Ensure data directory exists
   if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.mkdirSync(DATA_DIR, {recursive: true});
     console.log(`📁 Created data directory: ${DATA_DIR}`);
   }
 
