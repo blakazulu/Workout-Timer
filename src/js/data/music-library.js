@@ -6,7 +6,7 @@
  */
 
 // Import the song data
-import songData from './song-list.json'
+import songData from './workout_music.json'
 
 /**
  * Get playlists for a mood
