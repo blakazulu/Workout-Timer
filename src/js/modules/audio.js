@@ -52,8 +52,9 @@ export class AudioManager {
    * Generate a beep sound
    * @param {number} frequency - Frequency in Hz
    * @param {number} duration - Duration in seconds
+   * @param {number} volume - Volume (0-1), default 0.6
    */
-  beep(frequency, duration) {
+  beep(frequency, duration, volume = 0.6) {
     if (!this.audioEnabled || !this.audioContext) {
       console.warn('Audio is not enabled')
       return
@@ -67,7 +68,7 @@ export class AudioManager {
       gain.connect(this.audioContext.destination)
 
       osc.frequency.value = frequency
-      gain.gain.setValueAtTime(0.3, this.audioContext.currentTime)
+      gain.gain.setValueAtTime(volume, this.audioContext.currentTime)
       gain.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration)
 
       osc.start(this.audioContext.currentTime)

@@ -234,6 +234,36 @@ export class YouTubePlayer {
   }
 
   /**
+   * Set video volume
+   * @param {number} volume - Volume level (0-100)
+   */
+  setVolume(volume) {
+    if (this.player && this.isReady) {
+      try {
+        this.player.setVolume(volume)
+      } catch (error) {
+        console.error('Failed to set volume:', error)
+      }
+    }
+  }
+
+  /**
+   * Get current volume
+   * @returns {number} Current volume (0-100)
+   */
+  getVolume() {
+    if (this.player && this.isReady) {
+      try {
+        return this.player.getVolume()
+      } catch (error) {
+        console.error('Failed to get volume:', error)
+        return 100
+      }
+    }
+    return 100
+  }
+
+  /**
    * Show loading state
    */
   showLoading() {

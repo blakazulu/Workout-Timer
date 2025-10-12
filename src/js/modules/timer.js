@@ -18,6 +18,8 @@ export class Timer {
     this.isResting = false
     this.interval = null
     this.youtube = null
+    this.isAlertActive = false
+    this.normalVolume = 100
 
     // DOM elements
     this.timerDisplay = $('#timerDisplay')
@@ -78,6 +80,12 @@ export class Timer {
     this.isRunning = false
     this.startBtn.textContent = 'RESUME'
 
+    // Restore normal volume if we were in alert state
+    if (this.isAlertActive && this.youtube) {
+      this.youtube.setVolume(this.normalVolume)
+    }
+    this.isAlertActive = false
+
     // Pause YouTube video if loaded
     if (this.youtube) {
       this.youtube.pause()
@@ -92,6 +100,12 @@ export class Timer {
     this.isRunning = false
     this.startBtn.textContent = 'START'
     removeClass(this.settings, 'hidden')
+    
+    // Restore normal volume if we were in alert state
+    if (this.isAlertActive && this.youtube) {
+      this.youtube.setVolume(this.normalVolume)
+    }
+    this.isAlertActive = false
   }
 
   /**
@@ -102,6 +116,13 @@ export class Timer {
     this.currentTime = 0
     this.currentRep = 1
     this.isResting = false
+    
+    // Restore normal volume if we were in alert state
+    if (this.isAlertActive && this.youtube) {
+      this.youtube.setVolume(this.normalVolume)
+    }
+    this.isAlertActive = false
+    
     this.updateDisplay()
 
     // Stop YouTube video if loaded
@@ -173,8 +194,27 @@ export class Timer {
       this.repCounter.textContent = 'Ready'
     }
 
+    // Check if we're in alert state (final seconds)
+    const shouldAlert = this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning
+
+    // Handle YouTube volume ducking
+    if (shouldAlert && !this.isAlertActive) {
+      // Entering alert state - duck the music volume
+      if (this.youtube) {
+        this.normalVolume = this.youtube.getVolume()
+        this.youtube.setVolume(25) // Reduce to 25%
+      }
+      this.isAlertActive = true
+    } else if (!shouldAlert && this.isAlertActive) {
+      // Leaving alert state - restore normal volume
+      if (this.youtube) {
+        this.youtube.setVolume(this.normalVolume)
+      }
+      this.isAlertActive = false
+    }
+
     // Update alert state (during both work and rest in final seconds)
-    if (this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning) {
+    if (shouldAlert) {
       addClass(this.timerDisplay, 'alert')
       addClass(this.timerValue, 'warning')
       // Alert overrides rest mode visual
