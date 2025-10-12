@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CYCLE - A customizable interval workout timer with YouTube music integration. Set your duration, repetitions, and rest time for the perfect workout session with motivational music.">
   <link rel="icon" type="image/svg+xml" href="/icons/icon.svg"/>
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,7 +112,7 @@
     <h1 class="app-title">
       <img src="/icons/icon.svg" alt="CYCLE" class="app-icon">
       <span>CYCLE</span>
-      <span class="app-version">v1.0.2</span>
+      <span class="app-version">v1.0.3</span>
     </h1>
     <button class="btn-install" id="installBtn" style="display: none;">
       <i class="ph-bold ph-download-simple"></i>
@@ -178,28 +179,28 @@
       <!-- Link Mode (always visible) -->
       <div class="youtube-controls">
         <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
-        <button id="loadYoutubeBtn"><i class="ph-bold ph-magnifying-glass"></i></button>
+        <button id="loadYoutubeBtn" aria-label="Load YouTube video"><i class="ph-bold ph-magnifying-glass"></i></button>
       </div>
     </div>
 
     <div class="settings-grid">
       <div class="setting-group">
-        <label>Duration</label>
+        <label for="duration">Duration</label>
         <input type="number" id="duration" value="30" min="5" max="3600">
       </div>
 
       <div class="setting-group">
-        <label>Alert Time</label>
+        <label for="alertTime">Alert Time</label>
         <input type="number" id="alertTime" value="3" min="1" max="60">
       </div>
 
       <div class="setting-group">
-        <label>Repetitions</label>
+        <label for="repetitions">Repetitions</label>
         <input type="number" id="repetitions" value="3" min="1" max="99">
       </div>
 
       <div class="setting-group">
-        <label>Rest Time</label>
+        <label for="restTime">Rest Time</label>
         <input type="number" id="restTime" value="10" min="0" max="300">
       </div>
     </div>
