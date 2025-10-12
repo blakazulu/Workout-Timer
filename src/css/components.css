@@ -580,12 +580,14 @@
   }
 }
 
-/* Mood Tags - Card Grid Layout */
+/* Mood Tags - Hexagonal Honeycomb Layout */
 .mood-tags {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 4px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 10px;
   max-width: 100%;
 }
 
@@ -595,14 +597,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 24px 16px;
-  background: linear-gradient(135deg, rgba(0, 255, 200, 0.05), rgba(100, 100, 255, 0.08));
-  border: 2px solid rgba(0, 255, 200, 0.25);
-  border-radius: 16px;
+  gap: 8px;
+  width: 130px;
+  height: 140px;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.08), rgba(100, 100, 255, 0.1));
+  border: 2px solid rgba(0, 255, 200, 0.3);
   color: #00ffc8;
   font-family: var(--font-family-base);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -610,7 +612,16 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   overflow: hidden;
-  min-height: 120px;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+/* Hexagon offset for honeycomb effect */
+.mood-tag:nth-child(2n) {
+  margin-top: 0px;
+}
+
+.mood-tag:nth-child(2n+1) {
+  margin-top: -12px;
 }
 
 /* Animated background gradient */
@@ -618,22 +629,23 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 0;
 }
 
-/* Static border glow on hover */
+/* Outer glow on hover */
 .mood-tag::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, rgba(0, 255, 200, 0.6), rgba(100, 100, 255, 0.6));
-  border-radius: 16px;
+  inset: -4px;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.5), rgba(100, 100, 255, 0.5));
   opacity: 0;
   z-index: -1;
   transition: opacity 0.3s ease;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  filter: blur(8px);
 }
 
 .mood-tag:hover::before {
@@ -645,111 +657,157 @@
 }
 
 .mood-tag:hover {
-  border-color: rgba(0, 255, 200, 0.6);
-  transform: translateY(-4px) scale(1.03);
+  border-color: rgba(0, 255, 200, 0.7);
+  transform: scale(1.08);
   box-shadow:
-    0 0 40px rgba(0, 255, 200, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.7),
-    inset 0 0 30px rgba(0, 255, 200, 0.1);
-  text-shadow: 0 0 12px rgba(0, 255, 200, 0.8);
+    0 0 40px rgba(0, 255, 200, 0.5),
+    inset 0 0 30px rgba(0, 255, 200, 0.15);
+  text-shadow: 0 0 12px rgba(0, 255, 200, 1);
+  z-index: 10;
 }
 
 .mood-tag:active {
-  transform: translateY(-2px) scale(1.01);
+  transform: scale(1.04);
 }
 
 .mood-icon {
-  font-size: 42px;
+  font-size: 38px;
   filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.6));
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   position: relative;
   z-index: 1;
 }
 
 .mood-tag:hover .mood-icon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 16px rgba(0, 255, 200, 1));
+  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 1));
 }
 
 .mood-tag span:last-child {
-  line-height: 1.3;
+  line-height: 1.2;
   position: relative;
   z-index: 1;
+  max-width: 90%;
 }
 
-/* Genre Tags - Card Grid Layout */
+/* Genre Tags - Radial Petal Layout */
 .genre-tags {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 4px;
-  max-width: 100%;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 420px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.genre-tag {
-  position: relative;
+/* Center decorative element */
+.genre-tags::before {
+  content: '♪';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.2), rgba(100, 100, 255, 0.2));
+  border: 2px solid rgba(255, 0, 150, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 16px;
-  background: linear-gradient(135deg, rgba(255, 0, 150, 0.06), rgba(100, 100, 255, 0.08));
-  border: 2px solid rgba(255, 0, 150, 0.3);
-  border-radius: 14px;
+  font-size: 28px;
+  color: #ff0096;
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.3);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.genre-tag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.1), rgba(100, 100, 255, 0.1));
+  border: 2px solid rgba(255, 0, 150, 0.35);
+  border-radius: 50px;
   color: #ff0096;
   font-family: var(--font-family-base);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   overflow: hidden;
-  min-height: 90px;
-  line-height: 1.3;
+  line-height: 1.2;
+  padding: 8px 16px;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.2);
 }
 
-/* Diagonal sweep animation */
+/* Position each genre in a radial pattern - 10 genres (36° apart) */
+.genre-tag:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg);
+}
+.genre-tag:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(36deg) translateX(150px) rotate(-36deg);
+}
+.genre-tag:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(72deg) translateX(150px) rotate(-72deg);
+}
+.genre-tag:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(108deg) translateX(150px) rotate(-108deg);
+}
+.genre-tag:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(144deg) translateX(150px) rotate(-144deg);
+}
+.genre-tag:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(180deg) translateX(150px) rotate(-180deg);
+}
+.genre-tag:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(216deg) translateX(150px) rotate(-216deg);
+}
+.genre-tag:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(252deg) translateX(150px) rotate(-252deg);
+}
+.genre-tag:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(288deg) translateX(150px) rotate(-288deg);
+}
+.genre-tag:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(324deg) translateX(150px) rotate(-324deg);
+}
+
+/* Pulsing glow effect */
 .genre-tag::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255, 0, 150, 0.2),
-    transparent);
-  transition: left 0.6s ease;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.25), rgba(100, 100, 255, 0.25));
+  border-radius: 50px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   z-index: 0;
 }
 
-.genre-tag:hover::before {
-  left: 100%;
-}
-
-/* Animated border with gradient */
+/* Outer glow on hover */
 .genre-tag::after {
   content: '';
   position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg,
-    #ff0096 0%,
-    #6464ff 25%,
-    #ff0096 50%,
-    #6464ff 75%,
-    #ff0096 100%);
-  border-radius: 14px;
+  inset: -3px;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.6), rgba(100, 100, 255, 0.6));
+  border-radius: 50px;
   opacity: 0;
   z-index: -1;
-  background-size: 300% 300%;
-  animation: gradientShiftGenre 4s ease infinite;
+  filter: blur(6px);
+  transition: opacity 0.3s ease;
 }
 
-@keyframes gradientShiftGenre {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+.genre-tag:hover::before {
+  opacity: 1;
 }
 
 .genre-tag:hover::after {
@@ -757,18 +815,30 @@
 }
 
 .genre-tag:hover {
-  border-color: rgba(255, 0, 150, 0.7);
-  transform: translateY(-4px) scale(1.04);
+  border-color: rgba(255, 0, 150, 0.8);
+  transform: translate(-50%, -50%) rotate(var(--genre-angle)) translateX(160px) rotate(calc(-1 * var(--genre-angle))) scale(1.12);
   box-shadow:
-    0 0 45px rgba(255, 0, 150, 0.5),
-    0 8px 28px rgba(0, 0, 0, 0.7),
-    inset 0 0 30px rgba(255, 0, 150, 0.15);
-  text-shadow: 0 0 14px rgba(255, 0, 150, 1);
+    0 0 40px rgba(255, 0, 150, 0.6),
+    inset 0 0 20px rgba(255, 0, 150, 0.2);
+  text-shadow: 0 0 12px rgba(255, 0, 150, 1);
   color: #fff;
+  z-index: 10;
 }
 
+/* Set rotation angles for hover transform */
+.genre-tag:nth-child(1):hover { --genre-angle: 0deg; }
+.genre-tag:nth-child(2):hover { --genre-angle: 36deg; }
+.genre-tag:nth-child(3):hover { --genre-angle: 72deg; }
+.genre-tag:nth-child(4):hover { --genre-angle: 108deg; }
+.genre-tag:nth-child(5):hover { --genre-angle: 144deg; }
+.genre-tag:nth-child(6):hover { --genre-angle: 180deg; }
+.genre-tag:nth-child(7):hover { --genre-angle: 216deg; }
+.genre-tag:nth-child(8):hover { --genre-angle: 252deg; }
+.genre-tag:nth-child(9):hover { --genre-angle: 288deg; }
+.genre-tag:nth-child(10):hover { --genre-angle: 324deg; }
+
 .genre-tag:active {
-  transform: translateY(-2px) scale(1.02);
+  transform: translate(-50%, -50%) rotate(var(--genre-angle)) translateX(150px) rotate(calc(-1 * var(--genre-angle))) scale(1.05);
 }
 
 .genre-tag span {
@@ -1117,6 +1187,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12px;
   padding: 20px 24px;
   border-bottom: 1px solid rgba(0, 255, 200, 0.2);
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.08), rgba(100, 100, 255, 0.08));
@@ -1140,6 +1211,27 @@
   font-weight: 500;
 }
 
+.music-selection-back {
+  background: transparent;
+  border: none;
+  color: #00ffc8;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  margin-top: -4px;
+  flex-shrink: 0;
+}
+
+.music-selection-back:hover {
+  background: rgba(0, 255, 200, 0.2);
+  transform: translateX(-3px) scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+}
+
 .music-selection-close {
   background: transparent;
   border: none;
@@ -1152,6 +1244,7 @@
   border-radius: 6px;
   transition: all 0.2s ease;
   margin-top: -4px;
+  flex-shrink: 0;
 }
 
 .music-selection-close:hover {

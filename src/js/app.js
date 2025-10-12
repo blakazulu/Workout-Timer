@@ -476,7 +476,7 @@ function setupMusicModeToggle() {
         moodPopover.hidePopover()
       }
 
-      await searchAndLoadMusic(query)
+      await searchAndLoadMusic(query, 'mood')
     })
   })
 
@@ -491,26 +491,27 @@ function setupMusicModeToggle() {
         genrePopover.hidePopover()
       }
 
-      await searchAndLoadMusic(query)
+      await searchAndLoadMusic(query, 'genre')
     })
   })
 
   /**
    * Load music selection for mood/genre
    * @param {string} query - Original query from tag
+   * @param {string} sourcePopover - 'mood' or 'genre' to track where we came from
    */
-  async function searchAndLoadMusic(query) {
+  async function searchAndLoadMusic(query, sourcePopover) {
     // Get songs from library
     const isMood = isMoodQuery(query)
     const items = isMood ? getMoodPlaylists(query) : getGenreSongs(query)
-    
+
     if (items.length === 0) {
       showNotification('No music found for this selection', true)
       return
     }
 
     // Show music selection popover
-    showMusicSelection(items, query, isMood)
+    showMusicSelection(items, query, isMood, sourcePopover)
   }
 
   /**
@@ -518,13 +519,14 @@ function setupMusicModeToggle() {
    * @param {Array} items - Music items to display
    * @param {string} query - Original query
    * @param {boolean} isMood - Whether this is a mood or genre
+   * @param {string} sourcePopover - 'mood' or 'genre' to track where we came from
    */
-  function showMusicSelection(items, query, isMood) {
+  function showMusicSelection(items, query, isMood, sourcePopover) {
     const selectionPopover = $('#musicSelectionPopover')
     if (!selectionPopover) {
       // Create popover if it doesn't exist
       createMusicSelectionPopover()
-      return showMusicSelection(items, query, isMood)
+      return showMusicSelection(items, query, isMood, sourcePopover)
     }
 
     // Update title
@@ -538,6 +540,30 @@ function setupMusicModeToggle() {
     const subtitle = selectionPopover.querySelector('.music-selection-subtitle')
     if (subtitle) {
       subtitle.textContent = `${items.length} ${isMood ? 'playlists' : 'mixes'} • Click to play`
+    }
+
+    // Set up back button
+    const backBtn = selectionPopover.querySelector('.music-selection-back')
+    if (backBtn) {
+      // Remove old listeners
+      const newBackBtn = backBtn.cloneNode(true)
+      backBtn.parentNode.replaceChild(newBackBtn, backBtn)
+
+      // Add new listener
+      newBackBtn.addEventListener('click', () => {
+        selectionPopover.hidePopover()
+
+        // Reopen the source popover
+        setTimeout(() => {
+          if (sourcePopover === 'mood') {
+            const moodPopover = $('#moodPopover')
+            if (moodPopover) moodPopover.showPopover()
+          } else if (sourcePopover === 'genre') {
+            const genrePopover = $('#genrePopover')
+            if (genrePopover) genrePopover.showPopover()
+          }
+        }, 100)
+      })
     }
 
     // Render items with thumbnails
@@ -595,6 +621,12 @@ function setupMusicModeToggle() {
     popover.className = 'music-selection-popover'
     popover.innerHTML = `
       <div class="music-selection-header">
+        <button class="music-selection-back">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
         <div>
           <h3 class="music-selection-title">Select Music</h3>
           <p class="music-selection-subtitle">Choose a song to play</p>
