@@ -1,19 +1,37 @@
 # Workout Timer Pro
 
-A Progressive Web App (PWA) designed to help you manage workout sessions with precision timing, multiple repetitions, and audio/visual alerts.
+A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, YouTube background music, and an immersive cyberpunk aesthetic.
 
-## Features
+## ✨ Features
 
-- ⏱️ **Customizable Timer** - Set workout duration from 5 seconds to 1 hour
-- 🔁 **Multiple Repetitions** - Track up to 99 consecutive workout sets
-- 🔊 **Audio Alerts** - Built-in Web Audio API beeps (no audio files needed)
-- 📱 **Mobile-Optimized** - Responsive design with dark theme
-- 🎵 **YouTube Integration** - Optional music playback during workouts
-- 💾 **Settings Persistence** - Your preferences saved via localStorage
-- 📴 **Offline-First PWA** - Works without internet after first visit
-- 🚀 **Lightning Fast** - Vanilla JavaScript with Vite for optimal performance
+### Core Timer Functions
+- ⏱️ **Customizable Work/Rest Cycles** - Set workout duration (5s-1hr) and rest periods (0-300s)
+- 🔁 **Multiple Repetitions** - Track up to 99 consecutive workout sets with automatic progression
+- 🔊 **Audio Alerts** - Web Audio API beeps with custom frequencies (no audio files needed)
+- 📳 **Haptic Feedback** - Vibration patterns for mobile devices during alerts and completions
+- 🎯 **Smart Volume Ducking** - Music automatically reduces to 25% during final countdown alerts
 
-## Quick Start
+### YouTube Integration
+- 🎵 **Fullscreen Background Video** - YouTube videos as immersive 30% opacity backgrounds
+- 🎛️ **Music Controls Widget** - Play/pause, progress bar with seeking, time display
+- 📊 **Song Information** - Title, artist, duration, and video ID in tooltip
+- 🔄 **Seamless Playback** - Music continues during rest periods, syncs with timer lifecycle
+
+### User Experience
+- 👆 **Touch Gestures** - Double tap to start/pause, swipe down to reset (mobile)
+- ⌨️ **Keyboard Shortcuts** - Space to start/pause, R to reset (desktop)
+- 💾 **Settings Persistence** - Preferences saved via localStorage
+- 📱 **Mobile-Optimized** - Responsive design with touch-friendly controls
+- 📴 **Offline-First PWA** - Installable app that works without internet after first visit
+- 🎨 **Cyberpunk Theme** - Neon colors, animated grid, scanlines, floating orbs
+
+### Visual Design
+- 🌈 **Animated Background** - Tech grid pattern with neon orbs and scanlines
+- ✨ **Dynamic Glow Effects** - State-based color transitions (cyan/pink/purple)
+- 🔄 **Smooth Animations** - 60fps transitions with GPU-accelerated effects
+- 📐 **Responsive Layout** - Adapts from mobile to desktop seamlessly
+
+## 🚀 Quick Start
 
 ### Development
 
@@ -23,138 +41,295 @@ npm install
 
 # Start development server
 npm run dev
-
-# Preview production build
-npm run preview
 ```
 
-Open your browser to the URL shown in the terminal (typically `http://localhost:5173`).
+Open your browser to `http://localhost:5173` to see the app in action.
 
-### Working Prototype
+### Production Deployment
 
-For immediate testing, open `example/code.html` directly in your browser. This is a fully functional standalone version while the modular Vite implementation is in progress.
+The app is configured for Netlify deployment:
 
-## Usage
+```bash
+# Build for production (disabled per user config)
+# npm run build
 
-1. **Set Your Timer**
-   - Duration: Total workout time per set (default: 30 seconds)
-   - Alert Time: Countdown beep starts this many seconds before finish (default: 5 seconds)
-   - Repetitions: Number of sets to complete (default: 3)
+# Deploy to Netlify
+# Connected via Git - auto-deploys on push to main branch
+```
 
-2. **Optional: Load Music**
-   - Paste a YouTube URL and click "Load" for background music
+## 📖 Usage Guide
+
+### Setting Up Your Workout
+
+1. **Configure Timer Settings** (2x2 grid layout)
+   - **Duration**: Work time per set (default: 30 seconds)
+   - **Alert Time**: Countdown warning starts this many seconds before finish (default: 3 seconds)
+   - **Repetitions**: Number of sets to complete (default: 3)
+   - **Rest Time**: Break between sets (default: 10 seconds)
+
+2. **Load Background Music** (Optional)
+   - Paste any YouTube URL (`youtube.com/watch?v=` or `youtu.be/`)
+   - Click "Load" or press Enter
+   - Video loads as fullscreen background with music controls widget
+   - Loading overlay appears while video initializes
 
 3. **Start Your Workout**
-   - Click START to begin
-   - Timer counts down with visual display
-   - Alert beeps during final countdown
-   - Completion melody plays between sets
-   - Settings panel hides during workout
+   - Click START button (or press Space, or double-tap timer)
+   - Settings panel hides, timer display appears
+   - YouTube music starts playing automatically
+   - Timer counts down with cyan neon glow
 
-4. **Control Options**
-   - PAUSE/RESUME: Pause and resume current set
-   - RESET: Stop timer and return to settings
+### During Workout
 
-## Technology Stack
+**Work Period:**
+- Timer displays in cyan (#00ffc8) with glow effects
+- Rep counter shows "Rep X / Y"
+- Music plays at normal volume
 
-### Core
-- **Vite 7.1+** - Build tool and lightning-fast dev server
-- **Vanilla JavaScript (ES6+)** - No framework overhead
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with variables and gradients
+**Alert Period** (Final 3 seconds):
+- Timer glows pink (#ff0096) with pulsing animation
+- Music volume ducks to 25%
+- Rapid beep sounds (800Hz)
+- Vibration on mobile devices
+
+**Rest Period:**
+- Timer displays "REST - Next: Rep X / Y"
+- Background tints cyan
+- Music continues at normal volume
+- Alert beeps in final 3 seconds
+
+**Between Reps:**
+- Double beep melody (523Hz + 659Hz)
+- Double vibration pattern
+- Automatic progression to next rep after rest
+
+**Completion:**
+- Triple beep melody (523Hz + 659Hz + 784Hz)
+- Triple vibration pattern
+- "✓ Complete!" message
+- Music stops, settings panel returns
+
+### Controls
+
+**Buttons:**
+- **START/PAUSE** - Toggle timer (cyan gradient button)
+- **RESET** - Stop and return to settings (pink gradient button)
+
+**Keyboard Shortcuts:**
+- `Space` - Start/Pause timer
+- `R` - Reset timer
+
+**Touch Gestures (Mobile):**
+- Double tap timer display - Start/Pause
+- Swipe down on timer - Reset (with confirmation)
+
+**Music Controls Widget:**
+- Play/Pause button - Toggle music independently
+- Progress bar - Click to seek to specific time
+- Info button (ℹ️) - Show song details tooltip
+
+## 🛠️ Technology Stack
+
+### Core Technologies
+- **Vite 7.1.9** - Lightning-fast build tool and dev server
+- **Vanilla JavaScript (ES6+)** - No framework overhead, pure performance
+- **HTML5** - Semantic markup with modern APIs
+- **CSS3** - Custom properties, Grid, Flexbox, animations
 
 ### PWA Technologies
-- **vite-plugin-pwa** - PWA generation and service worker management
-- **Workbox** - Advanced caching strategies
-- **Web App Manifest** - Installation metadata
+- **vite-plugin-pwa 1.0.3** - Service worker generation and PWA manifest
+- **Workbox 7.3.0** - Advanced caching strategies with auto-update
+- **Web App Manifest** - Installation metadata for all icon sizes
 
 ### Browser APIs
-- **Web Audio API** - Generated beep sounds (no audio files required)
-- **YouTube IFrame API** - Optional music integration
-- **localStorage** - Settings persistence
-- **Service Workers** - Offline functionality
+- **Web Audio API** - Programmatic beep generation with frequency/duration control
+- **YouTube IFrame Player API** - Full playback control and metadata access
+- **Vibration API** - Haptic feedback patterns for mobile devices
+- **Popover API** - Native tooltip with JavaScript fallback
+- **localStorage** - Settings persistence across sessions
+- **Service Workers** - Offline functionality and background updates
 
-## Project Status
+### Fonts & Typography
+- **Orbitron** - Display font for timer and headers (Google Fonts)
+- **Rajdhani** - Body font for UI elements (Google Fonts)
 
-🚧 **Currently in Migration Phase**
+## 🎨 Design System
 
-- ✅ Working prototype: `example/code.html` (fully functional)
-- 🚧 Modular architecture: Being implemented in `src/` directory
-- 📋 PWA features: Planned with vite-plugin-pwa
-- 📱 Installation: Coming soon
+### Color Palette (Cyberpunk Neon)
+- **Primary (Cyan):** `#00ffc8` - Timer, borders, success states
+- **Accent (Hot Pink):** `#ff0096` - Alerts, music controls, CTA buttons
+- **Secondary (Purple):** `#6464ff` - Rep counter, progress bars, info
+- **Background:** `#0a0a0a` - Deep black base
+- **Gradients:** Multi-color (cyan → pink → purple) for headers and effects
 
-See `docs/plan.md` for detailed implementation roadmap.
+### Visual Effects
+- Animated tech grid pattern with 40px cells
+- Scanlines overlay (CRT monitor aesthetic)
+- 3 floating neon orbs (400-500px, blurred, animated)
+- Vignette darkening at edges
+- Glow and shadow on all text elements
+- Shimmer animations on timer display
+- Border glow pulses with gradient
 
-## Design System
+### Typography
+- **Display (Orbitron):** Timer value (80px), headers (36px)
+- **Body (Rajdhani):** Settings, labels, counters (14-18px)
+- **Letter Spacing:** 2-4px for cyberpunk aesthetic
+- **Text Shadow:** Neon glow effects on all text
 
-### Color Palette
-- Primary Gradient: `#ff5722` → `#ff006e`
-- Background: `#121212` → `#1a1a1a` gradient
-- Alert Color: `#ff006e`
-- Accent: `#ff6b6b`
+### Animations
+- 60fps GPU-accelerated transforms
+- Gradient flow on headers (4s infinite)
+- Grid movement (30s linear)
+- Floating orbs (20-30s ease-in-out)
+- Pulse glow on alerts (1s ease-in-out)
+- Button ripple effects on interaction
 
-### Audio Specifications
-- Alert Beeps: 800Hz, 0.1s duration
-- Completion (between reps): 523Hz + 659Hz (double beep)
-- Final Completion: 523Hz + 659Hz + 784Hz (triple beep)
+## 📱 Browser Compatibility
 
-## Browser Compatibility
+### Fully Supported
+- ✅ Chrome/Edge (Chromium 90+)
+- ✅ Firefox 88+
+- ✅ Safari 14+ (iOS and macOS)
+- ✅ Samsung Internet 15+
 
-- ✅ Chrome/Edge (Chromium)
-- ✅ Firefox
-- ✅ Safari (iOS and macOS)
-- ✅ Samsung Internet
+### Feature Support
+- **PWA Installation:** Requires HTTPS (auto on localhost)
+- **Vibration API:** Mobile devices only
+- **Popover API:** Chrome 114+, fallback positioning for others
+- **Web Audio API:** All modern browsers
+- **YouTube IFrame API:** All browsers with JavaScript enabled
 
-**Note**: PWA installation requires HTTPS (automatic on localhost for development).
+## ⚡ Performance Metrics
 
-## Performance Targets
+### Target Benchmarks
+- **Lighthouse PWA Score:** 90+
+- **Time to Interactive:** <3s
+- **First Contentful Paint:** <1.5s
+- **Total Bundle Size:** <100KB (vanilla JS advantage)
+- **Animation Frame Rate:** 60fps constant
 
-- Lighthouse PWA Score: 90+
-- Time to Interactive: <3s
-- First Contentful Paint: <1.5s
-- Bundle Size: <100KB
-- Animations: 60fps
+### Optimization Strategies
+- Lazy-loaded YouTube module (code splitting)
+- CSS animations on GPU (transform/opacity only)
+- Debounced progress updates (500ms interval)
+- Efficient DOM manipulation (minimal reflows)
+- Service worker caching (offline performance)
 
-## Why Vanilla JavaScript?
+## 🏗️ Architecture
 
-This project deliberately uses vanilla JavaScript instead of React/Vue/Angular for several reasons:
+### Module Structure
+```
+src/
+├── js/
+│   ├── modules/
+│   │   ├── timer.js       # Core timer logic + work/rest cycles
+│   │   ├── youtube.js     # IFrame Player API integration
+│   │   ├── audio.js       # Web Audio API + vibration
+│   │   └── storage.js     # localStorage persistence
+│   ├── utils/
+│   │   ├── dom.js         # DOM helper functions
+│   │   ├── time.js        # Time formatting utilities
+│   │   └── gestures.js    # Touch gesture detection
+│   └── app.js             # Main orchestrator + event handlers
+├── css/
+│   ├── variables.css      # Design tokens (colors, spacing, etc.)
+│   ├── global.css         # Layout + background effects
+│   ├── components.css     # UI element styles
+│   └── animations.css     # Keyframe animations
+└── main.js                # Entry point
+```
 
-- **Smaller Bundle Size**: ~40KB savings vs. framework overhead
-- **Faster Performance**: Direct DOM manipulation, no virtual DOM
-- **Simpler Architecture**: Perfect for single-page timer application
-- **Easier to Learn**: Standard JavaScript without JSX or framework-specific concepts
-- **Native Browser APIs**: Direct access without wrappers
+### State Management
+- **Timer State:** currentTime, currentRep, isRunning, isResting
+- **YouTube State:** player instance, isReady, currentVideoId
+- **Audio State:** audioContext, vibrationEnabled
+- **Settings State:** Persisted in localStorage, loaded on init
 
-## Future Enhancements
+## 🚀 Why Vanilla JavaScript?
 
-### Phase 2
-- Custom workout presets
-- Workout history tracking
-- Statistics and analytics
-- Export/import settings
+This project deliberately avoids frameworks for several advantages:
 
-### Phase 3
-- Push notifications for reminders
-- Social features and challenges
-- Fitness tracker integration
-- Voice commands
+1. **Performance** - Direct DOM manipulation, no virtual DOM overhead
+2. **Bundle Size** - ~2,455 lines total vs. 40KB+ for React alone
+3. **Simplicity** - Single-page app doesn't need complex state management
+4. **Learning** - Standard JavaScript, no framework-specific concepts
+5. **Native APIs** - Direct access to Web Audio, YouTube, Vibration APIs
+6. **Future-Proof** - No framework versioning or breaking changes
 
-## Documentation
+## 🎯 Project Status
+
+### ✅ Completed Features
+- [x] Core timer with work/rest cycles
+- [x] YouTube background video integration
+- [x] Music controls widget with seeking
+- [x] Touch gestures for mobile
+- [x] Vibration API for haptic feedback
+- [x] PWA with service worker
+- [x] Offline functionality
+- [x] Settings persistence
+- [x] Loading states and error handling
+- [x] Install prompt for PWA
+- [x] Cyberpunk theme with animations
+- [x] Smart volume ducking during alerts
+- [x] Song info tooltip
+- [x] Keyboard shortcuts
+- [x] Netlify deployment configuration
+
+### 🔮 Future Enhancements
+
+**Phase 2 - User Features:**
+- Custom workout presets (save/load configurations)
+- Workout history tracking with statistics
+- Export/import settings as JSON
+- Multiple timers/intervals in sequence
+- Custom alert sounds (upload MP3)
+
+**Phase 3 - Advanced Features:**
+- Push notifications for workout reminders
+- Background sync for workout logs
+- Social features (share workouts, challenges)
+- Fitness tracker integration (Apple Health, Google Fit)
+- Voice commands (Web Speech API)
+- Dark/Light theme toggle
+- More color schemes
+
+**Technical Improvements:**
+- TypeScript migration for type safety
+- Unit tests with Vitest
+- E2E tests with Playwright
+- CI/CD pipeline with GitHub Actions
+- Internationalization (i18n) for multiple languages
+- Web Components for better modularity
+- Accessibility audit (WCAG AA compliance)
+
+## 📚 Documentation
 
 - `docs/plan.md` - Comprehensive implementation plan and architecture
+- `docs/app_style.md` - Complete design system documentation
 - `CLAUDE.md` - Development guidance for AI assistants
-- `docs/DESIGN.md` - Visual design guidelines (planned)
-- `docs/ARCHITECTURE.md` - Technical architecture (planned)
-- `docs/PWA-IMPLEMENTATION.md` - PWA strategy details (planned)
+- `netlify.toml` - Deployment configuration
 
-## License
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Read the documentation in `docs/`
+2. Follow the existing code style (ES6 modules, JSDoc comments)
+3. Test on multiple browsers before submitting
+4. Update documentation for new features
+5. Keep the cyberpunk aesthetic consistent
+
+## 📄 License
 
 MIT License - See LICENSE file for details
 
-## Contributing
-
-Contributions are welcome! Please read the documentation in `docs/` before submitting pull requests.
-
 ---
 
-**Built with ❤️ using Vite + Vanilla JavaScript** 
+**Built with 💜 using Vite + Vanilla JavaScript**
+
+*Experience the future of workout timing with immersive visuals and seamless music integration.*
+
+🔗 **Live Demo:** [Your Netlify URL here]
+
+🎮 **Features:** Cyberpunk Theme • YouTube Background • Work/Rest Cycles • Touch Gestures • PWA

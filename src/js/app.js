@@ -153,24 +153,8 @@ function setupEventListeners() {
     })
   }
 
-  // Music info button tooltip
-  const musicInfoBtn = $('#musicInfoBtn')
-  const musicTooltip = $('#musicTooltip')
-  if (musicInfoBtn && musicTooltip) {
-    musicInfoBtn.addEventListener('click', (e) => {
-      e.stopPropagation()
-      musicTooltip.classList.toggle('hidden')
-    })
-    
-    // Close tooltip when clicking outside
-    document.addEventListener('click', (e) => {
-      if (musicTooltip && !musicTooltip.classList.contains('hidden')) {
-        if (!musicInfoBtn.contains(e.target) && !musicTooltip.contains(e.target)) {
-          musicTooltip.classList.add('hidden')
-        }
-      }
-    })
-  }
+  // Music info tooltip - using Popover API with positioning fallback
+  setupMusicTooltipPositioning()
 
   // Auto-save settings on change
   const settingsInputs = ['#duration', '#alertTime', '#repetitions', '#restTime']
@@ -258,6 +242,67 @@ function setupGestures() {
       timer.reset()
     }
   })
+}
+
+/**
+ * Setup music tooltip positioning (fallback for browsers without anchor positioning)
+ */
+function setupMusicTooltipPositioning() {
+  const musicInfoBtn = $('#musicInfoBtn')
+  const musicTooltip = $('#musicTooltip')
+  
+  if (!musicInfoBtn || !musicTooltip) return
+  
+  // Check if anchor positioning is supported
+  const supportsAnchorPositioning = CSS.supports('position-anchor', '--test')
+  
+  if (!supportsAnchorPositioning) {
+    console.log('Using JavaScript fallback for tooltip positioning')
+    
+    const positionTooltip = () => {
+      const rect = musicInfoBtn.getBoundingClientRect()
+      const tooltipRect = musicTooltip.getBoundingClientRect()
+      
+      // Position below the button, centered
+      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2)
+      let top = rect.bottom + 8
+      
+      // Keep within viewport bounds
+      const margin = 10
+      if (left < margin) left = margin
+      if (left + tooltipRect.width > window.innerWidth - margin) {
+        left = window.innerWidth - tooltipRect.width - margin
+      }
+      
+      if (top + tooltipRect.height > window.innerHeight - margin) {
+        // Position above button if not enough space below
+        top = rect.top - tooltipRect.height - 8
+      }
+      
+      musicTooltip.style.left = `${left}px`
+      musicTooltip.style.top = `${top}px`
+    }
+    
+    // Position on toggle
+    musicTooltip.addEventListener('toggle', (e) => {
+      if (e.newState === 'open') {
+        requestAnimationFrame(() => positionTooltip())
+      }
+    })
+    
+    // Reposition on scroll/resize
+    window.addEventListener('scroll', () => {
+      if (musicTooltip.matches(':popover-open')) {
+        positionTooltip()
+      }
+    })
+    
+    window.addEventListener('resize', () => {
+      if (musicTooltip.matches(':popover-open')) {
+        positionTooltip()
+      }
+    })
+  }
 }
 
 /**

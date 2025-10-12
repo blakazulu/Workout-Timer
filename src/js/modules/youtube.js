@@ -16,6 +16,8 @@ export class YouTubePlayer {
     this.loadingOverlay = $('#loadingOverlay')
     this.progressInterval = null
     this.videoTitle = ''
+    this.videoAuthor = ''
+    this.videoId = ''
 
     // Load YouTube IFrame API
     this.loadAPI()
@@ -169,11 +171,16 @@ export class YouTubePlayer {
       this.loadingOverlay.classList.add('hidden')
     }
     
-    // Get video title
+    // Get video data
     try {
-      this.videoTitle = this.player.getVideoData().title || 'YouTube Music'
+      const videoData = this.player.getVideoData()
+      this.videoTitle = videoData.title || 'YouTube Music'
+      this.videoAuthor = videoData.author || 'Unknown Artist'
+      this.videoId = videoData.video_id || this.currentVideoId
     } catch (error) {
       this.videoTitle = 'YouTube Music'
+      this.videoAuthor = 'Unknown Artist'
+      this.videoId = this.currentVideoId
     }
     
     // Show music controls
@@ -356,23 +363,49 @@ export class YouTubePlayer {
       
       musicTitle.textContent = displayTitle
       
-      // Set full title in tooltip
+      // Build detailed tooltip
       if (musicTooltip) {
-        musicTooltip.textContent = this.videoTitle
+        const duration = this.getDuration()
+        const durationFormatted = this.formatTime(duration)
+        
+        musicTooltip.innerHTML = `
+          <div class="music-tooltip-title">${this.escapeHtml(this.videoTitle)}</div>
+          <div class="music-tooltip-info">
+            <div class="music-tooltip-row">
+              <span class="music-tooltip-label">Artist:</span>
+              <span class="music-tooltip-value">${this.escapeHtml(this.videoAuthor)}</span>
+            </div>
+            <div class="music-tooltip-row">
+              <span class="music-tooltip-label">Duration:</span>
+              <span class="music-tooltip-value">${durationFormatted}</span>
+            </div>
+            <div class="music-tooltip-row">
+              <span class="music-tooltip-label">Video ID:</span>
+              <span class="music-tooltip-value">${this.videoId}</span>
+            </div>
+          </div>
+        `
       }
       
-      // Show/hide info button based on title length
+      // Always show info button
       if (musicInfoBtn) {
-        if (this.videoTitle.length > 20) {
-          musicInfoBtn.style.display = 'flex'
-        } else {
-          musicInfoBtn.style.display = 'none'
-        }
+        musicInfoBtn.style.display = 'flex'
       }
       
       musicControls.classList.remove('hidden')
       this.startProgressUpdates()
     }
+  }
+
+  /**
+   * Escape HTML to prevent XSS
+   * @param {string} text - Text to escape
+   * @returns {string} Escaped text
+   */
+  escapeHtml(text) {
+    const div = document.createElement('div')
+    div.textContent = text
+    return div.innerHTML
   }
 
   /**
@@ -505,6 +538,8 @@ export class YouTubePlayer {
     this.isReady = false
     this.currentVideoId = null
     this.videoTitle = ''
+    this.videoAuthor = ''
+    this.videoId = ''
   }
 }
 
