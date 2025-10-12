@@ -255,6 +255,10 @@ export class YouTubePlayer {
     console.log('🔇 Muting player...')
     event.target.mute()
 
+    // Update play/pause button to show correct state (paused)
+    console.log('🔄 Updating play/pause button state...')
+    this.updatePlayPauseButton()
+
     console.log('✅ Player setup complete!')
   }
 
