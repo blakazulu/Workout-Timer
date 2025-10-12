@@ -5,7 +5,7 @@
 import { $ } from './utils/dom.js'
 import { initTimer, getTimer } from './modules/timer.js'
 import { initAudio } from './modules/audio.js'
-import { loadSettings, saveSettings } from './modules/storage.js'
+import { loadSettings, saveSettings, getSongHistory, getMostPlayedSongs } from './modules/storage.js'
 import { createGestureHandler } from './utils/gestures.js'
 
 // Lazy loaded modules
@@ -61,6 +61,7 @@ function init() {
   setupEventListeners()
   handleInstallClick()
   setupGestures()
+  setupHistory()
 
   console.log('Workout Timer Pro initialized')
 }
@@ -326,6 +327,133 @@ function handleInstallClick() {
     deferredPrompt = null
     installBtn.style.display = 'none'
   })
+}
+
+/**
+ * Set up song history popover
+ */
+function setupHistory() {
+  const historyPopover = $('#historyPopover')
+  const historyContent = $('#historyContent')
+  const historyTabs = document.querySelectorAll('.history-tab')
+
+  if (!historyPopover || !historyContent) return
+
+  let currentTab = 'recent'
+
+  // Render history when popover opens
+  historyPopover.addEventListener('toggle', (e) => {
+    if (e.newState === 'open') {
+      renderHistory(currentTab)
+    }
+  })
+
+  // Tab switching
+  historyTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Update active state
+      historyTabs.forEach(t => t.classList.remove('active'))
+      tab.classList.add('active')
+
+      // Switch content
+      currentTab = tab.dataset.tab
+      renderHistory(currentTab)
+    })
+  })
+
+  /**
+   * Render history items
+   * @param {string} tab - 'recent' or 'top'
+   */
+  function renderHistory(tab) {
+    const songs = tab === 'recent' ? getSongHistory() : getMostPlayedSongs(20)
+
+    if (songs.length === 0) {
+      historyContent.innerHTML = '<div class="history-empty">No songs played yet</div>'
+      return
+    }
+
+    historyContent.innerHTML = songs.map(song => {
+      const duration = formatDuration(song.duration)
+      const thumbnail = song.thumbnail
+        ? `<img src="${song.thumbnail}" alt="${escapeHtml(song.title)}" class="history-item-thumbnail" loading="lazy">`
+        : `<div class="history-item-no-thumbnail">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <polygon points="5 3 19 12 5 21 5 3"></polygon>
+             </svg>
+           </div>`
+
+      return `
+        <div class="history-item" data-url="${escapeHtml(song.url)}">
+          ${thumbnail}
+          <div class="history-item-info">
+            <div class="history-item-title">${escapeHtml(song.title)}</div>
+            <div class="history-item-author">${escapeHtml(song.author)}</div>
+            <div class="history-item-meta">
+              <div class="history-item-plays">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                ${song.playCount}
+              </div>
+              <span>•</span>
+              <span>${duration}</span>
+            </div>
+          </div>
+        </div>
+      `
+    }).join('')
+
+    // Add click handlers to history items
+    document.querySelectorAll('.history-item').forEach(item => {
+      item.addEventListener('click', async () => {
+        const url = item.dataset.url
+
+        // Close popover
+        historyPopover.hidePopover()
+
+        // Load video
+        const youtubeUrl = $('#youtubeUrl')
+        if (youtubeUrl) {
+          youtubeUrl.value = url
+        }
+
+        const youtube = await loadYouTubeModule()
+        await youtube.loadVideo(url)
+
+        // Connect YouTube player to timer
+        const timer = getTimer()
+        timer.setYouTubePlayer(youtube)
+      })
+    })
+  }
+
+  /**
+   * Format duration in seconds to MM:SS or HH:MM:SS
+   * @param {number} seconds
+   * @returns {string}
+   */
+  function formatDuration(seconds) {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    const secs = Math.floor(seconds % 60)
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+    }
+    return `${minutes}:${secs.toString().padStart(2, '0')}`
+  }
+
+  /**
+   * Escape HTML to prevent XSS
+   * @param {string} text
+   * @returns {string}
+   */
+  function escapeHtml(text) {
+    const div = document.createElement('div')
+    div.textContent = text
+    return div.innerHTML
+  }
 }
 
 // Initialize app when DOM is ready
