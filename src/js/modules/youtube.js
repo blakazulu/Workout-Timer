@@ -4,6 +4,7 @@
  */
 
 import { $ } from '../utils/dom.js'
+import { saveSongToHistory } from './storage.js'
 
 export class YouTubePlayer {
   constructor(containerId) {
@@ -18,6 +19,7 @@ export class YouTubePlayer {
     this.videoTitle = ''
     this.videoAuthor = ''
     this.videoId = ''
+    this.originalUrl = '' // Store original URL for history
 
     // Load YouTube IFrame API
     this.loadAPI()
@@ -122,6 +124,7 @@ export class YouTubePlayer {
       }
 
       this.currentVideoId = videoId
+      this.originalUrl = url // Store original URL for history
 
       // Destroy existing player
       if (this.player) {
@@ -165,12 +168,12 @@ export class YouTubePlayer {
   onPlayerReady(event) {
     this.isReady = true
     console.log('YouTube player ready')
-    
+
     // Hide loading overlay
     if (this.loadingOverlay) {
       this.loadingOverlay.classList.add('hidden')
     }
-    
+
     // Get video data
     try {
       const videoData = this.player.getVideoData()
@@ -182,10 +185,10 @@ export class YouTubePlayer {
       this.videoAuthor = 'Unknown Artist'
       this.videoId = this.currentVideoId
     }
-    
+
     // Show music controls
     this.showMusicControls()
-    
+
     // Mute by default for autoplay policies
     event.target.mute()
   }
@@ -222,6 +225,19 @@ export class YouTubePlayer {
         // Unmute when user explicitly starts playback
         this.player.unMute()
         setTimeout(() => this.updatePlayPauseButton(), 100)
+
+        // Save to history when user actually plays (works on desktop and mobile)
+        try {
+          saveSongToHistory({
+            videoId: this.videoId,
+            title: this.videoTitle,
+            author: this.videoAuthor,
+            duration: this.getDuration(),
+            url: this.originalUrl
+          })
+        } catch (error) {
+          console.error('Failed to save song to history:', error)
+        }
       } catch (error) {
         console.error('Failed to play video:', error)
       }
