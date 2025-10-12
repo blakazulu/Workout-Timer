@@ -17,8 +17,77 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
 
   <title>CYCLE</title>
+
+  <!-- Inline loading screen styles (prevents FOUC) -->
+  <style>
+    #app-loader {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    #app-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 30px;
+      animation: loaderPulse 2s ease-in-out infinite;
+    }
+    .loader-text {
+      font-family: 'Orbitron', monospace;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(0, 255, 200, 0.2);
+      border-top-color: #00ffc8;
+      border-right-color: #ff0096;
+      border-radius: 50%;
+      animation: loaderSpin 1s linear infinite;
+    }
+    @keyframes loaderPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.6)); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 40px rgba(255, 0, 150, 0.8)); }
+    }
+    @keyframes loaderSpin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
+<!-- App Loader (shows immediately, prevents FOUC) -->
+<div id="app-loader">
+  <svg class="loader-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00ffc8" flood-opacity="0.8"/>
+      </filter>
+      <filter id="glow-pink" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ff0096" flood-opacity="0.8"/>
+      </filter>
+    </defs>
+    <path d="M12 52 A 20 20 0 1 1 52 12" stroke="#00ffc8" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#glow-cyan)"/>
+    <path d="M18 46 A 14 14 0 1 1 46 18" stroke="#ff0096" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#glow-pink)"/>
+  </svg>
+  <div class="loader-text">CYCLE</div>
+  <div class="loader-spinner"></div>
+</div>
 <!-- Animated Background Elements -->
 <div class="background-image"></div>
 <div class="background-grid"></div>

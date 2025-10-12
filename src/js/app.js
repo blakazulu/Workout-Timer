@@ -66,6 +66,27 @@ function init() {
   setupMusicModeToggle()
 
   console.log('CYCLE initialized')
+
+  // Hide app loader once everything is ready
+  hideAppLoader()
+}
+
+/**
+ * Hide the app loader with smooth transition
+ */
+function hideAppLoader() {
+  const loader = document.getElementById('app-loader')
+  if (!loader) return
+
+  // Small delay to ensure fonts and assets are loaded
+  setTimeout(() => {
+    loader.classList.add('hidden')
+
+    // Remove from DOM after transition completes
+    setTimeout(() => {
+      loader.remove()
+    }, 500)
+  }, 300)
 }
 
 /**
