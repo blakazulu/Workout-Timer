@@ -62,6 +62,7 @@ function init() {
   handleInstallClick()
   setupGestures()
   setupHistory()
+  setupMusicModeToggle()
 
   console.log('Workout Timer Pro initialized')
 }
@@ -453,6 +454,148 @@ function setupHistory() {
     const div = document.createElement('div')
     div.textContent = text
     return div.innerHTML
+  }
+}
+
+/**
+ * Set up music mode toggle (Link/Mood/Genre)
+ */
+function setupMusicModeToggle() {
+  const toggleButtons = document.querySelectorAll('.mode-toggle-btn')
+  const contentSections = document.querySelectorAll('.music-mode-content')
+  const moodTags = document.querySelectorAll('.mood-tag')
+  const genreTags = document.querySelectorAll('.genre-tag')
+
+  if (!toggleButtons.length) return
+
+  // Toggle between modes
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode
+
+      // Update button states
+      toggleButtons.forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+
+      // Update content visibility
+      contentSections.forEach(section => {
+        if (section.dataset.modeContent === mode) {
+          section.classList.add('active')
+        } else {
+          section.classList.remove('active')
+        }
+      })
+    })
+  })
+
+  // Handle mood tag clicks
+  moodTags.forEach(tag => {
+    tag.addEventListener('click', async () => {
+      const query = tag.dataset.query
+      await searchAndLoadMusic(query)
+    })
+  })
+
+  // Handle genre tag clicks
+  genreTags.forEach(tag => {
+    tag.addEventListener('click', async () => {
+      const query = tag.dataset.query
+      await searchAndLoadMusic(query)
+    })
+  })
+
+  /**
+   * Search YouTube and load music
+   * Opens YouTube search in the same page using iframe
+   * @param {string} query - Search query
+   */
+  async function searchAndLoadMusic(query) {
+    try {
+      // Show loading overlay with search info
+      const loadingOverlay = $('#loadingOverlay')
+      const loadingText = loadingOverlay?.querySelector('.loading-text')
+      
+      if (loadingOverlay && loadingText) {
+        loadingText.textContent = `Searching for: ${query}...`
+        loadingOverlay.classList.remove('hidden')
+      }
+
+      // Construct YouTube search URL
+      const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`
+      
+      // Open in new tab for user to select
+      const newTab = window.open(searchUrl, '_blank')
+      
+      if (newTab) {
+        // Hide loading after a short delay
+        setTimeout(() => {
+          if (loadingOverlay) {
+            loadingOverlay.classList.add('hidden')
+            if (loadingText) {
+              loadingText.textContent = 'Loading video...'
+            }
+          }
+        }, 1000)
+        
+        // Show helpful message
+        showNotification('YouTube search opened! Copy a video URL and paste it in the Link section.')
+      } else {
+        throw new Error('Popup blocked')
+      }
+    } catch (error) {
+      console.error('Error opening YouTube search:', error)
+      
+      // Hide loading
+      const loadingOverlay = $('#loadingOverlay')
+      const loadingText = loadingOverlay?.querySelector('.loading-text')
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden')
+        if (loadingText) {
+          loadingText.textContent = 'Loading video...'
+        }
+      }
+      
+      // Show error message
+      showNotification(`Error: Could not open YouTube search. Please search manually for: "${query}"`, true)
+    }
+  }
+
+  /**
+   * Show a notification to the user
+   * @param {string} message - Message to display
+   * @param {boolean} isError - Whether this is an error message
+   */
+  function showNotification(message, isError = false) {
+    // Create notification element
+    const notification = document.createElement('div')
+    notification.className = 'music-notification'
+    notification.textContent = message
+    notification.style.cssText = `
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: ${isError ? 'rgba(255, 0, 150, 0.95)' : 'rgba(0, 255, 200, 0.95)'};
+      color: #0a0a0a;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-family: var(--font-family-base);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 40px ${isError ? 'rgba(255, 0, 150, 0.6)' : 'rgba(0, 255, 200, 0.6)'};
+      z-index: 10001;
+      animation: slideDown 0.3s ease;
+      max-width: 90vw;
+      text-align: center;
+    `
+    
+    document.body.appendChild(notification)
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+      notification.style.animation = 'slideUp 0.3s ease'
+      setTimeout(() => notification.remove(), 300)
+    }, 4000)
   }
 }
 
