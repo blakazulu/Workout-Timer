@@ -174,6 +174,12 @@ export class YouTubePlayer {
       this.loadingOverlay.classList.add('hidden')
     }
 
+    // Hide background image when video is loaded
+    const backgroundImage = document.querySelector('.background-image')
+    if (backgroundImage) {
+      backgroundImage.classList.add('hidden')
+    }
+
     // Get video data
     try {
       const videoData = this.player.getVideoData()
@@ -543,7 +549,7 @@ export class YouTubePlayer {
   clear() {
     this.stopProgressUpdates()
     this.hideMusicControls()
-    
+
     if (this.player) {
       this.player.destroy()
       this.player = null
@@ -551,6 +557,13 @@ export class YouTubePlayer {
     if (this.container) {
       this.container.innerHTML = ''
     }
+
+    // Show background image again when video is cleared
+    const backgroundImage = document.querySelector('.background-image')
+    if (backgroundImage) {
+      backgroundImage.classList.remove('hidden')
+    }
+
     this.isReady = false
     this.currentVideoId = null
     this.videoTitle = ''
