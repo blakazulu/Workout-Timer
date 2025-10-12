@@ -10,7 +10,8 @@
       "Bash(git commit:*)",
       "Bash(node:*)",
       "Bash(command -v:*)",
-      "Bash(command:*)"
+      "Bash(command:*)",
+      "Bash(sharp:*)"
     ],
     "deny": [],
     "ask": []
