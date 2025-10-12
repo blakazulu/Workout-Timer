@@ -396,7 +396,7 @@ export class YouTubePlayer {
    * @returns {number} Duration in seconds
    */
   getDuration() {
-    if (this.player && this.isReady) {
+    if (this.player && this.isReady && typeof this.player.getDuration === 'function') {
       try {
         return this.player.getDuration()
       } catch (error) {
@@ -412,7 +412,7 @@ export class YouTubePlayer {
    * @returns {number} Current time in seconds
    */
   getCurrentTime() {
-    if (this.player && this.isReady) {
+    if (this.player && this.isReady && typeof this.player.getCurrentTime === 'function') {
       try {
         return this.player.getCurrentTime()
       } catch (error) {
@@ -442,7 +442,7 @@ export class YouTubePlayer {
    * @returns {boolean} True if playing
    */
   isPlaying() {
-    if (this.player && this.isReady) {
+    if (this.player && this.isReady && typeof this.player.getPlayerState === 'function') {
       try {
         return this.player.getPlayerState() === 1 // 1 = playing
       } catch (error) {
