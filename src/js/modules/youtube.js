@@ -14,6 +14,8 @@ export class YouTubePlayer {
     this.isReady = false
     this.apiLoaded = false
     this.loadingOverlay = $('#loadingOverlay')
+    this.progressInterval = null
+    this.videoTitle = ''
 
     // Load YouTube IFrame API
     this.loadAPI()
@@ -167,6 +169,16 @@ export class YouTubePlayer {
       this.loadingOverlay.classList.add('hidden')
     }
     
+    // Get video title
+    try {
+      this.videoTitle = this.player.getVideoData().title || 'YouTube Music'
+    } catch (error) {
+      this.videoTitle = 'YouTube Music'
+    }
+    
+    // Show music controls
+    this.showMusicControls()
+    
     // Mute by default for autoplay policies
     event.target.mute()
   }
@@ -175,7 +187,8 @@ export class YouTubePlayer {
    * Player state change callback
    */
   onPlayerStateChange(event) {
-    // Handle state changes if needed
+    // Update play/pause button state
+    this.updatePlayPauseButton()
   }
 
   /**
@@ -201,6 +214,7 @@ export class YouTubePlayer {
         this.player.playVideo()
         // Unmute when user explicitly starts playback
         this.player.unMute()
+        setTimeout(() => this.updatePlayPauseButton(), 100)
       } catch (error) {
         console.error('Failed to play video:', error)
       }
@@ -214,6 +228,7 @@ export class YouTubePlayer {
     if (this.player && this.isReady) {
       try {
         this.player.pauseVideo()
+        setTimeout(() => this.updatePlayPauseButton(), 100)
       } catch (error) {
         console.error('Failed to pause video:', error)
       }
@@ -264,6 +279,185 @@ export class YouTubePlayer {
   }
 
   /**
+   * Get video duration in seconds
+   * @returns {number} Duration in seconds
+   */
+  getDuration() {
+    if (this.player && this.isReady) {
+      try {
+        return this.player.getDuration()
+      } catch (error) {
+        console.error('Failed to get duration:', error)
+        return 0
+      }
+    }
+    return 0
+  }
+
+  /**
+   * Get current time in seconds
+   * @returns {number} Current time in seconds
+   */
+  getCurrentTime() {
+    if (this.player && this.isReady) {
+      try {
+        return this.player.getCurrentTime()
+      } catch (error) {
+        console.error('Failed to get current time:', error)
+        return 0
+      }
+    }
+    return 0
+  }
+
+  /**
+   * Seek to specific time
+   * @param {number} seconds - Time in seconds
+   */
+  seekTo(seconds) {
+    if (this.player && this.isReady) {
+      try {
+        this.player.seekTo(seconds, true)
+      } catch (error) {
+        console.error('Failed to seek:', error)
+      }
+    }
+  }
+
+  /**
+   * Check if video is playing
+   * @returns {boolean} True if playing
+   */
+  isPlaying() {
+    if (this.player && this.isReady) {
+      try {
+        return this.player.getPlayerState() === 1 // 1 = playing
+      } catch (error) {
+        return false
+      }
+    }
+    return false
+  }
+
+  /**
+   * Show music controls
+   */
+  showMusicControls() {
+    const musicControls = $('#musicControls')
+    const musicTitle = $('#musicTitle')
+    const musicTooltip = $('#musicTooltip')
+    const musicInfoBtn = $('#musicInfoBtn')
+    
+    if (musicControls && musicTitle) {
+      // Truncate title to 20 characters
+      const displayTitle = this.videoTitle.length > 20 
+        ? this.videoTitle.substring(0, 20) + '...' 
+        : this.videoTitle
+      
+      musicTitle.textContent = displayTitle
+      
+      // Set full title in tooltip
+      if (musicTooltip) {
+        musicTooltip.textContent = this.videoTitle
+      }
+      
+      // Show/hide info button based on title length
+      if (musicInfoBtn) {
+        if (this.videoTitle.length > 20) {
+          musicInfoBtn.style.display = 'flex'
+        } else {
+          musicInfoBtn.style.display = 'none'
+        }
+      }
+      
+      musicControls.classList.remove('hidden')
+      this.startProgressUpdates()
+    }
+  }
+
+  /**
+   * Hide music controls
+   */
+  hideMusicControls() {
+    const musicControls = $('#musicControls')
+    if (musicControls) {
+      musicControls.classList.add('hidden')
+      this.stopProgressUpdates()
+    }
+  }
+
+  /**
+   * Start progress bar updates
+   */
+  startProgressUpdates() {
+    this.stopProgressUpdates()
+    this.updateProgress()
+    this.progressInterval = setInterval(() => this.updateProgress(), 500)
+  }
+
+  /**
+   * Stop progress bar updates
+   */
+  stopProgressUpdates() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval)
+      this.progressInterval = null
+    }
+  }
+
+  /**
+   * Update progress bar
+   */
+  updateProgress() {
+    const currentTime = this.getCurrentTime()
+    const duration = this.getDuration()
+    
+    if (duration > 0) {
+      const percentage = (currentTime / duration) * 100
+      
+      const progressFill = $('#progressBarFill')
+      const progressHandle = $('#progressBarHandle')
+      const currentTimeEl = $('#musicCurrentTime')
+      const durationEl = $('#musicDuration')
+      
+      if (progressFill) progressFill.style.width = `${percentage}%`
+      if (progressHandle) progressHandle.style.left = `${percentage}%`
+      if (currentTimeEl) currentTimeEl.textContent = this.formatTime(currentTime)
+      if (durationEl) durationEl.textContent = this.formatTime(duration)
+    }
+  }
+
+  /**
+   * Update play/pause button state
+   */
+  updatePlayPauseButton() {
+    const musicBtn = $('#musicPlayPauseBtn')
+    if (!musicBtn) return
+    
+    const playIcon = musicBtn.querySelector('.play-icon')
+    const pauseIcon = musicBtn.querySelector('.pause-icon')
+    
+    if (this.isPlaying()) {
+      if (playIcon) playIcon.classList.add('hidden')
+      if (pauseIcon) pauseIcon.classList.remove('hidden')
+    } else {
+      if (playIcon) playIcon.classList.remove('hidden')
+      if (pauseIcon) pauseIcon.classList.add('hidden')
+    }
+  }
+
+  /**
+   * Format time in seconds to MM:SS
+   * @param {number} seconds - Time in seconds
+   * @returns {string} Formatted time
+   */
+  formatTime(seconds) {
+    const mins = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  }
+
+  /**
    * Show loading state
    */
   showLoading() {
@@ -298,6 +492,9 @@ export class YouTubePlayer {
    * Clear the video player
    */
   clear() {
+    this.stopProgressUpdates()
+    this.hideMusicControls()
+    
     if (this.player) {
       this.player.destroy()
       this.player = null
@@ -307,6 +504,7 @@ export class YouTubePlayer {
     }
     this.isReady = false
     this.currentVideoId = null
+    this.videoTitle = ''
   }
 }
 

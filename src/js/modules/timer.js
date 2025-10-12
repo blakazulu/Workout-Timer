@@ -62,6 +62,7 @@ export class Timer {
       this.interval = setInterval(() => this.tick(), 1000)
       this.startBtn.textContent = 'PAUSE'
       addClass(this.settings, 'hidden')
+      removeClass(this.timerDisplay, 'hidden')
 
       // Play YouTube video if loaded
       if (this.youtube) {
@@ -100,6 +101,7 @@ export class Timer {
     this.isRunning = false
     this.startBtn.textContent = 'START'
     removeClass(this.settings, 'hidden')
+    addClass(this.timerDisplay, 'hidden')
     
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -124,6 +126,7 @@ export class Timer {
     this.isAlertActive = false
     
     this.updateDisplay()
+    addClass(this.timerDisplay, 'hidden')
 
     // Stop YouTube video if loaded
     if (this.youtube) {

@@ -66,6 +66,10 @@
     }
 }
 
+.timer-display.hidden {
+    display: none;
+}
+
 .timer-display.alert {
     animation: pulse var(--transition-medium) infinite;
     border-color: #ff0096;
@@ -154,6 +158,194 @@
     .gesture-hint {
         display: none;
     }
+}
+
+/* Music Controls */
+.music-controls {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 0, 150, 0.3);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 
+        0 0 30px rgba(255, 0, 150, 0.2),
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 0, 150, 0.1);
+}
+
+.music-controls.hidden {
+    display: none;
+}
+
+.music-info {
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    position: relative;
+}
+
+.music-title {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: #ff0096;
+    letter-spacing: 1px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.music-info-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #ff0096;
+    background: rgba(255, 0, 150, 0.1);
+    color: #ff0096;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.music-info-btn:hover {
+    background: rgba(255, 0, 150, 0.2);
+    box-shadow: 0 0 15px rgba(255, 0, 150, 0.5);
+    transform: scale(1.1);
+}
+
+.music-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #ff0096;
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-size: var(--font-size-xxs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+    animation: fadeInUp 0.2s ease-out;
+}
+
+.music-tooltip.hidden {
+    display: none;
+}
+
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.music-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ff0096;
+    background: rgba(255, 0, 150, 0.1);
+    color: #ff0096;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(255, 0, 150, 0.3);
+}
+
+.music-btn:hover {
+    background: rgba(255, 0, 150, 0.2);
+    box-shadow: 0 0 25px rgba(255, 0, 150, 0.5);
+    transform: scale(1.05);
+}
+
+.music-btn:active {
+    transform: scale(0.95);
+}
+
+.music-btn svg {
+    pointer-events: none;
+}
+
+.music-btn .play-icon,
+.music-btn .pause-icon {
+    position: absolute;
+}
+
+.music-btn .hidden {
+    display: none !important;
+}
+
+.music-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex: 1;
+}
+
+.music-time {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xxs);
+    color: #6464ff;
+    font-weight: var(--font-weight-medium);
+    min-width: 35px;
+    text-align: center;
+}
+
+.progress-bar-container {
+    position: relative;
+    flex: 1;
+    height: 6px;
+    cursor: pointer;
+}
+
+.progress-bar-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 100, 255, 0.2);
+    border-radius: 3px;
+}
+
+.progress-bar-fill {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, #ff0096, #6464ff);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(255, 0, 150, 0.5);
+}
+
+.progress-bar-handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: #ff0096;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 0%;
+    box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+    transition: left 0.1s linear;
+    opacity: 0;
+}
+
+.progress-bar-container:hover .progress-bar-handle {
+    opacity: 1;
 }
 
 /* Settings Panel */

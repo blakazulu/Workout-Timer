@@ -40,10 +40,45 @@
             </button>
         </div>
 
-        <div class="timer-display" id="timerDisplay">
+        <div class="timer-display hidden" id="timerDisplay">
             <div class="timer-value" id="timerValue">00:00</div>
             <div class="rep-counter" id="repCounter">Ready</div>
             <div class="gesture-hint">Double tap to start • Swipe down to reset</div>
+        </div>
+
+        <!-- YouTube Music Controls -->
+        <div class="music-controls hidden" id="musicControls">
+            <div class="music-info">
+                <span class="music-title" id="musicTitle">No song loaded</span>
+                <button class="music-info-btn" id="musicInfoBtn" title="Song info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                </button>
+                <div class="music-tooltip hidden" id="musicTooltip"></div>
+            </div>
+            <div class="music-player">
+                <button class="music-btn" id="musicPlayPauseBtn">
+                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    <svg class="pause-icon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+                <div class="music-progress">
+                    <span class="music-time" id="musicCurrentTime">0:00</span>
+                    <div class="progress-bar-container" id="progressBarContainer">
+                        <div class="progress-bar-bg"></div>
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                        <div class="progress-bar-handle" id="progressBarHandle"></div>
+                    </div>
+                    <span class="music-time" id="musicDuration">0:00</span>
+                </div>
+            </div>
         </div>
 
         <div class="settings" id="settings">

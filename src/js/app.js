@@ -124,6 +124,54 @@ function setupEventListeners() {
     })
   }
 
+  // Music play/pause button
+  const musicPlayPauseBtn = $('#musicPlayPauseBtn')
+  if (musicPlayPauseBtn) {
+    musicPlayPauseBtn.addEventListener('click', async () => {
+      if (youtubeModule) {
+        if (youtubeModule.isPlaying()) {
+          youtubeModule.pause()
+        } else {
+          youtubeModule.play()
+        }
+      }
+    })
+  }
+
+  // Progress bar seeking
+  const progressBarContainer = $('#progressBarContainer')
+  if (progressBarContainer) {
+    progressBarContainer.addEventListener('click', async (e) => {
+      if (youtubeModule) {
+        const rect = progressBarContainer.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const percentage = (x / rect.width) * 100
+        const duration = youtubeModule.getDuration()
+        const seekTime = (percentage / 100) * duration
+        youtubeModule.seekTo(seekTime)
+      }
+    })
+  }
+
+  // Music info button tooltip
+  const musicInfoBtn = $('#musicInfoBtn')
+  const musicTooltip = $('#musicTooltip')
+  if (musicInfoBtn && musicTooltip) {
+    musicInfoBtn.addEventListener('click', (e) => {
+      e.stopPropagation()
+      musicTooltip.classList.toggle('hidden')
+    })
+    
+    // Close tooltip when clicking outside
+    document.addEventListener('click', (e) => {
+      if (musicTooltip && !musicTooltip.classList.contains('hidden')) {
+        if (!musicInfoBtn.contains(e.target) && !musicTooltip.contains(e.target)) {
+          musicTooltip.classList.add('hidden')
+        }
+      }
+    })
+  }
+
   // Auto-save settings on change
   const settingsInputs = ['#duration', '#alertTime', '#repetitions', '#restTime']
   settingsInputs.forEach(selector => {
