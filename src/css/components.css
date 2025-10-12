@@ -212,34 +212,60 @@
 }
 
 .music-tooltip {
-  /* Fallback positioning for non-supporting browsers */
+  /* Anchor positioning with automatic fallbacks for viewport overflow
+     Works in Chromium 125+, Firefox 128+
+     JavaScript fallback provided for older browsers
+     Polyfill available: https://github.com/oddbird/css-anchor-positioning */
   backdrop-filter: blur(10px);
-
-  /* Anchor positioning (Chrome 125+) */
   background: rgba(0, 0, 0, 0.98);
   border: 2px solid #ff0096;
   border-radius: var(--radius-lg);
   box-shadow: 0 0 30px rgba(255, 0, 150, 0.6);
   color: #fff;
-
-  /* Styling */
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  inset: auto;
   left: anchor(center);
   line-height: 1.6;
+  margin: 0;
   margin-top: 8px;
   max-height: 300px;
-  max-width: 400px;
-  min-width: 300px;
+  max-width: min(400px, calc(100vw - 20px));
+  min-width: min(280px, calc(100vw - 20px));
   overflow-y: auto;
   padding: var(--spacing-md);
   position: fixed;
   position-anchor: --music-info-btn;
+  position-try-fallbacks: --tooltip-left, --tooltip-right, --tooltip-above;
   top: anchor(bottom);
+  transform: translateX(-50%);
   transition: opacity 0.2s, transform 0.2s, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
+}
 
-  /* Transitions */
-  translate: -50% 0;
+/* Position fallbacks for when tooltip doesn't fit in viewport */
+@position-try --tooltip-left {
+  inset: auto;
+  left: anchor(left);
+  top: anchor(bottom);
+  margin-top: 8px;
+  transform: translateX(0);
+}
+
+@position-try --tooltip-right {
+  inset: auto;
+  right: anchor(right);
+  top: anchor(bottom);
+  margin-top: 8px;
+  transform: translateX(0);
+}
+
+@position-try --tooltip-above {
+  inset: auto;
+  left: anchor(center);
+  bottom: anchor(top);
+  margin-top: 0;
+  margin-bottom: 8px;
+  transform: translateX(-50%);
 }
 
 /* Popover animations */

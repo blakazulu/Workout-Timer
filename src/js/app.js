@@ -7,7 +7,7 @@ import {getTimer, initTimer} from "./modules/timer.js";
 import {initAudio} from "./modules/audio.js";
 import {getMostPlayedSongs, getSongHistory, loadSettings, saveSettings} from "./modules/storage.js";
 import {createGestureHandler} from "./utils/gestures.js";
-import {getGenreSongs, getMoodPlaylists, isMoodQuery} from "./data/music-library.js";
+import {getGenreSongs, getMoodPlaylists, isMoodQuery, getRandomSong} from "./data/music-library.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
 
@@ -28,6 +28,44 @@ const updateSW = registerSW({
 });
 
 /**
+ * Show a notification to the user
+ * @param {string} message - Message to display
+ * @param {boolean} isError - Whether this is an error message
+ */
+function showNotification(message, isError = false) {
+  // Create notification element
+  const notification = document.createElement("div");
+  notification.className = "music-notification";
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${isError ? "rgba(255, 0, 150, 0.95)" : "rgba(0, 255, 200, 0.95)"};
+    color: #0a0a0a;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-family: var(--font-family-base);
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 40px ${isError ? "rgba(255, 0, 150, 0.6)" : "rgba(0, 255, 200, 0.6)"};
+    z-index: 10001;
+    animation: slideDown 0.3s ease;
+    max-width: 90vw;
+    text-align: center;
+  `;
+
+  document.body.appendChild(notification);
+
+  // Remove after 4 seconds
+  setTimeout(() => {
+    notification.style.animation = "slideUp 0.3s ease";
+    setTimeout(() => notification.remove(), 300);
+  }, 4000);
+}
+
+/**
  * Lazy load YouTube module
  * @returns {Promise<Object>}
  */
@@ -36,8 +74,55 @@ async function loadYouTubeModule() {
     console.log("Lazy loading YouTube module...");
     const module = await import("./modules/youtube.js");
     youtubeModule = module.initYouTube("#youtube-player-iframe");
+
+    // Set up embedding error handler (for Error 150 - embedding disabled)
+    youtubeModule.onEmbeddingError = handleEmbeddingError;
   }
   return youtubeModule;
+}
+
+/**
+ * Handle YouTube embedding errors (Error 150) by loading a random alternative song
+ * @param {string} errorMessage - The error message from YouTube
+ */
+async function handleEmbeddingError(errorMessage) {
+  console.log("🎵 Handling embedding error, loading random alternative song...");
+
+  // Show notification to user
+  showNotification(`${errorMessage}. Loading alternative song...`, false);
+
+  // Get a random song from the library
+  const randomSong = getRandomSong();
+
+  if (!randomSong) {
+    showNotification("No alternative songs available", true);
+    return;
+  }
+
+  console.log("🎲 Selected random song:", randomSong.title);
+
+  // Wait a moment before loading the new song (better UX)
+  setTimeout(async () => {
+    // Update the URL input field
+    const youtubeUrl = $("#youtubeUrl");
+    if (youtubeUrl) {
+      youtubeUrl.value = randomSong.url;
+    }
+
+    // Load the alternative song
+    try {
+      await youtubeModule.loadVideo(randomSong.url);
+
+      // Connect YouTube player to timer
+      const timer = getTimer();
+      timer.setYouTubePlayer(youtubeModule);
+
+      showNotification(`Now playing: ${randomSong.title}`, false);
+    } catch (error) {
+      console.error("Failed to load alternative song:", error);
+      showNotification("Failed to load alternative song", true);
+    }
+  }, 1500);
 }
 
 /**
@@ -269,6 +354,7 @@ function setupGestures() {
 
 /**
  * Setup music tooltip positioning (fallback for browsers without anchor positioning)
+ * Modern browsers with anchor positioning + position-try-fallbacks handle this automatically
  */
 function setupMusicTooltipPositioning() {
   const musicInfoBtn = $("#musicInfoBtn");
@@ -277,28 +363,27 @@ function setupMusicTooltipPositioning() {
   if (!musicInfoBtn || !musicTooltip) return;
 
   // Check if anchor positioning is supported
-  const supportsAnchorPositioning = CSS.supports("position-anchor", "--test");
+  const supportsAnchorPositioning = CSS.supports("anchor-name", "--test");
 
   if (!supportsAnchorPositioning) {
-    console.log("Using JavaScript fallback for tooltip positioning");
+    console.log("Using JavaScript fallback for tooltip positioning (anchor positioning not supported)");
 
     const positionTooltip = () => {
       const rect = musicInfoBtn.getBoundingClientRect();
       const tooltipRect = musicTooltip.getBoundingClientRect();
+      const margin = 10;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
 
-      // Position below the button, centered
-      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+      // Simple positioning: centered below button, with basic viewport checks
       let top = rect.bottom + 8;
+      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
 
       // Keep within viewport bounds
-      const margin = 10;
-      if (left < margin) left = margin;
-      if (left + tooltipRect.width > window.innerWidth - margin) {
-        left = window.innerWidth - tooltipRect.width - margin;
-      }
+      left = Math.max(margin, Math.min(left, viewportWidth - tooltipRect.width - margin));
 
-      if (top + tooltipRect.height > window.innerHeight - margin) {
-        // Position above button if not enough space below
+      // Position above if no space below
+      if (top + tooltipRect.height > viewportHeight - margin) {
         top = rect.top - tooltipRect.height - 8;
       }
 
@@ -688,44 +773,6 @@ function setupMusicModeToggle() {
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
-  }
-
-  /**
-   * Show a notification to the user
-   * @param {string} message - Message to display
-   * @param {boolean} isError - Whether this is an error message
-   */
-  function showNotification(message, isError = false) {
-    // Create notification element
-    const notification = document.createElement("div");
-    notification.className = "music-notification";
-    notification.textContent = message;
-    notification.style.cssText = `
-      position: fixed;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: ${isError ? "rgba(255, 0, 150, 0.95)" : "rgba(0, 255, 200, 0.95)"};
-      color: #0a0a0a;
-      padding: 16px 24px;
-      border-radius: 12px;
-      font-family: var(--font-family-base);
-      font-size: 14px;
-      font-weight: 600;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 40px ${isError ? "rgba(255, 0, 150, 0.6)" : "rgba(0, 255, 200, 0.6)"};
-      z-index: 10001;
-      animation: slideDown 0.3s ease;
-      max-width: 90vw;
-      text-align: center;
-    `;
-
-    document.body.appendChild(notification);
-
-    // Remove after 4 seconds
-    setTimeout(() => {
-      notification.style.animation = "slideUp 0.3s ease";
-      setTimeout(() => notification.remove(), 300);
-    }, 4000);
   }
 }
 

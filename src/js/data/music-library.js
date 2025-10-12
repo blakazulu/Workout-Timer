@@ -80,3 +80,36 @@ export function getAllGenres() {
     "drum and bass workout music"
   ];
 }
+
+/**
+ * Get all songs from all moods and genres
+ * @returns {Array} Array of all song objects
+ */
+export function getAllSongs() {
+  const allSongs = [];
+  const allCategories = [...getAllMoods(), ...getAllGenres()];
+
+  allCategories.forEach(category => {
+    const songs = songData[category] || [];
+    songs.forEach(song => {
+      // Avoid duplicates by checking if URL already exists
+      if (!allSongs.some(s => s.url === song.url)) {
+        allSongs.push(song);
+      }
+    });
+  });
+
+  return allSongs;
+}
+
+/**
+ * Get a random song from all available music
+ * @returns {Object|null} Random song object or null if no songs available
+ */
+export function getRandomSong() {
+  const allSongs = getAllSongs();
+  if (allSongs.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * allSongs.length);
+  return allSongs[randomIndex];
+}

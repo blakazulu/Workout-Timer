@@ -20,6 +20,7 @@ export class YouTubePlayer {
     this.videoAuthor = "";
     this.videoId = "";
     this.originalUrl = ""; // Store original URL for history
+    this.onEmbeddingError = null; // Callback for embedding errors (101/150)
 
     // Load YouTube IFrame API
     this.loadAPI();
@@ -306,7 +307,13 @@ export class YouTubePlayer {
       this.loadingOverlay.classList.add("hidden");
     }
 
-    this.showError(errorMessage);
+    // Check if this is an embedding restriction error (101 or 150)
+    if ((event.data === 101 || event.data === 150) && this.onEmbeddingError) {
+      console.log("🔄 Calling embedding error callback to load alternative song...");
+      this.onEmbeddingError(errorMessage);
+    } else {
+      this.showError(errorMessage);
+    }
   }
 
   /**
@@ -481,10 +488,6 @@ export class YouTubePlayer {
         musicTooltip.innerHTML = `
           <div class="music-tooltip-title">${this.escapeHtml(this.videoTitle)}</div>
           <div class="music-tooltip-info">
-            <div class="music-tooltip-row">
-              <span class="music-tooltip-label">Artist:</span>
-              <span class="music-tooltip-value">${this.escapeHtml(this.videoAuthor)}</span>
-            </div>
             <div class="music-tooltip-row">
               <span class="music-tooltip-label">Duration:</span>
               <span class="music-tooltip-value">${durationFormatted}</span>
