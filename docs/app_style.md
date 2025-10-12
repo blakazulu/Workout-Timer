@@ -57,8 +57,8 @@
 
 ```css
 --bg-glass:
-
 rgba
+
 (
 10
 ,
@@ -69,8 +69,8 @@ rgba
 0.8
 )
 --bg-glass-light:
-
 rgba
+
 (
 10
 ,
@@ -81,8 +81,8 @@ rgba
 0.7
 )
 --bg-glass-dark:
-
 rgba
+
 (
 0
 ,
@@ -100,8 +100,8 @@ rgba
 
 ```css
 --border-cyan:
-
 rgba
+
 (
 0
 ,
@@ -112,8 +112,8 @@ rgba
 0.3
 )
 --border-pink:
-
 rgba
+
 (
 255
 ,
@@ -124,8 +124,8 @@ rgba
 0.3
 )
 --border-purple:
-
 rgba
+
 (
 100
 ,
@@ -307,8 +307,8 @@ text-shadow:
 0
 30
 px
-
 rgba
+
 (
 0
 ,
@@ -323,8 +323,8 @@ rgba
 0
 60
 px
-
 rgba
+
 (
 0
 ,
@@ -336,8 +336,8 @@ rgba
 )
 ;
 filter:
-
 drop-shadow
+
 (
 0
 4
@@ -345,8 +345,8 @@ px
 
 8
 px
-
 rgba
+
 (
 0
 ,
@@ -369,8 +369,8 @@ text-shadow:
 0
 30
 px
-
 rgba
+
 (
 255
 ,
@@ -385,8 +385,8 @@ rgba
 0
 60
 px
-
 rgba
+
 (
 255
 ,
@@ -398,8 +398,8 @@ rgba
 )
 ;
 filter:
-
 drop-shadow
+
 (
 0
 4
@@ -407,8 +407,8 @@ px
 
 8
 px
-
 rgba
+
 (
 255
 ,
@@ -426,8 +426,8 @@ rgba
 
 ```css
 background:
-
 linear-gradient
+
 (
 135
 deg, #00ffc8
@@ -558,10 +558,11 @@ px
 
 ```css
 background-image:
-
 linear-gradient
+
 (
 rgba
+
 (
 0
 ,
@@ -580,11 +581,12 @@ px
 )
 ,
 linear-gradient
+
 (
 90
 deg,
-
 rgba
+
 (
 0
 ,
@@ -640,8 +642,8 @@ opacity:
 
 ```css
 background:
-
 repeating-linear-gradient
+
 (
 0
 deg,
@@ -650,8 +652,8 @@ transparent
 
 2
 px,
-
 rgba
+
 (
 0
 ,
@@ -663,8 +665,8 @@ rgba
 )
 2
 px,
-
 rgba
+
 (
 0
 ,
@@ -705,12 +707,12 @@ px
 
 ;
 background:
-
 radial-gradient
+
 (
 circle,
-
 rgba
+
 (
 0
 ,
@@ -726,8 +728,8 @@ transparent
 )
 ;
 filter:
-
 blur
+
 (
 100
 px
@@ -772,12 +774,12 @@ px
 
 ;
 background:
-
 radial-gradient
+
 (
 circle,
-
 rgba
+
 (
 255
 ,
@@ -793,8 +795,8 @@ transparent
 )
 ;
 filter:
-
 blur
+
 (
 100
 px
@@ -845,12 +847,12 @@ px
 
 ;
 background:
-
 radial-gradient
+
 (
 circle,
-
 rgba
+
 (
 100
 ,
@@ -866,8 +868,8 @@ transparent
 )
 ;
 filter:
-
 blur
+
 (
 100
 px
@@ -920,8 +922,8 @@ px
 
 ```css
 background:
-
 radial-gradient
+
 (
 ellipse at center,
 transparent
@@ -935,6 +937,7 @@ transparent
 %
 ,
 rgba
+
 (
 0
 ,
@@ -998,8 +1001,8 @@ rgba
 
 ```css
 background:
-
 rgba
+
 (
 10
 ,
@@ -1011,8 +1014,8 @@ rgba
 )
 ;
 backdrop-filter:
-
 blur
+
 (
 20
 px
@@ -1023,8 +1026,8 @@ border:
 
 2
 px solid
-
 rgba
+
 (
 0
 ,
@@ -1041,8 +1044,8 @@ box-shadow:
 0
 40
 px
-
 rgba
+
 (
 0
 ,
@@ -1059,8 +1062,8 @@ px
 
 32
 px
-
 rgba
+
 (
 0
 ,
@@ -1079,6 +1082,7 @@ px
 
 0
 rgba
+
 (
 0
 ,
@@ -1101,8 +1105,8 @@ rgba
 
 ```css
 background:
-
 rgba
+
 (
 10
 ,
@@ -1117,8 +1121,8 @@ border:
 
 2
 px solid
-
 rgba
+
 (
 0
 ,
@@ -1135,8 +1139,8 @@ box-shadow:
 0
 40
 px
-
 rgba
+
 (
 0
 ,
@@ -1170,8 +1174,8 @@ box-shadow:
 0
 60
 px
-
 rgba
+
 (
 255
 ,
@@ -1194,8 +1198,8 @@ border-color: #00ffc8
 
 ;
 background:
-
 rgba
+
 (
 0
 ,
@@ -1212,8 +1216,8 @@ box-shadow:
 0
 40
 px
-
 rgba
+
 (
 0
 ,
@@ -1243,8 +1247,8 @@ rgba
 
 ```css
 background:
-
 rgba
+
 (
 10
 ,
@@ -1256,8 +1260,8 @@ rgba
 )
 ;
 backdrop-filter:
-
 blur
+
 (
 15
 px
@@ -1268,8 +1272,8 @@ border:
 
 1
 px solid
-
 rgba
+
 (
 255
 ,
@@ -1292,8 +1296,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 255
 ,
@@ -1310,8 +1314,8 @@ px
 
 32
 px
-
 rgba
+
 (
 0
 ,
@@ -1337,8 +1341,8 @@ rgba
 
 ```css
 background:
-
 linear-gradient
+
 (
 135
 deg, #00ffc8, #6464ff
@@ -1369,8 +1373,8 @@ px
 
 15
 px
-
 rgba
+
 (
 0
 ,
@@ -1387,8 +1391,8 @@ rgba
 
 ```css
 transform:
-
 translateY
+
 (
 -
 2
@@ -1402,8 +1406,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 0
 ,
@@ -1420,8 +1424,8 @@ rgba
 
 ```css
 background:
-
 linear-gradient
+
 (
 135
 deg, #ff0096, #6464ff
@@ -1446,8 +1450,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 255
 ,
@@ -1491,8 +1495,8 @@ px
 
 ;
 background:
-
 rgba
+
 (
 100
 ,
@@ -1518,8 +1522,8 @@ cursor: pointer
 
 ```css
 background:
-
 linear-gradient
+
 (
 90
 deg, #ff0096, #6464ff
@@ -1532,8 +1536,8 @@ box-shadow:
 0
 10
 px
-
 rgba
+
 (
 255
 ,
@@ -1587,8 +1591,8 @@ box-shadow:
 0
 15
 px
-
 rgba
+
 (
 255
 ,
@@ -1617,8 +1621,8 @@ opacity:
 
 ```css
 background:
-
 rgba
+
 (
 10
 ,
@@ -1630,8 +1634,8 @@ rgba
 )
 ;
 backdrop-filter:
-
 blur
+
 (
 15
 px
@@ -1642,8 +1646,8 @@ border:
 
 1
 px solid
-
 rgba
+
 (
 100
 ,
@@ -1666,8 +1670,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 100
 ,
@@ -1684,8 +1688,8 @@ px
 
 32
 px
-
 rgba
+
 (
 0
 ,
@@ -1725,8 +1729,8 @@ px
 
 ```css
 background:
-
 rgba
+
 (
 0
 ,
@@ -1741,8 +1745,8 @@ border:
 
 1
 px solid
-
 rgba
+
 (
 0
 ,
@@ -1778,8 +1782,8 @@ box-shadow:
 0
 20
 px
-
 rgba
+
 (
 0
 ,
@@ -1791,8 +1795,8 @@ rgba
 )
 ;
 background:
-
 rgba
+
 (
 0
 ,
@@ -1809,8 +1813,8 @@ rgba
 
 ```css
 background:
-
 rgba
+
 (
 0
 ,
@@ -1822,8 +1826,8 @@ rgba
 )
 ;
 backdrop-filter:
-
 blur
+
 (
 10
 px
@@ -1851,8 +1855,8 @@ border:
 
 4
 px solid
-
 rgba
+
 (
 0
 ,
@@ -1886,8 +1890,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 0
 ,
@@ -1904,8 +1908,8 @@ inset
 0
 20
 px
-
 rgba
+
 (
 0
 ,
@@ -1922,8 +1926,8 @@ rgba
 
 ```css
 background:
-
 rgba
+
 (
 0
 ,
@@ -1952,8 +1956,8 @@ box-shadow:
 0
 30
 px
-
 rgba
+
 (
 255
 ,
@@ -1965,8 +1969,8 @@ rgba
 )
 ;
 backdrop-filter:
-
 blur
+
 (
 10
 px

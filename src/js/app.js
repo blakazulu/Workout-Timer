@@ -7,7 +7,7 @@ import {getTimer, initTimer} from "./modules/timer.js";
 import {initAudio} from "./modules/audio.js";
 import {getMostPlayedSongs, getSongHistory, loadSettings, saveSettings} from "./modules/storage.js";
 import {createGestureHandler} from "./utils/gestures.js";
-import {getGenreSongs, getMoodPlaylists, isMoodQuery, getRandomSong} from "./data/music-library.js";
+import {getGenreSongs, getMoodPlaylists, getRandomSong, isMoodQuery} from "./data/music-library.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
 

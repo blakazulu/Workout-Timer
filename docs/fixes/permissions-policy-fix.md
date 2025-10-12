@@ -24,11 +24,13 @@ for feature autoplay. Allowlist item must be *, self or quoted url.
 ## The Fix
 
 ### Before (Incorrect):
+
 ```toml
 Permissions-Policy = "autoplay=(self https://www.youtube.com https://www.youtube-nocookie.com), ..."
 ```
 
 ### After (Correct):
+
 ```toml
 Permissions-Policy = "autoplay=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), picture-in-picture=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\")"
 ```
@@ -44,6 +46,7 @@ According to the [W3C Permissions Policy spec](https://www.w3.org/TR/permissions
 3. **`"https://example.com"`** - Specific origin (MUST be quoted)
 
 ### Valid Examples:
+
 ```
 Permissions-Policy: autoplay=(self)                           ✅ Self only
 Permissions-Policy: autoplay=(*)                              ✅ All origins
@@ -51,6 +54,7 @@ Permissions-Policy: autoplay=(self "https://youtube.com")     ✅ Self + quoted 
 ```
 
 ### Invalid Examples:
+
 ```
 Permissions-Policy: autoplay=(https://youtube.com)            ❌ Missing quotes
 Permissions-Policy: autoplay=('https://youtube.com')          ❌ Single quotes invalid
@@ -80,6 +84,7 @@ Permissions-Policy: autoplay=('https://youtube.com')          ❌ Single quotes 
 ## Testing the Fix
 
 ### Step 1: Deploy to Netlify
+
 ```bash
 git add netlify.toml
 git commit -m "Fix Permissions-Policy header syntax for YouTube embeds"
@@ -93,12 +98,14 @@ Netlify auto-deploys in ~30 seconds.
 After deployment, open https://workouttimerpro.netlify.app and check console:
 
 **Expected (Fixed):**
+
 - ✅ No "Invalid allowlist item" errors
 - ✅ No permissions policy violations
 - ✅ YouTube player loads successfully
 - ⚠️ Error 150 only appears for videos that genuinely disable embedding
 
 **Before (Broken):**
+
 - ❌ 6 "Invalid allowlist item" errors
 - ❌ Multiple permissions violations
 - ❌ Features blocked even for embeddable videos
@@ -112,6 +119,7 @@ After deployment, open https://workouttimerpro.netlify.app and check console:
 ## Error 150 Analysis
 
 **From error.txt line 80-93:**
+
 ```
 ❌ YouTube player error event: {target: X, data: 150}
 ❌ Error code: 150
@@ -123,6 +131,7 @@ After deployment, open https://workouttimerpro.netlify.app and check console:
 ### How to Distinguish:
 
 **Real Error 150 (Video Owner Restriction):**
+
 - ✅ YouTube API loads successfully
 - ✅ Player initialized
 - ✅ onPlayerReady called
@@ -130,6 +139,7 @@ After deployment, open https://workouttimerpro.netlify.app and check console:
 - ❌ Only affects specific videos
 
 **False Error 150 (Headers Blocking):**
+
 - ❌ YouTube API blocked by CSP
 - ❌ Multiple header/policy errors BEFORE player loads
 - ❌ Affects ALL videos
@@ -139,6 +149,7 @@ Your error log shows **Real Error 150** - the API loaded fine, the specific vide
 ## Other Errors in Log (Non-Critical)
 
 ### 1. postMessage Origin Mismatch (Lines 21-40)
+
 ```
 Failed to execute 'postMessage' on 'DOMWindow': The target origin provided
 ('https://www.youtube.com') does not match the recipient window's origin
@@ -151,6 +162,7 @@ Failed to execute 'postMessage' on 'DOMWindow': The target origin provided
 **Action:** No fix needed
 
 ### 2. Install Banner Not Shown (Line 9)
+
 ```
 Banner not shown: beforeinstallpromptevent.preventDefault() called.
 ```
@@ -163,14 +175,17 @@ Banner not shown: beforeinstallpromptevent.preventDefault() called.
 ## Summary
 
 ### What Was Broken:
+
 - ❌ Permissions-Policy header had unquoted URLs
 - ❌ All YouTube features blocked by browser
 
 ### What Was Fixed:
+
 - ✅ Added quotes around all YouTube URLs in Permissions-Policy
 - ✅ Browser now allows autoplay, fullscreen, picture-in-picture
 
 ### What Remains:
+
 - ⚠️ Some videos (like `iyfar8_aIP8`) genuinely can't be embedded
 - ✅ Your curated workout music library should work fine
 - ✅ YouTube API loads and functions correctly

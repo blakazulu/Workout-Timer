@@ -13,58 +13,64 @@ Your app now uses **Phosphor Icons** - a flexible, modern icon library with 4,09
 
 ### UI Controls
 
-| Icon | Class | Purpose | Location |
-|------|-------|---------|----------|
-| <i class="ph-bold ph-download-simple"></i> | `ph-bold ph-download-simple` | Install PWA button | Header |
-| <i class="ph ph-info"></i> | `ph ph-info` | Song info tooltip | Music controls |
-| <i class="ph-fill ph-play"></i> | `ph-fill ph-play` | Play music | Music player |
-| <i class="ph-fill ph-pause"></i> | `ph-fill ph-pause` | Pause music | Music player |
-| <i class="ph-bold ph-clock-counter-clockwise"></i> | `ph-bold ph-clock-counter-clockwise` | Song history | Settings |
-| <i class="ph-bold ph-x"></i> | `ph-bold ph-x` | Close popovers | All popovers |
+| Icon                                               | Class                                | Purpose            | Location       |
+|----------------------------------------------------|--------------------------------------|--------------------|----------------|
+| <i class="ph-bold ph-download-simple"></i>         | `ph-bold ph-download-simple`         | Install PWA button | Header         |
+| <i class="ph ph-info"></i>                         | `ph ph-info`                         | Song info tooltip  | Music controls |
+| <i class="ph-fill ph-play"></i>                    | `ph-fill ph-play`                    | Play music         | Music player   |
+| <i class="ph-fill ph-pause"></i>                   | `ph-fill ph-pause`                   | Pause music        | Music player   |
+| <i class="ph-bold ph-clock-counter-clockwise"></i> | `ph-bold ph-clock-counter-clockwise` | Song history       | Settings       |
+| <i class="ph-bold ph-x"></i>                       | `ph-bold ph-x`                       | Close popovers     | All popovers   |
 
 ### Mode Selection
 
-| Icon | Class | Purpose |
-|------|-------|---------|
-| <i class="ph-bold ph-link"></i> | `ph-bold ph-link` | Link mode |
-| <i class="ph-bold ph-smiley"></i> | `ph-bold ph-smiley` | Mood mode |
+| Icon                                   | Class                    | Purpose    |
+|----------------------------------------|--------------------------|------------|
+| <i class="ph-bold ph-link"></i>        | `ph-bold ph-link`        | Link mode  |
+| <i class="ph-bold ph-smiley"></i>      | `ph-bold ph-smiley`      | Mood mode  |
 | <i class="ph-bold ph-music-notes"></i> | `ph-bold ph-music-notes` | Genre mode |
 
 ### Mood Icons (All use `ph-fill` for filled style)
 
-| Mood | Icon | Class |
-|------|------|-------|
-| Beast Mode | <i class="ph-fill ph-barbell"></i> | `ph-fill ph-barbell` |
-| Intense | <i class="ph-fill ph-fire"></i> | `ph-fill ph-fire` |
-| Energetic | <i class="ph-fill ph-lightning"></i> | `ph-fill ph-lightning` |
-| Power | <i class="ph-fill ph-lightning-slash"></i> | `ph-fill ph-lightning-slash` |
-| Aggressive | <i class="ph-fill ph-fire-simple"></i> | `ph-fill ph-fire-simple` |
-| Pump Up | <i class="ph-fill ph-heartbeat"></i> | `ph-fill ph-heartbeat` |
-| Focus | <i class="ph-fill ph-crosshair"></i> | `ph-fill ph-crosshair` |
-| Motivated | <i class="ph-fill ph-rocket-launch"></i> | `ph-fill ph-rocket-launch` |
+| Mood       | Icon                                       | Class                        |
+|------------|--------------------------------------------|------------------------------|
+| Beast Mode | <i class="ph-fill ph-barbell"></i>         | `ph-fill ph-barbell`         |
+| Intense    | <i class="ph-fill ph-fire"></i>            | `ph-fill ph-fire`            |
+| Energetic  | <i class="ph-fill ph-lightning"></i>       | `ph-fill ph-lightning`       |
+| Power      | <i class="ph-fill ph-lightning-slash"></i> | `ph-fill ph-lightning-slash` |
+| Aggressive | <i class="ph-fill ph-fire-simple"></i>     | `ph-fill ph-fire-simple`     |
+| Pump Up    | <i class="ph-fill ph-heartbeat"></i>       | `ph-fill ph-heartbeat`       |
+| Focus      | <i class="ph-fill ph-crosshair"></i>       | `ph-fill ph-crosshair`       |
+| Motivated  | <i class="ph-fill ph-rocket-launch"></i>   | `ph-fill ph-rocket-launch`   |
 
 ## Icon Weights Explained
 
 ### Regular (Default)
+
 ```html
 <i class="ph ph-icon-name"></i>
 ```
+
 - Stroke-based design
 - 1.5px line weight
 - Best for UI controls
 
 ### Fill
+
 ```html
 <i class="ph-fill ph-icon-name"></i>
 ```
+
 - Solid/filled version
 - More prominent
 - Used for mood icons and play/pause
 
 ### Bold
+
 ```html
 <i class="ph-bold ph-icon-name"></i>
 ```
+
 - Thicker stroke (2px+)
 - More emphasis
 - Used for primary actions (install, close, history)
@@ -72,32 +78,41 @@ Your app now uses **Phosphor Icons** - a flexible, modern icon library with 4,09
 ## Available Weights (Not Currently Used)
 
 ### Thin
+
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/thin/style.css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/thin/style.css"/>
 <i class="ph-thin ph-icon-name"></i>
 ```
 
 ### Light
+
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/light/style.css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/light/style.css"/>
 <i class="ph-light ph-icon-name"></i>
 ```
 
 ### Duotone
+
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css"/>
 <i class="ph-duotone ph-icon-name"></i>
 ```
 
 ## How to Add More Icons
 
 ### 1. Browse Available Icons
+
 Visit [phosphoricons.com](https://phosphoricons.com) to browse all 4,098+ icons.
 
 ### 2. Find Fitness-Related Icons
+
 Search for: `fitness`, `gym`, `workout`, `sport`, `timer`, `running`, etc.
 
 **Examples of fitness icons available:**
+
 - `ph-barbell` (already used)
 - `ph-heartbeat` (already used)
 - `ph-bicycle`
@@ -110,6 +125,7 @@ Search for: `fitness`, `gym`, `workout`, `sport`, `timer`, `running`, etc.
 - `ph-pulse`
 
 ### 3. Add to HTML
+
 ```html
 <i class="ph ph-icon-name"></i>         <!-- Regular -->
 <i class="ph-fill ph-icon-name"></i>    <!-- Fill -->
@@ -117,6 +133,7 @@ Search for: `fitness`, `gym`, `workout`, `sport`, `timer`, `running`, etc.
 ```
 
 ### 4. Style with CSS
+
 ```css
 .my-icon {
   font-size: 24px;
@@ -127,6 +144,7 @@ Search for: `fitness`, `gym`, `workout`, `sport`, `timer`, `running`, etc.
 ## Suggested Improvements
 
 ### Add Genre Icons
+
 Currently, genre tags are text-only. You could add icons:
 
 ```html
@@ -156,6 +174,7 @@ Currently, genre tags are text-only. You could add icons:
 ```
 
 ### Add Timer Icons
+
 For the timer display:
 
 ```html
@@ -165,6 +184,7 @@ For the timer display:
 ```
 
 ### Add Workout Type Icons
+
 For future features:
 
 ```html
@@ -177,20 +197,24 @@ For future features:
 ## Performance Tips
 
 ### 1. Only Load Weights You Need
+
 Currently loading 3 weights = ~1.5MB. If you only use 2:
 
 ```html
 <!-- Remove this if not used -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
 ```
 
 ### 2. Use CDN (Already Implemented)
+
 CDN provides:
+
 - Global caching
 - Fast delivery
 - No npm install needed
 
 ### 3. Alternative: npm Package
+
 For better tree-shaking (only load icons you use):
 
 ```bash
@@ -202,14 +226,25 @@ Then import specific icons in JavaScript.
 ## Icon Customization
 
 ### Size
+
 ```css
-.ph { font-size: 24px; }      /* Default is 1em */
-.ph-large { font-size: 48px; }
+.ph {
+  font-size: 24px;
+}
+
+/* Default is 1em */
+.ph-large {
+  font-size: 48px;
+}
 ```
 
 ### Color
+
 ```css
-.ph { color: #ff5722; }
+.ph {
+  color: #ff5722;
+}
+
 .ph-gradient {
   background: linear-gradient(135deg, #ff5722, #ff006e);
   -webkit-background-clip: text;
@@ -218,10 +253,15 @@ Then import specific icons in JavaScript.
 ```
 
 ### Animation
+
 ```css
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ph-spinning {
@@ -234,6 +274,7 @@ Then import specific icons in JavaScript.
 Always provide context for screen readers:
 
 ```html
+
 <button aria-label="Play music">
   <i class="ph-fill ph-play" aria-hidden="true"></i>
 </button>
@@ -298,6 +339,7 @@ Uses standard web fonts, so compatibility is excellent.
 ---
 
 **Pro Tip**: Icons are just text, so you can use any CSS property that works with text:
+
 - `color`
 - `font-size`
 - `text-shadow`

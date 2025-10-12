@@ -11,16 +11,17 @@
 
 ### Core Web Vitals
 
-| Metric | Score | Value | Target | Status |
-|--------|-------|-------|--------|--------|
-| **First Contentful Paint (FCP)** | 0.26 | 3.8s | <1.8s | ❌ Needs Work |
-| **Largest Contentful Paint (LCP)** | 0.50 | 4.0s | <2.5s | ⚠️ Needs Improvement |
-| **Total Blocking Time (TBT)** | 1.00 | 0ms | <200ms | ✅ Excellent |
-| **Cumulative Layout Shift (CLS)** | 1.00 | 0 | <0.1 | ✅ Perfect |
-| **Speed Index** | 0.83 | 3.8s | <3.4s | ⚠️ Acceptable |
-| **Time to Interactive (TTI)** | 0.88 | 4.0s | <3.8s | ⚠️ Good |
+| Metric                             | Score | Value | Target | Status               |
+|------------------------------------|-------|-------|--------|----------------------|
+| **First Contentful Paint (FCP)**   | 0.26  | 3.8s  | <1.8s  | ❌ Needs Work         |
+| **Largest Contentful Paint (LCP)** | 0.50  | 4.0s  | <2.5s  | ⚠️ Needs Improvement |
+| **Total Blocking Time (TBT)**      | 1.00  | 0ms   | <200ms | ✅ Excellent          |
+| **Cumulative Layout Shift (CLS)**  | 1.00  | 0     | <0.1   | ✅ Perfect            |
+| **Speed Index**                    | 0.83  | 3.8s  | <3.4s  | ⚠️ Acceptable        |
+| **Time to Interactive (TTI)**      | 0.88  | 4.0s  | <3.8s  | ⚠️ Good              |
 
 ### Score Breakdown
+
 - ✅ **Excellent**: TBT (0ms), CLS (0)
 - ⚠️ **Needs Improvement**: LCP (4.0s), FCP (3.8s)
 - ❌ **Critical Issues**: Render-blocking resources
@@ -37,12 +38,12 @@
 
 #### Blocking Resources:
 
-| Resource | Duration | Size | Impact |
-|----------|----------|------|--------|
-| Phosphor Icons (regular) | 924ms | 12.4 KB | High |
-| Google Fonts (Orbitron + Rajdhani) | 820ms | 769 B | High |
-| Phosphor Icons (fill) | 450ms | 12.4 KB | Medium |
-| Phosphor Icons (bold) | 300ms | 12.5 KB | Medium |
+| Resource                           | Duration | Size    | Impact |
+|------------------------------------|----------|---------|--------|
+| Phosphor Icons (regular)           | 924ms    | 12.4 KB | High   |
+| Google Fonts (Orbitron + Rajdhani) | 820ms    | 769 B   | High   |
+| Phosphor Icons (fill)              | 450ms    | 12.4 KB | Medium |
+| Phosphor Icons (bold)              | 300ms    | 12.5 KB | Medium |
 
 **Total Impact**: 2,825ms blocking time
 
@@ -54,15 +55,17 @@
 
 #### Unused Stylesheets:
 
-| File | Unused | Size | Wasted |
-|------|--------|------|--------|
-| Phosphor Icons (fill) | **100%** | 12.2 KB | 12.2 KB |
-| Phosphor Icons (regular) | **100%** | 12.2 KB | 12.2 KB |
-| Phosphor Icons (bold) | **98.8%** | 12.0 KB | 11.9 KB |
+| File                     | Unused    | Size    | Wasted  |
+|--------------------------|-----------|---------|---------|
+| Phosphor Icons (fill)    | **100%**  | 12.2 KB | 12.2 KB |
+| Phosphor Icons (regular) | **100%**  | 12.2 KB | 12.2 KB |
+| Phosphor Icons (bold)    | **98.8%** | 12.0 KB | 11.9 KB |
 
 **Total Wasted**: 36.3 KB (100% of Phosphor Icons CSS)
 
-**Why?**: Phosphor Icons uses icon fonts, but Lighthouse detects the CSS classes as "unused" because they're applied to `<i>` elements dynamically. However, loading 3 complete icon sets (regular, fill, bold) when you likely only use a handful of icons is wasteful.
+**Why?**: Phosphor Icons uses icon fonts, but Lighthouse detects the CSS classes as "unused" because they're applied to
+`<i>` elements dynamically. However, loading 3 complete icon sets (regular, fill, bold) when you likely only use a
+handful of icons is wasteful.
 
 ---
 
@@ -73,6 +76,7 @@
 #### A. Self-Host and Inline Critical Fonts
 
 **Current Problem:**
+
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 ```
@@ -83,14 +87,20 @@
 <!-- In <head> -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
+<link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
 <noscript>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
 </noscript>
 ```
 
-**Or better yet**: Use `@import` in CSS with `font-display: swap` already in the URL (as shown above with `&display=swap`)
+**Or better yet**: Use `@import` in CSS with `font-display: swap` already in the URL (as shown above with
+`&display=swap`)
 
 **Expected Savings**: ~800ms
 
@@ -103,6 +113,7 @@
 **Solution Options:**
 
 **Option 1: Use SVG Sprites (Recommended)**
+
 - Only include the icons you actually use
 - No external requests
 - Better performance
@@ -113,16 +124,19 @@
 4. Remove the 3 CDN `<link>` tags
 
 **Option 2: Load Icons Asynchronously**
+
 ```html
 <!-- Instead of blocking <link> tags -->
 <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" media="print"
+      onload="this.media='all'">
 <noscript>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 </noscript>
 ```
 
 **Option 3: Load Only One Icon Weight**
+
 - Keep only `regular/style.css` or `bold/style.css`
 - Remove the other two unused sets
 - Reduces blocking time by ~750ms
@@ -180,6 +194,7 @@
 3. Load full CSS asynchronously
 
 **Tools to help**:
+
 - [Critical](https://github.com/addyosmani/critical)
 - [Critters (Vite plugin)](https://github.com/GoogleChromeLabs/critters)
 
@@ -189,13 +204,13 @@
 
 ## Performance Opportunities Summary
 
-| Fix | Estimated Improvement | Complexity | Priority |
-|-----|----------------------|------------|----------|
-| Async load Phosphor Icons | +1,674ms FCP/LCP | Low | ⭐⭐⭐ High |
-| Async load Google Fonts | +800ms FCP/LCP | Low | ⭐⭐⭐ High |
-| Switch to SVG icons | +1,674ms + reduce bundle | Medium | ⭐⭐ Medium |
-| Critical CSS inlining | +500ms FCP | Medium | ⭐⭐ Medium |
-| Font metric overrides | Prevent CLS | Low | ⭐ Nice to have |
+| Fix                       | Estimated Improvement    | Complexity | Priority       |
+|---------------------------|--------------------------|------------|----------------|
+| Async load Phosphor Icons | +1,674ms FCP/LCP         | Low        | ⭐⭐⭐ High       |
+| Async load Google Fonts   | +800ms FCP/LCP           | Low        | ⭐⭐⭐ High       |
+| Switch to SVG icons       | +1,674ms + reduce bundle | Medium     | ⭐⭐ Medium      |
+| Critical CSS inlining     | +500ms FCP               | Medium     | ⭐⭐ Medium      |
+| Font metric overrides     | Prevent CLS              | Low        | ⭐ Nice to have |
 
 **Total Potential Improvement**: ~3s faster FCP/LCP on mobile
 
@@ -206,19 +221,23 @@
 ### Desktop vs Mobile Performance
 
 Your **desktop score was 98/100** with:
+
 - FCP: 0.9s
 - LCP: 0.9s
 
 Your **mobile score is 78/100** with:
+
 - FCP: 3.8s
 - LCP: 4.0s
 
 **Why the difference?**
+
 - **Network throttling**: Mobile simulates slow 4G (1.6 Mbps, 150ms RTT)
 - **CPU throttling**: 4x slower CPU
 - **Render-blocking impact**: 2.8s of blocking time is magnified on slower connections
 
-The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), and you have zero layout shift. The only issues are external resources blocking render.
+The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), and you have zero layout shift. The only
+issues are external resources blocking render.
 
 ---
 
@@ -240,6 +259,7 @@ The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), a
 **File**: `index.html:15-17`
 
 **Current**:
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
@@ -247,10 +267,12 @@ The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), a
 ```
 
 **Replace with**:
+
 ```html
 <!-- Load only one weight, load it async -->
 <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" media="print"
+      onload="this.media='all'">
 <noscript>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
 </noscript>
@@ -265,16 +287,23 @@ The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), a
 **File**: `index.html:10-12`
 
 **Current**:
+
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 ```
 
 **Replace with**:
+
 ```html
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      media="print" onload="this.media='all'">
 <noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
 </noscript>
 ```
 
@@ -285,10 +314,12 @@ The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), a
 ## Expected Score After Quick Wins
 
 **Current Mobile Performance**: 78/100
+
 - FCP: 3.8s
 - LCP: 4.0s
 
 **After Quick Wins**: ~92-95/100
+
 - FCP: ~1.3s (save 2.5s)
 - LCP: ~1.5s (save 2.5s)
 
@@ -297,15 +328,18 @@ The good news: Your app's JavaScript is optimized (0ms TBT, 82ms bootup time), a
 ## Long-Term Optimization Strategy
 
 ### Phase 1: Immediate (This Week)
+
 - ✅ Async load fonts and icons (15 min)
 - Expected: 92-95/100 mobile score
 
 ### Phase 2: Short-Term (Next Sprint)
+
 - Replace Phosphor Icons with SVG sprites
 - Implement critical CSS inlining with Vite plugin
 - Expected: 95-98/100 mobile score
 
 ### Phase 3: Long-Term (Future)
+
 - Self-host fonts (better control, no external requests)
 - Implement service worker font caching
 - Add resource hints (dns-prefetch, preconnect)
@@ -320,10 +354,10 @@ After making changes:
 1. **Deploy to Netlify** (the changes must be live)
 2. **Test with PageSpeed Insights**: https://pagespeed.web.dev/
 3. **Or test in Chrome DevTools**:
-   - Open DevTools (F12)
-   - Lighthouse tab
-   - Select "Mobile"
-   - Click "Analyze page load"
+    - Open DevTools (F12)
+    - Lighthouse tab
+    - Select "Mobile"
+    - Click "Analyze page load"
 
 Compare before/after scores!
 
@@ -341,6 +375,7 @@ Compare before/after scores!
 ### Current Strengths
 
 Your app's **architecture is solid**:
+
 - Clean JavaScript (no bloat)
 - Lazy-loaded YouTube module
 - Efficient DOM updates

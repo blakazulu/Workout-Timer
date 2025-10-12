@@ -33,10 +33,12 @@ Users get fresh music! 🎵
 ### What Gets Updated
 
 The script updates these files:
+
 - `src/js/data/workout_music.json` - Music library used by your app
 - `src/js/data/workout_music_cache.json` - Cache to reduce API costs
 
 **Categories updated:**
+
 - 8 Moods: Beast Mode, Intense, Energetic, Power, Aggressive, Pump Up, Focus, Motivated
 - 10 Genres: EDM, Rock, Hip Hop, Metal, Trap, Dubstep, Hardstyle, Techno, Phonk, DnB
 
@@ -66,6 +68,7 @@ The script updates these files:
 The workflow is already created at `.github/workflows/update-music.yml`
 
 Just commit and push:
+
 ```bash
 git add .github/workflows/update-music.yml
 git commit -m "Add automated weekly music updates"
@@ -79,12 +82,14 @@ git push origin main
 Location: `.github/workflows/update-music.yml`
 
 ### Schedule
+
 ```yaml
 schedule:
   - cron: '0 2 * * 0'  # Every Sunday at 2 AM UTC
 ```
 
 ### What It Does
+
 1. Checks out your repository
 2. Sets up Node.js 18
 3. Installs dependencies (`npm install`)
@@ -93,6 +98,7 @@ schedule:
 6. Pushes back to GitHub
 
 ### Commit Message Format
+
 ```
 🎵 Auto-update workout music library
 
@@ -118,17 +124,20 @@ Location: `src/js/utils/song_fetcher.js`
 ### What It Does
 
 **Fetches from YouTube:**
+
 - Searches for workout music using curated queries
 - Filters videos: 30+ min, 10K+ views, not live/upcoming
 - Verifies all videos work and have visible stats
 - Downloads thumbnails and metadata
 
 **Smart Caching:**
+
 - Keeps cache for 30 days per category
 - Only refreshes stale categories
 - Reduces API quota usage by 90%
 
 **Rate Limiting:**
+
 - 250ms delay between API calls
 - Daily budget: 9,000 units (under YouTube's 10,000 limit)
 - Automatically stops if quota would be exceeded
@@ -174,14 +183,15 @@ Then update `music-library.js` to recognize the new category.
 1. Go to **Actions** tab in GitHub
 2. Click on latest "Update Workout Music" run
 3. View logs to see:
-   - Which categories were refreshed
-   - How many videos were fetched
-   - API quota used
-   - Any errors
+    - Which categories were refreshed
+    - How many videos were fetched
+    - API quota used
+    - Any errors
 
 ### Check Commits
 
 Look for automated commits in your repository:
+
 ```
 🎵 Auto-update workout music library
 github-actions[bot] committed 2 hours ago
@@ -200,12 +210,14 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### API Quota Usage
 
 **First run (no cache):**
+
 - 18 categories × ~5 searches = 90 searches
 - 90 searches × 100 units = 9,000 units
 - ~200 video details × 1 unit = 200 units
 - **Total: ~9,200 units**
 
 **Subsequent runs (with 30-day cache):**
+
 - Only stale categories refresh
 - Typical: ~5 categories refreshed
 - **Total: ~1,000-3,000 units**
@@ -215,6 +227,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### Storage & Bandwidth
 
 **File sizes:**
+
 - `workout_music.json`: ~130 KB
 - `workout_music_cache.json`: ~160 KB
 
@@ -227,6 +240,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### Workflow Not Running
 
 **Check:**
+
 1. GitHub Actions enabled (Settings → Actions)
 2. Write permissions granted (Settings → Actions → General)
 3. `YT_API_KEY` secret added (Settings → Secrets)
@@ -235,6 +249,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### "Missing YT_API_KEY" Error
 
 **Solution:**
+
 1. Go to repository Settings → Secrets → Actions
 2. Verify `YT_API_KEY` secret exists
 3. Value should be your YouTube API key (starts with `AIza...`)
@@ -242,6 +257,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### "Quota exceeded" Error
 
 **Solutions:**
+
 1. Wait 24 hours (quota resets daily)
 2. Reduce `WANT_PER_CATEGORY` to 5 in `song_fetcher.js`
 3. Increase `REFRESH_DAYS` to 60 (refresh less often)
@@ -250,6 +266,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### Workflow Runs But No Commit
 
 **This is normal!**
+
 - If music hasn't changed, no commit is created
 - Check logs: "✓ Using cache: [category name]"
 - Only stale categories (>30 days) trigger updates
@@ -257,6 +274,7 @@ https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas
 ### "Permission denied" When Pushing
 
 **Solution:**
+
 1. Repository Settings → Actions → General
 2. "Workflow permissions" → "Read and write permissions"
 3. Check "Allow GitHub Actions to create PRs"
@@ -277,6 +295,7 @@ node src/js/utils/song_fetcher.js
 ```
 
 Output files:
+
 - `src/js/data/workout_music.json`
 - `src/js/data/workout_music_cache.json`
 
@@ -326,12 +345,14 @@ workflow_dispatch:  # Keep manual trigger
 ## Benefits
 
 ### ✅ For Users
+
 - Always fresh workout music
 - 180 curated videos (18 categories × 10 each)
 - All videos 30+ minutes long
 - High-quality, popular content (10K+ views)
 
 ### ✅ For You
+
 - Zero maintenance
 - Fully automatic
 - Free (GitHub Actions + YouTube API)
@@ -339,6 +360,7 @@ workflow_dispatch:  # Keep manual trigger
 - Version controlled (git history)
 
 ### ✅ For the App
+
 - Fast loading (static JSON file)
 - Offline support (PWA caches it)
 - No runtime dependencies
