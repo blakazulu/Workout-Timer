@@ -11,10 +11,13 @@ export class Timer {
     this.duration = options.duration || 30
     this.alertTime = options.alertTime || 5
     this.repetitions = options.repetitions || 3
+    this.restTime = options.restTime || 10
     this.currentTime = 0
     this.currentRep = 1
     this.isRunning = false
+    this.isResting = false
     this.interval = null
+    this.youtube = null
 
     // DOM elements
     this.timerDisplay = $('#timerDisplay')
@@ -28,6 +31,14 @@ export class Timer {
   }
 
   /**
+   * Set YouTube player instance
+   * @param {Object} youtubePlayer - YouTube player instance
+   */
+  setYouTubePlayer(youtubePlayer) {
+    this.youtube = youtubePlayer
+  }
+
+  /**
    * Start or resume the timer
    */
   start() {
@@ -36,17 +47,24 @@ export class Timer {
       this.duration = parseInt($('#duration').value)
       this.alertTime = parseInt($('#alertTime').value)
       this.repetitions = parseInt($('#repetitions').value)
+      this.restTime = parseInt($('#restTime').value)
 
       // Initialize timer if starting fresh
       if (!this.currentTime) {
         this.currentTime = this.duration
         this.currentRep = 1
+        this.isResting = false
       }
 
       this.isRunning = true
       this.interval = setInterval(() => this.tick(), 1000)
       this.startBtn.textContent = 'PAUSE'
       addClass(this.settings, 'hidden')
+
+      // Play YouTube video if loaded (only during work, not rest)
+      if (this.youtube && !this.isResting) {
+        this.youtube.play()
+      }
     } else {
       this.pause()
     }
@@ -59,6 +77,11 @@ export class Timer {
     clearInterval(this.interval)
     this.isRunning = false
     this.startBtn.textContent = 'RESUME'
+
+    // Pause YouTube video if loaded
+    if (this.youtube) {
+      this.youtube.pause()
+    }
   }
 
   /**
@@ -78,7 +101,13 @@ export class Timer {
     this.stop()
     this.currentTime = 0
     this.currentRep = 1
+    this.isResting = false
     this.updateDisplay()
+
+    // Stop YouTube video if loaded
+    if (this.youtube) {
+      this.youtube.stop()
+    }
   }
 
   /**
@@ -88,20 +117,44 @@ export class Timer {
     if (this.currentTime > 0) {
       this.currentTime--
 
-      // Play alert beep during countdown
-      if (this.currentTime <= this.alertTime && this.currentTime > 0) {
+      // Play alert beep during work time countdown (not during rest)
+      if (!this.isResting && this.currentTime <= this.alertTime && this.currentTime > 0) {
         this.audio.playAlert()
       }
 
       this.updateDisplay()
     } else {
       // Timer reached zero
-      if (this.currentRep < this.repetitions) {
-        // More reps to go
-        this.audio.playComplete()
+      if (this.isResting) {
+        // Rest period ended, start next rep
+        this.isResting = false
         this.currentRep++
         this.currentTime = this.duration
         this.updateDisplay()
+        
+        // Resume YouTube video for next rep
+        if (this.youtube) {
+          this.youtube.play()
+        }
+      } else if (this.currentRep < this.repetitions) {
+        // Work period ended, more reps to go - start rest
+        this.audio.playComplete()
+        
+        if (this.restTime > 0) {
+          this.isResting = true
+          this.currentTime = this.restTime
+          this.updateDisplay()
+          
+          // Pause YouTube during rest
+          if (this.youtube) {
+            this.youtube.pause()
+          }
+        } else {
+          // No rest time, go directly to next rep
+          this.currentRep++
+          this.currentTime = this.duration
+          this.updateDisplay()
+        }
       } else {
         // All reps completed
         this.stop()
@@ -118,18 +171,33 @@ export class Timer {
     // Update timer value
     this.timerValue.textContent = formatTime(this.currentTime)
 
-    // Update rep counter
-    this.repCounter.textContent = this.isRunning
-      ? `Rep ${this.currentRep} / ${this.repetitions}`
-      : 'Ready'
+    // Update rep counter with rest indicator
+    if (this.isRunning) {
+      if (this.isResting) {
+        this.repCounter.textContent = `REST - Next: Rep ${this.currentRep} / ${this.repetitions}`
+      } else {
+        this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`
+      }
+    } else {
+      this.repCounter.textContent = 'Ready'
+    }
 
-    // Update alert state
-    if (this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning) {
+    // Update alert state (only during work, not rest)
+    if (!this.isResting && this.currentTime <= this.alertTime && this.currentTime > 0 && this.isRunning) {
       addClass(this.timerDisplay, 'alert')
       addClass(this.timerValue, 'warning')
     } else {
       removeClass(this.timerDisplay, 'alert')
       removeClass(this.timerValue, 'warning')
+    }
+    
+    // Add rest visual indicator
+    if (this.isResting && this.isRunning) {
+      addClass(this.timerDisplay, 'resting')
+      addClass(this.timerValue, 'rest-mode')
+    } else {
+      removeClass(this.timerDisplay, 'resting')
+      removeClass(this.timerValue, 'rest-mode')
     }
   }
 }

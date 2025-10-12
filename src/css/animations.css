@@ -9,3 +9,75 @@
         transform: scale(1.02);
     }
 }
+
+/* Background Animation - Subtle color shifts */
+@keyframes backgroundShift {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+/* Gradient Animation - Flowing colors */
+@keyframes gradientShift {
+    0% {
+        opacity: 0.5;
+        transform: translateX(0) translateY(0);
+    }
+    100% {
+        opacity: 0.8;
+        transform: translateX(50px) translateY(50px);
+    }
+}
+
+/* Grid Movement - Slow pan effect */
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+/* Floating Orbs - Smooth floating motion */
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    50% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+        transform: translate(40px, 10px) scale(1.05);
+    }
+}
+
+/* Fade in animation for content */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 87, 34, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 87, 34, 0.4);
+    }
+}

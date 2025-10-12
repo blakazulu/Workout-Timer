@@ -47,6 +47,12 @@ function init() {
   // Load saved settings
   const settings = loadSettings()
 
+  // Apply settings to input fields
+  $('#duration').value = settings.duration
+  $('#alertTime').value = settings.alertTime
+  $('#repetitions').value = settings.repetitions
+  $('#restTime').value = settings.restTime
+
   // Initialize core modules (YouTube is lazy loaded)
   initAudio()
   initTimer(settings)
@@ -74,7 +80,8 @@ function setupEventListeners() {
       saveSettings({
         duration: parseInt($('#duration').value),
         alertTime: parseInt($('#alertTime').value),
-        repetitions: parseInt($('#repetitions').value)
+        repetitions: parseInt($('#repetitions').value),
+        restTime: parseInt($('#restTime').value)
       })
     })
   }
@@ -94,7 +101,9 @@ function setupEventListeners() {
       const url = $('#youtubeUrl').value
       if (url) {
         const youtube = await loadYouTubeModule()
-        youtube.loadVideo(url)
+        await youtube.loadVideo(url)
+        // Connect YouTube player to timer
+        timer.setYouTubePlayer(youtube)
       }
     })
   }
@@ -107,14 +116,16 @@ function setupEventListeners() {
         const url = $('#youtubeUrl').value
         if (url) {
           const youtube = await loadYouTubeModule()
-          youtube.loadVideo(url)
+          await youtube.loadVideo(url)
+          // Connect YouTube player to timer
+          timer.setYouTubePlayer(youtube)
         }
       }
     })
   }
 
   // Auto-save settings on change
-  const settingsInputs = ['#duration', '#alertTime', '#repetitions']
+  const settingsInputs = ['#duration', '#alertTime', '#repetitions', '#restTime']
   settingsInputs.forEach(selector => {
     const input = $(selector)
     if (input) {
@@ -122,7 +133,8 @@ function setupEventListeners() {
         saveSettings({
           duration: parseInt($('#duration').value),
           alertTime: parseInt($('#alertTime').value),
-          repetitions: parseInt($('#repetitions').value)
+          repetitions: parseInt($('#repetitions').value),
+          restTime: parseInt($('#restTime').value)
         })
       })
     }

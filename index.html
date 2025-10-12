@@ -7,6 +7,23 @@
     <title>Workout Timer Pro</title>
 </head>
 <body>
+    <!-- Animated Background Elements -->
+    <div class="background-grid"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+    <div class="floating-orb"></div>
+
+    <!-- YouTube Background Video -->
+    <div id="youtube-player" class="youtube-background"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading video...</div>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>WORKOUT TIMER</h1>
@@ -33,22 +50,28 @@
                     <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL">
                     <button id="loadYoutubeBtn">Load</button>
                 </div>
-                <div id="youtube-player"></div>
             </div>
 
-            <div class="setting-group">
-                <label>Duration (seconds)</label>
-                <input type="number" id="duration" value="30" min="5" max="3600">
-            </div>
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <label>Duration (seconds)</label>
+                    <input type="number" id="duration" value="30" min="5" max="3600">
+                </div>
 
-            <div class="setting-group">
-                <label>Alert Time (seconds)</label>
-                <input type="number" id="alertTime" value="5" min="1" max="60">
-            </div>
+                <div class="setting-group">
+                    <label>Alert Time (seconds)</label>
+                    <input type="number" id="alertTime" value="5" min="1" max="60">
+                </div>
 
-            <div class="setting-group">
-                <label>Repetitions</label>
-                <input type="number" id="repetitions" value="3" min="1" max="99">
+                <div class="setting-group">
+                    <label>Repetitions</label>
+                    <input type="number" id="repetitions" value="3" min="1" max="99">
+                </div>
+
+                <div class="setting-group">
+                    <label>Rest Time (seconds)</label>
+                    <input type="number" id="restTime" value="10" min="0" max="300">
+                </div>
             </div>
         </div>
 
