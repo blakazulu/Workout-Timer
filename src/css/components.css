@@ -991,6 +991,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-md);
+  /* Prevent scrolling and touch issues on the entire button container */
+  touch-action: manipulation;
+  -webkit-touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .btn {
@@ -1008,6 +1014,12 @@
   position: relative;
   text-transform: uppercase;
   transition: all var(--transition-fast);
+  /* Prevent double-tap zoom and unwanted scrolling on mobile */
+  touch-action: manipulation;
+  -webkit-touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .btn::before {

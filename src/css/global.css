@@ -293,6 +293,9 @@ body::after {
 .app-footer {
   flex-shrink: 0;
   padding-top: var(--spacing-md);
+  /* Prevent touch scrolling issues in the footer area */
+  touch-action: manipulation;
+  -webkit-touch-action: manipulation;
 }
 
 .app-title {
@@ -348,6 +351,15 @@ body::after {
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* Prevent scrolling when timer is active on mobile */
+body.timer-active {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* Mobile responsive styles */

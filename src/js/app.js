@@ -203,7 +203,11 @@ function setupEventListeners() {
   // Start/Pause button
   const startBtn = $("#startBtn");
   if (startBtn) {
-    startBtn.addEventListener("click", () => {
+    const handleStart = (e) => {
+      // Prevent any default behaviors and propagation
+      e.preventDefault();
+      e.stopPropagation();
+
       timer.start();
       // Save settings when starting
       saveSettings({
@@ -212,23 +216,65 @@ function setupEventListeners() {
         repetitions: parseInt($("#repetitions").value),
         restTime: parseInt($("#restTime").value)
       });
-    });
+    };
+
+    // Handle both click and touch events
+    startBtn.addEventListener("click", handleStart);
+
+    // Prevent scrolling on touch devices
+    startBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+
+    // Handle touch end as the primary action on mobile
+    startBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleStart(e);
+    }, { passive: false });
   }
 
   // New Timer button (formerly Reset button)
   const resetBtn = $("#resetBtn");
   if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
+    const handleNewTimer = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       timer.newTimer();
-    });
+    };
+
+    resetBtn.addEventListener("click", handleNewTimer);
+    resetBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+    resetBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleNewTimer(e);
+    }, { passive: false });
   }
 
   // Clear All button
   const clearAllBtn = $("#clearAllBtn");
   if (clearAllBtn) {
-    clearAllBtn.addEventListener("click", () => {
+    const handleClearAll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       timer.clearAll();
-    });
+    };
+
+    clearAllBtn.addEventListener("click", handleClearAll);
+    clearAllBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, { passive: false });
+    clearAllBtn.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleClearAll(e);
+    }, { passive: false });
   }
 
   // YouTube load button - lazy load module on first interaction

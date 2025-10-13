@@ -68,6 +68,9 @@ export class Timer {
       addClass(this.youtubeSection, "hidden");
       removeClass(this.timerDisplay, "hidden");
 
+      // Prevent body scrolling on mobile when timer is active
+      document.body.classList.add("timer-active");
+
       // Show NEW TIMER and CLEAR ALL buttons when timer is active
       if (this.resetBtn) removeClass(this.resetBtn, "hidden");
       if (this.clearAllBtn) removeClass(this.clearAllBtn, "hidden");
@@ -88,6 +91,9 @@ export class Timer {
     clearInterval(this.interval);
     this.isRunning = false;
     this.startBtn.textContent = "RESUME";
+
+    // Re-enable body scrolling on mobile
+    document.body.classList.remove("timer-active");
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -112,6 +118,9 @@ export class Timer {
     removeClass(this.youtubeSection, "hidden");
     addClass(this.timerDisplay, "hidden");
 
+    // Re-enable body scrolling on mobile
+    document.body.classList.remove("timer-active");
+
     // Hide NEW TIMER and CLEAR ALL buttons when returning to home
     if (this.resetBtn) addClass(this.resetBtn, "hidden");
     if (this.clearAllBtn) addClass(this.clearAllBtn, "hidden");
@@ -131,6 +140,9 @@ export class Timer {
     this.currentTime = 0;
     this.currentRep = 1;
     this.isResting = false;
+
+    // Re-enable body scrolling on mobile
+    document.body.classList.remove("timer-active");
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -155,6 +167,9 @@ export class Timer {
     this.currentTime = 0;
     this.currentRep = 1;
     this.isResting = false;
+
+    // Re-enable body scrolling on mobile
+    document.body.classList.remove("timer-active");
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
