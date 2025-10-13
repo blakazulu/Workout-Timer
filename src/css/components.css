@@ -997,6 +997,9 @@
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   -webkit-user-select: none;
+  /* Prevent overflow in PWA mode */
+  overflow: hidden;
+  width: 100%;
 }
 
 .btn {

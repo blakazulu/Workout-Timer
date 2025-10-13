@@ -136,6 +136,12 @@ async function handleEmbeddingError(errorMessage) {
  * Initialize the application
  */
 function init() {
+  // Detect if running as installed PWA
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true) {
+    document.body.classList.add('pwa-standalone');
+  }
+
   // Load saved settings
   const settings = loadSettings();
 
