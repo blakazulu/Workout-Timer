@@ -11,9 +11,15 @@ import {getGenreSongs, getMoodPlaylists, getRandomSong, isMoodQuery} from "./dat
 import {startVersionChecking, getVersionInfo} from "./utils/version-check.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
+// Import YouTube search functionality
+import {isYouTubeUrl, debounce, searchYouTubeVideosDetailed} from "./utils/youtube-search.js";
+import {createSearchDropdown} from "./components/search-dropdown.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
+
+// Search dropdown instance
+let searchDropdown = null;
 
 // Register service worker with update notifications
 const updateSW = registerSW({
@@ -149,6 +155,7 @@ function init() {
   setupGestures();
   setupHistory();
   setupMusicModeToggle();
+  setupYouTubeSearch();
 
   // Start version checking (checks every 5 minutes)
   startVersionChecking();
@@ -788,6 +795,101 @@ function setupMusicModeToggle() {
     div.textContent = text;
     return div.innerHTML;
   }
+}
+
+/**
+ * Set up YouTube search with autocomplete
+ */
+function setupYouTubeSearch() {
+  const youtubeUrl = $("#youtubeUrl");
+  if (!youtubeUrl) return;
+
+  // Create search dropdown
+  searchDropdown = createSearchDropdown(youtubeUrl, {
+    onSelect: async (result) => {
+      console.log("Selected video:", result.title);
+
+      // Check if this is an actual video result (has URL)
+      if (result.url && result.type === "video") {
+        // Update input with the video URL
+        youtubeUrl.value = result.url;
+
+        // Load the video immediately
+        const youtube = await loadYouTubeModule();
+        await youtube.loadVideo(result.url);
+
+        // Connect YouTube player to timer
+        const timer = getTimer();
+        timer.setYouTubePlayer(youtube);
+
+        // Show notification
+        showNotification(`Loading: ${result.title}`, false);
+      } else {
+        // Fallback for non-video results (shouldn't happen with new API)
+        youtubeUrl.value = result.title;
+        showNotification(`Selected: ${result.title}`, false);
+      }
+    }
+  });
+
+  // Debounced search function
+  const performSearch = debounce(async (query) => {
+    if (!query || query.trim().length < 2) {
+      searchDropdown.hide();
+      return;
+    }
+
+    // Check if input is a URL
+    if (isYouTubeUrl(query)) {
+      console.log("Detected YouTube URL, hiding dropdown");
+      searchDropdown.hide();
+      return;
+    }
+
+    // Show loading state
+    searchDropdown.showLoading();
+
+    try {
+      // Fetch actual video results with thumbnails
+      const results = await searchYouTubeVideosDetailed(query, 6);
+
+      if (results && results.length > 0) {
+        searchDropdown.show(results);
+      } else {
+        searchDropdown.hide();
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      searchDropdown.hide();
+    }
+  }, 300);
+
+  // Listen to input changes
+  youtubeUrl.addEventListener("input", (e) => {
+    const query = e.target.value;
+    performSearch(query);
+  });
+
+  // Hide dropdown when input loses focus (with small delay to allow clicks)
+  youtubeUrl.addEventListener("blur", () => {
+    setTimeout(() => {
+      if (!searchDropdown.isOpen()) return;
+      // Don't hide if user is hovering over dropdown
+      const dropdown = document.getElementById("youtubeSearchDropdown");
+      if (dropdown && dropdown.matches(":hover")) {
+        return;
+      }
+      searchDropdown.hide();
+    }, 150);
+  });
+
+  // Show dropdown again when input gets focus (if there's content)
+  youtubeUrl.addEventListener("focus", () => {
+    const query = youtubeUrl.value;
+    if (query && query.trim().length >= 2 && !isYouTubeUrl(query)) {
+      performSearch(query);
+    }
+  });
 }
 
 // Initialize app when DOM is ready
