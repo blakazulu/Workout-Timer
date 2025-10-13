@@ -122,9 +122,19 @@ export class SearchDropdown {
       this.dropdown.style.bottom = 'auto';
     }
 
-    // Set horizontal position and width
-    this.dropdown.style.left = `${rect.left}px`;
-    this.dropdown.style.width = `${rect.width}px`;
+    // Get app-content width for dropdown width
+    const appContent = document.querySelector('.app-content');
+    const containerRect = appContent ? appContent.getBoundingClientRect() : null;
+
+    if (containerRect) {
+      // Use app-content dimensions
+      this.dropdown.style.left = `${containerRect.left}px`;
+      this.dropdown.style.width = `${containerRect.width}px`;
+    } else {
+      // Fallback to input dimensions
+      this.dropdown.style.left = `${rect.left}px`;
+      this.dropdown.style.width = `${rect.width}px`;
+    }
   }
 
   /**
