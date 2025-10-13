@@ -165,6 +165,7 @@ The app is configured for Netlify deployment:
 3. **Start Your Workout**
    - Click START button (or press Space, or double-tap timer)
    - Settings panel hides, timer display appears
+   - NEW TIMER and CLEAR ALL buttons appear
    - YouTube music starts playing automatically
    - Timer counts down with cyan neon glow
 
@@ -201,16 +202,21 @@ The app is configured for Netlify deployment:
 ### Controls
 
 **Buttons:**
-- **START/PAUSE** - Toggle timer (cyan gradient button)
-- **RESET** - Stop and return to settings (pink gradient button)
+- **START/PAUSE** - Toggle timer (cyan gradient button, always visible)
+- **NEW TIMER** - Stop timer, return to home, keep music playing (pink gradient, visible only when timer active)
+- **CLEAR ALL** - Stop timer and music, clear everything, return to home (red gradient, visible only when timer active)
+
+**Button Visibility:**
+- **Home Page:** Only START button visible
+- **Timer Active:** All three buttons (START/PAUSE, NEW TIMER, CLEAR ALL) visible
 
 **Keyboard Shortcuts:**
 - `Space` - Start/Pause timer
-- `R` - Reset timer
+- `R` - Start new timer (keeps music playing)
 
 **Touch Gestures (Mobile):**
 - Double tap timer display - Start/Pause
-- Swipe down on timer - Reset (with confirmation)
+- Swipe down on timer - Start new timer (with confirmation, keeps music playing)
 
 **Music Controls Widget:**
 - Play/Pause button - Toggle music independently
