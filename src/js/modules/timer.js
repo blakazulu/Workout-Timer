@@ -29,6 +29,7 @@ export class Timer {
     this.resetBtn = $("#resetBtn");
     this.clearAllBtn = $("#clearAllBtn");
     this.settings = $("#settings");
+    this.youtubeSection = $(".youtube-section");
 
     // Audio manager
     this.audio = getAudio();
@@ -64,6 +65,7 @@ export class Timer {
       this.interval = setInterval(() => this.tick(), 1000);
       this.startBtn.textContent = "PAUSE";
       addClass(this.settings, "hidden");
+      addClass(this.youtubeSection, "hidden");
       removeClass(this.timerDisplay, "hidden");
 
       // Show NEW TIMER and CLEAR ALL buttons when timer is active
@@ -107,6 +109,7 @@ export class Timer {
     this.isRunning = false;
     this.startBtn.textContent = "START";
     removeClass(this.settings, "hidden");
+    removeClass(this.youtubeSection, "hidden");
     addClass(this.timerDisplay, "hidden");
 
     // Hide NEW TIMER and CLEAR ALL buttons when returning to home
@@ -233,7 +236,7 @@ export class Timer {
     // Update rep counter with rest indicator
     if (this.isRunning) {
       if (this.isResting) {
-        this.repCounter.textContent = `REST - Next: Rep ${this.currentRep} / ${this.repetitions}`;
+        this.repCounter.textContent = `REST - Next: Rep ${this.currentRep + 1} / ${this.repetitions}`;
       } else {
         this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
       }

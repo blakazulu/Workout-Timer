@@ -74,6 +74,8 @@
   box-shadow: 0 0 60px rgba(255, 0, 150, 0.5),
   0 8px 32px rgba(0, 0, 0, 0.6),
   inset 0 1px 0 rgba(255, 0, 150, 0.3);
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .timer-display.resting {
@@ -515,6 +517,10 @@
   0 8px 32px rgba(0, 0, 0, 0.5),
   inset 0 1px 0 rgba(100, 100, 255, 0.1);
   padding: var(--spacing-lg);
+}
+
+.youtube-section.hidden {
+  display: none;
 }
 
 .youtube-header {
