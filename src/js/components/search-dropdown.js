@@ -150,9 +150,6 @@ export class SearchDropdown {
             ${result.description ? `<div class="search-dropdown-item-description">${this.escapeHtml(result.description)}</div>` : ""}
           </div>
           ${duration ? `<div class="search-dropdown-item-duration">${duration}</div>` : ""}
-          <div class="search-dropdown-item-action">
-            <i class="ph-bold ph-arrow-bend-down-left"></i>
-          </div>
         </div>
       `;
     }).join("");

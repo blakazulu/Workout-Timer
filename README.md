@@ -21,6 +21,16 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🎸 **Genre Mode** - Select from 10 workout music genres:
   - EDM • Rock • Hip Hop • Metal • Trap • Dubstep • Hardstyle • Techno • Phonk • DnB
 
+#### Live YouTube Search
+- 🔍 **Smart Search Input** - Type any song or artist name to search YouTube in real-time
+- 🎬 **Video Results with Thumbnails** - See actual videos (not just suggestions) with preview images
+- ⏱️ **Duration Display** - Each result shows video length (MM:SS or HH:MM:SS format)
+- 🎯 **Click to Play** - Instantly load and play any video from search results
+- 🔗 **URL Detection** - Paste a YouTube link → dropdown hides, loads video directly
+- 🔎 **Live Autocomplete** - Type to search → dropdown shows 6 real video results with metadata
+- ⚡ **Serverless Backend** - Secure YouTube API integration via Netlify Functions
+- 🎵 **No Filters** - Find songs (3-4 min) or long mixes (1+ hour) - complete flexibility
+
 #### Curated Music Library
 - 📚 **180+ Verified Tracks** - Curated collection of 30+ minute workout mixes
 - 🎯 **Quality Filtered** - All tracks have 10K+ views and verified playability
@@ -101,10 +111,19 @@ The app is configured for Netlify deployment:
 
 2. **Choose Your Workout Music** (Optional but recommended)
 
-   **Option A: Link Mode** (Direct YouTube URL)
+   **Option A: Link Mode** (Direct YouTube URL or Live Search)
+
+   **URL Paste:**
    - Paste any YouTube URL (`youtube.com/watch?v=` or `youtu.be/`)
    - Click magnifying glass icon or press Enter
    - Video loads as fullscreen background with music controls widget
+
+   **Live Search:**
+   - Type any song name or artist (e.g., "golden", "eminem workout")
+   - See real video results with thumbnails and duration
+   - Use arrow keys (↑↓) to navigate, Enter to select
+   - Or click any video to play instantly
+   - Dropdown shows 6 most relevant videos with channel names
 
    **Option B: Mood Mode** (Curated playlists by feeling)
    - Click the "Mood" button (smiley icon)
@@ -222,12 +241,18 @@ The app is configured for Netlify deployment:
 ### Browser APIs
 - **Web Audio API** - Programmatic beep generation with frequency/duration control
 - **YouTube IFrame Player API** - Full playback control, metadata access, error handling
-- **YouTube Data API v3** - Music library curation and auto-updating (backend)
+- **YouTube Data API v3** - Music library curation, auto-updating, and live search (backend)
 - **Vibration API** - Haptic feedback patterns for mobile devices
 - **Popover API** - Native tooltips and modal dialogs with JavaScript positioning fallback
 - **localStorage** - Settings persistence, history tracking, play counts across sessions
 - **Service Workers** - Offline functionality, background updates, auto-update detection
 - **Intersection Observer** - Performance optimization for thumbnails (lazy loading)
+
+### Backend & Serverless
+- **Netlify Functions** - TypeScript serverless functions for secure API access
+- **YouTube Search API** - Real-time video search with thumbnails, duration, and metadata
+- **Environment Variables** - Secure API key storage in Netlify (YT_API_KEY)
+- **Edge Functions** - `/api/youtube-search` endpoint for client-side searches
 
 ### Fonts & Typography
 - **Orbitron** - Display font for timer and headers (Google Fonts)
@@ -308,12 +333,15 @@ src/
 │   │   ├── youtube.js     # IFrame Player API integration
 │   │   ├── audio.js       # Web Audio API + vibration
 │   │   └── storage.js     # localStorage persistence + history tracking
+│   ├── components/
+│   │   └── search-dropdown.js  # YouTube search dropdown UI with thumbnails
 │   ├── utils/
 │   │   ├── dom.js         # DOM helper functions
 │   │   ├── time.js        # Time formatting utilities
 │   │   ├── gestures.js    # Touch gesture detection
-│   │   ├── song_fetcher.js    # YouTube API music library automation
-│   │   └── version-check.js   # Client-server version comparison + force update
+│   │   ├── youtube-search.js   # YouTube search API + URL detection
+│   │   ├── song_fetcher.js     # YouTube API music library automation
+│   │   └── version-check.js    # Client-server version comparison + force update
 │   ├── data/
 │   │   ├── music-library.js        # Music library API + queries
 │   │   ├── workout_music.json      # Curated music data (180+ tracks)
@@ -322,12 +350,15 @@ src/
 ├── css/
 │   ├── variables.css      # Design tokens (colors, spacing, etc.)
 │   ├── global.css         # Layout + background effects
-│   ├── components.css     # UI element styles
+│   ├── components.css     # UI element styles (includes search dropdown)
 │   └── animations.css     # Keyframe animations
 ├── scripts/
 │   └── generate-version.js # Build script for version.json generation
 ├── public/
 │   └── version.json       # Generated version metadata (v, build time)
+├── netlify/
+│   └── functions/
+│       └── youtube-search.mts  # Serverless function for secure YouTube API access
 └── main.js                # Entry point + PWA registration
 ```
 
@@ -431,12 +462,16 @@ This project deliberately avoids frameworks for several advantages:
 
 ## 🎯 Project Status
 
-### ✅ Completed Features (v1.0.4)
+### ✅ Completed Features (v1.0.5)
 - [x] Core timer with work/rest cycles
 - [x] YouTube background video integration
 - [x] Music controls widget with seeking
 - [x] **Curated Music Library** - 180+ tracks across 18 categories
 - [x] **Three Music Modes** - Link, Mood (8), Genre (10)
+- [x] **Live YouTube Search** - Real-time search with video thumbnails and duration
+- [x] **Smart Search Dropdown** - 6 results with thumbnails, click to play instantly
+- [x] **Serverless Backend** - Secure YouTube API via Netlify Functions
+- [x] **URL Detection** - Auto-detects URLs vs search terms
 - [x] **Song History System** - Recent + Most Played tabs
 - [x] **Auto-Updating Library** - 30-day refresh automation
 - [x] **Smart Error Recovery** - Error 150 fallback with alternatives
@@ -468,7 +503,7 @@ This project deliberately avoids frameworks for several advantages:
 - Multiple timers/intervals in sequence (complex HIIT programs)
 - Custom alert sounds (upload MP3/WAV files)
 - Playlist creation from library favorites
-- Search within music library
+- Advanced search filters (duration range, channel, upload date)
 
 **Phase 3 - Advanced Features:**
 - Push notifications for workout reminders
@@ -519,9 +554,11 @@ MIT License - See LICENSE file for details
 🔗 **Live Demo:** [https://workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)
 
 🎮 **Key Features:**
+- 🔍 **Live YouTube Search** - Find any song or mix instantly with real-time search
 - 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
 - ⏱️ **Precision Timer** with work/rest cycles
 - 📜 **Smart History** tracking your workout music
 - 🎨 **Cyberpunk Theme** with neon animations
 - 📱 **PWA** - Install and use offline
 - 🔄 **Auto-Updating** music library
+- ⚡ **Serverless Backend** - Secure API integration via Netlify
