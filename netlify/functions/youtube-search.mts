@@ -89,7 +89,7 @@ export default async (req: Request, context: Context) => {
   try {
     // Step 1: Search for videos
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?` +
-      `part=snippet&type=video&videoDuration=long&q=${encodeURIComponent(query)}&` +
+      `part=snippet&type=video&q=${encodeURIComponent(query)}&` +
       `maxResults=${maxResults}&key=${apiKey}`;
 
     const searchResponse = await fetch(searchUrl);

@@ -2076,7 +2076,7 @@
   transform: translateY(0);
   transition: opacity 0.3s ease, transform 0.3s ease;
   width: 100%;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .youtube-search-dropdown.hidden {
@@ -2235,6 +2235,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.search-dropdown-item-duration {
+  color: #6464ff;
+  flex-shrink: 0;
+  font-family: var(--font-family-display);
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: auto;
+  padding: 0 8px;
+  text-shadow: 0 0 8px rgba(100, 100, 255, 0.5);
+}
+
+.search-dropdown-item:hover .search-dropdown-item-duration,
+.search-dropdown-item.selected .search-dropdown-item-duration {
+  color: #ff0096;
+  text-shadow: 0 0 12px rgba(255, 0, 150, 0.6);
 }
 
 .search-dropdown-item-action {

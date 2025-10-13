@@ -131,6 +131,7 @@ export class SearchDropdown {
     const items = this.results.map((result, index) => {
       const isSelected = index === this.selectedIndex;
       const hasThumbnail = result.thumbnail && result.type === "video";
+      const duration = result.duration ? this.formatDuration(result.duration) : null;
 
       return `
         <div class="search-dropdown-item ${isSelected ? "selected" : ""}" data-index="${index}">
@@ -148,6 +149,7 @@ export class SearchDropdown {
             <div class="search-dropdown-item-title">${this.escapeHtml(result.title)}</div>
             ${result.description ? `<div class="search-dropdown-item-description">${this.escapeHtml(result.description)}</div>` : ""}
           </div>
+          ${duration ? `<div class="search-dropdown-item-duration">${duration}</div>` : ""}
           <div class="search-dropdown-item-action">
             <i class="ph-bold ph-arrow-bend-down-left"></i>
           </div>
@@ -233,6 +235,24 @@ export class SearchDropdown {
       return this.results[this.selectedIndex];
     }
     return null;
+  }
+
+  /**
+   * Format duration in seconds to readable time (MM:SS or HH:MM:SS)
+   * @param {number} seconds - Duration in seconds
+   * @returns {string} Formatted duration
+   */
+  formatDuration(seconds) {
+    if (!seconds || seconds === 0) return "";
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    }
+    return `${minutes}:${secs.toString().padStart(2, "0")}`;
   }
 
   /**
