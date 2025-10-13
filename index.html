@@ -141,12 +141,49 @@
   <div class="loading-text">Loading video...</div>
 </div>
 
+<!-- Update Overlay -->
+<div id="updateOverlay" class="update-overlay hidden">
+  <svg class="update-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="update-glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00ffc8" flood-opacity="0.8"/>
+      </filter>
+      <filter id="update-glow-pink" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ff0096" flood-opacity="0.8"/>
+      </filter>
+    </defs>
+    <path d="M12 52 A 20 20 0 1 1 52 12" stroke="#00ffc8" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#update-glow-cyan)"/>
+    <path d="M18 46 A 14 14 0 1 1 46 18" stroke="#ff0096" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#update-glow-pink)"/>
+  </svg>
+  <div class="update-title">UPDATING</div>
+  <div class="update-version-info">
+    <span class="update-old-version" id="updateOldVersion">v0.0.0</span>
+    <span class="update-arrow">→</span>
+    <span class="update-new-version" id="updateNewVersion">v0.0.0</span>
+  </div>
+  <div class="update-progress">
+    <div class="update-step active" id="updateStep1">
+      <div class="update-step-icon"></div>
+      <span>Clearing caches...</span>
+    </div>
+    <div class="update-step" id="updateStep2">
+      <div class="update-step-icon"></div>
+      <span>Preserving your data...</span>
+    </div>
+    <div class="update-step" id="updateStep3">
+      <div class="update-step-icon"></div>
+      <span>Loading new version...</span>
+    </div>
+  </div>
+  <div class="update-spinner"></div>
+</div>
+
 <div class="container">
   <div class="header">
     <h1 class="app-title">
       <img src="/icons/icon.svg" alt="CYCLE" class="app-icon">
       <span>CYCLE</span>
-      <span class="app-version">v1.0.3</span>
+      <span class="app-version" id="appVersion">Loading...</span>
     </h1>
     <button class="btn-install" id="installBtn" style="display: none;">
       <i class="ph-bold ph-download-simple"></i>

@@ -1,6 +1,6 @@
 # CYCLE
 
-A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, YouTube background music, and an immersive cyberpunk aesthetic.
+A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, curated workout music library, and an immersive cyberpunk aesthetic. Features 180+ verified tracks across 8 moods and 10 genres, all 30+ minutes long for uninterrupted workouts.
 
 ## ✨ Features
 
@@ -10,26 +10,57 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🔊 **Audio Alerts** - Web Audio API beeps with custom frequencies (no audio files needed)
 - 📳 **Haptic Feedback** - Vibration patterns for mobile devices during alerts and completions
 - 🎯 **Smart Volume Ducking** - Music automatically reduces to 25% during final countdown alerts
+- 💾 **Auto-Save Settings** - All preferences automatically persist on change
 
-### YouTube Integration
+### Music Integration
+
+#### Three Music Modes
+- 🔗 **Link Mode** - Load any YouTube video by pasting URL
+- 😄 **Mood Mode** - Choose from 8 curated workout moods:
+  - Beast Mode • Intense • Energetic • Power • Aggressive • Pump Up • Focus • Motivated
+- 🎸 **Genre Mode** - Select from 10 workout music genres:
+  - EDM • Rock • Hip Hop • Metal • Trap • Dubstep • Hardstyle • Techno • Phonk • DnB
+
+#### Curated Music Library
+- 📚 **180+ Verified Tracks** - Curated collection of 30+ minute workout mixes
+- 🎯 **Quality Filtered** - All tracks have 10K+ views and verified playability
+- 🔄 **Auto-Updating** - Music library refreshes every 30 days for compliance
+- 🎲 **Smart Fallback** - Auto-loads alternative song if embedding is disabled (Error 150)
+
+#### Playback Features
 - 🎵 **Fullscreen Background Video** - YouTube videos as immersive 30% opacity backgrounds
 - 🎛️ **Music Controls Widget** - Play/pause, progress bar with seeking, time display
-- 📊 **Song Information** - Title, artist, duration, and video ID in tooltip
+- 📊 **Song Information** - Title, artist, duration in detailed tooltip
 - 🔄 **Seamless Playback** - Music continues during rest periods, syncs with timer lifecycle
+- 🎼 **Music Selection UI** - Beautiful grid with thumbnails, duration, and artist info
+
+### History & Tracking
+- 📜 **Song History** - Track all songs you've played with timestamps
+- 🏆 **Most Played** - View your top 20 most-played workout tracks
+- 🖼️ **Visual History** - Thumbnails, titles, artists, play counts, and durations
+- 🔄 **Quick Replay** - Click any history item to instantly reload that song
 
 ### User Experience
 - 👆 **Touch Gestures** - Double tap to start/pause, swipe down to reset (mobile)
 - ⌨️ **Keyboard Shortcuts** - Space to start/pause, R to reset (desktop)
-- 💾 **Settings Persistence** - Preferences saved via localStorage
+- 💾 **Settings Persistence** - All preferences saved via localStorage
 - 📱 **Mobile-Optimized** - Responsive design with touch-friendly controls
 - 📴 **Offline-First PWA** - Installable app that works without internet after first visit
-- 🎨 **Cyberpunk Theme** - Neon colors, animated grid, scanlines, floating orbs
+- 🔔 **Smart Notifications** - Visual feedback for actions, errors, and song loading
+- 📲 **Install Prompt** - One-click PWA installation with native app experience
+- 🔄 **Version Check System** - Automatic client-server version comparison with force update
+- 🛡️ **Smart Updates** - Preserves user data (settings, history) during cache clearing
+- ✨ **Visual Update Overlay** - Animated cyberpunk update screen with progress steps
+- 🏷️ **Dynamic Version Display** - Real-time version info synced from package.json
 
 ### Visual Design
+- 🎨 **Cyberpunk Theme** - Neon colors, animated grid, scanlines, floating orbs
 - 🌈 **Animated Background** - Tech grid pattern with neon orbs and scanlines
 - ✨ **Dynamic Glow Effects** - State-based color transitions (cyan/pink/purple)
 - 🔄 **Smooth Animations** - 60fps transitions with GPU-accelerated effects
 - 📐 **Responsive Layout** - Adapts from mobile to desktop seamlessly
+- ⚡ **Custom Loader** - Branded loading screen with smooth transitions
+- 🔄 **Update Overlay** - Animated version update screen with progress steps and checkmarks
 
 ## 🚀 Quick Start
 
@@ -66,12 +97,51 @@ The app is configured for Netlify deployment:
    - **Alert Time**: Countdown warning starts this many seconds before finish (default: 3 seconds)
    - **Repetitions**: Number of sets to complete (default: 3)
    - **Rest Time**: Break between sets (default: 10 seconds)
+   - Settings auto-save on every change
 
-2. **Load Background Music** (Optional)
+2. **Choose Your Workout Music** (Optional but recommended)
+
+   **Option A: Link Mode** (Direct YouTube URL)
    - Paste any YouTube URL (`youtube.com/watch?v=` or `youtu.be/`)
-   - Click "Load" or press Enter
+   - Click magnifying glass icon or press Enter
    - Video loads as fullscreen background with music controls widget
-   - Loading overlay appears while video initializes
+
+   **Option B: Mood Mode** (Curated playlists by feeling)
+   - Click the "Mood" button (smiley icon)
+   - Select from 8 workout moods:
+     - **Beast Mode** - Maximum intensity, dominating workouts
+     - **Intense** - Hard-hitting, extreme training music
+     - **Energetic** - High energy, upbeat motivation
+     - **Power** - Strength and powerlifting focus
+     - **Aggressive** - Raw, aggressive trap/hardstyle
+     - **Pump Up** - Hype and motivational anthems
+     - **Focus** - Instrumental, concentration-focused
+     - **Motivated** - Inspirational speeches + music
+   - Browse 10+ verified mixes per mood with thumbnails
+   - Click any track to load instantly
+
+   **Option C: Genre Mode** (Curated by music style)
+   - Click the "Genre" button (music notes icon)
+   - Select from 10 workout genres:
+     - **EDM** - Electronic dance music and cyberpunk vibes
+     - **Rock** - Alternative and hard rock anthems
+     - **Hip Hop** - Rap and hip hop workout bangers
+     - **Metal** - Heavy metal and power metal
+     - **Trap** - Aggressive trap and phonk
+     - **Dubstep** - Heavy bass and drops
+     - **Hardstyle** - Euphoric and raw hardstyle
+     - **Techno** - Hard techno and industrial beats
+     - **Phonk** - Drift phonk and Memphis rap
+     - **DnB** - Drum and bass / neurofunk
+   - Browse 10+ verified mixes per genre with thumbnails
+   - Click any track to load instantly
+
+   **Option D: History** (Your recent tracks)
+   - Click the history button (clock icon)
+   - **Recent Tab**: See your last 20 played songs
+   - **Most Played Tab**: View your top 20 tracks
+   - Each shows: thumbnail, title, artist, play count, duration
+   - Click to instantly replay any song
 
 3. **Start Your Workout**
    - Click START button (or press Space, or double-tap timer)
@@ -135,19 +205,29 @@ The app is configured for Netlify deployment:
 - **Vanilla JavaScript (ES6+)** - No framework overhead, pure performance
 - **HTML5** - Semantic markup with modern APIs
 - **CSS3** - Custom properties, Grid, Flexbox, animations
+- **Node.js 18+** - Backend automation for music library curation
 
 ### PWA Technologies
 - **vite-plugin-pwa 1.0.3** - Service worker generation and PWA manifest
 - **Workbox 7.3.0** - Advanced caching strategies with auto-update
 - **Web App Manifest** - Installation metadata for all icon sizes
 
+### Music Library System
+- **YouTube Data API v3** - Automated music curation and verification
+- **Smart Caching** - 30-day refresh cycle with timestamp tracking
+- **Quality Filters** - 30+ min duration, 10K+ views, visible stats
+- **18 Categories** - 8 moods + 10 genres with 10 tracks each
+- **JSON Data Store** - Fast, offline-first music metadata
+
 ### Browser APIs
 - **Web Audio API** - Programmatic beep generation with frequency/duration control
-- **YouTube IFrame Player API** - Full playback control and metadata access
+- **YouTube IFrame Player API** - Full playback control, metadata access, error handling
+- **YouTube Data API v3** - Music library curation and auto-updating (backend)
 - **Vibration API** - Haptic feedback patterns for mobile devices
-- **Popover API** - Native tooltip with JavaScript fallback
-- **localStorage** - Settings persistence across sessions
-- **Service Workers** - Offline functionality and background updates
+- **Popover API** - Native tooltips and modal dialogs with JavaScript positioning fallback
+- **localStorage** - Settings persistence, history tracking, play counts across sessions
+- **Service Workers** - Offline functionality, background updates, auto-update detection
+- **Intersection Observer** - Performance optimization for thumbnails (lazy loading)
 
 ### Fonts & Typography
 - **Orbitron** - Display font for timer and headers (Google Fonts)
@@ -184,6 +264,7 @@ The app is configured for Netlify deployment:
 - Floating orbs (20-30s ease-in-out)
 - Pulse glow on alerts (1s ease-in-out)
 - Button ripple effects on interaction
+- Update overlay animations (icon rotation, step slide-ins, checkmark pops)
 
 ## 📱 Browser Compatibility
 
@@ -226,73 +307,178 @@ src/
 │   │   ├── timer.js       # Core timer logic + work/rest cycles
 │   │   ├── youtube.js     # IFrame Player API integration
 │   │   ├── audio.js       # Web Audio API + vibration
-│   │   └── storage.js     # localStorage persistence
+│   │   └── storage.js     # localStorage persistence + history tracking
 │   ├── utils/
 │   │   ├── dom.js         # DOM helper functions
 │   │   ├── time.js        # Time formatting utilities
-│   │   └── gestures.js    # Touch gesture detection
+│   │   ├── gestures.js    # Touch gesture detection
+│   │   ├── song_fetcher.js    # YouTube API music library automation
+│   │   └── version-check.js   # Client-server version comparison + force update
+│   ├── data/
+│   │   ├── music-library.js        # Music library API + queries
+│   │   ├── workout_music.json      # Curated music data (180+ tracks)
+│   │   └── workout_music_cache.json # Cache with timestamps for refresh
 │   └── app.js             # Main orchestrator + event handlers
 ├── css/
 │   ├── variables.css      # Design tokens (colors, spacing, etc.)
 │   ├── global.css         # Layout + background effects
 │   ├── components.css     # UI element styles
 │   └── animations.css     # Keyframe animations
-└── main.js                # Entry point
+├── scripts/
+│   └── generate-version.js # Build script for version.json generation
+├── public/
+│   └── version.json       # Generated version metadata (v, build time)
+└── main.js                # Entry point + PWA registration
 ```
 
 ### State Management
 - **Timer State:** currentTime, currentRep, isRunning, isResting
-- **YouTube State:** player instance, isReady, currentVideoId
-- **Audio State:** audioContext, vibrationEnabled
-- **Settings State:** Persisted in localStorage, loaded on init
+- **YouTube State:** player instance, isReady, currentVideoId, lazy-loaded
+- **Audio State:** audioContext, vibrationEnabled, volumeDucking
+- **Settings State:** Persisted in localStorage, auto-saved on change
+- **History State:** Song play history, play counts, timestamps (localStorage)
+- **Music Library:** 18 categories (8 moods + 10 genres) with metadata
+
+### Music Library System
+The app includes a sophisticated music curation system:
+
+**song_fetcher.js** (Backend automation):
+- YouTube Data API v3 integration with quota management
+- Fetches 10 verified tracks per category (180+ total)
+- Filters: 30+ minute videos, 10K+ views, no live/upcoming
+- Auto-refresh every 30 days for policy compliance
+- Rate limiting: 250ms between requests, 9000 unit daily budget
+- Outputs: `workout_music.json` (clean) + `workout_music_cache.json` (timestamps)
+
+**music-library.js** (Frontend API):
+- Imports curated JSON data
+- Provides functions: `getMoodPlaylists()`, `getGenreSongs()`, `getRandomSong()`
+- Handles duplicate detection across categories
+- Powers mood/genre selection UI
+
+**Error Handling**:
+- Error 150 (embedding disabled) detection
+- Auto-loads random alternative track from library
+- User notifications for errors and recoveries
+
+### Version Check System
+The app includes robust client-server version synchronization with visual feedback:
+
+**Build-Time Generation** (`scripts/generate-version.js`):
+- Reads version from `package.json` (single source of truth)
+- Generates `version.json` with version, build time, build ID
+- Runs automatically before every dev/build command
+- Injected into client code via Vite define plugin
+
+**Dynamic Version Display**:
+- Version number in HTML header auto-updates on app load
+- Reads from embedded `__APP_VERSION__` constant
+- Single source of truth eliminates hardcoded versions
+- Always displays current version from package.json
+
+**Client-Side Checking** (`src/js/utils/version-check.js`):
+- Fetches `/version.json` from server with cache-busting
+- Compares client version (injected at build) with server version
+- Checks every 5 minutes for active users
+- Initial check on app load
+
+**Visual Update Overlay**:
+When version mismatch detected, displays animated cyberpunk overlay with:
+- **Version Transition** - Shows old version → new version (e.g., `v1.0.4 → v1.0.5`)
+- **Animated Icon** - Rotating, pulsing cyberpunk logo with color shifts
+- **Progress Steps** - 3 animated steps with checkmarks:
+  1. ✓ Clearing caches... (spins while active)
+  2. ✓ Preserving your data... (spins while active)
+  3. ✓ Loading new version... (spins while active)
+- **Smooth Animations** - Cyan/pink glows, slide-ins, checkmark pops
+- **Professional UX** - Users see exactly what's happening during update
+
+**Force Update Flow**:
+1. Version mismatch detected
+2. Show visual update overlay with version numbers
+3. Step 1: Unregister service workers + clear caches (animated)
+4. Step 2: Preserve user data (`cycleSettings`, `cycleHistory`) (animated)
+5. Step 3: Reload with cache-busting parameter (animated)
+6. Page reloads with new version (~3-4 seconds total)
+
+**Benefits**:
+- ✅ Guarantees users run latest deployed version
+- ✅ Critical fixes reach users immediately
+- ✅ Prevents stale cache issues
+- ✅ User data survives updates
+- ✅ Professional visual feedback during updates
+- ✅ Clear communication (shows old → new version)
+- ✅ Branded cyberpunk aesthetic maintained
 
 ## 🚀 Why Vanilla JavaScript?
 
 This project deliberately avoids frameworks for several advantages:
 
 1. **Performance** - Direct DOM manipulation, no virtual DOM overhead
-2. **Bundle Size** - ~2,455 lines total vs. 40KB+ for React alone
+2. **Bundle Size** - Minimal overhead vs. 40KB+ for React alone
 3. **Simplicity** - Single-page app doesn't need complex state management
 4. **Learning** - Standard JavaScript, no framework-specific concepts
-5. **Native APIs** - Direct access to Web Audio, YouTube, Vibration APIs
+5. **Native APIs** - Direct access to Web Audio, YouTube, Vibration, Popover APIs
 6. **Future-Proof** - No framework versioning or breaking changes
+
+### Codebase Statistics
+- **Total Lines:** ~3,200+ lines of production code
+- **JavaScript:** ~2,000 lines (ES6 modules)
+- **CSS:** ~800 lines (custom properties, animations)
+- **HTML:** ~360 lines (semantic markup)
+- **Data:** ~180 curated tracks with metadata
+- **Dependencies:** Just 2 runtime deps (vite-plugin-pwa, workbox-window)
 
 ## 🎯 Project Status
 
-### ✅ Completed Features
+### ✅ Completed Features (v1.0.4)
 - [x] Core timer with work/rest cycles
 - [x] YouTube background video integration
 - [x] Music controls widget with seeking
-- [x] Touch gestures for mobile
+- [x] **Curated Music Library** - 180+ tracks across 18 categories
+- [x] **Three Music Modes** - Link, Mood (8), Genre (10)
+- [x] **Song History System** - Recent + Most Played tabs
+- [x] **Auto-Updating Library** - 30-day refresh automation
+- [x] **Smart Error Recovery** - Error 150 fallback with alternatives
+- [x] Touch gestures for mobile (double tap, swipe down)
 - [x] Vibration API for haptic feedback
-- [x] PWA with service worker
-- [x] Offline functionality
-- [x] Settings persistence
-- [x] Loading states and error handling
-- [x] Install prompt for PWA
+- [x] PWA with service worker + install prompt
+- [x] Offline functionality with caching
+- [x] Auto-save settings on change
+- [x] Loading states with branded loader
 - [x] Cyberpunk theme with animations
 - [x] Smart volume ducking during alerts
-- [x] Song info tooltip
-- [x] Keyboard shortcuts
+- [x] Song info tooltip with popover
+- [x] Keyboard shortcuts (Space, R)
+- [x] Visual notifications system
+- [x] **Version Check System** - Client-server comparison every 5 minutes
+- [x] **Force Update Capability** - Clears cache while preserving user data
+- [x] **Build-time version injection** - Single source of truth (package.json)
+- [x] **Visual Update Overlay** - Animated cyberpunk update screen with progress
+- [x] **Dynamic Version Display** - Auto-synced version number in HTML header
 - [x] Netlify deployment configuration
+- [x] Anchor positioning fallback for older browsers
 
 ### 🔮 Future Enhancements
 
-**Phase 2 - User Features:**
+**Phase 2 - User Customization:**
 - Custom workout presets (save/load configurations)
-- Workout history tracking with statistics
+- Workout session history tracking with statistics (duration, sets, dates)
 - Export/import settings as JSON
-- Multiple timers/intervals in sequence
-- Custom alert sounds (upload MP3)
+- Multiple timers/intervals in sequence (complex HIIT programs)
+- Custom alert sounds (upload MP3/WAV files)
+- Playlist creation from library favorites
+- Search within music library
 
 **Phase 3 - Advanced Features:**
 - Push notifications for workout reminders
 - Background sync for workout logs
-- Social features (share workouts, challenges)
+- Social features (share workouts, challenges, leaderboards)
 - Fitness tracker integration (Apple Health, Google Fit)
-- Voice commands (Web Speech API)
-- Dark/Light theme toggle
-- More color schemes
+- Voice commands (Web Speech API) - "Start workout", "Skip to rest"
+- Dark/Light theme toggle with multiple color schemes
+- Weekly workout statistics dashboard
+- Spotify integration as alternative to YouTube
 
 **Technical Improvements:**
 - TypeScript migration for type safety
@@ -328,8 +514,14 @@ MIT License - See LICENSE file for details
 
 **Built with 💜 using Vite + Vanilla JavaScript**
 
-*Experience the future of workout timing with immersive visuals and seamless music integration.*
+*Experience the future of workout timing with immersive visuals and a curated music library.*
 
-🔗 **Live Demo:** [Your Netlify URL here]
+🔗 **Live Demo:** [https://workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)
 
-🎮 **Features:** Cyberpunk Theme • YouTube Background • Work/Rest Cycles • Touch Gestures • PWA
+🎮 **Key Features:**
+- 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
+- ⏱️ **Precision Timer** with work/rest cycles
+- 📜 **Smart History** tracking your workout music
+- 🎨 **Cyberpunk Theme** with neon animations
+- 📱 **PWA** - Install and use offline
+- 🔄 **Auto-Updating** music library

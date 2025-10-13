@@ -8,6 +8,7 @@ import {initAudio} from "./modules/audio.js";
 import {getMostPlayedSongs, getSongHistory, loadSettings, saveSettings} from "./modules/storage.js";
 import {createGestureHandler} from "./utils/gestures.js";
 import {getGenreSongs, getMoodPlaylists, getRandomSong, isMoodQuery} from "./data/music-library.js";
+import {startVersionChecking, getVersionInfo} from "./utils/version-check.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
 
@@ -149,7 +150,20 @@ function init() {
   setupHistory();
   setupMusicModeToggle();
 
-  console.log("CYCLE initialized");
+  // Start version checking (checks every 5 minutes)
+  startVersionChecking();
+
+  // Update version display in HTML
+  const versionInfo = getVersionInfo();
+  const appVersionEl = $("#appVersion");
+  if (appVersionEl) {
+    appVersionEl.textContent = `v${versionInfo.version}`;
+  }
+
+  // Log version info
+  console.log(`🚀 CYCLE v${versionInfo.version}`);
+  console.log(`   Build: ${versionInfo.buildTime}`);
+  console.log("   Initialized successfully");
 
   // Hide app loader once everything is ready
   hideAppLoader();
