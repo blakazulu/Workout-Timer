@@ -179,19 +179,22 @@
 </div>
 
 <div class="container">
-  <div class="header">
-    <h1 class="app-title">
-      <img src="/icons/icon.svg" alt="CYCLE" class="app-icon">
-      <span>CYCLE</span>
-      <span class="app-version" id="appVersion">Loading...</span>
-    </h1>
-    <button class="btn-install" id="installBtn" style="display: none;">
-      <i class="ph-bold ph-download-simple"></i>
-      Install App
-    </button>
+  <div class="app-header">
+    <div class="header">
+      <h1 class="app-title">
+        <img src="/icons/icon.svg" alt="CYCLE" class="app-icon">
+        <span>CYCLE</span>
+        <span class="app-version" id="appVersion">Loading...</span>
+      </h1>
+      <button class="btn-install" id="installBtn" style="display: none;">
+        <i class="ph-bold ph-download-simple"></i>
+        Install App
+      </button>
+    </div>
   </div>
 
-  <div class="timer-display hidden" id="timerDisplay">
+  <div class="app-content">
+    <div class="timer-display hidden" id="timerDisplay">
     <div class="timer-value" id="timerValue">00:00</div>
     <div class="rep-counter" id="repCounter">Ready</div>
     <div class="gesture-hint">Double tap to start • Swipe down for new timer</div>
@@ -276,11 +279,14 @@
       </div>
     </div>
   </div>
+  </div>
 
-  <div class="controls">
-    <button class="btn btn-start" id="startBtn">START</button>
-    <button class="btn btn-reset hidden" id="resetBtn">NEW TIMER</button>
-    <button class="btn btn-clear-all hidden" id="clearAllBtn">CLEAR ALL</button>
+  <div class="app-footer">
+    <div class="controls">
+      <button class="btn btn-start" id="startBtn">START</button>
+      <button class="btn btn-reset hidden" id="resetBtn">NEW TIMER</button>
+      <button class="btn btn-clear-all hidden" id="clearAllBtn">CLEAR ALL</button>
+    </div>
   </div>
 </div>
 

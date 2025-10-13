@@ -32,8 +32,8 @@ export class SearchDropdown {
     this.dropdown.className = "youtube-search-dropdown hidden";
     this.dropdown.id = "youtubeSearchDropdown";
 
-    // Insert dropdown after the input
-    this.input.parentNode.insertBefore(this.dropdown, this.input.nextSibling);
+    // Append to body for fixed positioning (like music tooltip popover)
+    document.body.appendChild(this.dropdown);
 
     // Set up event listeners
     this.setupEventListeners();
@@ -84,6 +84,47 @@ export class SearchDropdown {
         this.selectResult(index);
       }
     });
+
+    // Reposition on window resize and scroll
+    window.addEventListener("resize", () => {
+      if (this.isVisible) {
+        this.positionDropdown();
+      }
+    });
+
+    window.addEventListener("scroll", () => {
+      if (this.isVisible) {
+        this.positionDropdown();
+      }
+    }, true); // Use capture phase to catch scrolling in child elements
+  }
+
+  /**
+   * Position the dropdown relative to the input
+   */
+  positionDropdown() {
+    const rect = this.input.getBoundingClientRect();
+    const dropdownHeight = this.dropdown.offsetHeight;
+    const viewportHeight = window.innerHeight;
+    const spaceBelow = viewportHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    // Determine if dropdown should appear above or below input
+    const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
+
+    if (showAbove) {
+      // Position above input
+      this.dropdown.style.bottom = `${viewportHeight - rect.top + 8}px`;
+      this.dropdown.style.top = 'auto';
+    } else {
+      // Position below input
+      this.dropdown.style.top = `${rect.bottom + 8}px`;
+      this.dropdown.style.bottom = 'auto';
+    }
+
+    // Set horizontal position and width
+    this.dropdown.style.left = `${rect.left}px`;
+    this.dropdown.style.width = `${rect.width}px`;
   }
 
   /**
@@ -102,6 +143,9 @@ export class SearchDropdown {
     this.render();
     this.dropdown.classList.remove("hidden");
     this.isVisible = true;
+
+    // Position dropdown after rendering
+    requestAnimationFrame(() => this.positionDropdown());
   }
 
   /**
@@ -175,6 +219,9 @@ export class SearchDropdown {
     `;
     this.dropdown.classList.remove("hidden");
     this.isVisible = true;
+
+    // Position dropdown after rendering
+    requestAnimationFrame(() => this.positionDropdown());
   }
 
   /**
