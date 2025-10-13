@@ -13,7 +13,9 @@ const MAX_FAVORITES = 100; // Limit to prevent localStorage overflow
 export function getFavorites() {
   try {
     const stored = localStorage.getItem(FAVORITES_KEY);
-    return stored ? JSON.parse(stored) : [];
+    const favorites = stored ? JSON.parse(stored) : [];
+    console.log(`📚 Retrieved ${favorites.length} favorites from storage:`, favorites);
+    return favorites;
   } catch (error) {
     console.error("Failed to load favorites:", error);
     return [];
@@ -49,11 +51,13 @@ export function isFavorite(videoId) {
  */
 export function addToFavorites(songData) {
   try {
+    console.log("➕ Adding song to favorites - Input data:", songData);
+
     const favorites = getFavorites();
 
     // Check if already favorited
     if (favorites.some(fav => fav.videoId === songData.videoId)) {
-      console.log("Song already in favorites");
+      console.log("⚠️ Song already in favorites:", songData.videoId);
       return false;
     }
 
@@ -73,16 +77,18 @@ export function addToFavorites(songData) {
       favoritedAt: new Date().toISOString()
     };
 
+    console.log("💾 Created favorite entry:", favoriteEntry);
+
     // Add to beginning of array (most recent first)
     favorites.unshift(favoriteEntry);
 
     // Save back to localStorage
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
-    console.log(`Song added to favorites: ${songData.title}`);
+    console.log(`✅ Song added to favorites: ${songData.title} (Total favorites: ${favorites.length})`);
     return true;
   } catch (error) {
-    console.error("Failed to add song to favorites:", error);
+    console.error("❌ Failed to add song to favorites:", error);
     throw error;
   }
 }

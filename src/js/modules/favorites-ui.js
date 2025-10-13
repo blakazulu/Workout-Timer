@@ -44,6 +44,15 @@ function setupFavoriteButton(youtubeModule, showNotification) {
 
     try {
       // Extract song data with fallbacks for missing metadata
+      console.log("🎵 Extracting song data from YouTube module:", {
+        videoId: youtubeModule.videoId,
+        currentVideoId: youtubeModule.currentVideoId,
+        videoTitle: youtubeModule.videoTitle,
+        videoChannel: youtubeModule.videoChannel,
+        duration: youtubeModule.getDuration ? youtubeModule.getDuration() : 'N/A',
+        originalUrl: youtubeModule.originalUrl
+      });
+
       const videoId = youtubeModule.videoId || youtubeModule.currentVideoId;
       const title = youtubeModule.videoTitle || "YouTube Music";
       const channel = youtubeModule.videoChannel || "Unknown Channel";
@@ -52,6 +61,7 @@ function setupFavoriteButton(youtubeModule, showNotification) {
 
       // Validate required fields
       if (!videoId) {
+        console.error("❌ Cannot favorite: Video ID missing");
         showNotification("Cannot favorite: Video ID missing", true);
         return;
       }
@@ -64,7 +74,7 @@ function setupFavoriteButton(youtubeModule, showNotification) {
         url
       };
 
-      console.log("Favoriting song with data:", songData);
+      console.log("💝 Attempting to favorite song with data:", songData);
 
       const isFavorited = toggleFavorite(songData);
       updateFavoriteButton(videoId);
@@ -141,17 +151,22 @@ export function updateFavoritesBadge() {
 export function renderFavorites(loadYouTubeModule, showNotification) {
   const favorites = getFavorites();
 
+  console.log(`🎨 Rendering ${favorites.length} favorites for display`);
+
   if (favorites.length === 0) {
+    console.log("📭 No favorites to display");
     return '<div class="history-empty">No favorites yet<br><small>Click the heart icon while playing a song to add it to favorites</small></div>';
   }
 
-  return favorites.map(song => {
+  return favorites.map((song, index) => {
     // Extract and validate song data with fallbacks
     const title = song.title || "Unknown Title";
     const channel = song.channel || "Unknown Channel";
     const duration = formatDuration(song.duration);
     const videoId = song.videoId || "";
     const url = song.url || `https://www.youtube.com/watch?v=${videoId}`;
+
+    console.log(`  ${index + 1}. ${title} - ${channel} (${videoId})`);
 
     const thumbnail = song.thumbnail
       ? `<img src="${song.thumbnail}" alt="${escapeHtml(title)}" class="history-item-thumbnail" loading="lazy">`

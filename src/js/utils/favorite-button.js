@@ -53,8 +53,8 @@ export function setupFavoriteButtons(container, showNotification, onToggle = nul
     const videoId = button.dataset.videoId;
     if (!videoId) return;
 
-    // Get song data from parent element
-    const songElement = button.closest("[data-url], [data-video-id]");
+    // Get song data from parent element (skip the button itself and find the container)
+    const songElement = button.closest(".music-selection-item, .history-item, .search-dropdown-item, .favorite-item");
     if (!songElement) {
       showNotification("Unable to favorite: song data not found", true);
       return;
