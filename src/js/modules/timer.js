@@ -26,6 +26,8 @@ export class Timer {
     this.timerValue = $("#timerValue");
     this.repCounter = $("#repCounter");
     this.startBtn = $("#startBtn");
+    this.resetBtn = $("#resetBtn");
+    this.clearAllBtn = $("#clearAllBtn");
     this.settings = $("#settings");
 
     // Audio manager
@@ -63,6 +65,10 @@ export class Timer {
       this.startBtn.textContent = "PAUSE";
       addClass(this.settings, "hidden");
       removeClass(this.timerDisplay, "hidden");
+
+      // Show NEW TIMER and CLEAR ALL buttons when timer is active
+      if (this.resetBtn) removeClass(this.resetBtn, "hidden");
+      if (this.clearAllBtn) removeClass(this.clearAllBtn, "hidden");
 
       // Play YouTube video if loaded
       if (this.youtube) {
@@ -103,6 +109,10 @@ export class Timer {
     removeClass(this.settings, "hidden");
     addClass(this.timerDisplay, "hidden");
 
+    // Hide NEW TIMER and CLEAR ALL buttons when returning to home
+    if (this.resetBtn) addClass(this.resetBtn, "hidden");
+    if (this.clearAllBtn) addClass(this.clearAllBtn, "hidden");
+
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
       this.youtube.setVolume(this.normalVolume);
@@ -131,6 +141,40 @@ export class Timer {
     // Stop YouTube video if loaded
     if (this.youtube) {
       this.youtube.stop();
+    }
+  }
+
+  /**
+   * Start a new timer session while keeping music playing
+   */
+  newTimer() {
+    this.stop();
+    this.currentTime = 0;
+    this.currentRep = 1;
+    this.isResting = false;
+
+    // Restore normal volume if we were in alert state
+    if (this.isAlertActive && this.youtube) {
+      this.youtube.setVolume(this.normalVolume);
+    }
+    this.isAlertActive = false;
+
+    this.updateDisplay();
+    addClass(this.timerDisplay, "hidden");
+
+    // Keep YouTube music playing (don't stop it)
+  }
+
+  /**
+   * Clear everything including music
+   */
+  clearAll() {
+    // Reset timer state and stop music
+    this.reset();
+
+    // Clear YouTube player completely
+    if (this.youtube) {
+      this.youtube.clear();
     }
   }
 

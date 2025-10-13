@@ -215,11 +215,19 @@ function setupEventListeners() {
     });
   }
 
-  // Reset button
+  // New Timer button (formerly Reset button)
   const resetBtn = $("#resetBtn");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
-      timer.reset();
+      timer.newTimer();
+    });
+  }
+
+  // Clear All button
+  const clearAllBtn = $("#clearAllBtn");
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener("click", () => {
+      timer.clearAll();
     });
   }
 
@@ -313,10 +321,10 @@ function setupEventListeners() {
       e.preventDefault();
       timer.start();
     }
-    // R key to reset
+    // R key to start new timer
     if (e.code === "KeyR" && !e.target.matches("input")) {
       e.preventDefault();
-      timer.reset();
+      timer.newTimer();
     }
   });
 }
@@ -365,10 +373,10 @@ function setupGestures() {
     timer.start();
   });
 
-  // Swipe down to reset
+  // Swipe down to start new timer
   gestures.on("swipeDown", () => {
-    if (confirm("Reset timer?")) {
-      timer.reset();
+    if (confirm("Start new timer?")) {
+      timer.newTimer();
     }
   });
 }
