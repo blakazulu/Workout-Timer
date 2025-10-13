@@ -7,11 +7,16 @@
   # Publish directory - where Vite outputs the built files
   publish = "dist"
 
-# Redirect all requests to index.html for SPA routing
+[functions]
+  # Directory containing serverless functions
+  directory = "netlify/functions"
+
+# Redirect all requests to index.html for SPA routing (except API/functions)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false  # Don't override existing files or functions
 
 # Headers for PWA and security
 [[headers]]
