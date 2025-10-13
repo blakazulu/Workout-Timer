@@ -265,11 +265,9 @@ body::after {
   animation: fadeInUp 0.8s ease-out;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   height: 100dvh; /* Dynamic viewport height for mobile browsers */
-  max-height: 100vh;
   max-height: 100dvh;
-  max-width: 400px;
+  max-width: 500px;
   position: relative;
   width: 100%;
   z-index: 10;
@@ -279,9 +277,7 @@ body::after {
 /* PWA Standalone container fixes */
 @media (display-mode: standalone) {
   .container {
-    height: 100vh;
     height: 100dvh;
-    max-height: 100vh;
     max-height: 100dvh;
     overflow: hidden;
   }
@@ -291,6 +287,7 @@ body::after {
   align-items: center;
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: column;
   gap: var(--spacing-md);
   justify-content: center;
 }

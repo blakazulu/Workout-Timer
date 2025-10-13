@@ -11,7 +11,7 @@ import songData from "./workout_music.json";
 /**
  * Get playlists for a mood
  * @param {string} query - Mood query key
- * @returns {Array} Array of playlist objects with title, url, thumbnail, duration, artist
+ * @returns {Array} Array of playlist objects with title, url, thumbnail, duration, channel
  */
 export function getMoodPlaylists(query) {
   return songData[query] || [];
@@ -20,7 +20,7 @@ export function getMoodPlaylists(query) {
 /**
  * Get songs for a genre
  * @param {string} query - Genre query key
- * @returns {Array} Array of song objects with title, url, thumbnail, duration, artist
+ * @returns {Array} Array of song objects with title, url, thumbnail, duration, channel
  */
 export function getGenreSongs(query) {
   return songData[query] || [];

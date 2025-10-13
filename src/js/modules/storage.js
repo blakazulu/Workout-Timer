@@ -60,7 +60,7 @@ const MAX_THUMBNAIL_TOP = 10; // Store thumbnails for top 10 most played
  * @param {Object} songData - Song information
  * @param {string} songData.videoId - YouTube video ID
  * @param {string} songData.title - Video title
- * @param {string} songData.author - Video author/artist
+ * @param {string} songData.channel - YouTube channel name
  * @param {number} songData.duration - Video duration in seconds
  * @param {string} songData.url - Original YouTube URL
  */
@@ -75,7 +75,7 @@ export function saveSongToHistory(songData) {
     const songEntry = {
       videoId: songData.videoId,
       title: songData.title,
-      author: songData.author,
+      channel: songData.channel,
       duration: songData.duration,
       url: songData.url,
       thumbnail: `https://img.youtube.com/vi/${songData.videoId}/mqdefault.jpg`, // Medium quality thumbnail (320x180)

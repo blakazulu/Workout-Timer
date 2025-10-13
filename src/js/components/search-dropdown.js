@@ -4,12 +4,14 @@
  */
 
 import {$} from "../utils/dom.js";
+import {createFavoriteButtonHTML, setupFavoriteButtons} from "../utils/favorite-button.js";
 
 export class SearchDropdown {
   constructor(inputElement, options = {}) {
     this.input = inputElement;
     this.options = {
       onSelect: options.onSelect || (() => {}),
+      showNotification: options.showNotification || (() => {}),
       minChars: options.minChars || 2,
       maxResults: options.maxResults || 8,
       ...options
@@ -43,6 +45,9 @@ export class SearchDropdown {
    * Set up event listeners
    */
   setupEventListeners() {
+    // Set up favorite buttons event delegation
+    setupFavoriteButtons(this.dropdown, this.options.showNotification);
+
     // Click outside to close
     document.addEventListener("click", (e) => {
       if (!this.input.contains(e.target) && !this.dropdown.contains(e.target)) {
@@ -78,6 +83,11 @@ export class SearchDropdown {
 
     // Dropdown item clicks
     this.dropdown.addEventListener("click", (e) => {
+      // Don't trigger selection if clicking favorite button
+      if (e.target.closest("[data-action='toggle-favorite']")) {
+        return;
+      }
+
       const item = e.target.closest(".search-dropdown-item");
       if (item) {
         const index = parseInt(item.dataset.index, 10);
@@ -186,9 +196,15 @@ export class SearchDropdown {
       const isSelected = index === this.selectedIndex;
       const hasThumbnail = result.thumbnail && result.type === "video";
       const duration = result.duration ? this.formatDuration(result.duration) : null;
+      const isVideo = result.type === "video" && result.id;
 
       return `
-        <div class="search-dropdown-item ${isSelected ? "selected" : ""}" data-index="${index}">
+        <div class="search-dropdown-item ${isSelected ? "selected" : ""}"
+             data-index="${index}"
+             data-video-id="${isVideo ? this.escapeHtml(result.id) : ""}"
+             data-url="${isVideo ? this.escapeHtml(result.url) : ""}"
+             data-title="${this.escapeHtml(result.title)}"
+             data-author="${this.escapeHtml(result.description || "")}">
           ${hasThumbnail ? `
             <img src="${this.escapeHtml(result.thumbnail)}"
                  alt="${this.escapeHtml(result.title)}"
@@ -204,6 +220,7 @@ export class SearchDropdown {
             ${result.description ? `<div class="search-dropdown-item-description">${this.escapeHtml(result.description)}</div>` : ""}
           </div>
           ${duration ? `<div class="search-dropdown-item-duration">${duration}</div>` : ""}
+          ${isVideo ? createFavoriteButtonHTML(result.id, {size: "small", className: "search-dropdown-item-favorite"}) : ""}
         </div>
       `;
     }).join("");

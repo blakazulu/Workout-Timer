@@ -269,7 +269,7 @@ function mapToOutput(item) {
     url: `https://www.youtube.com/watch?v=${id}`,
     thumbnail: buildThumb(id),
     duration: iso8601ToSeconds(item.contentDetails?.duration || ""),
-    artist: item.snippet?.channelTitle || "Unknown",
+    channel: item.snippet?.channelTitle || "Unknown",
     type: "mix",
     _fetchedAt: nowIso() // kept only in cache; stripped from final output
   };

@@ -204,9 +204,15 @@
   <div class="music-controls hidden" id="musicControls">
     <div class="music-info">
       <span class="music-title" id="musicTitle">No song loaded</span>
-      <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
-        <i class="ph-bold ph-info"></i>
-      </button>
+      <div class="music-info-actions">
+        <button class="music-favorite-btn" id="musicFavoriteBtn" title="Add to favorites">
+          <i class="favorite-icon ph-bold ph-heart"></i>
+          <i class="favorited-icon hidden ph-bold ph-heart-fill"></i>
+        </button>
+        <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
+          <i class="ph-bold ph-info"></i>
+        </button>
+      </div>
     </div>
     <div class="music-player">
       <button class="music-btn" id="musicPlayPauseBtn">
@@ -228,10 +234,12 @@
   <div class="youtube-section">
     <div class="youtube-header">
       <label>Workout Music</label>
-      <button id="historyBtn" class="btn-history" popovertarget="historyPopover" title="Song History">
-        <label class="history-label">History</label>
-        <i class="ph-bold ph-clock-counter-clockwise"></i>
-      </button>
+      <div class="youtube-header-actions">
+        <button id="historyBtn" class="btn-history" popovertarget="musicLibraryPopover" title="Song History & Favorites">
+          <label class="history-label">Library</label>
+          <i class="ph-bold ph-clock-counter-clockwise"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Three-way Toggle -->
@@ -299,16 +307,34 @@
 <div popover id="musicTooltip" class="music-tooltip"></div>
 
 <!-- Song History (popover) -->
-<div popover id="historyPopover" class="history-popover">
+<div popover id="musicLibraryPopover" class="music-library-popover">
   <div class="history-header">
-    <h3>Song History</h3>
-    <button class="history-close" popovertarget="historyPopover" popovertargetaction="hide">
+    <h3>Music Library</h3>
+    <button class="history-close" popovertarget="musicLibraryPopover" popovertargetaction="hide">
       <i class="ph-bold ph-x"></i>
     </button>
   </div>
   <div class="history-tabs">
     <button class="history-tab active" data-tab="recent">Recent</button>
     <button class="history-tab" data-tab="top">Most Played</button>
+    <button class="history-tab" data-tab="favorites">
+      <i class="ph-bold ph-heart-fill"></i>
+      Favorites
+    </button>
+  </div>
+  <div class="history-actions hidden" id="historyActions">
+    <button class="history-action-btn" id="shuffleFavoritesBtn" title="Shuffle favorites">
+      <i class="ph-bold ph-shuffle"></i>
+      Shuffle
+    </button>
+    <button class="history-action-btn" id="exportFavoritesBtn" title="Export favorites">
+      <i class="ph-bold ph-download-simple"></i>
+      Export
+    </button>
+    <button class="history-action-btn" id="importFavoritesBtn" title="Import favorites">
+      <i class="ph-bold ph-upload-simple"></i>
+      Import
+    </button>
   </div>
   <div class="history-content" id="historyContent">
     <div class="history-empty">No songs played yet</div>

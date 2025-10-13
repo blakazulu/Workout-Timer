@@ -14,6 +14,17 @@ import {registerSW} from "virtual:pwa-register";
 // Import YouTube search functionality
 import {isYouTubeUrl, debounce, searchYouTubeVideosDetailed} from "./utils/youtube-search.js";
 import {createSearchDropdown} from "./components/search-dropdown.js";
+// Import favorites functionality
+import {
+  initFavoritesUI,
+  updateFavoriteButton,
+  updateFavoritesBadge,
+  renderFavorites,
+  setupFavoritesActions,
+  highlightFavoritesInHistory
+} from "./modules/favorites-ui.js";
+import {isFavorite, removeFromFavorites} from "./modules/favorites.js";
+import {createFavoriteButtonHTML, setupFavoriteButtons} from "./utils/favorite-button.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -57,7 +68,7 @@ function showNotification(message, isError = false) {
     font-size: 14px;
     font-weight: 600;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 40px ${isError ? "rgba(255, 0, 150, 0.6)" : "rgba(0, 255, 200, 0.6)"};
-    z-index: 10001;
+    z-index: 100000;
     animation: slideDown 0.3s ease;
     max-width: 90vw;
     text-align: center;
@@ -84,6 +95,9 @@ async function loadYouTubeModule() {
 
     // Set up embedding error handler (for Error 150 - embedding disabled)
     youtubeModule.onEmbeddingError = handleEmbeddingError;
+
+    // Initialize favorites UI after YouTube module is loaded
+    initFavoritesUI(youtubeModule, loadYouTubeModule, showNotification);
   }
   return youtubeModule;
 }
@@ -159,9 +173,12 @@ function init() {
   setupEventListeners();
   handleInstallClick();
   setupGestures();
-  setupHistory();
+  setupMusicLibrary();
   setupMusicModeToggle();
   setupYouTubeSearch();
+
+  // Initialize favorites badge
+  updateFavoritesBadge();
 
   // Start version checking (checks every 5 minutes)
   startVersionChecking();
@@ -518,87 +535,166 @@ function handleInstallClick() {
 }
 
 /**
- * Set up song history popover
+ * Set up music library popover
  */
-function setupHistory() {
-  const historyPopover = $("#historyPopover");
-  const historyContent = $("#historyContent");
-  const historyTabs = document.querySelectorAll(".history-tab");
+function setupMusicLibrary() {
+  const musicLibraryPopover = $("#musicLibraryPopover");
+  const libraryContent = $("#historyContent");
+  const libraryTabs = document.querySelectorAll(".history-tab");
+  const libraryActions = $("#historyActions");
 
-  if (!historyPopover || !historyContent) return;
+  if (!musicLibraryPopover || !libraryContent) return;
 
   let currentTab = "recent";
 
-  // Render history when popover opens
-  historyPopover.addEventListener("toggle", (e) => {
+  // Render library when popover opens
+  musicLibraryPopover.addEventListener("toggle", (e) => {
     if (e.newState === "open") {
-      renderHistory(currentTab);
+      renderLibrary(currentTab);
     }
   });
 
   // Tab switching
-  historyTabs.forEach(tab => {
+  libraryTabs.forEach(tab => {
     tab.addEventListener("click", () => {
       // Update active state
-      historyTabs.forEach(t => t.classList.remove("active"));
+      libraryTabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
 
       // Switch content
       currentTab = tab.dataset.tab;
-      renderHistory(currentTab);
+      renderLibrary(currentTab);
     });
   });
 
-  /**
-   * Render history items
-   * @param {string} tab - 'recent' or 'top'
-   */
-  function renderHistory(tab) {
-    const songs = tab === "recent" ? getSongHistory() : getMostPlayedSongs(20);
+  // Setup favorites actions (shuffle, export, import)
+  setupFavoritesActions(loadYouTubeModule, showNotification, () => renderLibrary(currentTab));
 
-    if (songs.length === 0) {
-      historyContent.innerHTML = "<div class=\"history-empty\">No songs played yet</div>";
+  /**
+   * Render library items
+   * @param {string} tab - 'recent', 'top', or 'favorites'
+   */
+  function renderLibrary(tab) {
+    // Show/hide actions bar based on tab
+    if (libraryActions) {
+      if (tab === "favorites") {
+        libraryActions.classList.remove("hidden");
+      } else {
+        libraryActions.classList.add("hidden");
+      }
+    }
+
+    // Render favorites tab differently
+    if (tab === "favorites") {
+      libraryContent.innerHTML = renderFavorites(loadYouTubeModule, showNotification);
+
+      // Add click handlers for favorite items
+      document.querySelectorAll(".favorite-item").forEach(item => {
+        const url = item.dataset.url;
+
+        // Click on item to play
+        item.addEventListener("click", async (e) => {
+          // Don't trigger if clicking remove button
+          if (e.target.closest(".history-item-remove")) return;
+
+          // Close popover
+          musicLibraryPopover.hidePopover();
+
+          // Load video
+          const youtubeUrl = $("#youtubeUrl");
+          if (youtubeUrl) {
+            youtubeUrl.value = url;
+          }
+
+          const youtube = await loadYouTubeModule();
+          await youtube.loadVideo(url);
+
+          // Connect YouTube player to timer
+          const timer = getTimer();
+          timer.setYouTubePlayer(youtube);
+        });
+
+        // Remove button handler
+        const removeBtn = item.querySelector(".history-item-remove");
+        if (removeBtn) {
+          removeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const videoId = removeBtn.dataset.videoId;
+
+            if (confirm("Remove this song from favorites?")) {
+              removeFromFavorites(videoId);
+              updateFavoritesBadge();
+              renderLibrary(currentTab);
+              showNotification("Removed from favorites", false);
+
+              // Update favorite button if this is the currently playing song
+              if (youtubeModule && youtubeModule.videoId === videoId) {
+                updateFavoriteButton(videoId);
+              }
+            }
+          });
+        }
+      });
+
       return;
     }
 
-    historyContent.innerHTML = songs.map(song => {
+    // Library rendering for 'recent' and 'top' tabs
+    const songs = tab === "recent" ? getSongHistory() : getMostPlayedSongs(20);
+
+    if (songs.length === 0) {
+      libraryContent.innerHTML = "<div class=\"history-empty\">No songs played yet</div>";
+      return;
+    }
+
+    libraryContent.innerHTML = songs.map(song => {
       const duration = formatDuration(song.duration);
       const thumbnail = song.thumbnail
-        ? `<img src="${song.thumbnail}" alt="${escapeHtml(song.title)}" class="history-item-thumbnail" loading="lazy">`
-        : `<div class="history-item-no-thumbnail">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        ? `<img src="${song.thumbnail}" alt="${escapeHtml(song.title)}" class="music-selection-item-thumbnail" loading="lazy">`
+        : `<div class="music-selection-item-thumbnail" style="background: rgba(100, 100, 255, 0.1); display: flex; align-items: center; justify-content: center;">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 40px; height: 40px; opacity: 0.3;">
                <polygon points="5 3 19 12 5 21 5 3"></polygon>
              </svg>
            </div>`;
 
       return `
-        <div class="history-item" data-url="${escapeHtml(song.url)}">
+        <div class="music-selection-item" data-url="${escapeHtml(song.url)}" data-video-id="${escapeHtml(song.videoId)}" data-duration="${song.duration}">
           ${thumbnail}
-          <div class="history-item-info">
-            <div class="history-item-title">${escapeHtml(song.title)}</div>
-            <div class="history-item-author">${escapeHtml(song.author)}</div>
-            <div class="history-item-meta">
-              <div class="history-item-plays">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-                ${song.playCount}
-              </div>
-              <span>•</span>
-              <span>${duration}</span>
-            </div>
+          <div class="music-selection-item-info">
+            <div class="music-selection-item-title">${escapeHtml(song.title)}</div>
+            <div class="music-selection-item-artist">${escapeHtml(song.channel || 'Unknown Channel')} • ${song.playCount} plays</div>
           </div>
+          <div class="music-selection-item-duration">${duration}</div>
+          ${createFavoriteButtonHTML(song.videoId, {size: "small", className: "music-selection-item-favorite"})}
         </div>
       `;
     }).join("");
 
-    // Add click handlers to history items
-    document.querySelectorAll(".history-item").forEach(item => {
-      item.addEventListener("click", async () => {
+    // Highlight favorited songs in library
+    highlightFavoritesInHistory();
+
+    // Set up favorite buttons for library items
+    setupFavoriteButtons(libraryContent, showNotification, ({videoId, isFavorited}) => {
+      // Update favorite button in music controls if this is the currently playing song
+      if (youtubeModule && youtubeModule.videoId === videoId) {
+        updateFavoriteButton(videoId);
+      }
+      // Refresh the library display to show/hide badges
+      highlightFavoritesInHistory();
+    });
+
+    // Add click handlers to library items
+    document.querySelectorAll(".music-selection-item").forEach(item => {
+      item.addEventListener("click", async (e) => {
+        // Don't trigger if clicking favorite button
+        if (e.target.closest("[data-action='toggle-favorite']")) {
+          return;
+        }
+
         const url = item.dataset.url;
 
         // Close popover
-        historyPopover.hidePopover();
+        musicLibraryPopover.hidePopover();
 
         // Load video
         const youtubeUrl = $("#youtubeUrl");
@@ -757,21 +853,36 @@ function setupMusicModeToggle() {
     if (content) {
       content.innerHTML = items.map((item, index) => {
         const duration = formatDuration(item.duration);
+        const videoId = extractVideoIdFromUrl(item.url);
         return `
-          <div class="music-selection-item" data-url="${escapeHtml(item.url)}" data-index="${index}">
+          <div class="music-selection-item" data-url="${escapeHtml(item.url)}" data-video-id="${escapeHtml(videoId)}" data-index="${index}" data-duration="${item.duration}">
             <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="music-selection-item-thumbnail" loading="lazy">
             <div class="music-selection-item-info">
               <div class="music-selection-item-title">${escapeHtml(item.title)}</div>
-              <div class="music-selection-item-artist">${escapeHtml(item.artist)}</div>
+              <div class="music-selection-item-artist">${escapeHtml(item.channel)}</div>
             </div>
             <div class="music-selection-item-duration">${duration}</div>
+            ${videoId ? createFavoriteButtonHTML(videoId, {size: "small", className: "music-selection-item-favorite"}) : ""}
           </div>
         `;
       }).join("");
 
+      // Set up favorite buttons
+      setupFavoriteButtons(content, showNotification, ({videoId}) => {
+        // Update favorite button in music controls if this is the currently playing song
+        if (youtubeModule && youtubeModule.videoId === videoId) {
+          updateFavoriteButton(videoId);
+        }
+      });
+
       // Add click handlers
       content.querySelectorAll(".music-selection-item").forEach(itemEl => {
-        itemEl.addEventListener("click", async () => {
+        itemEl.addEventListener("click", async (e) => {
+          // Don't trigger if clicking favorite button
+          if (e.target.closest("[data-action='toggle-favorite']")) {
+            return;
+          }
+
           const url = itemEl.dataset.url;
 
           // Close popover
@@ -795,6 +906,39 @@ function setupMusicModeToggle() {
 
     // Show popover
     selectionPopover.showPopover();
+  }
+
+  /**
+   * Extract video ID from YouTube URL
+   * @param {string} url - YouTube URL
+   * @returns {string} Video ID or empty string
+   */
+  function extractVideoIdFromUrl(url) {
+    if (!url) return "";
+
+    try {
+      // Handle youtube.com/watch?v= format
+      if (url.includes("youtube.com/watch")) {
+        const urlObj = new URL(url);
+        return urlObj.searchParams.get("v") || "";
+      }
+
+      // Handle youtu.be/ format
+      if (url.includes("youtu.be/")) {
+        const match = url.match(/youtu\.be\/([^?&]+)/);
+        return match ? match[1] : "";
+      }
+
+      // Handle youtube.com/embed/ format
+      if (url.includes("youtube.com/embed/")) {
+        const match = url.match(/youtube\.com\/embed\/([^?&]+)/);
+        return match ? match[1] : "";
+      }
+    } catch (error) {
+      console.error("Failed to extract video ID:", error);
+    }
+
+    return "";
   }
 
   /**
@@ -866,6 +1010,7 @@ function setupYouTubeSearch() {
 
   // Create search dropdown
   searchDropdown = createSearchDropdown(youtubeUrl, {
+    showNotification: showNotification,
     onSelect: async (result) => {
       console.log("Selected video:", result.title);
 
@@ -951,6 +1096,10 @@ function setupYouTubeSearch() {
     }
   });
 }
+
+// Expose functions to window for YouTube module callbacks
+window.updateFavoriteButton = updateFavoriteButton;
+window.getTimer = getTimer;
 
 // Initialize app when DOM is ready
 if (document.readyState === "loading") {

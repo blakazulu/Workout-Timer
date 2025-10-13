@@ -17,7 +17,7 @@ export class YouTubePlayer {
     this.loadingOverlay = $("#loadingOverlay");
     this.progressInterval = null;
     this.videoTitle = "";
-    this.videoAuthor = "";
+    this.videoChannel = "";
     this.videoId = "";
     this.originalUrl = ""; // Store original URL for history
     this.onEmbeddingError = null; // Callback for embedding errors (101/150)
@@ -238,13 +238,13 @@ export class YouTubePlayer {
     try {
       const videoData = this.player.getVideoData();
       this.videoTitle = videoData.title || "YouTube Music";
-      this.videoAuthor = videoData.author || "Unknown Artist";
+      this.videoChannel = videoData.author || "Unknown Channel";
       this.videoId = videoData.video_id || this.currentVideoId;
-      console.log("✅ Video data:", {title: this.videoTitle, author: this.videoAuthor, id: this.videoId});
+      console.log("✅ Video data:", {title: this.videoTitle, channel: this.videoChannel, id: this.videoId});
     } catch (error) {
       console.error("❌ Error getting video data:", error);
       this.videoTitle = "YouTube Music";
-      this.videoAuthor = "Unknown Artist";
+      this.videoChannel = "Unknown Channel";
       this.videoId = this.currentVideoId;
     }
 
@@ -259,6 +259,11 @@ export class YouTubePlayer {
     // Update play/pause button to show correct state (paused)
     console.log("🔄 Updating play/pause button state...");
     this.updatePlayPauseButton();
+
+    // Update favorite button state (if favorites module is loaded)
+    if (typeof window.updateFavoriteButton === "function") {
+      window.updateFavoriteButton(this.videoId);
+    }
 
     console.log("✅ Player setup complete!");
   }
@@ -332,7 +337,7 @@ export class YouTubePlayer {
           saveSongToHistory({
             videoId: this.videoId,
             title: this.videoTitle,
-            author: this.videoAuthor,
+            channel: this.videoChannel,
             duration: this.getDuration(),
             url: this.originalUrl
           });
@@ -660,7 +665,7 @@ export class YouTubePlayer {
     this.isReady = false;
     this.currentVideoId = null;
     this.videoTitle = "";
-    this.videoAuthor = "";
+    this.videoChannel = "";
     this.videoId = "";
   }
 }

@@ -44,11 +44,15 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🔄 **Seamless Playback** - Music continues during rest periods, syncs with timer lifecycle
 - 🎼 **Music Selection UI** - Beautiful grid with thumbnails, duration, and artist info
 
-### History & Tracking
-- 📜 **Song History** - Track all songs you've played with timestamps
+### Media Library & Favorites
+- 📚 **Music Library** - Track all songs you've played with timestamps
 - 🏆 **Most Played** - View your top 20 most-played workout tracks
-- 🖼️ **Visual History** - Thumbnails, titles, artists, play counts, and durations
-- 🔄 **Quick Replay** - Click any history item to instantly reload that song
+- 💖 **Favorite Songs** - Save your favorite tracks for quick access
+- 🔀 **Shuffle Favorites** - Randomly play from your favorited collection
+- 📤 **Export/Import** - Backup and restore your favorites as JSON
+- 🖼️ **Visual Library** - Thumbnails, titles, play counts, and durations with enhanced styling
+- 🔄 **Quick Replay** - Click any library item to instantly reload that song
+- ⭐ **Favorite Highlighting** - Favorited songs stand out with pink gradient effects
 
 ### User Experience
 - 👆 **Touch Gestures** - Double tap to start/pause, swipe down to reset (mobile)
@@ -155,12 +159,19 @@ The app is configured for Netlify deployment:
    - Browse 10+ verified mixes per genre with thumbnails
    - Click any track to load instantly
 
-   **Option D: History** (Your recent tracks)
-   - Click the history button (clock icon)
-   - **Recent Tab**: See your last 20 played songs
-   - **Most Played Tab**: View your top 20 tracks
-   - Each shows: thumbnail, title, artist, play count, duration
-   - Click to instantly replay any song
+   **Option D: Music Library** (Your tracks & favorites)
+   - Click the Library button (clock icon) in the header
+   - **Recent Tab**: See your last 20 played songs with enhanced card styling
+   - **Most Played Tab**: View your top 20 tracks with beautiful gradient effects
+   - **Favorites Tab**: Access all your favorited songs in one place
+   - Each song shows: thumbnail, title, play count, duration, and favorite button
+   - **Favorite Button**: Click the heart icon to save/unsave any song
+   - **Favorited Songs**: Highlighted with pink gradient backgrounds
+   - Click any song to instantly replay it
+   - **Favorites Actions**:
+     - 🔀 **Shuffle** - Play a random song from your favorites
+     - 📤 **Export** - Download your favorites as a JSON file
+     - 📥 **Import** - Upload a previously exported favorites file
 
 3. **Start Your Workout**
    - Click START button (or press Space, or double-tap timer)
@@ -373,7 +384,8 @@ src/
 - **YouTube State:** player instance, isReady, currentVideoId, lazy-loaded
 - **Audio State:** audioContext, vibrationEnabled, volumeDucking
 - **Settings State:** Persisted in localStorage, auto-saved on change
-- **History State:** Song play history, play counts, timestamps (localStorage)
+- **Library State:** Song play history, play counts, timestamps (localStorage)
+- **Favorites State:** Favorited songs with metadata, export/import support (localStorage)
 - **Music Library:** 18 categories (8 moods + 10 genres) with metadata
 
 ### Music Library System
@@ -478,7 +490,10 @@ This project deliberately avoids frameworks for several advantages:
 - [x] **Smart Search Dropdown** - 6 results with thumbnails, click to play instantly
 - [x] **Serverless Backend** - Secure YouTube API via Netlify Functions
 - [x] **URL Detection** - Auto-detects URLs vs search terms
-- [x] **Song History System** - Recent + Most Played tabs
+- [x] **Music Library System** - Recent + Most Played + Favorites tabs
+- [x] **Favorite Songs** - Save, manage, and highlight your favorite tracks
+- [x] **Favorites Management** - Shuffle, export, and import favorites
+- [x] **Enhanced Library Styling** - Beautiful gradient effects matching music selection UI
 - [x] **Auto-Updating Library** - 30-day refresh automation
 - [x] **Smart Error Recovery** - Error 150 fallback with alternatives
 - [x] Touch gestures for mobile (double tap, swipe down)
@@ -562,9 +577,10 @@ MIT License - See LICENSE file for details
 🎮 **Key Features:**
 - 🔍 **Live YouTube Search** - Find any song or mix instantly with real-time search
 - 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
+- 💖 **Favorite Songs** - Save, shuffle, export/import your favorite tracks
 - ⏱️ **Precision Timer** with work/rest cycles
-- 📜 **Smart History** tracking your workout music
-- 🎨 **Cyberpunk Theme** with neon animations
+- 📚 **Music Library** - Beautiful visual library tracking your workout music with favorites
+- 🎨 **Cyberpunk Theme** with neon gradient animations
 - 📱 **PWA** - Install and use offline
 - 🔄 **Auto-Updating** music library
 - ⚡ **Serverless Backend** - Secure API integration via Netlify
