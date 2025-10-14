@@ -1,0 +1,76 @@
+/* Music Mode Toggle */
+.music-mode-toggle {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  border-radius: 12px;
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--spacing-md);
+  padding: 4px;
+  position: relative;
+}
+
+.mode-toggle-btn {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(100, 100, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  font-family: var(--font-family-base);
+  font-size: 13px;
+  font-weight: 600;
+  gap: 6px;
+  justify-content: center;
+  letter-spacing: 1px;
+  padding: 10px 12px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.mode-toggle-btn svg {
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.mode-toggle-btn:hover:not(.active) {
+  background: rgba(100, 100, 255, 0.1);
+  color: #6464ff;
+}
+
+.mode-toggle-btn.active {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
+  border: 1px solid rgba(0, 255, 200, 0.4);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3),
+  inset 0 1px 0 rgba(0, 255, 200, 0.2);
+  color: #00ffc8;
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
+}
+
+.mode-toggle-btn.active svg {
+  filter: drop-shadow(0 0 6px rgba(0, 255, 200, 0.6));
+}
+
+/* Music Mode Content */
+.music-mode-content {
+  animation: fadeInContent 0.3s ease;
+  display: none;
+}
+
+.music-mode-content.active {
+  display: block;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,108 @@
+/* Mood Tags - Hexagonal Honeycomb Layout */
+.mood-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 100%;
+  padding: 20px 10px;
+  position: relative;
+}
+
+.mood-tag {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.08), rgba(100, 100, 255, 0.1));
+  border: 2px solid rgba(0, 255, 200, 0.3);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  color: #00ffc8;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-base);
+  font-size: 12px;
+  font-weight: 700;
+  gap: 8px;
+  height: 140px;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 130px;
+}
+
+/* Hexagon offset for honeycomb effect */
+.mood-tag:nth-child(2n) {
+  margin-top: 0px;
+}
+
+.mood-tag:nth-child(2n+1) {
+  margin-top: -12px;
+}
+
+/* Animated background gradient */
+.mood-tag::before {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
+  content: '';
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+/* Outer glow on hover */
+.mood-tag::after {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.5), rgba(100, 100, 255, 0.5));
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  content: '';
+  filter: blur(8px);
+  inset: -4px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.mood-tag:hover::before {
+  opacity: 1;
+}
+
+.mood-tag:hover::after {
+  opacity: 1;
+}
+
+.mood-tag:hover {
+  border-color: rgba(0, 255, 200, 0.7);
+  box-shadow: 0 0 40px rgba(0, 255, 200, 0.5),
+  inset 0 0 30px rgba(0, 255, 200, 0.15);
+  text-shadow: 0 0 12px rgba(0, 255, 200, 1);
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+.mood-tag:active {
+  transform: scale(1.04);
+}
+
+.mood-icon {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.6));
+  font-size: 38px;
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.mood-tag:hover .mood-icon {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 1));
+  transform: scale(1.15) rotate(5deg);
+}
+
+.mood-tag span:last-child {
+  line-height: 1.2;
+  max-width: 90%;
+  position: relative;
+  z-index: 1;
+}

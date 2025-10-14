@@ -1,0 +1,192 @@
+/* Genre Tags - Radial Petal Layout */
+.genre-tags {
+  height: 420px;
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 20px;
+  position: relative;
+  width: 100%;
+}
+
+/* Center decorative element */
+.genre-tags::before {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.2), rgba(100, 100, 255, 0.2));
+  border: 2px solid rgba(255, 0, 150, 0.4);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.3);
+  color: #ff0096;
+  content: '♪';
+  display: flex;
+  font-size: 28px;
+  height: 70px;
+  justify-content: center;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  z-index: 0;
+}
+
+.genre-tag {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.1), rgba(100, 100, 255, 0.1));
+  border: 2px solid rgba(255, 0, 150, 0.35);
+  border-radius: 50px;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.2);
+  color: #ff0096;
+  cursor: pointer;
+  display: flex;
+  font-family: var(--font-family-base);
+  font-size: 12px;
+  font-weight: 800;
+  height: 70px;
+  justify-content: center;
+  left: 50%;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  overflow: hidden;
+  padding: 8px 16px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 120px;
+}
+
+/* Position each genre in a radial pattern - 10 genres (36° apart) */
+.genre-tag:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg);
+}
+
+.genre-tag:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(36deg) translateX(150px) rotate(-36deg);
+}
+
+.genre-tag:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(72deg) translateX(150px) rotate(-72deg);
+}
+
+.genre-tag:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(108deg) translateX(150px) rotate(-108deg);
+}
+
+.genre-tag:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(144deg) translateX(150px) rotate(-144deg);
+}
+
+.genre-tag:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(180deg) translateX(150px) rotate(-180deg);
+}
+
+.genre-tag:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(216deg) translateX(150px) rotate(-216deg);
+}
+
+.genre-tag:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(252deg) translateX(150px) rotate(-252deg);
+}
+
+.genre-tag:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(288deg) translateX(150px) rotate(-288deg);
+}
+
+.genre-tag:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(324deg) translateX(150px) rotate(-324deg);
+}
+
+/* Pulsing glow effect */
+.genre-tag::before {
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.25), rgba(100, 100, 255, 0.25));
+  border-radius: 50px;
+  content: '';
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+/* Outer glow on hover */
+.genre-tag::after {
+  background: linear-gradient(135deg, rgba(255, 0, 150, 0.6), rgba(100, 100, 255, 0.6));
+  border-radius: 50px;
+  content: '';
+  filter: blur(6px);
+  inset: -3px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.genre-tag:hover::before {
+  opacity: 1;
+}
+
+.genre-tag:hover::after {
+  opacity: 1;
+}
+
+.genre-tag:hover {
+  border-color: rgba(255, 0, 150, 0.8);
+  box-shadow: 0 0 40px rgba(255, 0, 150, 0.6),
+  inset 0 0 20px rgba(255, 0, 150, 0.2);
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 0, 150, 1);
+  transform: translate(-50%, -50%) rotate(var(--genre-angle)) translateX(160px) rotate(calc(-1 * var(--genre-angle))) scale(1.12);
+  z-index: 10;
+}
+
+/* Set rotation angles for hover transform */
+.genre-tag:nth-child(1):hover {
+  --genre-angle: 0deg;
+}
+
+.genre-tag:nth-child(2):hover {
+  --genre-angle: 36deg;
+}
+
+.genre-tag:nth-child(3):hover {
+  --genre-angle: 72deg;
+}
+
+.genre-tag:nth-child(4):hover {
+  --genre-angle: 108deg;
+}
+
+.genre-tag:nth-child(5):hover {
+  --genre-angle: 144deg;
+}
+
+.genre-tag:nth-child(6):hover {
+  --genre-angle: 180deg;
+}
+
+.genre-tag:nth-child(7):hover {
+  --genre-angle: 216deg;
+}
+
+.genre-tag:nth-child(8):hover {
+  --genre-angle: 252deg;
+}
+
+.genre-tag:nth-child(9):hover {
+  --genre-angle: 288deg;
+}
+
+.genre-tag:nth-child(10):hover {
+  --genre-angle: 324deg;
+}
+
+.genre-tag:active {
+  transform: translate(-50%, -50%) rotate(var(--genre-angle)) translateX(150px) rotate(calc(-1 * var(--genre-angle))) scale(1.05);
+}
+
+.genre-tag span {
+  position: relative;
+  z-index: 1;
+}

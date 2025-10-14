@@ -6,7 +6,10 @@
 
 /* Music Components */
 @import './components/music-controls.css';
-@import './components/music-selection.css';
+@import './components/music-selection/mode-toggle.css';
+@import './components/music-selection/mood-tags.css';
+@import './components/music-selection/genre-tags.css';
+@import './components/music-selection/youtube-controls.css';
 
 /* Settings Components */
 @import './components/settings.css';
