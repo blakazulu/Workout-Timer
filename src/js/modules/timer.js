@@ -62,6 +62,7 @@ export class Timer {
       }
 
       this.isRunning = true;
+      this.updateDisplay(); // Update display immediately to show full duration
       this.interval = setInterval(() => this.tick(), 1000);
       this.startBtn.textContent = "PAUSE";
       addClass(this.settings, "hidden");
@@ -193,6 +194,12 @@ export class Timer {
     // Clear YouTube player completely
     if (this.youtube) {
       this.youtube.clear();
+    }
+
+    // Clear YouTube URL input field
+    const youtubeUrl = $("#youtubeUrl");
+    if (youtubeUrl) {
+      youtubeUrl.value = "";
     }
   }
 

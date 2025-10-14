@@ -62,9 +62,6 @@ async function loadYouTubeModule() {
 
     // Initialize favorites UI after YouTube module is loaded
     initFavoritesUI(youtubeModule, loadYouTubeModule, showNotification);
-
-    // Update window reference for compatibility with event handlers
-    window.youtubeModule = youtubeModule;
   }
   return youtubeModule;
 }
@@ -184,6 +181,7 @@ function hideAppLoader() {
 // Expose functions to window for YouTube module callbacks
 window.updateFavoriteButton = updateFavoriteButton;
 window.getTimer = getTimer;
+window.youtubeModule = youtubeModule; // For compatibility during refactoring
 
 // Initialize app when DOM is ready
 if (document.readyState === "loading") {
