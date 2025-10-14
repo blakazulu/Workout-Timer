@@ -26,7 +26,10 @@
       "Bash(for file in src/css/*.css src/js/*.js src/js/components/*.js src/js/modules/*.js src/js/utils/*.js src/main.js)",
       "Bash(do [ -f \"$file\" ])",
       "Bash(done)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:www.npmjs.com)"
     ],
     "deny": [],
     "ask": []

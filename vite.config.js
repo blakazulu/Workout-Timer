@@ -1,6 +1,12 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+// Get directory name in ESM
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Read package.json for version injection
 const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
@@ -11,9 +17,12 @@ export default defineConfig({
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
   },
   plugins: [
+    ViteEjsPlugin({
+      title: 'CYCLE',
+    }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'bg.webp', 'icons/*.png', 'icons/*.svg'],
+      includeAssets: ['robots.txt', 'bg.webp', 'icons/*.png', 'icons/*.svg'],
       manifest: {
         name: 'CYCLE',
         short_name: 'CYCLE',

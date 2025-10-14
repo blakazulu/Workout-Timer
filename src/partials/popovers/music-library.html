@@ -1,0 +1,34 @@
+<!-- Song History & Favorites (popover) -->
+<div popover id="musicLibraryPopover" class="music-library-popover">
+  <div class="history-header">
+    <h3>Music Library</h3>
+    <button class="history-close" popovertarget="musicLibraryPopover" popovertargetaction="hide">
+      <i class="ph-bold ph-x"></i>
+    </button>
+  </div>
+  <div class="history-tabs">
+    <button class="history-tab active" data-tab="recent">Recent</button>
+    <button class="history-tab" data-tab="top">Most Played</button>
+    <button class="history-tab" data-tab="favorites">
+      <i class="ph-bold ph-heart-fill"></i>
+      Favorites
+    </button>
+  </div>
+  <div class="history-actions hidden" id="historyActions">
+    <button class="history-action-btn" id="shuffleFavoritesBtn" title="Shuffle favorites">
+      <i class="ph-bold ph-shuffle"></i>
+      Shuffle
+    </button>
+    <button class="history-action-btn" id="exportFavoritesBtn" title="Export favorites">
+      <i class="ph-bold ph-download-simple"></i>
+      Export
+    </button>
+    <button class="history-action-btn" id="importFavoritesBtn" title="Import favorites">
+      <i class="ph-bold ph-upload-simple"></i>
+      Import
+    </button>
+  </div>
+  <div class="history-content" id="historyContent">
+    <div class="history-empty">No songs played yet</div>
+  </div>
+</div>

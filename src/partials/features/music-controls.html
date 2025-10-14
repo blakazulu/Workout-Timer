@@ -1,0 +1,33 @@
+<!-- YouTube Music Controls -->
+<div class="music-controls hidden" id="musicControls">
+  <div class="music-info">
+    <span class="music-title" id="musicTitle">No song loaded</span>
+    <div class="music-info-actions">
+      <button class="music-favorite-btn" id="musicFavoriteBtn" title="Add to favorites">
+        <i class="favorite-icon ph-bold ph-heart"></i>
+        <i class="favorited-icon hidden ph-bold ph-heart-fill"></i>
+      </button>
+      <button class="music-info-btn" id="musicInfoBtn" popovertarget="musicTooltip" title="Song info">
+        <i class="ph-bold ph-info"></i>
+      </button>
+    </div>
+  </div>
+  <div class="music-player">
+    <button class="music-btn" id="musicPlayPauseBtn">
+      <i class="play-icon ph-bold ph-play"></i>
+      <i class="pause-icon hidden ph-bold ph-pause"></i>
+    </button>
+    <div class="music-progress">
+      <span class="music-time" id="musicCurrentTime">0:00</span>
+      <div class="progress-bar-container" id="progressBarContainer">
+        <div class="progress-bar-bg"></div>
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+        <div class="progress-bar-handle" id="progressBarHandle"></div>
+      </div>
+      <span class="music-time" id="musicDuration">0:00</span>
+    </div>
+  </div>
+</div>
+
+<!-- Music Tooltip (popover) -->
+<div popover id="musicTooltip" class="music-tooltip"></div>

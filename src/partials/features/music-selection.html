@@ -1,0 +1,34 @@
+<!-- YouTube Music Selection -->
+<div class="youtube-section">
+  <div class="youtube-header">
+    <label>Workout Music</label>
+    <div class="youtube-header-actions">
+      <button id="historyBtn" class="btn-history" popovertarget="musicLibraryPopover" title="Song History & Favorites">
+        <label class="history-label">Library</label>
+        <i class="ph-bold ph-clock-counter-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Three-way Toggle -->
+  <div class="music-mode-toggle">
+    <button class="mode-toggle-btn active" id="linkModeBtn">
+      <i class="ph-bold ph-youtube-logo"></i>
+      <span>YouTube</span>
+    </button>
+    <button class="mode-toggle-btn" popovertarget="moodPopover">
+      <i class="ph-bold ph-smiley"></i>
+      <span>Mood</span>
+    </button>
+    <button class="mode-toggle-btn" popovertarget="genrePopover">
+      <i class="ph-bold ph-music-notes"></i>
+      <span>Genre</span>
+    </button>
+  </div>
+
+  <!-- Link Mode (always visible) -->
+  <div class="youtube-controls">
+    <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL" autocomplete="off" spellcheck="false">
+    <button id="loadYoutubeBtn" aria-label="Load YouTube video"><i class="ph-bold ph-magnifying-glass"></i></button>
+  </div>
+</div>
