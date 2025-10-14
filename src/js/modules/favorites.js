@@ -13,9 +13,7 @@ const MAX_FAVORITES = 100; // Limit to prevent localStorage overflow
 export function getFavorites() {
   try {
     const stored = localStorage.getItem(FAVORITES_KEY);
-    const favorites = stored ? JSON.parse(stored) : [];
-    console.log(`📚 Retrieved ${favorites.length} favorites from storage:`, favorites);
-    return favorites;
+    return stored ? JSON.parse(stored) : [];
   } catch (error) {
     console.error("Failed to load favorites:", error);
     return [];

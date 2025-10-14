@@ -54,7 +54,7 @@ const updateSW = registerSW({
 async function loadYouTubeModule() {
   if (!youtubeModule) {
     console.log("Lazy loading YouTube module...");
-    const module = await import("./modules/youtube.js");
+    const module = await import("./modules/youtube/index.js");
     youtubeModule = module.initYouTube("#youtube-player-iframe");
 
     // Set up embedding error handler (for Error 150 - embedding disabled)
