@@ -600,156 +600,229 @@ export function getYouTubePlayer() {
 
 ### Phase 4: Index.html Organization (MEDIUM PRIORITY)
 
-**Target:** `index.html` (436 lines → better structure)
-**Estimated Time:** 2-3 hours (with build) / 30 min (comments only)
+**Target:** `index.html` (436 lines → modular partials)
+**Estimated Time:** 2-3 hours
 **Risk Level:** Low
-**Impact:** Cleaner HTML structure
+**Impact:** Future-proofed structure for new features
 
 #### Current Structure Issues
 
-- Single 436-line HTML file
+- Single 436-line HTML file (only 9% over limit now, but will grow)
 - Mixes meta tags, styles, content, popovers
-- Hard to navigate
-- Difficult to maintain
+- Hard to navigate and maintain
+- **Critical:** Adding 2-3 new features will push this to 600-700+ lines
+- No clean way to add new UI components without bloating the file
 
-#### Option A: With Build Tool (Recommended)
+#### Why Split Now (Not Later)
 
-**Proposed Structure:**
+**Active Development Reality:**
+
+- Currently at 436 lines
+- Each new feature typically adds 50-150 lines
+- Planned features will easily exceed 600+ lines
+- Refactoring later = 4-5 hours + risk of breaking changes
+- **Investment now: 2-3 hours | Savings later: 2-3 hours + prevented technical debt**
+
+#### Recommended Approach: HTML Partials with Vite
+
+Since you're already using **Vite** (detected via `virtual:pwa-register`), adding HTML templating is straightforward:
+
+**Proposed Structure (Feature-Oriented):**
 
 ```
 src/
-├── index.html              (~150 lines) - Main structure + imports
+├── index.html              (~100 lines) - Main structure + imports
 ├── partials/
-│   ├── head.html          (~60 lines) - Meta tags, fonts, title
-│   ├── app-loader.html    (~30 lines) - Loading screen
-│   ├── backgrounds.html   (~20 lines) - Background elements
-│   ├── main-content.html  (~150 lines) - Main UI content
-│   └── popovers.html      (~150 lines) - All popover definitions
+│   ├── meta/
+│   │   ├── head.html      (~60 lines) - Meta tags, fonts, SEO
+│   │   └── pwa-manifest.html (~20 lines) - PWA config
+│   ├── layout/
+│   │   ├── app-loader.html (~30 lines) - Loading screen
+│   │   └── backgrounds.html (~20 lines) - Visual effects
+│   ├── features/
+│   │   ├── timer-controls.html (~80 lines) - Main timer UI
+│   │   ├── music-player.html   (~70 lines) - Music controls
+│   │   └── settings-panel.html (~60 lines) - Settings
+│   └── popovers/
+│       ├── music-library.html (~80 lines) - Library popup
+│       ├── mood-selector.html (~70 lines) - Mood tags
+│       └── genre-selector.html (~70 lines) - Genre tags
 └── styles/
-    └── inline-loader.css  (~50 lines) - Critical loader styles
+    └── inline-critical.css (~40 lines) - Critical path CSS
 ```
 
-**index.html:**
+**Main index.html:**
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('partials/head.html') %>
+  <%- include('partials/meta/head.html') %>
+  <%- include('partials/meta/pwa-manifest.html') %>
   <style>
     <
     %
     -
     include
     (
-    'styles/inline-loader.css'
+    'styles/inline-critical.css'
     )
     %
     >
   </style>
 </head>
 <body>
-<%- include('partials/app-loader.html') %>
-<%- include('partials/backgrounds.html') %>
-<%- include('partials/main-content.html') %>
-<%- include('partials/popovers.html') %>
+<!-- Layout -->
+<%- include('partials/layout/app-loader.html') %>
+<%- include('partials/layout/backgrounds.html') %>
+
+<!-- Core Features -->
+<main>
+  <%- include('partials/features/timer-controls.html') %>
+  <%- include('partials/features/music-player.html') %>
+  <%- include('partials/features/settings-panel.html') %>
+</main>
+
+<!-- Popovers -->
+<%- include('partials/popovers/music-library.html') %>
+<%- include('partials/popovers/mood-selector.html') %>
+<%- include('partials/popovers/genre-selector.html') %>
+
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
 ```
 
-#### Option B: Without Build Tool (Simpler)
+#### Vite Setup Instructions
 
-Keep single file but add clear section markers:
+**1. Install Vite HTML Plugin**
 
-```html
-<!-- ============================================ -->
-<!-- META & HEAD - SEO, Fonts, PWA -->
-<!-- ============================================ -->
-<head>
-  ...
-</head>
-
-<!-- ============================================ -->
-<!-- INLINE CRITICAL STYLES - App Loader -->
-<!-- ============================================ -->
-<style>
-  ...
-</style>
-
-<!-- ============================================ -->
-<!-- APP LOADER - Initial Loading Screen -->
-<!-- ============================================ -->
-<div class="app-loader">
-  ...
-</div>
-
-<!-- ============================================ -->
-<!-- BACKGROUND ELEMENTS -->
-<!-- ============================================ -->
-<div class="bg-grid"></div>
-<div class="bg-orb"></div>
-
-<!-- ============================================ -->
-<!-- MAIN CONTENT - Timer & Controls -->
-<!-- ============================================ -->
-<main>
-  ...
-</main>
-
-<!-- ============================================ -->
-<!-- POPOVERS - Music Tooltip, Library, Moods, Genres -->
-<!-- ============================================ -->
-<div popover id="music-tooltip">
-  ...
-</div>
+```bash
+npm install --save-dev vite-plugin-html
 ```
 
-#### Migration Steps (Option A - With Build Tool)
+**2. Update vite.config.js**
 
-1. **Setup Build Tool**
-    - Choose tool (Vite recommended for simplicity)
-    - Configure HTML templating plugin
-    - Set up dev server
+Create or update `vite.config.js`:
 
-2. **Extract Partials**
-    - Create `src/partials/` directory
-    - Extract head section → `head.html`
-    - Extract app loader → `app-loader.html`
-    - Extract backgrounds → `backgrounds.html`
-    - Extract main content → `main-content.html`
-    - Extract popovers → `popovers.html`
+```javascript
+import {defineConfig} from 'vite'
+import {VitePWA} from 'vite-plugin-pwa'
+import {createHtmlPlugin} from 'vite-plugin-html'
 
-3. **Extract Inline Styles**
-    - Create `src/styles/inline-loader.css`
-    - Move critical app loader styles
+export default defineConfig({
+  plugins: [
+    createHtmlPlugin({
+      minify: true,
+      // EJS template support
+      template: 'index.html',
+    }),
+    VitePWA({
+      // ... existing PWA config
+    })
+  ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html'
+      }
+    }
+  }
+})
+```
 
-4. **Update Main File**
-    - Replace content with includes
+**Alternative: Simple HTML Partials (No Plugin)**
+
+If you prefer not to add dependencies, use Vite's built-in multi-page setup:
+
+```javascript
+// vite.config.js
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        // Partials loaded via fetch() in JavaScript
+      }
+    }
+  }
+})
+```
+
+Then load partials dynamically:
+
+```javascript
+// In app.js
+async function loadPartial(url, targetId) {
+  const response = await fetch(url);
+  const html = await response.text();
+  document.getElementById(targetId).innerHTML = html;
+}
+```
+
+#### Migration Steps
+
+1. **Preparation**
+    - Install `vite-plugin-html` OR decide on dynamic loading
+    - Create directory structure: `src/partials/{meta,layout,features,popovers}/`
+    - Back up current `index.html`
+
+2. **Setup Vite Configuration**
+    - Update `vite.config.js` with HTML plugin
+    - Test dev server: `npm run dev`
+    - Verify build works: `npm run build`
+
+3. **Extract Partials (Do in logical order)**
+    - Extract head/meta → `partials/meta/head.html`
+    - Extract PWA manifest → `partials/meta/pwa-manifest.html`
+    - Extract app loader → `partials/layout/app-loader.html`
+    - Extract backgrounds → `partials/layout/backgrounds.html`
+    - Extract timer controls → `partials/features/timer-controls.html`
+    - Extract music player → `partials/features/music-player.html`
+    - Extract settings panel → `partials/features/settings-panel.html`
+    - Extract music library → `partials/popovers/music-library.html`
+    - Extract mood selector → `partials/popovers/mood-selector.html`
+    - Extract genre selector → `partials/popovers/genre-selector.html`
+
+4. **Extract Critical CSS**
+    - Create `src/styles/inline-critical.css`
+    - Move app loader styles (currently inline)
+    - Keep only above-the-fold critical styles
+
+5. **Update Main HTML**
+    - Replace extracted sections with `<%- include(...) %>` statements
+    - Maintain proper HTML structure
     - Test build output
 
-5. **Update Build Process**
-    - Update npm scripts
-    - Update deployment scripts
+6. **Testing**
+    - Test dev server renders correctly
     - Test production build
+    - Verify all styles load
+    - Test all interactive elements
+    - Check PWA functionality
+    - Test on multiple browsers
 
-#### Migration Steps (Option B - Comments Only)
-
-1. **Add Section Markers**
-    - Add HTML comment blocks for each section
-    - Ensure clear visual separation
-    - Update any documentation
-
-2. **Optional: Minor Reorganization**
-    - Group related elements together
-    - Ensure logical flow
-    - Improve readability
+7. **Update Documentation**
+    - Document partial structure
+    - Add guidelines for new features
+    - Update deployment docs if needed
 
 #### Files Affected
 
-- Build configuration (Option A)
-- Deployment scripts (Option A)
-- Documentation
+- `vite.config.js` (add HTML plugin)
+- `package.json` (add dependency)
+- Build/deployment scripts (verify compatibility)
+- Any documentation referencing HTML structure
+
+#### Future Benefits
+
+**Adding New Features:**
+
+- New popup? Just create `partials/popovers/new-feature.html` (~50-80 lines)
+- New control panel? Create `partials/features/new-panel.html` (~60-100 lines)
+- **No more scrolling through 600+ line files**
+- **Each partial stays focused and manageable**
+- **Easier to find and modify specific UI components**
 
 ---
 
@@ -1258,11 +1331,21 @@ workout-timer-pro/
 │   │       ├── workout_music.json
 │   │       └── workout_music_cache.json
 │   │
-│   └── partials/                      ⭐ Optional (if using build tool)
-│       ├── head.html
-│       ├── app-loader.html
-│       ├── main-content.html
-│       └── popovers.html
+│   └── partials/                      ⭐ New directory (Phase 4)
+│       ├── meta/
+│       │   ├── head.html             (~60 lines)
+│       │   └── pwa-manifest.html     (~20 lines)
+│       ├── layout/
+│       │   ├── app-loader.html       (~30 lines)
+│       │   └── backgrounds.html      (~20 lines)
+│       ├── features/
+│       │   ├── timer-controls.html   (~80 lines)
+│       │   ├── music-player.html     (~70 lines)
+│       │   └── settings-panel.html   (~60 lines)
+│       └── popovers/
+│           ├── music-library.html    (~80 lines)
+│           ├── mood-selector.html    (~70 lines)
+│           └── genre-selector.html   (~70 lines)
 │
 ├── .github/
 │   └── workflows/
@@ -1280,11 +1363,17 @@ workout-timer-pro/
 
 **Summary:**
 
-- ⭐ 9 new directories created
-- 📝 27 new files created from refactoring
+- ⭐ 13 new directories created (CSS, JS, HTML partials)
+- 📝 40 new files created from refactoring:
+    - 10 CSS component files
+    - 7 JS core/ui/search files
+    - 5 YouTube module files
+    - 5 Song fetcher utility files
+    - 13 HTML partial files
 - ✂️ 5 large files split into focused modules
 - 📊 All files now under 400 lines (except monitored ones)
 - 🛡️ Prevention measures in place
+- 🚀 Future-proofed for new features
 
 ---
 
@@ -1370,18 +1459,27 @@ workout-timer-pro/
 
 ### Phase 4: Index.html Organization
 
-- [ ] Decide on approach (with/without build tool)
-- [ ] If build tool: Set up build configuration
-- [ ] Create directory structure (if using partials)
-- [ ] Extract head section
-- [ ] Extract app loader
-- [ ] Extract main content
-- [ ] Extract popovers
-- [ ] Update main `index.html`
-- [ ] Test build output (if using build tool)
-- [ ] Update deployment scripts (if needed)
-- [ ] Test final HTML
-- [ ] Verify all styles and scripts load
+- [ ] Install `vite-plugin-html` package
+- [ ] Update `vite.config.js` with HTML plugin
+- [ ] Test dev server and build process
+- [ ] Create directory structure: `src/partials/{meta,layout,features,popovers}/`
+- [ ] Back up current `index.html`
+- [ ] Extract head/meta → `partials/meta/head.html`
+- [ ] Extract PWA manifest → `partials/meta/pwa-manifest.html`
+- [ ] Extract app loader → `partials/layout/app-loader.html`
+- [ ] Extract backgrounds → `partials/layout/backgrounds.html`
+- [ ] Extract timer controls → `partials/features/timer-controls.html`
+- [ ] Extract music player → `partials/features/music-player.html`
+- [ ] Extract settings panel → `partials/features/settings-panel.html`
+- [ ] Extract music library → `partials/popovers/music-library.html`
+- [ ] Extract mood selector → `partials/popovers/mood-selector.html`
+- [ ] Extract genre selector → `partials/popovers/genre-selector.html`
+- [ ] Extract critical CSS → `styles/inline-critical.css`
+- [ ] Update main `index.html` with includes
+- [ ] Test dev server renders correctly
+- [ ] Test production build
+- [ ] Verify all styles and interactive elements work
+- [ ] Update deployment documentation
 
 **Status:** Not Started
 **Estimated Completion:** ___ / ___ / ___
@@ -1444,8 +1542,8 @@ workout-timer-pro/
 
 - **Files over 400 lines:** 0
 - **Largest file:** ~400 lines (max)
-- **Average file size:** ~200 lines
-- **Total source files:** ~50 (better organized)
+- **Average file size:** ~150 lines
+- **Total source files:** ~63 (better organized with HTML partials)
 
 ### Expected Benefits
 
@@ -1492,4 +1590,4 @@ workout-timer-pro/
 ---
 
 *Last Updated: 2025-10-14*
-*Document Version: 1.0*
+*Document Version: 1.1 - Updated Phase 4 to use HTML partials with Vite (future-proofing for active development)*
