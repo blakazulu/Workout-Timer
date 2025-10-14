@@ -3,9 +3,9 @@
  * Handles all UI event listeners for controls, settings, and keyboard shortcuts
  */
 
-import { $ } from "../utils/dom.js";
-import { getTimer } from "../modules/timer.js";
-import { saveSettings } from "../modules/storage.js";
+import {$} from "../utils/dom.js";
+import {getTimer} from "../modules/timer.js";
+import {saveSettings} from "../modules/storage.js";
 
 /**
  * Set up all event listeners
@@ -66,14 +66,14 @@ function setupTimerControls(timer) {
     startBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
 
     // Handle touch end as the primary action on mobile
     startBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleStart(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 
   // New Timer button (formerly Reset button)
@@ -89,12 +89,12 @@ function setupTimerControls(timer) {
     resetBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
     resetBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleNewTimer(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 
   // Clear All button
@@ -110,12 +110,12 @@ function setupTimerControls(timer) {
     clearAllBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
     clearAllBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleClearAll(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 }
 

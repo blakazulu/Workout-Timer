@@ -32,12 +32,12 @@ class EventBus {
    * @returns {Function} Unsubscribe function
    */
   on(eventName, handler) {
-    if (!eventName || typeof eventName !== 'string') {
-      throw new Error('Event name must be a non-empty string');
+    if (!eventName || typeof eventName !== "string") {
+      throw new Error("Event name must be a non-empty string");
     }
 
-    if (typeof handler !== 'function') {
-      throw new Error('Event handler must be a function');
+    if (typeof handler !== "function") {
+      throw new Error("Event handler must be a function");
     }
 
     if (!this.events.has(eventName)) {
@@ -136,7 +136,7 @@ class EventBus {
     } else {
       this.events.clear();
       if (this.debugMode) {
-        console.log('[EventBus] Cleared all event handlers');
+        console.log("[EventBus] Cleared all event handlers");
       }
     }
   }
@@ -156,7 +156,7 @@ class EventBus {
    */
   setDebugMode(enabled) {
     this.debugMode = enabled;
-    console.log(`[EventBus] Debug mode ${enabled ? 'enabled' : 'disabled'}`);
+    console.log(`[EventBus] Debug mode ${enabled ? "enabled" : "disabled"}`);
   }
 
   /**
@@ -172,4 +172,4 @@ class EventBus {
 export const eventBus = new EventBus();
 
 // Also export the class for testing purposes
-export { EventBus };
+export {EventBus};

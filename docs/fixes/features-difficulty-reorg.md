@@ -8,12 +8,14 @@
 ## New Organization Structure
 
 ### 🟢 Easiest (1-2 days each)
+
 1. **Favorite Songs System** - localStorage CRUD + UI button
 2. **Minimal/Focus Mode** - Pure CSS/UI hiding
 3. **Smart Exercise Labels** - Text display + storage
 4. **Warmup/Cooldown Phases** - Simple timer state extension
 
 ### 🟡 Easy (3-5 days each)
+
 5. **Custom Themes & Backgrounds** - CSS variables + Unsplash API
 6. **Workout Journal & Notes** - Text forms + localStorage
 7. **Social Sharing** - Canvas image generation
@@ -21,6 +23,7 @@
 9. **Breath Pacing Overlay** - SVG circle animation
 
 ### 🟠 Medium (1-2 weeks each)
+
 10. **Workout Templates Library (basic)** - Pre-defined workout configs + UI
 11. **Workout Calendar & Cybernetic Augmentations** - Heat map visualization + localStorage
 12. **Music → Workout Correlation** - Data analysis + chart visualization
@@ -28,12 +31,14 @@
 14. **BPM Detection (basic)** - Web Audio API AnalyserNode
 
 ### 🔴 Medium-Hard (2-4 weeks each)
+
 15. **Dynamic Interval Program Builder** - Complex drag-and-drop UI + state management
 16. **BPM-Synchronized Workouts (full)** - Audio analysis + visual sync + alert timing
 17. **AI Voice Assistant (bidirectional)** - Wake word detection + command parsing
 18. **Spotify/Apple Music Integration** - OAuth flow + API integration
 
 ### 🟣 Hard/Experimental (1+ months each)
+
 19. **Orbital Progress Visualizer** - Complex Canvas/SVG animations with physics
 20. **AI Workout Generator** - LLM integration + prompt engineering
 21. **Rep Counter via Camera** - TensorFlow.js + pose detection + angle calculation
@@ -45,23 +50,27 @@
 ## Rationale
 
 **Easiest Tier:**
+
 - Simple data operations (CRUD on localStorage)
 - Basic UI changes (CSS, simple HTML)
 - No external APIs or complex algorithms
 
 **Easy Tier:**
+
 - Single external API (Unsplash)
 - Basic canvas operations
 - Simple algorithmic logic
 - All text-based data
 
 **Medium Tier:**
+
 - Complex UI components (heat maps, charts)
 - Basic audio/speech APIs
 - Data aggregation and analysis
 - Multiple interconnected features
 
 **Medium-Hard Tier:**
+
 - Advanced UI interactions (drag-and-drop)
 - Complex audio analysis
 - OAuth flows
@@ -69,6 +78,7 @@
 - Multi-step workflows
 
 **Hard/Experimental Tier:**
+
 - Advanced graphics programming (Canvas physics)
 - Machine learning (TensorFlow.js)
 - Real-time multiplayer (WebRTC)

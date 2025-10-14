@@ -3,30 +3,26 @@
  * Orchestrates module initialization and coordinates application startup
  */
 
-import { $ } from "./utils/dom.js";
-import { getTimer, initTimer } from "./modules/timer.js";
-import { initAudio } from "./modules/audio.js";
-import { loadSettings } from "./modules/storage.js";
-import { getRandomSong } from "./data/music-library.js";
-import { startVersionChecking, getVersionInfo } from "./utils/version-check.js";
+import {$} from "./utils/dom.js";
+import {getTimer, initTimer} from "./modules/timer.js";
+import {initAudio} from "./modules/audio.js";
+import {loadSettings} from "./modules/storage.js";
+import {getRandomSong} from "./data/music-library.js";
+import {getVersionInfo, startVersionChecking} from "./utils/version-check.js";
 // Import PWA service worker registration
-import { registerSW } from "virtual:pwa-register";
+import {registerSW} from "virtual:pwa-register";
 // Import favorites functionality
-import {
-  initFavoritesUI,
-  updateFavoriteButton,
-  updateFavoritesBadge
-} from "./modules/favorites-ui.js";
+import {initFavoritesUI, updateFavoriteButton, updateFavoritesBadge} from "./modules/favorites-ui.js";
 
 // Import extracted modules
-import { showNotification } from "./core/notifications.js";
-import { initPWAInstall } from "./core/pwa-install.js";
-import { setupGestures } from "./core/gesture-handler.js";
-import { setupEventListeners } from "./ui/event-handlers.js";
-import { setupMusicTooltipPositioning } from "./ui/tooltip-handler.js";
-import { setupMusicLibrary } from "./ui/library-ui.js";
-import { setupMusicModeToggle } from "./ui/mode-toggle.js";
-import { setupYouTubeSearch } from "./search/youtube-search-ui.js";
+import {showNotification} from "./core/notifications.js";
+import {initPWAInstall} from "./core/pwa-install.js";
+import {setupGestures} from "./core/gesture-handler.js";
+import {setupEventListeners} from "./ui/event-handlers.js";
+import {setupMusicTooltipPositioning} from "./ui/tooltip-handler.js";
+import {setupMusicLibrary} from "./ui/library-ui.js";
+import {setupMusicModeToggle} from "./ui/mode-toggle.js";
+import {setupYouTubeSearch} from "./search/youtube-search-ui.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -192,4 +188,4 @@ if (document.readyState === "loading") {
   init();
 }
 
-export { init };
+export {init};

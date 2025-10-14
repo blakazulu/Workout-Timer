@@ -10,12 +10,12 @@
 
 After completing Phase 1 (CSS Component Split), several CSS files still exceed the 400-line limit:
 
-| File | Lines | Status |
-|------|-------|--------|
-| `src/css/components/library.css` | 718 | 1.80x over limit |
-| `src/css/components/favorites.css` | 560 | 1.40x over limit |
-| `src/css/global.css` | 489 | 1.22x over limit |
-| `src/css/components/music-selection.css` | 446 | 1.12x over limit (acceptable) |
+| File                                     | Lines | Status                        |
+|------------------------------------------|-------|-------------------------------|
+| `src/css/components/library.css`         | 718   | 1.80x over limit              |
+| `src/css/components/favorites.css`       | 560   | 1.40x over limit              |
+| `src/css/global.css`                     | 489   | 1.22x over limit              |
+| `src/css/components/music-selection.css` | 446   | 1.12x over limit (acceptable) |
 
 ## Problem Statement
 
@@ -35,7 +35,9 @@ A new **Phase 6: CSS Oversized Files Refinement** has been added as a HIGH PRIOR
 ## Phase 6 Breakdown
 
 ### 6.1: Library.css Split (718 → 3 files) - CRITICAL
+
 **Target Structure:**
+
 ```
 src/css/components/library/
 ├── popover-base.css      (~200 lines) - Base popover styles & animations
@@ -49,7 +51,9 @@ src/css/components/library/
 ---
 
 ### 6.2: Favorites.css Split (560 → 2 files) - HIGH
+
 **Target Structure:**
+
 ```
 src/css/components/favorites/
 ├── favorite-buttons.css  (~280 lines) - Button styles, animations, variants
@@ -62,7 +66,9 @@ src/css/components/favorites/
 ---
 
 ### 6.3: Global.css Split (489 → 3 files) - MEDIUM
+
 **Target Structure:**
+
 ```
 src/css/base/
 ├── typography.css        (~180 lines) - Fonts, text styles, headings
@@ -76,9 +82,11 @@ src/css/base/
 ---
 
 ### 6.4: Music-Selection.css (446 lines) - OPTIONAL
+
 **Recommendation:** DEFER split
 
 **Rationale:**
+
 - Only 46 lines over limit (11%)
 - Highly cohesive content (all mood/genre selection)
 - Complex geometric layouts (hexagonal moods, radial genres)
@@ -90,6 +98,7 @@ src/css/base/
 ## Expected Outcomes
 
 **After Phase 6 Completion:**
+
 - CSS files over 400 lines: 1 (music-selection.css at 446 - acceptable)
 - Largest CSS file: 446 lines (down from 2,944)
 - Average CSS file size: ~180 lines
@@ -97,6 +106,7 @@ src/css/base/
 - Full CSS modularization complete
 
 **New Directory Structure:**
+
 ```
 src/css/
 ├── base/                        ⭐ NEW
@@ -119,6 +129,7 @@ src/css/
 ## Updated Priority Order
 
 **New Refactoring Sequence:**
+
 1. ✅ Phase 1: CSS Component Split (COMPLETE)
 2. ✅ Phase 2: App.js Refactoring (COMPLETE)
 3. **→ Phase 6: CSS Oversized Files Refinement (NEXT PRIORITY)**
@@ -128,6 +139,7 @@ src/css/
 7. Phase 7: Prevention Measures
 
 **Rationale for Priority:**
+
 - Must complete CSS refactoring before moving to new areas
 - Lower risk than Phase 3 (YouTube has complex interdependencies)
 - Maintains consistency with Phase 1 objectives
@@ -141,12 +153,14 @@ src/css/
 **Total Phase 6 Time:** 4-5 hours
 
 **Breakdown:**
+
 - Library split: 2 hours
 - Favorites split: 1.5 hours
 - Global split: 1 hour
 - Testing & verification: 0.5-1 hour
 
 **ROI:**
+
 - Prevents files from growing further (saves 2-3+ hours later)
 - Maintains code quality standards
 - Easier to add new features with smaller files
@@ -157,6 +171,7 @@ src/css/
 ## Documentation Updates
 
 Updated `docs/refactor.md` to version 3.0:
+
 - Added comprehensive Phase 6 section with split strategies
 - Updated priority order and timeline (30-41 hours total)
 - Added Phase 6 progress tracking checklist

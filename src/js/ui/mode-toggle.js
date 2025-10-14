@@ -3,12 +3,12 @@
  * Handles mood/genre selection and music selection popover
  */
 
-import { $ } from "../utils/dom.js";
-import { getTimer } from "../modules/timer.js";
-import { getGenreSongs, getMoodPlaylists, isMoodQuery } from "../data/music-library.js";
-import { updateFavoriteButton } from "../modules/favorites-ui.js";
-import { createFavoriteButtonHTML, setupFavoriteButtons } from "../utils/favorite-button.js";
-import { formatDuration, escapeHtml } from "./library-ui.js";
+import {$} from "../utils/dom.js";
+import {getTimer} from "../modules/timer.js";
+import {getGenreSongs, getMoodPlaylists, isMoodQuery} from "../data/music-library.js";
+import {updateFavoriteButton} from "../modules/favorites-ui.js";
+import {createFavoriteButtonHTML, setupFavoriteButtons} from "../utils/favorite-button.js";
+import {escapeHtml, formatDuration} from "./library-ui.js";
 
 /**
  * Set up music mode toggle (Mood/Genre)
@@ -139,7 +139,10 @@ function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModu
             <div class="music-selection-item-artist">${escapeHtml(item.channel)}</div>
           </div>
           <div class="music-selection-item-duration">${duration}</div>
-          ${videoId ? createFavoriteButtonHTML(videoId, {size: "small", className: "music-selection-item-favorite"}) : ""}
+          ${videoId ? createFavoriteButtonHTML(videoId, {
+        size: "small",
+        className: "music-selection-item-favorite"
+      }) : ""}
         </div>
       `;
     }).join("");

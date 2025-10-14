@@ -4,7 +4,7 @@
  * Modern browsers with anchor positioning + position-try-fallbacks handle this automatically
  */
 
-import { $ } from "../utils/dom.js";
+import {$} from "../utils/dom.js";
 
 /**
  * Set up music tooltip positioning

@@ -5,14 +5,13 @@
 
 import {$} from "../utils/dom.js";
 import {
+  downloadFavoritesFile,
   getFavorites,
-  isFavorite,
-  toggleFavorite,
   getFavoritesCount,
   getShuffledFavorites,
-  downloadFavoritesFile,
-  uploadFavoritesFile,
-  getRandomFavorite
+  isFavorite,
+  toggleFavorite,
+  uploadFavoritesFile
 } from "./favorites.js";
 
 /**
@@ -49,7 +48,7 @@ function setupFavoriteButton(youtubeModule, showNotification) {
         currentVideoId: youtubeModule.currentVideoId,
         videoTitle: youtubeModule.videoTitle,
         videoChannel: youtubeModule.videoChannel,
-        duration: youtubeModule.getDuration ? youtubeModule.getDuration() : 'N/A',
+        duration: youtubeModule.getDuration ? youtubeModule.getDuration() : "N/A",
         originalUrl: youtubeModule.originalUrl
       });
 
@@ -155,7 +154,7 @@ export function renderFavorites(loadYouTubeModule, showNotification) {
 
   if (favorites.length === 0) {
     console.log("📭 No favorites to display");
-    return '<div class="history-empty">No favorites yet<br><small>Click the heart icon while playing a song to add it to favorites</small></div>';
+    return "<div class=\"history-empty\">No favorites yet<br><small>Click the heart icon while playing a song to add it to favorites</small></div>";
   }
 
   return favorites.map((song, index) => {
@@ -315,7 +314,7 @@ export function highlightFavoritesInHistory(videoId) {
       if (item.classList.contains("history-item") && !item.querySelector(".history-item-favorite-badge")) {
         const favoriteBadge = document.createElement("div");
         favoriteBadge.className = "history-item-favorite-badge";
-        favoriteBadge.innerHTML = '<i class="ph-bold ph-heart-fill"></i>';
+        favoriteBadge.innerHTML = "<i class=\"ph-bold ph-heart-fill\"></i>";
         favoriteBadge.title = "Favorited";
 
         const info = item.querySelector(".history-item-info");

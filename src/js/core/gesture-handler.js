@@ -3,9 +3,9 @@
  * Sets up touch gesture handlers for mobile UX
  */
 
-import { $ } from "../utils/dom.js";
-import { createGestureHandler } from "../utils/gestures.js";
-import { getTimer } from "../modules/timer.js";
+import {$} from "../utils/dom.js";
+import {createGestureHandler} from "../utils/gestures.js";
+import {getTimer} from "../modules/timer.js";
 
 /**
  * Set up touch gesture handlers

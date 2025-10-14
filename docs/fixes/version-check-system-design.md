@@ -7,20 +7,21 @@
 ## Current State Analysis
 
 ### Version Tracking Issues
+
 1. **Inconsistent Versions:**
-   - HTML: hardcoded "v1.0.4" in index.html:149
-   - package.json: "1.0.0"
-   - No single source of truth
+    - HTML: hardcoded "v1.0.4" in index.html:149
+    - package.json: "1.0.0"
+    - No single source of truth
 
 2. **No Version Verification:**
-   - Service worker only detects file changes
-   - No client-server version comparison
-   - Users might run stale code even after deployment
+    - Service worker only detects file changes
+    - No client-server version comparison
+    - Users might run stale code even after deployment
 
 3. **Silent Updates:**
-   - `registerType: 'autoUpdate'` updates silently
-   - No way to force immediate update
-   - Relies on service worker detecting changes
+    - `registerType: 'autoUpdate'` updates silently
+    - No way to force immediate update
+    - Relies on service worker detecting changes
 
 ## Proposed Solution: Hybrid Version Check System
 
@@ -63,6 +64,7 @@
 ## 1. Build-Time Version Injection
 
 ### A. Update package.json (Single Source of Truth)
+
 ```json
 {
   "name": "cycle",
@@ -72,6 +74,7 @@
 ```
 
 ### B. Create Build Script (`scripts/generate-version.js`)
+
 ```javascript
 import fs from 'fs';
 import path from 'path';
@@ -101,6 +104,7 @@ console.log(`✓ Generated version.json: ${version} (build: ${buildVersion})`);
 ```
 
 ### C. Update Vite Config to Inject Version
+
 ```javascript
 // vite.config.js
 import { defineConfig } from 'vite';
@@ -124,6 +128,7 @@ export default defineConfig({
 ```
 
 ### D. Update package.json Scripts
+
 ```json
 {
   "scripts": {
@@ -351,6 +356,7 @@ function init() {
 ### C. Add Manual Check Button (Optional)
 
 Add to HTML (in header next to Install button):
+
 ```html
 <button class="btn-version-check" id="versionCheckBtn" title="Check for updates">
   <i class="ph-bold ph-arrows-clockwise"></i>
@@ -359,6 +365,7 @@ Add to HTML (in header next to Install button):
 ```
 
 Add to event listeners:
+
 ```javascript
 const versionCheckBtn = $("#versionCheckBtn");
 if (versionCheckBtn) {
@@ -381,13 +388,16 @@ if (versionCheckBtn) {
 ## 3. Backend/Netlify Integration
 
 ### Option A: Static version.json (Simpler)
+
 - Generated during build by `scripts/generate-version.js`
 - Deployed with app
 - No server-side logic needed
 - ✅ **Recommended for this project**
 
 ### Option B: Netlify Function (Advanced)
+
 Create `netlify/functions/version.js`:
+
 ```javascript
 export default async function handler(request, context) {
   // Could read from environment variable or database
@@ -407,6 +417,7 @@ export default async function handler(request, context) {
 ```
 
 Update `netlify.toml`:
+
 ```toml
 [build.environment]
   APP_VERSION = "1.0.4"  # Or read from package.json in build script
@@ -415,24 +426,26 @@ Update `netlify.toml`:
 ## 4. Testing Strategy
 
 ### Manual Testing
+
 1. **Deploy with v1.0.4**
-   - Verify version.json served correctly
-   - Check console logs for version
-   - Confirm no version mismatch
+    - Verify version.json served correctly
+    - Check console logs for version
+    - Confirm no version mismatch
 
 2. **Simulate version mismatch**
-   - Edit local version in Vite define
-   - Run dev server
-   - Should detect mismatch and force update
+    - Edit local version in Vite define
+    - Run dev server
+    - Should detect mismatch and force update
 
 3. **Test update flow**
-   - Open app in browser
-   - Deploy new version to Netlify
-   - Wait for check interval (or click manual check button)
-   - Should show notification or auto-update
-   - Verify page reloads with new version
+    - Open app in browser
+    - Deploy new version to Netlify
+    - Wait for check interval (or click manual check button)
+    - Should show notification or auto-update
+    - Verify page reloads with new version
 
 ### Automated Testing (Future)
+
 ```javascript
 // tests/version-check.test.js
 describe('Version Check', () => {
@@ -454,6 +467,7 @@ describe('Version Check', () => {
 ### Update Scenarios
 
 **Scenario 1: Background Update (Silent)**
+
 - User has app open
 - New version deploys
 - Check interval triggers (5 min)
@@ -462,6 +476,7 @@ describe('Version Check', () => {
 - User sees no interruption
 
 **Scenario 2: Manual Check**
+
 - User clicks "Check for Updates" button
 - Shows spinner while checking
 - If update available: shows notification with change details
@@ -469,6 +484,7 @@ describe('Version Check', () => {
 - If yes: clears cache and reloads
 
 **Scenario 3: Stale Cache**
+
 - User hasn't opened app in days
 - Opens app with old cached version
 - Initial version check on load
@@ -477,6 +493,7 @@ describe('Version Check', () => {
 - User sees latest version
 
 ### Notification Copy
+
 ```
 🔄 New version available!
 
@@ -491,6 +508,7 @@ Update now to get the latest features and fixes?
 ## 6. Configuration Options
 
 ### Environment Variables (Netlify)
+
 ```toml
 # netlify.toml
 [build.environment]
@@ -500,6 +518,7 @@ Update now to get the latest features and fixes?
 ```
 
 ### Feature Flags
+
 ```javascript
 // src/js/config.js
 export const VERSION_CHECK_CONFIG = {
@@ -513,6 +532,7 @@ export const VERSION_CHECK_CONFIG = {
 ## 7. Rollout Plan
 
 ### Phase 1: Infrastructure (Week 1)
+
 - [x] Create version-check-system-design.md
 - [ ] Create `scripts/generate-version.js`
 - [ ] Update `package.json` version to 1.0.4
@@ -520,24 +540,28 @@ export const VERSION_CHECK_CONFIG = {
 - [ ] Update build scripts
 
 ### Phase 2: Implementation (Week 1)
+
 - [ ] Create `src/js/utils/version-check.js`
 - [ ] Integrate into `src/js/app.js`
 - [ ] Update `vite.config.js` with version injection
 - [ ] Add version check button to UI (optional)
 
 ### Phase 3: Testing (Week 1)
+
 - [ ] Test in development
 - [ ] Test version mismatch detection
 - [ ] Test force update flow
 - [ ] Verify localStorage preservation
 
 ### Phase 4: Deployment (Week 2)
+
 - [ ] Deploy to Netlify staging
 - [ ] Monitor for 24 hours
 - [ ] Deploy to production
 - [ ] Monitor version checks in console
 
 ### Phase 5: Monitoring (Ongoing)
+
 - [ ] Add analytics tracking for version checks
 - [ ] Monitor error rates
 - [ ] Gather user feedback
@@ -546,18 +570,21 @@ export const VERSION_CHECK_CONFIG = {
 ## 8. Benefits
 
 ✅ **For Users:**
+
 - Always get latest features and bug fixes
 - No stale cached code
 - Smooth update experience
 - Optional manual update control
 
 ✅ **For Developers:**
+
 - Confidence that users run current version
 - Can push critical fixes with certainty
 - Easier debugging (know exact version user has)
 - Centralized version management
 
 ✅ **For Operations:**
+
 - No need to clear CDN cache manually
 - Force updates for security patches
 - Better version tracking and analytics
@@ -596,6 +623,7 @@ try {
 ## Recommendation
 
 **Implement Option A (Static version.json)** because:
+
 1. ✅ Simpler - no server-side logic needed
 2. ✅ Faster - direct file fetch, no function cold start
 3. ✅ Cheaper - no additional Netlify function costs
@@ -603,6 +631,7 @@ try {
 5. ✅ Sufficient - meets all requirements for this project
 
 **Start with silent updates** (no notifications) because:
+
 1. Better UX for workout app - no interruptions
 2. Users always have latest version
 3. Can add notifications later if needed
@@ -610,6 +639,7 @@ try {
 ## Next Steps
 
 Ready to implement? I can:
+
 1. Create all the files (scripts, version-check module)
 2. Update existing files (package.json, vite.config.js, app.js)
 3. Add manual check button to UI

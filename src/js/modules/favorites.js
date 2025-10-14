@@ -311,7 +311,7 @@ export function importFavorites(jsonString, merge = true) {
 export function downloadFavoritesFile() {
   try {
     const jsonString = exportFavorites();
-    const blob = new Blob([jsonString], { type: "application/json" });
+    const blob = new Blob([jsonString], {type: "application/json"});
     const url = URL.createObjectURL(blob);
 
     // Create download link

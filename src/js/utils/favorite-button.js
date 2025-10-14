@@ -240,7 +240,7 @@ function syncFavoriteButtons(videoId, isFavorited) {
       if (!item.querySelector(".history-item-favorite-badge") && item.classList.contains("history-item")) {
         const favoriteBadge = document.createElement("div");
         favoriteBadge.className = "history-item-favorite-badge";
-        favoriteBadge.innerHTML = '<i class="ph-bold ph-heart-fill"></i>';
+        favoriteBadge.innerHTML = "<i class=\"ph-bold ph-heart-fill\"></i>";
         favoriteBadge.title = "Favorited";
 
         const info = item.querySelector(".history-item-info");

@@ -5,20 +5,22 @@
 
 ## Overview
 
-Added an awesome animated overlay that displays during version updates, showing users the update progress with cyberpunk-styled animations and step-by-step visual feedback.
+Added an awesome animated overlay that displays during version updates, showing users the update progress with
+cyberpunk-styled animations and step-by-step visual feedback.
 
 ## What Was Added
 
 ### 1. HTML Structure (`index.html` lines 144-179)
 
 **Update Overlay with:**
+
 - Animated spinning icon (same as app loader)
 - "UPDATING" title with gradient animation
 - Version transition display (old version → new version)
 - 3 progress steps with animations:
-  1. Clearing caches...
-  2. Preserving your data...
-  3. Loading new version...
+    1. Clearing caches...
+    2. Preserving your data...
+    3. Loading new version...
 - Bottom spinner for final loading state
 
 ```html
@@ -42,6 +44,7 @@ Added an awesome animated overlay that displays during version updates, showing 
 ### 2. CSS Styles (`src/css/components.css` lines 1126-1340)
 
 **Cyberpunk-themed animations:**
+
 - **Icon Animation** - Rotates 180° while pulsing and changing glow colors
 - **Title Gradient** - Cyan → Pink → Purple gradient text
 - **Version Arrow** - Pulses and slides right continuously
@@ -51,6 +54,7 @@ Added an awesome animated overlay that displays during version updates, showing 
 - **Progress Steps** - Color transitions and border glows
 
 **Key Animations:**
+
 ```css
 @keyframes updatePulse - Icon rotation with color change
 @keyframes arrowPulse - Arrow slide animation
@@ -63,6 +67,7 @@ Added an awesome animated overlay that displays during version updates, showing 
 ### 3. JavaScript Logic (`src/js/utils/version-check.js` lines 52-140)
 
 **Enhanced `forceUpdate()` function:**
+
 ```javascript
 async function forceUpdate(oldVersion, newVersion) {
   // 1. Show overlay with version info
@@ -87,6 +92,7 @@ async function forceUpdate(oldVersion, newVersion) {
 ```
 
 **Updated `checkVersion()` function:**
+
 ```javascript
 // Pass versions to forceUpdate
 await forceUpdate(CLIENT_VERSION, serverVersion);
@@ -132,37 +138,44 @@ Page reloads with new version
 ## Animation Details
 
 ### Icon Animation
+
 - 2s infinite loop
 - Rotates 180° and scales to 1.08x
 - Glow changes from cyan (0.6 opacity) to pink (0.8 opacity)
 
 ### Version Arrow
+
 - 1.5s infinite pulse
 - Slides 10px to the right
 - Opacity oscillates 0.6 → 1.0
 
 ### New Version
+
 - 2s infinite glow
 - Text shadow intensity varies
 - Dual-color glow (cyan + pink)
 
 ### Step Activation
+
 - 0.6s slide-in from left (-20px)
 - Opacity fade-in
 - Background gradient activation
 - Border glow appears
 
 ### Step Icon
+
 - Active: 1s continuous spin
 - Completed: 0.4s checkmark pop (scale 0 → 1.2 → 1)
 
 ## Colors Used
 
 **Overlay Background:**
+
 - Gradient: `rgba(0, 0, 0, 0.98)` → `rgba(10, 10, 20, 0.98)`
 - Backdrop blur: 20px
 
 **Elements:**
+
 - Cyan: `#00ffc8` (primary, active states)
 - Pink: `#ff0096` (accents, rotations)
 - Purple: `#6464ff` (gradients, borders)
@@ -171,12 +184,14 @@ Page reloads with new version
 ## Benefits
 
 ### User Experience
+
 - **Visual Feedback** - Users see exactly what's happening
 - **No Confusion** - Clear progress instead of blank screen
 - **Professional** - Polished, branded experience
 - **Data Assurance** - Shows "Preserving your data..." step
 
 ### Technical
+
 - **Non-blocking** - Async operations don't freeze UI
 - **Error Handling** - Fallback to simple reload on errors
 - **Smooth Transitions** - Proper timing between steps
@@ -193,23 +208,23 @@ Page reloads with new version
    ```
 
 2. **Version Mismatch:**
-   - Change `package.json` version to `1.0.5`
-   - Run `npm run dev`
-   - Open app (will show as client `1.0.4`, server `1.0.5`)
-   - Update overlay will trigger automatically
+    - Change `package.json` version to `1.0.5`
+    - Run `npm run dev`
+    - Open app (will show as client `1.0.4`, server `1.0.5`)
+    - Update overlay will trigger automatically
 
 3. **Deploy Test:**
-   - Update version in `package.json`
-   - Deploy to Netlify
-   - Users on old version will see update overlay
+    - Update version in `package.json`
+    - Deploy to Netlify
+    - Users on old version will see update overlay
 
 ## File Changes Summary
 
-| File | Lines | Changes |
-|------|-------|---------|
-| `index.html` | +36 | Added update overlay HTML |
-| `src/css/components.css` | +215 | Added styles and animations |
-| `src/js/utils/version-check.js` | +88 | Enhanced forceUpdate with UI |
+| File                            | Lines | Changes                      |
+|---------------------------------|-------|------------------------------|
+| `index.html`                    | +36   | Added update overlay HTML    |
+| `src/css/components.css`        | +215  | Added styles and animations  |
+| `src/js/utils/version-check.js` | +88   | Enhanced forceUpdate with UI |
 
 **Total:** +339 lines added
 

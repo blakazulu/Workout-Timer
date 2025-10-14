@@ -3,7 +3,7 @@
  * Handles Progressive Web App installation prompt and related functionality
  */
 
-import { $ } from "../utils/dom.js";
+import {$} from "../utils/dom.js";
 
 // Store deferred install prompt
 let deferredPrompt = null;
@@ -69,7 +69,7 @@ function setupInstallButton() {
     deferredPrompt.prompt();
 
     // Wait for user response
-    const { outcome } = await deferredPrompt.userChoice;
+    const {outcome} = await deferredPrompt.userChoice;
     console.log(`Install prompt outcome: ${outcome}`);
 
     // Clear the deferred prompt
@@ -82,8 +82,8 @@ function setupInstallButton() {
  * Detect if running as installed PWA and add appropriate class
  */
 function detectStandaloneMode() {
-  if (window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true) {
-    document.body.classList.add('pwa-standalone');
+  if (window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true) {
+    document.body.classList.add("pwa-standalone");
   }
 }

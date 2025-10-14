@@ -2,7 +2,7 @@
  * UI Controls - Handles music controls display, progress bar, and UI synchronization
  */
 
-import { $ } from "../../utils/dom.js";
+import {$} from "../../utils/dom.js";
 
 export class UIControls {
   constructor(player, playbackControls) {

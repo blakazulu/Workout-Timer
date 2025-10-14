@@ -2,7 +2,7 @@
  * Playback Controls - Handles play, pause, stop, volume, and seeking
  */
 
-import { saveSongToHistory } from "../storage.js";
+import {saveSongToHistory} from "../storage.js";
 
 export class PlaybackControls {
   constructor(player) {

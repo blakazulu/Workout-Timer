@@ -4,13 +4,13 @@
   flex-wrap: wrap;
   gap: var(--spacing-md);
   /* Prevent scrolling and touch issues on the entire button container */
-  touch-action: manipulation;
-  -webkit-touch-action: manipulation;
+  overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  -webkit-touch-action: manipulation;
+  touch-action: manipulation;
   -webkit-user-select: none;
   /* Prevent overflow in PWA mode */
-  overflow: hidden;
+  user-select: none;
   width: 100%;
 }
 
@@ -27,14 +27,14 @@
   overflow: hidden;
   padding: var(--spacing-md);
   position: relative;
-  text-transform: uppercase;
-  transition: all var(--transition-fast);
-  /* Prevent double-tap zoom and unwanted scrolling on mobile */
-  touch-action: manipulation;
-  -webkit-touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  text-transform: uppercase;
+  /* Prevent double-tap zoom and unwanted scrolling on mobile */
+  -webkit-touch-action: manipulation;
+  touch-action: manipulation;
+  transition: all var(--transition-fast);
   -webkit-user-select: none;
+  user-select: none;
 }
 
 .btn::before {
@@ -91,10 +91,10 @@
 .btn-clear-all {
   background: linear-gradient(135deg, #ff0040, #8b0000);
   color: var(--text-primary);
+  flex: unset;
   font-size: 16px;
   font-weight: var(--font-weight-bold);
   width: 100%;
-  flex: unset;
 }
 
 .btn-clear-all:hover {

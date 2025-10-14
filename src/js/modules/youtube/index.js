@@ -3,10 +3,10 @@
  * Composes player, video loader, playback controls, and UI controls
  */
 
-import { YouTubePlayer } from "./player.js";
-import { VideoLoader } from "./video-loader.js";
-import { PlaybackControls } from "./playback-controls.js";
-import { UIControls } from "./ui-controls.js";
+import {YouTubePlayer} from "./player.js";
+import {VideoLoader} from "./video-loader.js";
+import {PlaybackControls} from "./playback-controls.js";
+import {UIControls} from "./ui-controls.js";
 
 /**
  * YouTubeModule - Facade that exposes all YouTube functionality
@@ -18,6 +18,70 @@ class YouTubeModule {
     this.videoLoader = new VideoLoader(this.player);
     this.playbackControls = new PlaybackControls(this.player);
     this.uiControls = new UIControls(this.player, this.playbackControls);
+  }
+
+  /**
+   * Get embedding error callback
+   * @returns {Function} Callback function
+   */
+  get onEmbeddingError() {
+    return this.player.onEmbeddingError;
+  }
+
+  /**
+   * Set embedding error callback
+   * @param {Function} callback - Callback function for embedding errors
+   */
+  set onEmbeddingError(callback) {
+    this.player.onEmbeddingError = callback;
+  }
+
+  /**
+   * Get current video ID
+   * @returns {string|null}
+   */
+  get videoId() {
+    return this.player.videoId;
+  }
+
+  /**
+   * Get video title
+   * @returns {string}
+   */
+  get videoTitle() {
+    return this.player.videoTitle;
+  }
+
+  /**
+   * Get video channel
+   * @returns {string}
+   */
+  get videoChannel() {
+    return this.player.videoChannel;
+  }
+
+  /**
+   * Check if player is ready
+   * @returns {boolean}
+   */
+  get isReady() {
+    return this.player.isReady;
+  }
+
+  /**
+   * Get current video ID
+   * @returns {string|null}
+   */
+  get currentVideoId() {
+    return this.player.currentVideoId;
+  }
+
+  /**
+   * Get original URL
+   * @returns {string}
+   */
+  get originalUrl() {
+    return this.player.originalUrl;
   }
 
   /**
@@ -142,75 +206,11 @@ class YouTubeModule {
   }
 
   /**
-   * Set embedding error callback
-   * @param {Function} callback - Callback function for embedding errors
-   */
-  set onEmbeddingError(callback) {
-    this.player.onEmbeddingError = callback;
-  }
-
-  /**
-   * Get embedding error callback
-   * @returns {Function} Callback function
-   */
-  get onEmbeddingError() {
-    return this.player.onEmbeddingError;
-  }
-
-  /**
    * Get video metadata
    * @returns {object} Video metadata
    */
   getMetadata() {
     return this.player.getVideoMetadata();
-  }
-
-  /**
-   * Get current video ID
-   * @returns {string|null}
-   */
-  get videoId() {
-    return this.player.videoId;
-  }
-
-  /**
-   * Get video title
-   * @returns {string}
-   */
-  get videoTitle() {
-    return this.player.videoTitle;
-  }
-
-  /**
-   * Get video channel
-   * @returns {string}
-   */
-  get videoChannel() {
-    return this.player.videoChannel;
-  }
-
-  /**
-   * Check if player is ready
-   * @returns {boolean}
-   */
-  get isReady() {
-    return this.player.isReady;
-  }
-
-  /**
-   * Get current video ID
-   * @returns {string|null}
-   */
-  get currentVideoId() {
-    return this.player.currentVideoId;
-  }
-
-  /**
-   * Get original URL
-   * @returns {string}
-   */
-  get originalUrl() {
-    return this.player.originalUrl;
   }
 }
 
@@ -238,4 +238,4 @@ export function getYouTube() {
 }
 
 // For backward compatibility, also export the class
-export { YouTubeModule };
+export {YouTubeModule};

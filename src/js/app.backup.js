@@ -8,22 +8,22 @@ import {initAudio} from "./modules/audio.js";
 import {getMostPlayedSongs, getSongHistory, loadSettings, saveSettings} from "./modules/storage.js";
 import {createGestureHandler} from "./utils/gestures.js";
 import {getGenreSongs, getMoodPlaylists, getRandomSong, isMoodQuery} from "./data/music-library.js";
-import {startVersionChecking, getVersionInfo} from "./utils/version-check.js";
+import {getVersionInfo, startVersionChecking} from "./utils/version-check.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
 // Import YouTube search functionality
-import {isYouTubeUrl, debounce, searchYouTubeVideosDetailed} from "./utils/youtube-search.js";
+import {debounce, isYouTubeUrl, searchYouTubeVideosDetailed} from "./utils/youtube-search.js";
 import {createSearchDropdown} from "./components/search-dropdown.js";
 // Import favorites functionality
 import {
+  highlightFavoritesInHistory,
   initFavoritesUI,
-  updateFavoriteButton,
-  updateFavoritesBadge,
   renderFavorites,
   setupFavoritesActions,
-  highlightFavoritesInHistory
+  updateFavoriteButton,
+  updateFavoritesBadge
 } from "./modules/favorites-ui.js";
-import {isFavorite, removeFromFavorites} from "./modules/favorites.js";
+import {removeFromFavorites} from "./modules/favorites.js";
 import {createFavoriteButtonHTML, setupFavoriteButtons} from "./utils/favorite-button.js";
 
 // Lazy loaded modules
@@ -217,9 +217,9 @@ async function handleEmbeddingError(errorMessage) {
  */
 function init() {
   // Detect if running as installed PWA
-  if (window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true) {
-    document.body.classList.add('pwa-standalone');
+  if (window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true) {
+    document.body.classList.add("pwa-standalone");
   }
 
   // Load saved settings
@@ -314,14 +314,14 @@ function setupEventListeners() {
     startBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
 
     // Handle touch end as the primary action on mobile
     startBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleStart(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 
   // New Timer button (formerly Reset button)
@@ -337,12 +337,12 @@ function setupEventListeners() {
     resetBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
     resetBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleNewTimer(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 
   // Clear All button
@@ -358,12 +358,12 @@ function setupEventListeners() {
     clearAllBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       e.stopPropagation();
-    }, { passive: false });
+    }, {passive: false});
     clearAllBtn.addEventListener("touchend", (e) => {
       e.preventDefault();
       e.stopPropagation();
       handleClearAll(e);
-    }, { passive: false });
+    }, {passive: false});
   }
 
   // YouTube load button - lazy load module on first interaction
@@ -728,7 +728,7 @@ function setupMusicLibrary() {
           ${thumbnail}
           <div class="music-selection-item-info">
             <div class="music-selection-item-title">${escapeHtml(song.title)}</div>
-            <div class="music-selection-item-artist">${escapeHtml(song.channel || 'Unknown Channel')} • ${song.playCount} plays</div>
+            <div class="music-selection-item-artist">${escapeHtml(song.channel || "Unknown Channel")} • ${song.playCount} plays</div>
           </div>
           <div class="music-selection-item-duration">${duration}</div>
           ${createFavoriteButtonHTML(song.videoId, {size: "small", className: "music-selection-item-favorite"})}
@@ -928,7 +928,10 @@ function setupMusicModeToggle() {
               <div class="music-selection-item-artist">${escapeHtml(item.channel)}</div>
             </div>
             <div class="music-selection-item-duration">${duration}</div>
-            ${videoId ? createFavoriteButtonHTML(videoId, {size: "small", className: "music-selection-item-favorite"}) : ""}
+            ${videoId ? createFavoriteButtonHTML(videoId, {
+          size: "small",
+          className: "music-selection-item-favorite"
+        }) : ""}
           </div>
         `;
       }).join("");

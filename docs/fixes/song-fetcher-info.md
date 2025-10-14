@@ -121,7 +121,7 @@ const REFRESH_DAYS = 30;            // Cache expiration (days)
 const RATE = {
   delayMsBetweenRequests: 250,      // Rate limiting delay
   dailyBudgetUnits: 9000,           // Daily quota budget
-  costs: { search: 100, videos: 1 } // API cost estimates
+  costs: {search: 100, videos: 1} // API cost estimates
 };
 ```
 

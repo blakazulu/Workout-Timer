@@ -149,7 +149,11 @@ export class VideoLoader {
       this.player.videoTitle = videoData.title || "YouTube Music";
       this.player.videoChannel = videoData.author || "Unknown Channel";
       this.player.videoId = videoData.video_id || this.player.currentVideoId;
-      console.log("✅ Video data:", { title: this.player.videoTitle, channel: this.player.videoChannel, id: this.player.videoId });
+      console.log("✅ Video data:", {
+        title: this.player.videoTitle,
+        channel: this.player.videoChannel,
+        id: this.player.videoId
+      });
     } catch (error) {
       console.error("❌ Error getting video data:", error);
       this.player.videoTitle = "YouTube Music";

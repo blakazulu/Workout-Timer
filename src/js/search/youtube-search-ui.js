@@ -3,10 +3,10 @@
  * Handles YouTube search dropdown with autocomplete
  */
 
-import { $ } from "../utils/dom.js";
-import { getTimer } from "../modules/timer.js";
-import { isYouTubeUrl, debounce, searchYouTubeVideosDetailed } from "../utils/youtube-search.js";
-import { createSearchDropdown } from "../components/search-dropdown.js";
+import {$} from "../utils/dom.js";
+import {getTimer} from "../modules/timer.js";
+import {debounce, isYouTubeUrl, searchYouTubeVideosDetailed} from "../utils/youtube-search.js";
+import {createSearchDropdown} from "../components/search-dropdown.js";
 
 /**
  * Set up YouTube search with autocomplete

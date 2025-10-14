@@ -90,13 +90,13 @@
 .update-title {
   background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
   font-family: var(--font-family-display);
   font-size: 42px;
   font-weight: var(--font-weight-black);
   letter-spacing: 8px;
   text-align: center;
+  -webkit-text-fill-color: transparent;
   text-shadow: 0 0 40px rgba(0, 255, 200, 0.5);
 }
 
@@ -148,7 +148,7 @@
   }
   50% {
     text-shadow: 0 0 40px rgba(0, 255, 200, 1),
-                 0 0 60px rgba(255, 0, 150, 0.6);
+    0 0 60px rgba(255, 0, 150, 0.6);
   }
 }
 
@@ -226,7 +226,9 @@
 }
 
 @keyframes iconSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes checkmark {
@@ -257,7 +259,7 @@
   border-right-color: #ff0096;
   border-top-color: #00ffc8;
   box-shadow: 0 0 40px rgba(0, 255, 200, 0.6),
-              inset 0 0 25px rgba(0, 255, 200, 0.3);
+  inset 0 0 25px rgba(0, 255, 200, 0.3);
   height: 70px;
   margin-top: var(--spacing-lg);
   width: 70px;

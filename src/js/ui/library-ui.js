@@ -3,18 +3,18 @@
  * Handles music library popover, history display, and favorites management
  */
 
-import { $ } from "../utils/dom.js";
-import { getMostPlayedSongs, getSongHistory } from "../modules/storage.js";
-import { getTimer } from "../modules/timer.js";
+import {$} from "../utils/dom.js";
+import {getMostPlayedSongs, getSongHistory} from "../modules/storage.js";
+import {getTimer} from "../modules/timer.js";
 import {
-  updateFavoriteButton,
-  updateFavoritesBadge,
+  highlightFavoritesInHistory,
   renderFavorites,
   setupFavoritesActions,
-  highlightFavoritesInHistory
+  updateFavoriteButton,
+  updateFavoritesBadge
 } from "../modules/favorites-ui.js";
-import { removeFromFavorites } from "../modules/favorites.js";
-import { createFavoriteButtonHTML, setupFavoriteButtons } from "../utils/favorite-button.js";
+import {removeFromFavorites} from "../modules/favorites.js";
+import {createFavoriteButtonHTML, setupFavoriteButtons} from "../utils/favorite-button.js";
 
 /**
  * Set up music library popover
@@ -146,7 +146,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
           ${thumbnail}
           <div class="music-selection-item-info">
             <div class="music-selection-item-title">${escapeHtml(song.title)}</div>
-            <div class="music-selection-item-artist">${escapeHtml(song.channel || 'Unknown Channel')} • ${song.playCount} plays</div>
+            <div class="music-selection-item-artist">${escapeHtml(song.channel || "Unknown Channel")} • ${song.playCount} plays</div>
           </div>
           <div class="music-selection-item-duration">${duration}</div>
           ${createFavoriteButtonHTML(song.videoId, {size: "small", className: "music-selection-item-favorite"})}

@@ -19,7 +19,7 @@
  * });
  */
 
-import { eventBus } from './event-bus.js';
+import {eventBus} from "./event-bus.js";
 
 class AppState {
   constructor() {
@@ -35,15 +35,15 @@ class AppState {
       music: {
         isPlaying: false,
         currentTrack: null,
-        currentTrackTitle: '',
+        currentTrackTitle: "",
         volume: 70,
-        mode: 'mood', // 'mood' or 'genre'
+        mode: "mood", // 'mood' or 'genre'
         selectedMood: null,
         selectedGenre: null,
       },
       ui: {
         activePanel: null,
-        theme: 'dark',
+        theme: "dark",
         musicControlsVisible: false,
         libraryOpen: false,
       },
@@ -66,12 +66,12 @@ class AppState {
    * @returns {*} The value at the path, or undefined if not found
    */
   get(path) {
-    if (!path || typeof path !== 'string') {
-      console.warn('[AppState] Invalid path provided to get()');
+    if (!path || typeof path !== "string") {
+      console.warn("[AppState] Invalid path provided to get()");
       return undefined;
     }
 
-    const value = path.split('.').reduce((obj, key) => {
+    const value = path.split(".").reduce((obj, key) => {
       return obj !== undefined && obj !== null ? obj[key] : undefined;
     }, this.state);
 
@@ -88,15 +88,15 @@ class AppState {
    * @param {*} value - The value to set
    */
   set(path, value) {
-    if (!path || typeof path !== 'string') {
-      console.warn('[AppState] Invalid path provided to set()');
+    if (!path || typeof path !== "string") {
+      console.warn("[AppState] Invalid path provided to set()");
       return;
     }
 
-    const keys = path.split('.');
+    const keys = path.split(".");
     const lastKey = keys.pop();
     const target = keys.reduce((obj, key) => {
-      if (!obj[key] || typeof obj[key] !== 'object') {
+      if (!obj[key] || typeof obj[key] !== "object") {
         obj[key] = {};
       }
       return obj[key];
@@ -109,12 +109,12 @@ class AppState {
       target[lastKey] = value;
 
       if (this.debugMode) {
-        console.log(`[AppState] Set "${path}":`, oldValue, '→', value);
+        console.log(`[AppState] Set "${path}":`, oldValue, "→", value);
       }
 
       // Emit both generic and specific state change events
-      eventBus.emit('state:changed', { path, value, oldValue });
-      eventBus.emit(`state:changed:${path}`, { value, oldValue });
+      eventBus.emit("state:changed", {path, value, oldValue});
+      eventBus.emit(`state:changed:${path}`, {value, oldValue});
     }
   }
 
@@ -124,8 +124,8 @@ class AppState {
    * @param {Function} updater - Function that receives current value and returns new value
    */
   update(path, updater) {
-    if (typeof updater !== 'function') {
-      console.warn('[AppState] Updater must be a function');
+    if (typeof updater !== "function") {
+      console.warn("[AppState] Updater must be a function");
       return;
     }
 
@@ -150,7 +150,7 @@ class AppState {
    * @returns {Function} Unsubscribe function
    */
   subscribeAll(handler) {
-    return eventBus.on('state:changed', handler);
+    return eventBus.on("state:changed", handler);
   }
 
   /**
@@ -159,7 +159,7 @@ class AppState {
    */
   getState() {
     if (this.debugMode) {
-      console.log('[AppState] Getting entire state');
+      console.log("[AppState] Getting entire state");
     }
     return this.state;
   }
@@ -168,7 +168,7 @@ class AppState {
    * Reset state to initial values
    */
   reset() {
-    const oldState = { ...this.state };
+    const oldState = {...this.state};
 
     this.state = {
       timer: {
@@ -182,15 +182,15 @@ class AppState {
       music: {
         isPlaying: false,
         currentTrack: null,
-        currentTrackTitle: '',
+        currentTrackTitle: "",
         volume: 70,
-        mode: 'mood',
+        mode: "mood",
         selectedMood: null,
         selectedGenre: null,
       },
       ui: {
         activePanel: null,
-        theme: 'dark',
+        theme: "dark",
         musicControlsVisible: false,
         libraryOpen: false,
       },
@@ -205,10 +205,10 @@ class AppState {
     };
 
     if (this.debugMode) {
-      console.log('[AppState] State reset');
+      console.log("[AppState] State reset");
     }
 
-    eventBus.emit('state:reset', { oldState, newState: this.state });
+    eventBus.emit("state:reset", {oldState, newState: this.state});
   }
 
   /**
@@ -217,7 +217,7 @@ class AppState {
    */
   setDebugMode(enabled) {
     this.debugMode = enabled;
-    console.log(`[AppState] Debug mode ${enabled ? 'enabled' : 'disabled'}`);
+    console.log(`[AppState] Debug mode ${enabled ? "enabled" : "disabled"}`);
   }
 
   /**
@@ -225,14 +225,14 @@ class AppState {
    * @param {Object} partialState - Object to merge into state
    */
   merge(partialState) {
-    if (!partialState || typeof partialState !== 'object') {
-      console.warn('[AppState] Invalid partial state provided to merge()');
+    if (!partialState || typeof partialState !== "object") {
+      console.warn("[AppState] Invalid partial state provided to merge()");
       return;
     }
 
     const deepMerge = (target, source) => {
       for (const key in source) {
-        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
           if (!target[key]) target[key] = {};
           deepMerge(target[key], source[key]);
         } else {
@@ -244,10 +244,10 @@ class AppState {
     deepMerge(this.state, partialState);
 
     if (this.debugMode) {
-      console.log('[AppState] Merged partial state:', partialState);
+      console.log("[AppState] Merged partial state:", partialState);
     }
 
-    eventBus.emit('state:merged', { partialState });
+    eventBus.emit("state:merged", {partialState});
   }
 }
 
@@ -255,4 +255,4 @@ class AppState {
 export const appState = new AppState();
 
 // Also export the class for testing purposes
-export { AppState };
+export {AppState};

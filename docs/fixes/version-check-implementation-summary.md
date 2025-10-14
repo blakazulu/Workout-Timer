@@ -6,20 +6,24 @@
 
 ## Overview
 
-Successfully implemented a comprehensive client-server version check system with force update capability. The system ensures users always run the latest deployed version while preserving their settings and history.
+Successfully implemented a comprehensive client-server version check system with force update capability. The system
+ensures users always run the latest deployed version while preserving their settings and history.
 
 ## Files Created
 
 ### 1. `scripts/generate-version.js`
+
 **Purpose:** Build script that generates version.json from package.json
 
 **Key Features:**
+
 - Reads version from package.json (single source of truth)
 - Generates build timestamp and ID
 - Creates version.json in public/ folder
 - Runs automatically before dev/build commands
 
 **Output Example:**
+
 ```json
 {
   "version": "1.0.4",
@@ -30,9 +34,11 @@ Successfully implemented a comprehensive client-server version check system with
 ```
 
 ### 2. `src/js/utils/version-check.js`
+
 **Purpose:** Client-side version comparison and force update logic
 
 **Key Features:**
+
 - Fetches `/version.json` with cache-busting headers
 - Compares embedded client version with server version
 - Checks every 5 minutes for active users
@@ -40,12 +46,14 @@ Successfully implemented a comprehensive client-server version check system with
 - Force update flow with user data preservation
 
 **Exported Functions:**
+
 - `startVersionChecking(intervalMs)` - Start periodic checks
 - `stopVersionChecking()` - Stop checking
 - `checkVersion(showNotification)` - Manual version check
 - `getVersionInfo()` - Get current version info
 
 ### 3. `public/version.json`
+
 **Purpose:** Server-side version metadata (generated during build)
 
 **Location:** Deployed to site root
@@ -54,7 +62,9 @@ Successfully implemented a comprehensive client-server version check system with
 ## Files Modified
 
 ### 1. `package.json`
+
 **Changes:**
+
 - Updated version from `1.0.0` to `1.0.4`
 - Updated scripts to run `generate-version.js` before dev/build
 
@@ -69,7 +79,9 @@ Successfully implemented a comprehensive client-server version check system with
 ```
 
 ### 2. `vite.config.js`
+
 **Changes:**
+
 - Added fs import
 - Reads package.json
 - Injects version constants via `define` config
@@ -82,7 +94,9 @@ define: {
 ```
 
 ### 3. `src/js/app.js`
+
 **Changes:**
+
 - Imported version-check functions
 - Start version checking in `init()`
 - Log version info on startup
@@ -97,7 +111,9 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ```
 
 ### 4. `netlify.toml`
+
 **Changes:**
+
 - Added no-cache headers for `/version.json`
 - Ensures fresh version data on every check
 
@@ -110,7 +126,9 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ```
 
 ### 5. `README.md`
+
 **Changes:**
+
 - Added version check system to User Experience features
 - Added to Completed Features list
 - Updated module structure diagram
@@ -119,6 +137,7 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ## How It Works
 
 ### Build Process
+
 ```
 1. npm run dev/build
    ↓
@@ -136,6 +155,7 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ```
 
 ### Runtime Process
+
 ```
 1. App loads
    ↓
@@ -153,6 +173,7 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ```
 
 ### Force Update Flow
+
 ```
 1. Version mismatch detected
    ↓
@@ -175,6 +196,7 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 ## Testing
 
 ### Verification Steps
+
 1. ✅ Generated version.json exists in public/ folder
 2. ✅ Version in version.json matches package.json (1.0.4)
 3. ✅ Build script runs successfully
@@ -182,6 +204,7 @@ console.log(`🚀 CYCLE v${versionInfo.version}`);
 5. ✅ No TypeScript/compile errors
 
 ### Manual Testing (To Do)
+
 ```bash
 # Test 1: Start dev server
 npm run dev
@@ -203,6 +226,7 @@ npm run dev
 ## User Data Protection
 
 The system **preserves** the following during force updates:
+
 - `cycleSettings` - User's timer configuration
 - `cycleHistory` - Song play history and counts
 
@@ -211,17 +235,21 @@ All other localStorage data is cleared to ensure fresh state.
 ## Configuration
 
 ### Check Interval
+
 Default: 5 minutes (300,000 ms)
 
 To change, modify in `src/js/utils/version-check.js`:
+
 ```javascript
 const CHECK_INTERVAL_MS = 5 * 60 * 1000;
 ```
 
 ### Silent vs Prompted Updates
+
 Default: Silent (no user notification)
 
 To add user prompt:
+
 ```javascript
 // In version-check.js, change:
 checkVersion(false);  // Silent
@@ -230,7 +258,9 @@ checkVersion(true);   // With notification
 ```
 
 ### Preserved Data
+
 To preserve additional localStorage keys:
+
 ```javascript
 // In version-check.js, add to array:
 const preserveKeys = ['cycleSettings', 'cycleHistory', 'yourNewKey'];
@@ -239,18 +269,21 @@ const preserveKeys = ['cycleSettings', 'cycleHistory', 'yourNewKey'];
 ## Benefits
 
 ### For Users
+
 - ✅ Always run latest features and bug fixes
 - ✅ No stale cached code
 - ✅ Settings and history survive updates
 - ✅ Silent updates (no workout interruptions)
 
 ### For Developers
+
 - ✅ Confidence that users run current version
 - ✅ Can push critical fixes with certainty
 - ✅ Single source of truth (package.json)
 - ✅ Easy version tracking (console logs)
 
 ### For Operations
+
 - ✅ No manual cache clearing needed
 - ✅ Force updates for security patches
 - ✅ Better debugging (know user's exact version)
@@ -259,6 +292,7 @@ const preserveKeys = ['cycleSettings', 'cycleHistory', 'yourNewKey'];
 ## Deployment Checklist
 
 When deploying to Netlify:
+
 - [ ] Verify `scripts/generate-version.js` runs in build
 - [ ] Check version.json is in dist/ after build
 - [ ] Verify no-cache headers on /version.json
@@ -269,25 +303,31 @@ When deploying to Netlify:
 ## Troubleshooting
 
 ### Issue: Version check fails
+
 **Symptoms:** Console shows "Version check failed"
 **Cause:** version.json not accessible
 **Solution:**
+
 1. Check netlify.toml has version.json headers
 2. Verify version.json in dist/ folder after build
 3. Check network tab for 404 on /version.json
 
 ### Issue: Infinite reload loop
+
 **Symptoms:** Page keeps reloading
 **Cause:** Version mismatch between build and deploy
 **Solution:**
+
 1. Clear browser cache manually
 2. Hard reload (Ctrl+Shift+R)
 3. Check build logs for version generation
 
 ### Issue: User data lost after update
+
 **Symptoms:** Settings reset after update
 **Cause:** localStorage keys not in preserveKeys array
 **Solution:**
+
 1. Add keys to preserveKeys in version-check.js:
    ```javascript
    const preserveKeys = ['cycleSettings', 'cycleHistory'];
@@ -296,6 +336,7 @@ When deploying to Netlify:
 ## Monitoring
 
 ### Console Logs to Watch
+
 ```
 ✓ Generated version.json: v1.0.4 (build: 20251013051941)
 🚀 CYCLE v1.0.4
@@ -306,6 +347,7 @@ When deploying to Netlify:
 ```
 
 ### Warning Logs (Expected on Updates)
+
 ```
 ⚠️  Version mismatch detected!
 Client: 1.0.3 | Server: 1.0.4
@@ -315,25 +357,26 @@ Client: 1.0.3 | Server: 1.0.4
 ## Next Steps
 
 ### Optional Enhancements
+
 1. **Manual Check Button**
-   - Add "Check for Updates" button in UI
-   - Allow users to manually trigger version check
-   - Show notification with changelog
+    - Add "Check for Updates" button in UI
+    - Allow users to manually trigger version check
+    - Show notification with changelog
 
 2. **Version Info Display**
-   - Show version in footer/header
-   - Display build time on hover
-   - Link to changelog
+    - Show version in footer/header
+    - Display build time on hover
+    - Link to changelog
 
 3. **Analytics Tracking**
-   - Track version check frequency
-   - Monitor update success rate
-   - Alert on high error rates
+    - Track version check frequency
+    - Monitor update success rate
+    - Alert on high error rates
 
 4. **Changelog Integration**
-   - Fetch CHANGELOG.md from server
-   - Show what's new on update
-   - Link to GitHub releases
+    - Fetch CHANGELOG.md from server
+    - Show what's new on update
+    - Link to GitHub releases
 
 ## Documentation References
 
@@ -343,8 +386,10 @@ Client: 1.0.3 | Server: 1.0.4
 
 ## Conclusion
 
-The version check system is fully implemented and ready for deployment. It provides robust version synchronization between client and server with automatic force updates while preserving user data.
+The version check system is fully implemented and ready for deployment. It provides robust version synchronization
+between client and server with automatic force updates while preserving user data.
 
-**Key Achievement:** Users will always run the latest deployed version within 5 minutes of deployment, with zero data loss.
+**Key Achievement:** Users will always run the latest deployed version within 5 minutes of deployment, with zero data
+loss.
 
 **Status:** ✅ Ready for production

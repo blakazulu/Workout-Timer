@@ -2,7 +2,7 @@
  * YouTube Player - Core player class with API loading
  */
 
-import { $ } from "../../utils/dom.js";
+import {$} from "../../utils/dom.js";
 
 export class YouTubePlayer {
   constructor(elementId) {
