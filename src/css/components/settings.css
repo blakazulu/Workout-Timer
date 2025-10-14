@@ -1,0 +1,105 @@
+/* Settings Panel */
+.settings {
+  backdrop-filter: blur(15px);
+  background: rgba(10, 10, 10, 0.7);
+  border: 1px solid rgba(100, 100, 255, 0.2);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 0 30px rgba(100, 100, 255, 0.1),
+  0 8px 32px rgba(0, 0, 0, 0.5),
+  inset 0 1px 0 rgba(100, 100, 255, 0.1);
+  padding: var(--spacing-lg);
+}
+
+.settings.hidden {
+  display: none;
+}
+
+.settings-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.settings-header label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing);
+  margin-bottom: 0;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+.settings-grid {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: 1fr 1fr;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-group label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing);
+  margin-bottom: var(--spacing-xs);
+  opacity: 0.9;
+}
+
+.setting-group input {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  border-radius: var(--radius-md);
+  color: #00ffc8;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  outline: none;
+  padding: 12px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.setting-group input:focus {
+  background: rgba(0, 255, 200, 0.05);
+  border-color: #00ffc8;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3);
+}
+
+/* YouTube Section */
+.youtube-section {
+  backdrop-filter: blur(15px);
+  background: rgba(10, 10, 10, 0.7);
+  border: 1px solid rgba(100, 100, 255, 0.2);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 0 30px rgba(100, 100, 255, 0.1),
+  0 8px 32px rgba(0, 0, 0, 0.5),
+  inset 0 1px 0 rgba(100, 100, 255, 0.1);
+  padding: var(--spacing-lg);
+}
+
+.youtube-section.hidden {
+  display: none;
+}
+
+.youtube-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.youtube-section label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing);
+  margin-bottom: 0;
+  opacity: 0.9;
+  text-transform: uppercase;
+}

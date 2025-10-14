@@ -1,0 +1,142 @@
+/* Control Buttons */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  /* Prevent scrolling and touch issues on the entire button container */
+  touch-action: manipulation;
+  -webkit-touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Prevent overflow in PWA mode */
+  overflow: hidden;
+  width: 100%;
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  flex: 1;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+  overflow: hidden;
+  padding: var(--spacing-md);
+  position: relative;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+  /* Prevent double-tap zoom and unwanted scrolling on mobile */
+  touch-action: manipulation;
+  -webkit-touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn::before {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  content: '';
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  width: 0;
+  z-index: 0;
+}
+
+.btn:hover::before {
+  height: 300px;
+  width: 300px;
+}
+
+.btn:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-start {
+  background: linear-gradient(135deg, #00ffc8, #6464ff);
+  color: #000;
+  font-size: 24px;
+  font-weight: var(--font-weight-extra-bold);
+  text-shadow: none;
+}
+
+.btn-start:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.5), 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #ff0096, #6464ff);
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: var(--font-weight-extra-bold);
+}
+
+.btn-reset:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.5), 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-clear-all {
+  background: linear-gradient(135deg, #ff0040, #8b0000);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  width: 100%;
+  flex: unset;
+}
+
+.btn-clear-all:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 64, 0.5), 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn.hidden {
+  display: none;
+}
+
+/* Install Button */
+.btn-install {
+  align-items: center;
+  background: rgba(0, 255, 200, 0.1);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+  color: #00ffc8;
+  cursor: pointer;
+  display: none;
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-install:hover {
+  background: rgba(0, 255, 200, 0.2);
+  border-color: #00ffc8;
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-install:active {
+  transform: scale(0.98);
+}
+
+.btn-install svg {
+  filter: drop-shadow(0 0 5px rgba(0, 255, 200, 0.5));
+  height: 16px;
+  width: 16px;
+}

@@ -1,0 +1,280 @@
+/* Music Controls */
+.music-controls {
+  backdrop-filter: blur(15px);
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(255, 0, 150, 0.3);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.2),
+  0 8px 32px rgba(0, 0, 0, 0.5),
+  inset 0 1px 0 rgba(255, 0, 150, 0.1);
+  padding: var(--spacing-md);
+}
+
+.music-controls.hidden {
+  display: none;
+}
+
+.music-info {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.music-title {
+  color: #ff0096;
+  flex: 1;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-info-btn {
+  align-items: center;
+  anchor-name: --music-info-btn;
+  background: rgba(255, 0, 150, 0.1);
+  border: 1px solid #ff0096;
+  border-radius: 50%;
+  color: #ff0096;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 24px;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  width: 24px;
+}
+
+.music-info-btn:hover {
+  background: rgba(255, 0, 150, 0.2);
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.5);
+  transform: scale(1.1);
+}
+
+.music-tooltip {
+  /* Anchor positioning with automatic fallbacks for viewport overflow
+     Works in Chromium 125+, Firefox 128+
+     JavaScript fallback provided for older browsers
+     Polyfill available: https://github.com/oddbird/css-anchor-positioning */
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.98);
+  border: 2px solid #ff0096;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 30px rgba(255, 0, 150, 0.6);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  inset: auto;
+  left: anchor(center);
+  line-height: 1.6;
+  margin: 0;
+  margin-top: 8px;
+  max-height: 300px;
+  max-width: min(400px, calc(100vw - 20px));
+  min-width: min(280px, calc(100vw - 20px));
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  position: fixed;
+  position-anchor: --music-info-btn;
+  position-try-fallbacks: --tooltip-left, --tooltip-right, --tooltip-above;
+  top: anchor(bottom);
+  transform: translateX(-50%);
+  transition: opacity 0.2s, transform 0.2s, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
+}
+
+/* Position fallbacks for when tooltip doesn't fit in viewport */
+@position-try --tooltip-left {
+  inset: auto;
+  left: anchor(left);
+  top: anchor(bottom);
+  margin-top: 8px;
+  transform: translateX(0);
+}
+
+@position-try --tooltip-right {
+  inset: auto;
+  right: anchor(right);
+  top: anchor(bottom);
+  margin-top: 8px;
+  transform: translateX(0);
+}
+
+@position-try --tooltip-above {
+  inset: auto;
+  left: anchor(center);
+  bottom: anchor(top);
+  margin-top: 0;
+  margin-bottom: 8px;
+  transform: translateX(-50%);
+}
+
+/* Popover animations */
+.music-tooltip:popover-open {
+  opacity: 1;
+  transform: translateY(0);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.music-tooltip::-webkit-scrollbar {
+  width: 6px;
+}
+
+.music-tooltip::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.1);
+  border-radius: 3px;
+}
+
+.music-tooltip::-webkit-scrollbar-thumb {
+  background: #ff0096;
+  border-radius: 3px;
+}
+
+.music-tooltip::-webkit-scrollbar-thumb:hover {
+  background: #ff0096;
+  box-shadow: 0 0 10px rgba(255, 0, 150, 0.8);
+}
+
+.music-tooltip-title {
+  color: #ff0096;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+  word-break: break-word;
+}
+
+.music-tooltip-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.music-tooltip-row {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.music-tooltip-label {
+  color: #6464ff;
+  font-weight: var(--font-weight-bold);
+  min-width: 80px;
+}
+
+.music-tooltip-value {
+  color: #00ffc8;
+  flex: 1;
+  word-break: break-word;
+}
+
+.music-player {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.music-btn {
+  align-items: center;
+  background: rgba(255, 0, 150, 0.1);
+  border: 2px solid #ff0096;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.3);
+  color: #ff0096;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 40px;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+}
+
+.music-btn:hover {
+  background: rgba(255, 0, 150, 0.2);
+  box-shadow: 0 0 25px rgba(255, 0, 150, 0.5);
+  transform: scale(1.05);
+}
+
+.music-btn:active {
+  transform: scale(0.95);
+}
+
+.music-btn svg {
+  pointer-events: none;
+}
+
+.music-btn .play-icon,
+.music-btn .pause-icon {
+  position: absolute;
+}
+
+.music-btn .hidden {
+  display: none !important;
+}
+
+.music-progress {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-sm);
+}
+
+.music-time {
+  color: #6464ff;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xxs);
+  font-weight: var(--font-weight-medium);
+  min-width: 35px;
+  text-align: center;
+}
+
+.progress-bar-container {
+  cursor: pointer;
+  flex: 1;
+  height: 6px;
+  position: relative;
+}
+
+.progress-bar-bg {
+  background: rgba(100, 100, 255, 0.2);
+  border-radius: 3px;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, #ff0096, #6464ff);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(255, 0, 150, 0.5);
+  height: 100%;
+  position: absolute;
+  transition: width 0.1s linear;
+  width: 0%;
+}
+
+.progress-bar-handle {
+  background: #ff0096;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+  height: 14px;
+  left: 0%;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.1s linear;
+  width: 14px;
+}
+
+.progress-bar-container:hover .progress-bar-handle {
+  opacity: 1;
+}
