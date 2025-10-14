@@ -2,7 +2,7 @@
  * Search Dropdown Core - Constructor and initialization
  */
 
-import { setupEventListeners } from './events.js';
+import {setupEventListeners} from "./events.js";
 
 /**
  * SearchDropdown class - Main dropdown component
@@ -11,8 +11,10 @@ export class SearchDropdown {
   constructor(inputElement, options = {}) {
     this.input = inputElement;
     this.options = {
-      onSelect: options.onSelect || (() => {}),
-      showNotification: options.showNotification || (() => {}),
+      onSelect: options.onSelect || (() => {
+      }),
+      showNotification: options.showNotification || (() => {
+      }),
       minChars: options.minChars || 2,
       maxResults: options.maxResults || 8,
       ...options

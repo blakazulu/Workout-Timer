@@ -1,22 +1,24 @@
 <!-- Loading Overlay -->
-<div id="loadingOverlay" class="loading-overlay hidden">
+<div class="loading-overlay hidden" id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div class="loading-text">Loading video...</div>
 </div>
 
 <!-- Update Overlay -->
-<div id="updateOverlay" class="update-overlay hidden">
+<div class="update-overlay hidden" id="updateOverlay">
   <svg class="update-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <filter id="update-glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
-        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00ffc8" flood-opacity="0.8"/>
+      <filter height="200%" id="update-glow-cyan" width="200%" x="-50%" y="-50%">
+        <feDropShadow dx="0" dy="0" flood-color="#00ffc8" flood-opacity="0.8" stdDeviation="4"/>
       </filter>
-      <filter id="update-glow-pink" x="-50%" y="-50%" width="200%" height="200%">
-        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ff0096" flood-opacity="0.8"/>
+      <filter height="200%" id="update-glow-pink" width="200%" x="-50%" y="-50%">
+        <feDropShadow dx="0" dy="0" flood-color="#ff0096" flood-opacity="0.8" stdDeviation="4"/>
       </filter>
     </defs>
-    <path d="M12 52 A 20 20 0 1 1 52 12" stroke="#00ffc8" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#update-glow-cyan)"/>
-    <path d="M18 46 A 14 14 0 1 1 46 18" stroke="#ff0096" stroke-width="7" fill="none" stroke-linecap="round" filter="url(#update-glow-pink)"/>
+    <path d="M12 52 A 20 20 0 1 1 52 12" fill="none" filter="url(#update-glow-cyan)" stroke="#00ffc8" stroke-linecap="round"
+          stroke-width="7"/>
+    <path d="M18 46 A 14 14 0 1 1 46 18" fill="none" filter="url(#update-glow-pink)" stroke="#ff0096" stroke-linecap="round"
+          stroke-width="7"/>
   </svg>
   <div class="update-title">UPDATING</div>
   <div class="update-version-info">

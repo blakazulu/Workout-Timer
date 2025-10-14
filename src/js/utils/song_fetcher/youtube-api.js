@@ -1,5 +1,5 @@
-import { RATE } from "./config.js";
-import { delay } from "./filters.js";
+import {RATE} from "./config.js";
+import {delay} from "./filters.js";
 
 // ---------- RATE LIMITER + BUDGET ----------
 export const budget = {
@@ -28,7 +28,7 @@ async function ytGet(apiKey, url, params, costTag, retries = 3) {
   return withPacing(cost, async () => {
     for (let attempt = 1; attempt <= retries; attempt++) {
       try {
-        const usp = new URLSearchParams({ key: apiKey, ...params });
+        const usp = new URLSearchParams({key: apiKey, ...params});
         const r = await fetch(`${url}?${usp.toString()}`);
 
         if (!r.ok) {

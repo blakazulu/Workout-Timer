@@ -7,16 +7,16 @@ export {
   initFavoritesUI,
   updateFavoriteButton,
   updateFavoritesBadge
-} from './initialization.js';
+} from "./initialization.js";
 
 export {
   renderFavorites
-} from './rendering.js';
+} from "./rendering.js";
 
 export {
   setupFavoritesActions
-} from './actions.js';
+} from "./actions.js";
 
 export {
   highlightFavoritesInHistory
-} from './state.js';
+} from "./state.js";

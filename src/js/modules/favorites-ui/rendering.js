@@ -2,8 +2,8 @@
  * Favorites UI Rendering - Rendering favorites list
  */
 
-import { getFavorites } from "../favorites.js";
-import { formatDuration, escapeHtml } from './utils.js';
+import {getFavorites} from "../favorites.js";
+import {escapeHtml, formatDuration} from "./utils.js";
 
 /**
  * Render favorites tab content

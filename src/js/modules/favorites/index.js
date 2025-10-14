@@ -14,13 +14,13 @@ export {
   clearAllFavorites,
   FAVORITES_KEY,
   MAX_FAVORITES
-} from './storage.js';
+} from "./storage.js";
 
 // Shuffle and random operations
 export {
   getRandomFavorite,
   getShuffledFavorites
-} from './shuffle.js';
+} from "./shuffle.js";
 
 // Import/export operations
 export {
@@ -28,4 +28,4 @@ export {
   importFavorites,
   downloadFavoritesFile,
   uploadFavoritesFile
-} from './import-export.js';
+} from "./import-export.js";

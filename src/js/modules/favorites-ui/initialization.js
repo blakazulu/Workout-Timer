@@ -2,8 +2,8 @@
  * Favorites UI Initialization - Setup and badge management
  */
 
-import { $ } from "../../utils/dom.js";
-import { getFavoritesCount, isFavorite, toggleFavorite } from "../favorites.js";
+import {$} from "../../utils/dom.js";
+import {getFavoritesCount, isFavorite, toggleFavorite} from "../favorites.js";
 
 /**
  * Initialize favorites UI components

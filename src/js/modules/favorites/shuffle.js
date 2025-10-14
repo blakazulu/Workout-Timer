@@ -3,7 +3,7 @@
  * Provides random selection and shuffling of favorite songs
  */
 
-import { getFavorites } from './storage.js';
+import {getFavorites} from "./storage.js";
 
 /**
  * Get a random favorite song

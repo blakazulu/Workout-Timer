@@ -3,17 +3,27 @@
  * Displays YouTube search suggestions in a dropdown
  */
 
-import { $ } from "../../utils/dom.js";
-import { SearchDropdown } from './core.js';
-import { show, hide, showLoading } from './rendering.js';
-import { isOpen, getSelected } from './navigation.js';
+import {$} from "../../utils/dom.js";
+import {SearchDropdown} from "./core.js";
+import {hide, show, showLoading} from "./rendering.js";
+import {getSelected, isOpen} from "./navigation.js";
 
 // Attach methods to the prototype
-SearchDropdown.prototype.show = function(results) { return show(this, results); };
-SearchDropdown.prototype.hide = function() { return hide(this); };
-SearchDropdown.prototype.showLoading = function() { return showLoading(this); };
-SearchDropdown.prototype.isOpen = function() { return isOpen(this); };
-SearchDropdown.prototype.getSelected = function() { return getSelected(this); };
+SearchDropdown.prototype.show = function (results) {
+  return show(this, results);
+};
+SearchDropdown.prototype.hide = function () {
+  return hide(this);
+};
+SearchDropdown.prototype.showLoading = function () {
+  return showLoading(this);
+};
+SearchDropdown.prototype.isOpen = function () {
+  return isOpen(this);
+};
+SearchDropdown.prototype.getSelected = function () {
+  return getSelected(this);
+};
 
 /**
  * Create a search dropdown for an input element
@@ -31,4 +41,4 @@ export function createSearchDropdown(input, options = {}) {
   return new SearchDropdown(inputElement, options);
 }
 
-export { SearchDropdown };
+export {SearchDropdown};

@@ -2,9 +2,9 @@
  * Search Dropdown Rendering - Display and rendering methods
  */
 
-import { createFavoriteButtonHTML } from "../../utils/favorite-button.js";
-import { positionDropdown } from './events.js';
-import { escapeHtml, formatDuration } from './utils.js';
+import {createFavoriteButtonHTML} from "../../utils/favorite-button.js";
+import {positionDropdown} from "./events.js";
+import {escapeHtml, formatDuration} from "./utils.js";
 
 /**
  * Show the dropdown with results

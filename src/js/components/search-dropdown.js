@@ -3,4 +3,4 @@
  * Re-exports all functionality from the modular search-dropdown/ directory
  */
 
-export * from './search-dropdown/index.js';
+export * from "./search-dropdown/index.js";

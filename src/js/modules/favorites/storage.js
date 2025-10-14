@@ -164,4 +164,4 @@ export function clearAllFavorites() {
 }
 
 // Export constants for use in other modules
-export { FAVORITES_KEY, MAX_FAVORITES };
+export {FAVORITES_KEY, MAX_FAVORITES};

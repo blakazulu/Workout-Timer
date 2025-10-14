@@ -2,9 +2,9 @@
  * Search Dropdown Events - Event listeners and positioning
  */
 
-import { setupFavoriteButtons } from "../../utils/favorite-button.js";
-import { selectNext, selectPrevious, selectResult } from './navigation.js';
-import { hide } from './rendering.js';
+import {setupFavoriteButtons} from "../../utils/favorite-button.js";
+import {selectNext, selectPrevious, selectResult} from "./navigation.js";
+import {hide} from "./rendering.js";
 
 /**
  * Position the dropdown relative to the input

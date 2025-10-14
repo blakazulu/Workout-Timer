@@ -3,4 +3,4 @@
  * Re-exports all functionality from the modular favorites-ui/ directory
  */
 
-export * from './favorites-ui/index.js';
+export * from "./favorites-ui/index.js";

@@ -1,20 +1,14 @@
 // Node 18+ (built-in fetch). Run: YT_API_KEY=... node src/js/utils/song_fetcher/index.js
 
 import fs from "node:fs";
+import {categories, DATA_DIR_PATH, MIN_SECONDS, OUTPUT_FILE, WANT_PER_CATEGORY} from "./config.js";
+import {budget, fetchVideosDetails, searchVideosForQuery} from "./youtube-api.js";
+import {categoryIsStale, loadCache, saveCache} from "./cache.js";
 import {
-  WANT_PER_CATEGORY,
-  MIN_SECONDS,
-  categories,
-  OUTPUT_FILE,
-  DATA_DIR_PATH
-} from "./config.js";
-import { searchVideosForQuery, fetchVideosDetails, budget } from "./youtube-api.js";
-import { loadCache, saveCache, categoryIsStale } from "./cache.js";
-import {
-  isUpcomingOrLive,
   hasVisibleStats,
-  mapToOutput,
   iso8601ToSeconds,
+  isUpcomingOrLive,
+  mapToOutput,
   nowIso,
   stripPrivateFieldsForOutput
 } from "./filters.js";
@@ -74,7 +68,7 @@ async function fetchCategory(categoryName, queries) {
 async function main() {
   // Ensure data directory exists
   if (!fs.existsSync(DATA_DIR_PATH)) {
-    fs.mkdirSync(DATA_DIR_PATH, { recursive: true });
+    fs.mkdirSync(DATA_DIR_PATH, {recursive: true});
     console.log(`📁 Created data directory: ${DATA_DIR_PATH}`);
   }
 
@@ -118,7 +112,7 @@ async function main() {
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(resultForApp, null, 2), "utf-8");
 
   console.log(`\nSaved app JSON: ${OUTPUT_FILE}`);
-  console.log(`Saved cache     : ${cache._meta ? 'workout_music_cache.json' : ''}`);
+  console.log(`Saved cache     : ${cache._meta ? "workout_music_cache.json" : ""}`);
   console.log(`Estimated quota used: ${budget.used}/${budget.limit} units`);
 }
 

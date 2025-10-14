@@ -2,7 +2,7 @@
  * Favorites UI State - State management and highlighting
  */
 
-import { isFavorite } from "../favorites.js";
+import {isFavorite} from "../favorites.js";
 
 /**
  * Check if current song is favorited and update highlighted status in history

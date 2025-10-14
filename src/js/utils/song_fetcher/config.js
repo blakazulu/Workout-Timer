@@ -1,5 +1,5 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath} from "node:url";
 
 // Get directory name for ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +23,7 @@ export const RATE = {
   dailyBudgetUnits: 9000,        // stop before 10,000 default quota
   // Cost estimates: search.list = 100 units, videos.list = 1 unit.
   // (Matches Google's published table; tweak if your project differs.)
-  costs: { search: 100, videos: 1 }
+  costs: {search: 100, videos: 1}
 };
 
 // ---------- CATEGORY QUERIES ----------

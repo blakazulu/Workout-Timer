@@ -1,4 +1,4 @@
-import { MIN_VIEWS } from "./config.js";
+import {MIN_VIEWS} from "./config.js";
 
 // ---------- UTILS ----------
 export const delay = ms => new Promise(r => setTimeout(r, ms));
@@ -61,5 +61,5 @@ export function mapToOutput(item) {
 
 export function stripPrivateFieldsForOutput(items) {
   // drop _fetchedAt in final app JSON
-  return items.map(({ _fetchedAt, ...rest }) => rest);
+  return items.map(({_fetchedAt, ...rest}) => rest);
 }

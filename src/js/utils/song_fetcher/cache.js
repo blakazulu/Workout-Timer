@@ -1,22 +1,22 @@
 import fs from "node:fs";
-import { CACHE_FILE, REFRESH_DAYS } from "./config.js";
-import { budget } from "./youtube-api.js";
-import { nowIso, daysAgoIso } from "./filters.js";
+import {CACHE_FILE, REFRESH_DAYS} from "./config.js";
+import {budget} from "./youtube-api.js";
+import {daysAgoIso, nowIso} from "./filters.js";
 
 // ---------- CACHE ----------
 export function loadCache() {
   if (!fs.existsSync(CACHE_FILE)) {
-    return { _meta: { version: 1, createdAt: nowIso(), lastRunAt: null }, categories: {} };
+    return {_meta: {version: 1, createdAt: nowIso(), lastRunAt: null}, categories: {}};
   }
   try {
     const raw = fs.readFileSync(CACHE_FILE, "utf-8");
     const data = JSON.parse(raw);
     // ensure shape
-    if (!data._meta) data._meta = { version: 1, createdAt: nowIso(), lastRunAt: null };
+    if (!data._meta) data._meta = {version: 1, createdAt: nowIso(), lastRunAt: null};
     if (!data.categories) data.categories = {};
     return data;
   } catch {
-    return { _meta: { version: 1, createdAt: nowIso(), lastRunAt: null }, categories: {} };
+    return {_meta: {version: 1, createdAt: nowIso(), lastRunAt: null}, categories: {}};
   }
 }
 

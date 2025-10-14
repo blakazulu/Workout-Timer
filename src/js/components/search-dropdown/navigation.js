@@ -2,7 +2,7 @@
  * Search Dropdown Navigation - Navigation and selection methods
  */
 
-import { render, hide } from './rendering.js';
+import {hide, render} from "./rendering.js";
 
 /**
  * Select next result

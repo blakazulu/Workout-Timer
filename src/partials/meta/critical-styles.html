@@ -1,51 +1,65 @@
 <!-- Critical inline styles for app loader (prevents FOUC) -->
 <style>
   #app-loader {
-    position: fixed;
-    inset: 0;
+    align-items: center;
     background: #0a0a0a;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    inset: 0;
     justify-content: center;
-    z-index: 99999;
+    position: fixed;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 99999;
   }
+
   #app-loader.hidden {
     opacity: 0;
     visibility: hidden;
   }
+
   .loader-icon {
-    width: 120px;
+    animation: loaderPulse 2s ease-in-out infinite;
     height: 120px;
     margin-bottom: 30px;
-    animation: loaderPulse 2s ease-in-out infinite;
+    width: 120px;
   }
+
   .loader-text {
+    background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
     font-family: 'Orbitron', monospace;
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 6px;
-    background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     margin-bottom: 20px;
+    -webkit-text-fill-color: transparent;
   }
+
   .loader-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(0, 255, 200, 0.2);
-    border-top-color: #00ffc8;
-    border-right-color: #ff0096;
-    border-radius: 50%;
     animation: loaderSpin 1s linear infinite;
+    border: 3px solid rgba(0, 255, 200, 0.2);
+    border-radius: 50%;
+    border-right-color: #ff0096;
+    border-top-color: #00ffc8;
+    height: 50px;
+    width: 50px;
   }
+
   @keyframes loaderPulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.6)); }
-    50% { transform: scale(1.1); filter: drop-shadow(0 0 40px rgba(255, 0, 150, 0.8)); }
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.6));
+    }
+    50% {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 40px rgba(255, 0, 150, 0.8));
+    }
   }
+
   @keyframes loaderSpin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>

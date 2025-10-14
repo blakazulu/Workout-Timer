@@ -2,9 +2,9 @@
  * Favorites UI Actions - Action handlers (shuffle, export, import)
  */
 
-import { $ } from "../../utils/dom.js";
-import { downloadFavoritesFile, getShuffledFavorites, uploadFavoritesFile } from "../favorites.js";
-import { updateFavoritesBadge } from './initialization.js';
+import {$} from "../../utils/dom.js";
+import {downloadFavoritesFile, getShuffledFavorites, uploadFavoritesFile} from "../favorites.js";
+import {updateFavoritesBadge} from "./initialization.js";
 
 /**
  * Set up favorites tab action buttons

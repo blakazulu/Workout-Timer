@@ -3,7 +3,7 @@
  * Handles exporting favorites to JSON and importing from files
  */
 
-import { getFavorites, MAX_FAVORITES } from './storage.js';
+import {getFavorites, MAX_FAVORITES} from "./storage.js";
 
 /**
  * Export favorites as JSON
