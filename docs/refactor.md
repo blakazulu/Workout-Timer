@@ -3,6 +3,7 @@
 **Date:** 2025-10-14
 **Reason:** File size compliance - Multiple files exceed 300-400 line maximum
 **Status:** Planning Phase
+**Tracking:** See `docs/refactoring-journal.md` for daily progress
 
 ---
 
@@ -26,6 +27,309 @@
 | `src/js/modules/favorites.js`          | 380           | Warning |
 | `src/js/components/search-dropdown.js` | 369           | Warning |
 | `src/js/modules/favorites-ui.js`       | 368           | Warning |
+
+---
+
+## 🔄 Module Communication Pattern
+
+### Overview
+
+As the codebase is refactored into smaller, focused modules, a clear communication pattern is essential to prevent tight
+coupling and maintain modularity.
+
+### Architecture: Event-Driven with Shared State
+
+**Pattern:** Custom Event Bus + Centralized State Management
+
+#### Core Communication Mechanisms
+
+**1. Event Bus (`src/js/core/event-bus.js`)**
+
+Central pub/sub system for cross-module communication without direct dependencies.
+
+```javascript
+// event-bus.js (~100 lines)
+class EventBus {
+  constructor() {
+    this.events = new Map();
+  }
+
+  on(eventName, handler) {
+    if (!this.events.has(eventName)) {
+      this.events.set(eventName, []);
+    }
+    this.events.get(eventName).push(handler);
+
+    // Return unsubscribe function
+    return () => this.off(eventName, handler);
+  }
+
+  off(eventName, handler) {
+    if (!this.events.has(eventName)) return;
+    const handlers = this.events.get(eventName);
+    const index = handlers.indexOf(handler);
+    if (index > -1) {
+      handlers.splice(index, 1);
+    }
+  }
+
+  emit(eventName, data) {
+    if (!this.events.has(eventName)) return;
+    this.events.get(eventName).forEach(handler => {
+      try {
+        handler(data);
+      } catch (error) {
+        console.error(`Error in event handler for ${eventName}:`, error);
+      }
+    });
+  }
+
+  once(eventName, handler) {
+    const onceHandler = (data) => {
+      handler(data);
+      this.off(eventName, onceHandler);
+    };
+    this.on(eventName, onceHandler);
+  }
+}
+
+export const eventBus = new EventBus();
+```
+
+**2. Application State (`src/js/core/app-state.js`)**
+
+Centralized state management for shared application data.
+
+```javascript
+// app-state.js (~120 lines)
+import {eventBus} from './event-bus.js';
+
+class AppState {
+  constructor() {
+    this.state = {
+      timer: {
+        isRunning: false,
+        isPaused: false,
+        currentTime: 0,
+        totalTime: 0,
+      },
+      music: {
+        isPlaying: false,
+        currentTrack: null,
+        volume: 70,
+        mode: 'mood', // 'mood' or 'genre'
+      },
+      ui: {
+        activePanel: null,
+        theme: 'dark',
+      },
+      settings: {},
+    };
+  }
+
+  get(path) {
+    return path.split('.').reduce((obj, key) => obj?.[key], this.state);
+  }
+
+  set(path, value) {
+    const keys = path.split('.');
+    const lastKey = keys.pop();
+    const target = keys.reduce((obj, key) => obj[key], this.state);
+
+    const oldValue = target[lastKey];
+    target[lastKey] = value;
+
+    // Emit state change event
+    eventBus.emit('state:changed', {path, value, oldValue});
+    eventBus.emit(`state:changed:${path}`, {value, oldValue});
+  }
+
+  update(path, updater) {
+    const currentValue = this.get(path);
+    const newValue = updater(currentValue);
+    this.set(path, newValue);
+  }
+
+  subscribe(path, handler) {
+    return eventBus.on(`state:changed:${path}`, handler);
+  }
+}
+
+export const appState = new AppState();
+```
+
+**3. Event Constants (`src/js/core/events.js`)**
+
+Typed event names for consistency and type safety.
+
+```javascript
+// events.js (~80 lines)
+export const EVENTS = {
+  // Timer events
+  TIMER_STARTED: 'timer:started',
+  TIMER_PAUSED: 'timer:paused',
+  TIMER_RESUMED: 'timer:resumed',
+  TIMER_STOPPED: 'timer:stopped',
+  TIMER_COMPLETED: 'timer:completed',
+  TIMER_TICK: 'timer:tick',
+
+  // Music events
+  MUSIC_PLAYING: 'music:playing',
+  MUSIC_PAUSED: 'music:paused',
+  MUSIC_STOPPED: 'music:stopped',
+  MUSIC_TRACK_CHANGED: 'music:track:changed',
+  MUSIC_VOLUME_CHANGED: 'music:volume:changed',
+  MUSIC_MODE_CHANGED: 'music:mode:changed',
+
+  // UI events
+  UI_PANEL_OPENED: 'ui:panel:opened',
+  UI_PANEL_CLOSED: 'ui:panel:closed',
+  UI_THEME_CHANGED: 'ui:theme:changed',
+
+  // Favorites events
+  FAVORITES_ADDED: 'favorites:added',
+  FAVORITES_REMOVED: 'favorites:removed',
+
+  // Settings events
+  SETTINGS_UPDATED: 'settings:updated',
+
+  // State events
+  STATE_CHANGED: 'state:changed',
+};
+```
+
+#### Event Naming Conventions
+
+**Format:** `<domain>:<action>[:<detail>]`
+
+**Examples:**
+
+- `timer:started`, `timer:paused`, `timer:completed`
+- `music:playing`, `music:paused`, `music:track:changed`
+- `ui:panel:opened`, `ui:panel:closed`
+- `favorites:added`, `favorites:removed`
+- `state:changed:timer.isRunning`
+
+#### Module Communication Examples
+
+**Example 1: Timer Module → UI Updates**
+
+```javascript
+// In timer.js
+import {eventBus} from '../core/event-bus.js';
+import {appState} from '../core/app-state.js';
+import {EVENTS} from '../core/events.js';
+
+class Timer {
+  start() {
+    appState.set('timer.isRunning', true);
+    eventBus.emit(EVENTS.TIMER_STARTED, {startTime: Date.now()});
+  }
+
+  pause() {
+    appState.set('timer.isPaused', true);
+    eventBus.emit(EVENTS.TIMER_PAUSED, {currentTime: this.currentTime});
+  }
+}
+
+// In ui/event-handlers.js
+import {eventBus} from '../core/event-bus.js';
+import {EVENTS} from '../core/events.js';
+
+eventBus.on(EVENTS.TIMER_STARTED, (data) => {
+  updateTimerDisplay();
+  updateButtonStates();
+});
+
+eventBus.on(EVENTS.TIMER_PAUSED, (data) => {
+  showPauseIndicator();
+});
+```
+
+**Example 2: Music Module → Multiple Listeners**
+
+```javascript
+// In modules/youtube/index.js
+import {eventBus} from '../../core/event-bus.js';
+import {appState} from '../../core/app-state.js';
+import {EVENTS} from '../../core/events.js';
+
+export function playVideo(videoId) {
+  // Play logic...
+  appState.set('music.isPlaying', true);
+  appState.set('music.currentTrack', videoId);
+  eventBus.emit(EVENTS.MUSIC_PLAYING, {videoId, title});
+}
+
+// In ui/music-controls.js
+eventBus.on(EVENTS.MUSIC_PLAYING, ({videoId, title}) => {
+  showMusicControls();
+  updateNowPlaying(title);
+});
+
+// In modules/favorites-ui.js
+eventBus.on(EVENTS.MUSIC_PLAYING, ({videoId}) => {
+  highlightCurrentTrack(videoId);
+});
+
+// In core/notifications.js
+eventBus.on(EVENTS.MUSIC_PLAYING, ({title}) => {
+  showNotification(`Now playing: ${title}`);
+});
+```
+
+**Example 3: State Subscriptions**
+
+```javascript
+// In ui/timer-display.js
+import {appState} from '../core/app-state.js';
+
+// Subscribe to specific state changes
+const unsubscribe = appState.subscribe('timer.currentTime', ({value}) => {
+  updateTimerDisplay(value);
+});
+
+// Later, clean up
+// unsubscribe();
+```
+
+#### Communication Matrix
+
+| Module               | Emits Events | Listens To               | Accesses State         |
+|----------------------|--------------|--------------------------|------------------------|
+| timer.js             | timer:*      | -                        | timer.*                |
+| youtube/index.js     | music:*      | timer:completed          | music.*                |
+| favorites.js         | favorites:*  | music:playing            | -                      |
+| ui/event-handlers.js | -            | timer:*, music:*, ui:*   | ui.*                   |
+| ui/library-ui.js     | ui:panel:*   | favorites:*              | music.mode             |
+| notifications.js     | -            | timer:completed, music:* | settings.notifications |
+
+#### Benefits of This Pattern
+
+1. **Loose Coupling:** Modules don't need direct references to each other
+2. **Testability:** Easy to test modules in isolation
+3. **Extensibility:** New modules can listen to existing events
+4. **Debuggability:** All communication flows through event bus (can be logged)
+5. **State Predictability:** Centralized state makes debugging easier
+6. **Event Replay:** Can record and replay events for debugging
+
+#### Implementation Guidelines
+
+**DO:**
+
+- ✅ Use events for cross-module communication
+- ✅ Use state for shared data
+- ✅ Use direct function calls within the same module
+- ✅ Document what events each module emits/listens to
+- ✅ Use typed event names (constants from events.js)
+
+**DON'T:**
+
+- ❌ Import UI modules into core modules
+- ❌ Create circular dependencies
+- ❌ Emit events for internal module logic
+- ❌ Store large objects in state (use references)
+- ❌ Mutate state directly (always use appState.set())
 
 ---
 
@@ -203,6 +507,9 @@ src/css/
 src/js/
 ├── app.js                     (~150 lines) - Main orchestration only
 ├── core/
+│   ├── event-bus.js          (~100 lines) - ⭐ Event communication system
+│   ├── app-state.js          (~120 lines) - ⭐ Centralized state management
+│   ├── events.js             (~80 lines) - ⭐ Event constants
 │   ├── notifications.js       (~100 lines) - Notification system
 │   ├── pwa-install.js        (~80 lines) - PWA install handling
 │   └── gestures-handler.js   (~60 lines) - Touch gesture setup
@@ -225,6 +532,11 @@ src/js/
 - Minimal coordination logic
 
 ```javascript
+// Core infrastructure (must be imported first)
+import './core/event-bus.js';    // ⭐ Initialize event system
+import './core/app-state.js';    // ⭐ Initialize state management
+import './core/events.js';       // ⭐ Event constants available globally
+
 import {initNotifications} from './core/notifications.js';
 import {initPWAInstall} from './core/pwa-install.js';
 import {initGestureHandlers} from './core/gestures-handler.js';
@@ -237,9 +549,12 @@ async function init() {
   const settings = loadSettings();
   applySettings(settings);
 
+  // Initialize core systems
   initNotifications();
   initPWAInstall();
   initGestureHandlers();
+
+  // Initialize UI components (these will listen to events)
   initEventHandlers();
   initLibraryUI();
   initModeToggle();
@@ -250,6 +565,28 @@ async function init() {
 
 init();
 ```
+
+**core/event-bus.js** (~100 lines) ⭐ NEW
+
+- Event pub/sub system
+- Event subscription/unsubscription
+- Event emission with error handling
+- See "Module Communication Pattern" section above for full implementation
+
+**core/app-state.js** (~120 lines) ⭐ NEW
+
+- Centralized application state
+- State getter/setter with path notation
+- State change events
+- State subscriptions
+- See "Module Communication Pattern" section above for full implementation
+
+**core/events.js** (~80 lines) ⭐ NEW
+
+- Event name constants
+- Typed event names for IDE autocomplete
+- Prevents typos in event names
+- See "Module Communication Pattern" section above for full implementation
 
 **core/notifications.js** (~100 lines)
 
@@ -312,34 +649,46 @@ init();
     - Back up current `app.js`
     - Set up test harness for critical functions
 
-2. **Extract Core Functions** (Do first - lowest risk)
+2. **Create Communication Infrastructure** ⭐ (Do FIRST - Foundation for all modules)
+    - Create `core/event-bus.js` (see Module Communication Pattern section)
+    - Create `core/app-state.js` (see Module Communication Pattern section)
+    - Create `core/events.js` (see Module Communication Pattern section)
+    - Test event system independently
+    - Test state management independently
+
+3. **Extract Core Functions** (Do second - lowest risk)
     - Extract notification system → `core/notifications.js`
     - Extract PWA install → `core/pwa-install.js`
     - Extract gesture handlers → `core/gestures-handler.js`
+    - Update each to use event bus where appropriate
     - Test each extraction independently
 
-3. **Extract UI Functions** (Medium risk)
+4. **Extract UI Functions** (Medium risk)
     - Extract event handlers → `ui/event-handlers.js`
     - Extract tooltip logic → `ui/tooltip-handler.js`
     - Extract library UI → `ui/library-ui.js`
     - Extract mode toggle → `ui/mode-toggle.js`
+    - Update each to use event bus and state management
     - Test UI interactions after each extraction
 
-4. **Extract Search Functions** (Low risk)
+5. **Extract Search Functions** (Low risk)
     - Extract YouTube search UI → `search/youtube-search-ui.js`
+    - Update to use event bus
     - Test search functionality
 
-5. **Refactor Main App**
-    - Update `app.js` to import and orchestrate modules
+6. **Refactor Main App**
+    - Update `app.js` to import communication infrastructure first
+    - Import and orchestrate all modules
     - Remove old code
     - Ensure clean initialization flow
 
-6. **Update Imports**
+7. **Update Imports**
     - Update all files that import from `app.js`
     - Fix any broken dependencies
     - Update window exports if needed
+    - Ensure all modules import from correct paths
 
-7. **Comprehensive Testing**
+8. **Comprehensive Testing**
     - Test full app initialization
     - Test all UI interactions
     - Test PWA installation
@@ -598,30 +947,38 @@ export function getYouTubePlayer() {
 
 ---
 
-### Phase 4: Index.html Organization (MEDIUM PRIORITY)
+### Phase 4: Index.html Organization (HIGH PRIORITY - REQUIRED)
 
 **Target:** `index.html` (436 lines → modular partials)
 **Estimated Time:** 2-3 hours
 **Risk Level:** Low
-**Impact:** Future-proofed structure for new features
+**Impact:** Essential for maintainability and future development
+**Status:** ⭐ REQUIRED - DO NOT DEFER
 
 #### Current Structure Issues
 
-- Single 436-line HTML file (only 9% over limit now, but will grow)
-- Mixes meta tags, styles, content, popovers
-- Hard to navigate and maintain
+- Single 436-line HTML file (9% over limit and actively growing)
+- Mixes meta tags, styles, content, popovers in one monolithic file
+- Hard to navigate and maintain as features are added
 - **Critical:** Adding 2-3 new features will push this to 600-700+ lines
-- No clean way to add new UI components without bloating the file
+- No clean way to add new UI components without significant bloat
+- Makes parallel development difficult (merge conflicts)
+- Violates separation of concerns
 
-#### Why Split Now (Not Later)
+#### Why This Phase Is REQUIRED
 
-**Active Development Reality:**
+**This is NOT optional - it's essential infrastructure:**
 
-- Currently at 436 lines
-- Each new feature typically adds 50-150 lines
-- Planned features will easily exceed 600+ lines
-- Refactoring later = 4-5 hours + risk of breaking changes
-- **Investment now: 2-3 hours | Savings later: 2-3 hours + prevented technical debt**
+1. **Active Development:** Project is under active development with new features planned
+2. **Imminent Growth:** Current 436 lines will quickly exceed 600+ lines
+3. **Prevention Over Cure:** Refactoring at 600+ lines = 4-5 hours + high risk
+4. **Investment ROI:** 2-3 hours now saves 2-3+ hours later plus prevents tech debt
+5. **Maintainability:** Modular HTML is easier to understand and modify
+6. **Team Collaboration:** Partials prevent merge conflicts in team environments
+7. **Consistency:** Matches the modular architecture of CSS and JS refactoring
+
+**Bottom Line:** Deferring this phase contradicts the entire refactoring effort. If we're splitting 2,944-line CSS files
+and 1,177-line JS files for maintainability, we MUST split the 436-line HTML file that's actively growing.
 
 #### Recommended Approach: HTML Partials with Vite
 
@@ -664,6 +1021,7 @@ src/
     %
     -
     include
+
     (
     'styles/inline-critical.css'
     )
@@ -1283,6 +1641,9 @@ workout-timer-pro/
 │   │   ├── main.js                    (~13 lines)
 │   │   │
 │   │   ├── core/                      ⭐ New directory
+│   │   │   ├── event-bus.js          (~100 lines) ⭐ NEW - Event system
+│   │   │   ├── app-state.js          (~120 lines) ⭐ NEW - State management
+│   │   │   ├── events.js             (~80 lines) ⭐ NEW - Event constants
 │   │   │   ├── notifications.js       (~100 lines)
 │   │   │   ├── pwa-install.js        (~80 lines)
 │   │   │   └── gestures-handler.js   (~60 lines)
@@ -1364,9 +1725,9 @@ workout-timer-pro/
 **Summary:**
 
 - ⭐ 13 new directories created (CSS, JS, HTML partials)
-- 📝 40 new files created from refactoring:
+- 📝 43 new files created from refactoring:
     - 10 CSS component files
-    - 7 JS core/ui/search files
+    - 10 JS core/ui/search files (includes 3 new event system files)
     - 5 YouTube module files
     - 5 Song fetcher utility files
     - 13 HTML partial files
@@ -1407,6 +1768,11 @@ workout-timer-pro/
 
 - [ ] Create directory structure (`core/`, `ui/`, `search/`)
 - [ ] Back up current `app.js`
+- [ ] ⭐ Create `core/event-bus.js` (Event communication system)
+- [ ] ⭐ Create `core/app-state.js` (State management)
+- [ ] ⭐ Create `core/events.js` (Event constants)
+- [ ] ⭐ Test event system independently
+- [ ] ⭐ Test state management independently
 - [ ] Extract notifications → `core/notifications.js`
 - [ ] Test notifications
 - [ ] Extract PWA install → `core/pwa-install.js`
@@ -1583,11 +1949,13 @@ workout-timer-pro/
 
 ---
 
-**Total Estimated Effort:** 22-32 hours
-**Priority Order:** Phase 1 → Phase 2 → Phase 3 → Phase 5 → Phase 4 → Phase 6
-**Recommended Timeline:** 2-4 weeks (depending on available time)
+**Total Estimated Effort:** 26-36 hours (includes communication infrastructure)
+**Priority Order:** Phase 6 (Prevention) → Phase 1 (CSS) → Phase 2 (App.js) → Phase 3 (YouTube) → Phase 4 (HTML) → Phase
+5 (Song Fetcher)
+**Recommended Timeline:** 3-4 weeks (depending on available time)
+**All Phases Required:** Yes - Phase 4 is NOT optional
 
 ---
 
 *Last Updated: 2025-10-14*
-*Document Version: 1.1 - Updated Phase 4 to use HTML partials with Vite (future-proofing for active development)*
+*Document Version: 2.0 - Added Module Communication Pattern (Event Bus + State Management), Made Phase 4 REQUIRED*
