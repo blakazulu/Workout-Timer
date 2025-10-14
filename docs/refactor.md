@@ -1436,16 +1436,355 @@ main();
 
 ---
 
+### Phase 6: CSS Oversized Files Refinement (HIGH PRIORITY)
+
+**Target:** CSS files exceeding 400-line limit after Phase 1
+**Estimated Time:** 4-5 hours
+**Risk Level:** Low-Medium
+**Impact:** Complete file size compliance
+**Status:** ⭐ REQUIRED - Address files created in Phase 1 that exceed limits
+
+#### Current Issues
+
+After Phase 1 completion, several CSS component files still exceed the 400-line target:
+
+| File                               | Current Lines | Violation Level | Over Limit By |
+|------------------------------------|---------------|-----------------|---------------|
+| `src/css/components/library.css`   | 718           | SIGNIFICANT     | 1.80x         |
+| `src/css/components/favorites.css` | 560           | MODERATE        | 1.40x         |
+| `src/css/global.css`               | 489           | MINOR           | 1.22x         |
+| `src/css/components/music-selection.css` | 446     | MINOR           | 1.12x         |
+
+**Why This Phase is Required:**
+
+1. **Compliance:** Files still violate 400-line standard established in Phase 1
+2. **Consistency:** All other component files are under 300 lines
+3. **Maintainability:** Large files defeat the purpose of the modularization effort
+4. **Future-Proofing:** These files will grow with new features
+5. **Best Practice:** Completing this ensures long-term code health
+
+---
+
+#### 6.1: Library.css Split (718 lines → 3 files)
+
+**Target:** `src/css/components/library.css` (718 lines → 3 focused files)
+**Priority:** CRITICAL
+**Estimated Time:** 2 hours
+
+**Current Content Analysis:**
+- History/Library popover system
+- Music selection popover with track listings
+- Mood and Genre popovers
+- History tabs (Library/Favorites)
+- History items with metadata
+- Music library grid with album art
+- Popover animations using `@starting-style`
+
+**Proposed Split:**
+
+```
+src/css/components/
+├── library/
+│   ├── popover-base.css        (~200 lines) - Base popover styles & animations
+│   ├── history-tabs.css        (~250 lines) - History items, tabs, metadata
+│   └── music-grid.css          (~280 lines) - Music library grid, album art
+└── library.css                 (~10 lines) - Import aggregator
+```
+
+**Content Breakdown:**
+
+**`library/popover-base.css`** (~200 lines)
+- Popover container styles
+- `@starting-style` animations
+- Popover open/close states
+- Backdrop styles
+- Position and sizing
+- Common popover structure
+
+**`library/history-tabs.css`** (~250 lines)
+- History tab switching UI
+- Tab buttons and active states
+- History item list styles
+- Play count display
+- Channel information
+- Duration formatting
+- Click handlers styling
+
+**`library/music-grid.css`** (~280 lines)
+- Music library grid layout
+- Album art thumbnails
+- Grid item hover states
+- Lazy-loaded image placeholders
+- Track selection states
+- Responsive grid adjustments
+- Mobile optimizations
+
+**Migration Steps:**
+
+1. Create `src/css/components/library/` subdirectory
+2. Extract popover base styles → `library/popover-base.css`
+3. Extract history/tabs UI → `library/history-tabs.css`
+4. Extract music grid → `library/music-grid.css`
+5. Convert `library.css` to import aggregator:
+   ```css
+   /* Library Components */
+   @import './library/popover-base.css';
+   @import './library/history-tabs.css';
+   @import './library/music-grid.css';
+   ```
+6. Test all library functionality
+7. Verify popover animations work
+8. Test responsive layouts
+
+---
+
+#### 6.2: Favorites.css Split (560 lines → 2 files)
+
+**Target:** `src/css/components/favorites.css` (560 lines → 2 focused files)
+**Priority:** HIGH
+**Estimated Time:** 1.5 hours
+
+**Current Content Analysis:**
+- Favorite button states and animations
+- `favoriteAdded` and `heartBeat` animations
+- Favorites badge on library button
+- Song favorite buttons with size variants (small/medium/large)
+- Positioning for different list types (history, music selection, search)
+- Favorited item states with gradient backgrounds
+- History action buttons (shuffle, export, import)
+- Remove button for favorite items
+
+**Proposed Split:**
+
+```
+src/css/components/
+├── favorites/
+│   ├── favorite-buttons.css    (~280 lines) - Button styles, animations, variants
+│   └── favorite-items.css      (~290 lines) - Favorited items, actions, badges
+└── favorites.css               (~10 lines) - Import aggregator
+```
+
+**Content Breakdown:**
+
+**`favorites/favorite-buttons.css`** (~280 lines)
+- Favorite button base styles
+- Size variants (small, medium, large)
+- Button states (default, active, hover)
+- `favoriteAdded` keyframe animation (rotation effects)
+- `heartBeat` animation for active favorites tab
+- Button positioning in different contexts:
+  - History list items
+  - Music selection items
+  - Search results
+- Touch-friendly mobile styles
+
+**`favorites/favorite-items.css`** (~290 lines)
+- Favorited item container styles
+- Gradient backgrounds for favorited states
+- Favorites badge on library button
+- History action buttons:
+  - Shuffle button
+  - Export button
+  - Import button
+- Remove button styling
+- Item hover states
+- Responsive adjustments for mobile
+
+**Migration Steps:**
+
+1. Create `src/css/components/favorites/` subdirectory
+2. Extract favorite button styles → `favorites/favorite-buttons.css`
+3. Extract favorited item styles → `favorites/favorite-items.css`
+4. Convert `favorites.css` to import aggregator:
+   ```css
+   /* Favorites Components */
+   @import './favorites/favorite-buttons.css';
+   @import './favorites/favorite-items.css';
+   ```
+5. Test favorite button interactions
+6. Test favorited item display
+7. Verify animations work correctly
+8. Test all action buttons
+
+---
+
+#### 6.3: Global.css Review and Split (489 lines → 2-3 files)
+
+**Target:** `src/css/global.css` (489 lines → 2-3 focused files)
+**Priority:** MEDIUM
+**Estimated Time:** 1 hour
+
+**Current Content Analysis:**
+- Base typography and font styles
+- Layout utilities and containers
+- Global element resets
+- Common utility classes
+- Scrollbar styling
+- Focus states and accessibility
+- Print styles (if any)
+
+**Proposed Split:**
+
+```
+src/css/
+├── base/
+│   ├── typography.css          (~180 lines) - Fonts, text styles, headings
+│   ├── layout.css              (~180 lines) - Containers, grid, utilities
+│   └── accessibility.css       (~140 lines) - Focus states, a11y, scrollbars
+└── global.css                  (~10 lines) - Import aggregator
+```
+
+**Content Breakdown:**
+
+**`base/typography.css`** (~180 lines)
+- Font imports and definitions
+- Base font sizing and line-height
+- Heading styles (h1-h6)
+- Text utilities (bold, italic, etc.)
+- Text color utilities
+- Font-weight variations
+
+**`base/layout.css`** (~180 lines)
+- Container widths and margins
+- Flexbox utilities
+- Grid utilities
+- Spacing utilities (padding, margin)
+- Positioning helpers
+- Display utilities
+
+**`base/accessibility.css`** (~140 lines)
+- Focus outline styles
+- Focus-visible states
+- Screen reader utilities
+- Skip links
+- Scrollbar styling
+- Reduced motion preferences
+- High contrast mode support
+
+**Migration Steps:**
+
+1. Create `src/css/base/` subdirectory
+2. Analyze and categorize `global.css` content
+3. Extract typography → `base/typography.css`
+4. Extract layout utilities → `base/layout.css`
+5. Extract accessibility → `base/accessibility.css`
+6. Convert `global.css` to import aggregator:
+   ```css
+   /* Base Styles */
+   @import './base/typography.css';
+   @import './base/layout.css';
+   @import './base/accessibility.css';
+   ```
+7. Test entire application for visual regressions
+8. Verify all utilities work correctly
+9. Test accessibility features
+
+---
+
+#### 6.4: Music-Selection.css Review (446 lines - OPTIONAL)
+
+**Target:** `src/css/components/music-selection.css` (446 lines)
+**Priority:** LOW (Optional - only 11% over limit)
+**Estimated Time:** 1 hour (if needed)
+
+**Current Content:**
+- Music mode toggle (Mood/Genre switcher)
+- Mood tags with hexagonal honeycomb layout
+- Genre tags with radial petal layout (10 genres at 36° intervals)
+- Complex clip-paths and transforms
+- Selection states and animations
+- Neon glow effects
+
+**Decision Points:**
+
+**Option 1: Leave As-Is (Recommended for now)**
+- Only 46 lines over 400-line target (11% over)
+- Highly cohesive content (all mood/genre selection)
+- Complex geometric layouts difficult to split logically
+- Splitting might reduce maintainability
+- Monitor for growth; split if it reaches 500+ lines
+
+**Option 2: Split if Absolutely Necessary** (Future consideration)
+
+If file grows to 500+ lines, consider:
+
+```
+src/css/components/music-selection/
+├── mode-toggle.css             (~100 lines) - Mood/Genre switcher
+├── mood-tags.css               (~180 lines) - Hexagonal layout
+└── genre-tags.css              (~180 lines) - Radial layout
+```
+
+**Recommendation:** Monitor but defer split until file reaches 500+ lines or new features are added.
+
+---
+
+#### Phase 6 Summary
+
+**Total Files to Split:** 3 required, 1 optional
+- ✅ library.css (718 → 3 files of ~200-280 lines)
+- ✅ favorites.css (560 → 2 files of ~280-290 lines)
+- ✅ global.css (489 → 3 files of ~140-180 lines)
+- ⏸️ music-selection.css (446 lines - monitor, defer split)
+
+**Expected Outcome:**
+- All CSS files under 400 lines
+- Improved file organization
+- Better separation of concerns
+- Easier to locate and modify styles
+- Complete compliance with coding standards
+
+**New Directory Structure After Phase 6:**
+
+```
+src/css/
+├── base/                       ⭐ NEW
+│   ├── typography.css         (~180 lines)
+│   ├── layout.css             (~180 lines)
+│   └── accessibility.css      (~140 lines)
+├── components/
+│   ├── library/               ⭐ NEW
+│   │   ├── popover-base.css  (~200 lines)
+│   │   ├── history-tabs.css  (~250 lines)
+│   │   └── music-grid.css    (~280 lines)
+│   ├── favorites/             ⭐ NEW
+│   │   ├── favorite-buttons.css (~280 lines)
+│   │   └── favorite-items.css   (~290 lines)
+│   ├── timer.css              (155 lines) ✅
+│   ├── music-controls.css     (280 lines) ✅
+│   ├── music-selection.css    (446 lines) ⏸️ Monitor
+│   ├── buttons.css            (143 lines) ✅
+│   ├── overlays.css           (264 lines) ✅
+│   ├── search.css             (265 lines) ✅
+│   ├── settings.css           (105 lines) ✅
+│   ├── library.css            (~10 lines) - Import aggregator
+│   └── favorites.css          (~10 lines) - Import aggregator
+├── animations.css             (144 lines) ✅
+├── variables.css              (66 lines) ✅
+├── global.css                 (~10 lines) - Import aggregator
+└── components.css             (28 lines) ✅
+```
+
+**Progress After Phase 6:**
+- **CSS files over 400 lines:** 1 (music-selection.css at 446, acceptable)
+- **Largest CSS file:** 446 lines (was 2,944)
+- **Average CSS file size:** ~180 lines
+- **File size compliance:** 95% (20 of 21 files compliant)
+
+---
+
 #### Files to Monitor
 
 Track these files that are approaching the 400-line limit:
 
-| File                                   | Current Lines | Action Threshold |
-|----------------------------------------|---------------|------------------|
-| `src/css/global.css`                   | 489           | Split if > 450   |
-| `src/js/modules/favorites.js`          | 380           | Split if > 400   |
-| `src/js/components/search-dropdown.js` | 369           | Split if > 400   |
-| `src/js/modules/favorites-ui.js`       | 368           | Split if > 400   |
+| File                                   | Current Lines | Action Threshold | Phase 6 Status |
+|----------------------------------------|---------------|------------------|----------------|
+| `src/css/components/music-selection.css` | 446         | Split if > 500   | ⏸️ Deferred    |
+| `src/js/modules/favorites.js`          | 380           | Split if > 400   | Monitor        |
+| `src/js/components/search-dropdown.js` | 369           | Split if > 400   | Monitor        |
+| `src/js/modules/favorites-ui.js`       | 368           | Split if > 400   | Monitor        |
+
+---
 
 #### Prevention Measures
 
@@ -1870,7 +2209,52 @@ workout-timer-pro/
 
 ---
 
-### Phase 6: Monitoring & Prevention
+### Phase 6: CSS Oversized Files Refinement
+
+#### 6.1: Library.css Split (718 → 3 files)
+- [ ] Create `src/css/components/library/` subdirectory
+- [ ] Extract popover base styles → `library/popover-base.css`
+- [ ] Extract history/tabs UI → `library/history-tabs.css`
+- [ ] Extract music grid → `library/music-grid.css`
+- [ ] Convert `library.css` to import aggregator
+- [ ] Test all library functionality
+- [ ] Verify popover animations work
+- [ ] Test responsive layouts
+
+#### 6.2: Favorites.css Split (560 → 2 files)
+- [ ] Create `src/css/components/favorites/` subdirectory
+- [ ] Extract favorite button styles → `favorites/favorite-buttons.css`
+- [ ] Extract favorited item styles → `favorites/favorite-items.css`
+- [ ] Convert `favorites.css` to import aggregator
+- [ ] Test favorite button interactions
+- [ ] Test favorited item display
+- [ ] Verify animations work correctly
+- [ ] Test all action buttons
+
+#### 6.3: Global.css Split (489 → 3 files)
+- [ ] Create `src/css/base/` subdirectory
+- [ ] Analyze and categorize `global.css` content
+- [ ] Extract typography → `base/typography.css`
+- [ ] Extract layout utilities → `base/layout.css`
+- [ ] Extract accessibility → `base/accessibility.css`
+- [ ] Convert `global.css` to import aggregator
+- [ ] Test entire application for visual regressions
+- [ ] Verify all utilities work correctly
+- [ ] Test accessibility features
+
+#### 6.4: Music-Selection.css Review (Optional)
+- [ ] Review `music-selection.css` current size (446 lines)
+- [ ] Decision: defer split (recommended) or proceed
+- [ ] If proceeding: Create subdirectory and split
+- [ ] If deferring: Document monitoring threshold (500 lines)
+
+**Status:** Not Started
+**Priority:** HIGH (Next after Phase 2)
+**Estimated Completion:** ___ / ___ / ___
+
+---
+
+### Phase 7: Monitoring & Prevention
 
 - [ ] Create pre-commit hook
 - [ ] Make hook executable
@@ -1891,19 +2275,35 @@ workout-timer-pro/
 
 ## 📊 Metrics
 
-### Before Refactoring
+### Before Refactoring (Initial State)
 
 - **Files over 400 lines:** 5
 - **Largest file:** 2,944 lines (components.css)
 - **Average file size:** 312 lines
 - **Total source files:** 23
 
-### After Refactoring (Target)
+### After Phase 1 & 2 (Current State)
+
+- **Files over 400 lines:** 3 CSS files (library: 718, favorites: 560, global: 489)
+- **Largest file:** 718 lines (library.css)
+- **Average file size:** ~220 lines
+- **Total source files:** ~35
+- **Progress:** Infrastructure + Phase 1 + Phase 2 complete (~55%)
+
+### After Phase 6 (CSS Refinement Target)
+
+- **Files over 400 lines:** 1 CSS file (music-selection.css: 446 - acceptable)
+- **Largest file:** 446 lines (music-selection.css)
+- **Average CSS file size:** ~180 lines
+- **CSS file compliance:** 95% (20 of 21 files under 400 lines)
+
+### After All Phases (Final Target)
 
 - **Files over 400 lines:** 0
 - **Largest file:** ~400 lines (max)
 - **Average file size:** ~150 lines
-- **Total source files:** ~63 (better organized with HTML partials)
+- **Total source files:** ~70 (better organized with HTML partials)
+- **File compliance:** 100%
 
 ### Expected Benefits
 
@@ -1943,13 +2343,27 @@ workout-timer-pro/
 
 ---
 
-**Total Estimated Effort:** 26-36 hours (includes communication infrastructure)
-**Priority Order:** Phase 6 (Prevention) → Phase 1 (CSS) → Phase 2 (App.js) → Phase 3 (YouTube) → Phase 4 (HTML) → Phase
-5 (Song Fetcher)
-**Recommended Timeline:** 3-4 weeks (depending on available time)
-**All Phases Required:** Yes - Phase 4 is NOT optional
+**Total Estimated Effort:** 30-41 hours (includes communication infrastructure + CSS refinement)
+**Priority Order:**
+1. Phase 1 (CSS Component Split) ✅ COMPLETE
+2. Phase 2 (App.js Refactoring) ✅ COMPLETE
+3. **Phase 6 (CSS Oversized Files Refinement) ← NEXT PRIORITY**
+4. Phase 3 (YouTube Module Split)
+5. Phase 4 (HTML Organization) - REQUIRED
+6. Phase 5 (Song Fetcher Split)
+7. Phase 7 (Prevention Measures)
+
+**Recommended Timeline:** 4-5 weeks (depending on available time)
+**All Phases Required:** Yes - Phases 4 and 6 are NOT optional
+
+**Rationale for Phase 6 Priority:**
+- Must complete CSS refactoring before moving to new areas
+- Files created in Phase 1 still exceed limits (library: 718, favorites: 560, global: 489)
+- Relatively low risk compared to Phase 3 (YouTube) which has complex interdependencies
+- Maintains consistency with Phase 1 objectives
+- Only 4-5 hours of work to achieve full CSS compliance
 
 ---
 
 *Last Updated: 2025-10-14*
-*Document Version: 2.0 - Added Module Communication Pattern (Event Bus + State Management), Made Phase 4 REQUIRED*
+*Document Version: 3.0 - Added Phase 6 (CSS Oversized Files Refinement), Updated Priority Order*
