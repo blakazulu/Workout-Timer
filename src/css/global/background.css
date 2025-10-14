@@ -1,0 +1,225 @@
+/* ============================================
+   BACKGROUND EFFECTS & ANIMATIONS
+   ============================================ */
+
+/* Bold Gradient Background */
+body::before {
+  background: radial-gradient(ellipse at top left, rgba(0, 255, 200, 0.15) 0%, transparent 50%),
+  radial-gradient(ellipse at bottom right, rgba(255, 0, 150, 0.15) 0%, transparent 50%),
+  radial-gradient(ellipse at top right, rgba(100, 100, 255, 0.1) 0%, transparent 50%);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+body::after {
+  background: linear-gradient(
+          45deg,
+          rgba(0, 255, 200, 0.05) 0%,
+          transparent 50%,
+          rgba(255, 0, 150, 0.05) 100%
+  );
+  content: '';
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Background Image Layer */
+.background-image {
+  background-image: url('/bg.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  left: 0;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.3s ease;
+  width: 100%;
+  z-index: 0;
+}
+
+.background-image.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Tech Grid Pattern */
+.background-grid {
+  animation: gridMove 30s linear infinite;
+  background-image: linear-gradient(rgba(200, 255, 240, 0.15) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(200, 255, 240, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+  height: 100%;
+  left: 0;
+  opacity: 0.4;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Dual light sweep effect - Left sweep */
+.background-grid::before {
+  animation: lightSweepLeft 8s ease-in-out infinite;
+  background: radial-gradient(
+          ellipse at center,
+          rgba(0, 255, 200, 0.6) 0%,
+          rgba(0, 255, 200, 0.3) 30%,
+          rgba(0, 255, 200, 0.1) 50%,
+          transparent 70%
+  );
+  content: '';
+  filter: blur(20px);
+  height: 100%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: 30%;
+}
+
+/* Dual light sweep effect - Right sweep */
+.background-grid::after {
+  animation: lightSweepRight 8s ease-in-out infinite;
+  background: radial-gradient(
+          ellipse at center,
+          rgba(0, 255, 200, 0.6) 0%,
+          rgba(0, 255, 200, 0.3) 30%,
+          rgba(0, 255, 200, 0.1) 50%,
+          transparent 70%
+  );
+  content: '';
+  filter: blur(20px);
+  height: 100%;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: 30%;
+}
+
+/* Scanlines Effect */
+.scanlines {
+  background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 255, 200, 0.03) 2px,
+          rgba(0, 255, 200, 0.03) 4px
+  );
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Vignette Effect */
+.vignette {
+  background: radial-gradient(
+          ellipse at center,
+          transparent 0%,
+          transparent 60%,
+          rgba(0, 0, 0, 0.4) 100%
+  );
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Neon Orbs */
+.floating-orb {
+  animation: float 25s ease-in-out infinite;
+  border-radius: 50%;
+  filter: blur(100px);
+  mix-blend-mode: screen;
+  position: fixed;
+  z-index: 0;
+}
+
+.floating-orb:nth-child(1) {
+  animation-delay: 0s;
+  animation-duration: 20s;
+  background: radial-gradient(circle, rgba(0, 255, 200, 0.5), transparent);
+  height: 400px;
+  left: -100px;
+  top: -100px;
+  width: 400px;
+}
+
+.floating-orb:nth-child(2) {
+  animation-delay: 7s;
+  animation-duration: 25s;
+  background: radial-gradient(circle, rgba(255, 0, 150, 0.4), transparent);
+  bottom: -150px;
+  height: 500px;
+  right: -150px;
+  width: 500px;
+}
+
+.floating-orb:nth-child(3) {
+  animation-delay: 14s;
+  animation-duration: 30s;
+  background: radial-gradient(circle, rgba(100, 100, 255, 0.4), transparent);
+  height: 350px;
+  right: -100px;
+  top: 40%;
+  width: 350px;
+}
+
+/* YouTube Background Video */
+.youtube-background {
+  height: 100vh;
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0.3;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  z-index: 0;
+}
+
+.youtube-background::after {
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.youtube-background iframe,
+.youtube-background #youtube-player-iframe {
+  height: 56.25vw; /* 16:9 aspect ratio */
+  left: 50%;
+  min-height: 100vh;
+  min-width: 177.77vh; /* 16:9 aspect ratio */
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+}

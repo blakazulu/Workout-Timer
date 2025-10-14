@@ -1,0 +1,226 @@
+/* History Button */
+.btn-history {
+  align-items: center;
+  background: rgba(100, 100, 255, 0.2);
+  border: 1px solid rgba(100, 100, 255, 0.4);
+  border-radius: 8px;
+  color: #6464ff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-width: 44px;
+  padding: 10px;
+  transition: all 0.2s ease;
+}
+
+.history-label {
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-history:hover {
+  background: rgba(100, 100, 255, 0.3);
+  border-color: rgba(100, 100, 255, 0.6);
+  box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
+}
+
+.btn-history svg {
+  filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.6));
+}
+
+.history-header {
+  align-items: center;
+  background: rgba(100, 100, 255, 0.05);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.history-header h3 {
+  color: #6464ff;
+  font-family: var(--font-family-display);
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(100, 100, 255, 0.5);
+}
+
+.history-close {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: #6464ff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.history-close:hover {
+  background: rgba(100, 100, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.history-tabs {
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+  display: flex;
+  gap: 0;
+}
+
+.history-tab {
+  background: transparent;
+  border: none;
+  color: rgba(100, 100, 255, 0.6);
+  cursor: pointer;
+  flex: 1;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 14px 16px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.history-tab:hover {
+  background: rgba(100, 100, 255, 0.1);
+  color: #6464ff;
+}
+
+.history-tab.active {
+  color: #6464ff;
+  text-shadow: 0 0 10px rgba(100, 100, 255, 0.6);
+}
+
+.history-tab.active::after {
+  background: linear-gradient(90deg, transparent, #6464ff, transparent);
+  bottom: 0;
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.8);
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.history-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.history-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-content::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.1);
+  border-radius: 3px;
+}
+
+.history-content::-webkit-scrollbar-thumb {
+  background: #6464ff;
+  border-radius: 3px;
+}
+
+.history-content::-webkit-scrollbar-thumb:hover {
+  background: #6464ff;
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.8);
+}
+
+.history-empty {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.history-item {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  gap: 14px;
+  margin-bottom: 6px;
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background: rgba(100, 100, 255, 0.1);
+  border-color: rgba(100, 100, 255, 0.3);
+  transform: translateX(4px);
+}
+
+.history-item-thumbnail {
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  border-radius: 6px;
+  flex-shrink: 0;
+  height: 56px;
+  object-fit: cover;
+  width: 100px;
+}
+
+.history-item-no-thumbnail {
+  align-items: center;
+  background: rgba(100, 100, 255, 0.1);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  border-radius: 6px;
+  display: flex;
+  flex-shrink: 0;
+  height: 56px;
+  justify-content: center;
+  width: 100px;
+}
+
+.history-item-no-thumbnail svg {
+  color: rgba(100, 100, 255, 0.4);
+  height: 28px;
+  width: 28px;
+}
+
+.history-item-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-right: 32px;
+  position: relative;
+}
+
+.history-item-title {
+  -webkit-box-orient: vertical;
+  color: #00ffc8;
+  display: -webkit-box;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 600;
+  -webkit-line-clamp: 2;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-item-meta {
+  align-items: center;
+  color: rgba(100, 100, 255, 0.8);
+  display: flex;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.history-item-plays {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+}
+
+.history-item-plays svg {
+  height: 13px;
+  width: 13px;
+}

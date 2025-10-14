@@ -1,0 +1,63 @@
+/* ============================================
+   APP BRANDING - TITLE, ICON, VERSION
+   ============================================ */
+
+/* App Title */
+.app-title {
+  align-items: center;
+  animation: gradientFlow 4s ease infinite;
+  background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200% 200%;
+  display: flex;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.5));
+  font-family: var(--font-family-display);
+  font-size: clamp(32px, 10vw, 48px);
+  font-weight: var(--font-weight-bold);
+  gap: 16px;
+  letter-spacing: clamp(2px, 0.8vw, 6px);
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+/* App Icon */
+.app-icon {
+  animation: iconGlow 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 200, 0.8)) drop-shadow(0 0 30px rgba(255, 0, 150, 0.6));
+  flex-shrink: 0;
+  height: clamp(40px, 10vw, 60px);
+  width: clamp(40px, 10vw, 60px);
+}
+
+/* App Version */
+.app-version {
+  background: none;
+  color: #ffffff;
+  font-size: clamp(12px, 3vw, 16px);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 1px;
+  margin-left: 8px;
+  opacity: 0.7;
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Icon Glow Animation */
+@keyframes iconGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(0, 255, 200, 0.8)) drop-shadow(0 0 30px rgba(255, 0, 150, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(0, 255, 200, 1)) drop-shadow(0 0 45px rgba(255, 0, 150, 0.8));
+  }
+}
+
+/* Gradient Flow Animation */
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
