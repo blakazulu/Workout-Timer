@@ -29,7 +29,7 @@ jobs:
       - name: Run song fetcher
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
-        run: node src/js/utils/song_fetcher.js
+        run: node src/js/utils/song_fetcher/index.js
 
       - name: Check for changes
         id: git-check

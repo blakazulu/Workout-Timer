@@ -29,7 +29,8 @@
       "Bash(mkdir:*)",
       "Bash(timeout 10 npm run dev:*)",
       "Bash(npm uninstall:*)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(for file in \"/mnt/c/My Stuff/workout-timer-pro/src/js/utils/song_fetcher\"/*.js)"
     ],
     "deny": [],
     "ask": []
