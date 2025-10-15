@@ -1,48 +1,38 @@
+@reference "../../global.css";
+
 /* ============================================
    FAVORITES SYSTEM - BUTTONS & CONTROLS
    ============================================ */
 
 /* Music Info Actions Container */
 .music-info-actions {
-  align-items: center;
-  display: flex;
-  gap: 8px;
+  @apply flex items-center gap-2;
 }
 
 /* Favorite Button */
 .music-favorite-btn {
-  align-items: center;
+  @apply flex items-center justify-center flex-shrink-0 relative cursor-pointer;
+  @apply w-6 h-6 p-0 rounded-full border border-solid;
   background: rgba(255, 0, 150, 0.1);
-  border: 1px solid rgba(255, 0, 150, 0.3);
-  border-radius: 50%;
+  border-color: rgba(255, 0, 150, 0.3);
   color: #ff0096;
-  cursor: pointer;
-  display: flex;
-  flex-shrink: 0;
-  height: 24px;
-  justify-content: center;
-  padding: 0;
-  position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 24px;
 }
 
 .music-favorite-btn:hover {
+  @apply scale-115;
   background: rgba(255, 0, 150, 0.2);
   border-color: rgba(255, 0, 150, 0.6);
   box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
-  transform: scale(1.15);
 }
 
 .music-favorite-btn:active {
-  transform: scale(0.95);
+  @apply scale-95;
 }
 
 .music-favorite-btn svg {
+  @apply w-[14px] h-[14px] transition-all duration-300;
   filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.5));
-  height: 14px;
-  transition: all 0.3s ease;
-  width: 14px;
 }
 
 /* Favorited State */
@@ -79,50 +69,40 @@
 
 .music-favorite-btn .favorite-icon,
 .music-favorite-btn .favorited-icon {
-  transition: opacity 0.2s ease;
+  @apply transition-opacity duration-200;
 }
 
 .music-favorite-btn .hidden {
-  display: none;
+  @apply hidden;
 }
 
 /* Favorites Badge on Library Button */
 .favorites-badge {
+  @apply absolute -left-1.5 -top-1.5 z-[1] min-w-[18px] text-center;
+  @apply px-[5px] py-0.5 rounded-[10px] border border-solid;
+  @apply text-[10px] font-bold text-white transition-all duration-300;
   background: linear-gradient(135deg, #ff0096, #6464ff);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 0 15px rgba(255, 0, 150, 0.6),
-  inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  color: #fff;
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
   font-family: var(--font-family-display);
-  font-size: 10px;
-  font-weight: 700;
-  left: -6px;
-  min-width: 18px;
-  padding: 2px 5px;
-  position: absolute;
-  text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  top: -6px;
-  transition: all 0.3s ease;
-  z-index: 1;
 }
 
 .favorites-badge.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .btn-history:hover .favorites-badge {
+  @apply scale-110;
   box-shadow: 0 0 25px rgba(255, 0, 150, 0.8),
-  inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Favorites Tab Styling */
 .history-tab i {
+  @apply mr-1.5 transition-[filter] duration-200;
   filter: drop-shadow(0 0 4px currentColor);
-  margin-right: 6px;
-  transition: filter 0.2s ease;
 }
 
 .history-tab.active i {
@@ -144,62 +124,50 @@
 
 /* History Actions Bar */
 .history-actions {
+  @apply flex gap-2 px-4 py-3 transition-all duration-300;
+  @apply border-b border-solid;
   background: rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px;
-  transition: all 0.3s ease;
+  border-color: rgba(100, 100, 255, 0.2);
 }
 
 .history-actions.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .history-action-btn {
-  align-items: center;
+  @apply flex flex-1 items-center justify-center gap-1.5 cursor-pointer;
+  @apply px-3 py-2.5 rounded-lg border border-solid;
+  @apply text-[13px] font-semibold tracking-[0.5px];
   background: rgba(100, 100, 255, 0.1);
-  border: 1px solid rgba(100, 100, 255, 0.3);
-  border-radius: 8px;
+  border-color: rgba(100, 100, 255, 0.3);
   color: #6464ff;
-  cursor: pointer;
-  display: flex;
-  flex: 1;
   font-family: var(--font-family-base);
-  font-size: 13px;
-  font-weight: 600;
-  gap: 6px;
-  justify-content: center;
-  letter-spacing: 0.5px;
-  padding: 10px 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .history-action-btn:hover {
+  @apply -translate-y-0.5;
   background: linear-gradient(135deg, rgba(100, 100, 255, 0.25), rgba(0, 255, 200, 0.2));
   border-color: rgba(100, 100, 255, 0.6);
   box-shadow: 0 0 20px rgba(100, 100, 255, 0.4);
   color: #00ffc8;
   text-shadow: 0 0 8px rgba(0, 255, 200, 0.6);
-  transform: translateY(-2px);
 }
 
 .history-action-btn:active {
-  transform: translateY(0) scale(0.98);
+  @apply translate-y-0 scale-[0.98];
 }
 
 .history-action-btn svg {
+  @apply w-4 h-4 transition-[filter] duration-200;
   filter: drop-shadow(0 0 4px currentColor);
-  height: 16px;
-  transition: filter 0.2s ease;
-  width: 16px;
 }
 
 .history-action-btn:hover svg {
   filter: drop-shadow(0 0 8px currentColor);
 }
 
-/* Shuffle Button Specific */
+/* Random Button Specific */
 .history-action-btn:nth-child(1):hover {
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
 }
@@ -216,51 +184,37 @@
 
 /* Song Favorite Buttons - Inline buttons in song lists */
 .song-favorite-btn {
-  align-items: center;
+  @apply flex items-center justify-center flex-shrink-0 relative cursor-pointer z-[5];
+  @apply p-0 rounded-full border border-solid opacity-60;
   background: rgba(255, 0, 150, 0.1);
-  border: 1px solid rgba(255, 0, 150, 0.3);
-  border-radius: 50%;
+  border-color: rgba(255, 0, 150, 0.3);
   color: #ff0096;
-  cursor: pointer;
-  display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  opacity: 0.6;
-  padding: 0;
-  position: relative;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 5;
 }
 
 /* Size variants */
 .song-favorite-btn.favorite-btn-small {
-  height: 24px;
-  width: 24px;
+  @apply w-6 h-6;
 }
 
 .song-favorite-btn.favorite-btn-small svg {
-  height: 13px;
-  width: 13px;
+  @apply w-[13px] h-[13px];
 }
 
 .song-favorite-btn.favorite-btn-medium {
-  height: 26px;
-  width: 26px;
+  @apply w-[26px] h-[26px];
 }
 
 .song-favorite-btn.favorite-btn-medium svg {
-  height: 14px;
-  width: 14px;
+  @apply w-[14px] h-[14px];
 }
 
 .song-favorite-btn.favorite-btn-large {
-  height: 30px;
-  width: 30px;
+  @apply w-[30px] h-[30px];
 }
 
 .song-favorite-btn.favorite-btn-large svg {
-  height: 16px;
-  width: 16px;
+  @apply w-4 h-4;
 }
 
 /* Show button on parent hover or when favorited */
@@ -268,48 +222,48 @@
 .music-selection-item:hover .song-favorite-btn,
 .search-dropdown-item:hover .song-favorite-btn,
 .song-favorite-btn.favorited {
-  opacity: 1;
+  @apply opacity-100;
 }
 
 /* Mobile: always show favorite buttons with good visibility */
 @media (hover: none) and (pointer: coarse) {
   .song-favorite-btn {
-    opacity: 0.8;
+    @apply opacity-80;
   }
 
   .song-favorite-btn.favorited {
-    opacity: 1;
+    @apply opacity-100;
   }
 }
 
 .song-favorite-btn:hover {
+  @apply scale-110;
   background: rgba(255, 0, 150, 0.2);
   border-color: rgba(255, 0, 150, 0.6);
   box-shadow: 0 0 15px rgba(255, 0, 150, 0.5);
-  transform: scale(1.1);
 }
 
 .song-favorite-btn:active {
-  transform: scale(0.9);
+  @apply scale-90;
 }
 
 .song-favorite-btn svg {
+  @apply transition-all duration-200;
   filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.5));
-  transition: all 0.2s ease;
 }
 
 /* Favorited State */
 .song-favorite-btn.favorited {
+  @apply opacity-100;
   animation: favoriteAdded 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   background: linear-gradient(135deg, rgba(255, 0, 150, 0.3), rgba(255, 0, 150, 0.2));
   border-color: #ff0096;
   box-shadow: 0 0 15px rgba(255, 0, 150, 0.6);
-  opacity: 1;
 }
 
 .song-favorite-btn.favorited:hover {
+  @apply scale-110;
   box-shadow: 0 0 25px rgba(255, 0, 150, 0.8);
-  transform: scale(1.1);
 }
 
 .song-favorite-btn.favorited svg {
@@ -319,53 +273,46 @@
 
 .song-favorite-btn .favorite-icon,
 .song-favorite-btn .favorited-icon {
-  transition: opacity 0.2s ease;
+  @apply transition-opacity duration-200;
 }
 
 .song-favorite-btn .hidden {
-  display: none;
+  @apply hidden;
 }
 
 /* Positioning for different list types - Consistent System */
 
 /* History Items - Favorite button positioning (info container already has padding-right) */
 .history-item-favorite {
-  position: absolute;
-  right: 2px;
-  top: 2px;
+  @apply absolute right-0.5 top-0.5;
 }
 
 /* Music Selection Items - Absolute positioning outside flex flow */
 .music-selection-item {
-  position: relative;
+  @apply relative;
 }
 
 .music-selection-item-info {
-  padding-right: 32px;
+  @apply pr-8;
 }
 
 .music-selection-item-favorite {
-  position: absolute;
-  right: 8px;
-  top: 20%;
+  @apply absolute right-2 top-[20%];
 }
 
 .music-selection-item-favorite:hover {
-  transform: scale(1.1);
+  @apply scale-110;
 }
 
 /* Search Dropdown Items - Absolute positioning to avoid duration overlap */
 .search-dropdown-item {
-  position: relative;
+  @apply relative;
 }
 
 .search-dropdown-item-content {
-  padding-right: 32px;
+  @apply pr-8;
 }
 
 .search-dropdown-item-favorite {
-  flex-shrink: 0;
-  position: absolute;
-  right: 6px;
-  top: 6px;
+  @apply flex-shrink-0 absolute right-1.5 top-1.5;
 }

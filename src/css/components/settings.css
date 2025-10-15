@@ -1,68 +1,49 @@
+@reference "../global.css";
+
 /* Settings Panel */
 .settings {
+  @apply p-[var(--spacing-lg)] rounded-[var(--radius-xl)] border border-solid;
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.7);
-  border: 1px solid rgba(100, 100, 255, 0.2);
-  border-radius: var(--radius-xl);
+  border-color: rgba(100, 100, 255, 0.2);
   box-shadow: 0 0 30px rgba(100, 100, 255, 0.1),
-  0 8px 32px rgba(0, 0, 0, 0.5),
-  inset 0 1px 0 rgba(100, 100, 255, 0.1);
-  padding: var(--spacing-lg);
+              0 8px 32px rgba(0, 0, 0, 0.5),
+              inset 0 1px 0 rgba(100, 100, 255, 0.1);
 }
 
 .settings.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .settings-header {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  @apply flex items-center justify-between mb-[var(--spacing-md)];
 }
 
 .settings-header label {
-  display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing);
-  margin-bottom: 0;
-  opacity: 0.9;
-  text-transform: uppercase;
+  @apply block mb-0 opacity-90 uppercase;
+  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
 }
 
 .settings-grid {
-  display: grid;
-  gap: var(--spacing-md);
-  grid-template-columns: 1fr 1fr;
+  @apply grid grid-cols-2 gap-[var(--spacing-md)];
 }
 
 .setting-group {
-  display: flex;
-  flex-direction: column;
+  @apply flex flex-col;
 }
 
 .setting-group label {
-  display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing);
-  margin-bottom: var(--spacing-xs);
-  opacity: 0.9;
+  @apply block mb-[var(--spacing-xs)] opacity-90;
+  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
 }
 
 .setting-group input {
+  @apply w-full p-3 outline-none rounded-[var(--radius-md)] border border-solid;
+  @apply text-[var(--font-size-md)] font-semibold transition-all duration-300;
   background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 255, 200, 0.2);
-  border-radius: var(--radius-md);
+  border-color: rgba(0, 255, 200, 0.2);
   color: #00ffc8;
   font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
-  outline: none;
-  padding: 12px;
-  transition: all 0.3s ease;
-  width: 100%;
 }
 
 .setting-group input:focus {
@@ -73,33 +54,24 @@
 
 /* YouTube Section */
 .youtube-section {
+  @apply p-[var(--spacing-lg)] rounded-[var(--radius-xl)] border border-solid;
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.7);
-  border: 1px solid rgba(100, 100, 255, 0.2);
-  border-radius: var(--radius-xl);
+  border-color: rgba(100, 100, 255, 0.2);
   box-shadow: 0 0 30px rgba(100, 100, 255, 0.1),
-  0 8px 32px rgba(0, 0, 0, 0.5),
-  inset 0 1px 0 rgba(100, 100, 255, 0.1);
-  padding: var(--spacing-lg);
+              0 8px 32px rgba(0, 0, 0, 0.5),
+              inset 0 1px 0 rgba(100, 100, 255, 0.1);
 }
 
 .youtube-section.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .youtube-header {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  @apply flex items-center justify-between mb-[var(--spacing-md)];
 }
 
 .youtube-section label {
-  display: block;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing);
-  margin-bottom: 0;
-  opacity: 0.9;
-  text-transform: uppercase;
+  @apply block mb-0 opacity-90 uppercase;
+  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
 }

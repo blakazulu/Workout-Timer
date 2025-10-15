@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
+import tailwindcss from '@tailwindcss/vite'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -17,6 +18,7 @@ export default defineConfig({
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
   },
   plugins: [
+    tailwindcss(),
     ViteEjsPlugin({
       title: 'CYCLE',
     }),

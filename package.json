@@ -14,7 +14,9 @@
     "vite-plugin-pwa": "^1.0.3"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.14",
     "sharp": "^0.34.4",
+    "tailwindcss": "^4.1.14",
     "workbox-window": "^7.3.0"
   },
   "optionalDependencies": {

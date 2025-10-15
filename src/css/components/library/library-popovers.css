@@ -1,32 +1,24 @@
+@reference "../../global.css";
+
 /* Music Library Popover */
 .music-library-popover {
+  @apply hidden flex-col m-auto max-h-[600px] overflow-hidden p-0;
+  @apply rounded-xl border-2 border-solid text-white;
+  @apply transition-all duration-300;
   backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.98);
-  border: 2px solid rgba(100, 100, 255, 0.5);
-  border-radius: 12px;
+  border-color: rgba(100, 100, 255, 0.5);
   box-shadow: 0 0 40px rgba(100, 100, 255, 0.3),
-  0 8px 32px rgba(0, 0, 0, 0.8);
-  color: var(--text-primary);
-  display: none;
-  flex-direction: column;
-  margin: auto;
-  max-height: 600px;
-  overflow: hidden;
-  padding: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
-
-  /* Transitions for animation */
+              0 8px 32px rgba(0, 0, 0, 0.8);
   width: min(480px, 90vw);
+  transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
 }
 
 .music-library-popover:popover-open {
-  display: flex;
-  opacity: 1;
-  transform: scale(1);
+  @apply flex opacity-100 scale-100;
 
   @starting-style {
-    opacity: 0;
-    transform: scale(0.95);
+    @apply opacity-0 scale-95;
   }
 }
 
@@ -125,45 +117,32 @@
 }
 
 .mood-popover-header {
-  align-items: center;
+  @apply flex items-center justify-between px-5 py-4;
+  @apply border-b border-solid;
   background: rgba(0, 255, 200, 0.05);
-  border-bottom: 1px solid rgba(0, 255, 200, 0.2);
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 20px;
+  border-color: rgba(0, 255, 200, 0.2);
 }
 
 .mood-popover-header h3 {
+  @apply m-0 text-xl tracking-wider;
   color: #00ffc8;
   font-family: var(--font-family-display);
-  font-size: 20px;
-  letter-spacing: 2px;
-  margin: 0;
   text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
 }
 
 .mood-popover-close {
-  align-items: center;
-  background: transparent;
-  border: none;
-  border-radius: 4px;
+  @apply flex items-center justify-center p-1 cursor-pointer;
+  @apply bg-transparent border-0 rounded transition-all duration-200;
   color: #00ffc8;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  padding: 4px;
-  transition: all 0.2s ease;
 }
 
 .mood-popover-close:hover {
+  @apply scale-110;
   background: rgba(0, 255, 200, 0.2);
-  transform: scale(1.1);
 }
 
 .mood-popover-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
+  @apply flex-1 overflow-y-auto p-4;
 }
 
 .mood-popover-content::-webkit-scrollbar {

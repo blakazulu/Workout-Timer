@@ -1,44 +1,33 @@
+@reference "../global.css";
+
 /* Loading Overlay */
 .loading-overlay {
-  align-items: center;
+  @apply fixed top-0 left-0 w-full h-full z-[9999];
+  @apply flex flex-col items-center justify-center gap-[var(--spacing-lg)];
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.95);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 9999;
 }
 
 .loading-overlay.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .loading-spinner {
+  @apply w-[60px] h-[60px] rounded-full border-4 border-solid;
   animation: spin 1s linear infinite;
-  border: 4px solid rgba(0, 255, 200, 0.2);
-  border-radius: 50%;
+  border-color: rgba(0, 255, 200, 0.2);
   border-right-color: #ff0096;
   border-top-color: #00ffc8;
   box-shadow: 0 0 30px rgba(0, 255, 200, 0.5),
-  inset 0 0 20px rgba(0, 255, 200, 0.2);
-  height: 60px;
-  width: 60px;
+              inset 0 0 20px rgba(0, 255, 200, 0.2);
 }
 
 .loading-text {
+  @apply uppercase font-bold tracking-[var(--letter-spacing-wide)];
+  @apply text-[var(--font-size-md)];
   color: #00ffc8;
   font-family: var(--font-family-base);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-wide);
   text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
-  text-transform: uppercase;
 }
 
 @keyframes spin {
@@ -49,31 +38,20 @@
 
 /* Update Overlay */
 .update-overlay {
-  align-items: center;
+  @apply fixed top-0 left-0 w-full h-full z-[99999];
+  @apply flex flex-col items-center justify-center gap-[var(--spacing-xl)];
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.98), rgba(10, 10, 20, 0.98));
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99999;
 }
 
 .update-overlay.hidden {
-  display: none;
+  @apply hidden;
 }
 
 .update-icon {
+  @apply w-[140px] h-[140px] mb-[var(--spacing-md)];
   animation: updatePulse 2s ease-in-out infinite;
   filter: drop-shadow(0 0 30px rgba(0, 255, 200, 0.6));
-  height: 140px;
-  margin-bottom: var(--spacing-md);
-  width: 140px;
 }
 
 @keyframes updatePulse {
@@ -88,37 +66,29 @@
 }
 
 .update-title {
+  @apply text-center text-[42px] font-black tracking-[8px];
   background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   font-family: var(--font-family-display);
-  font-size: 42px;
-  font-weight: var(--font-weight-black);
-  letter-spacing: 8px;
-  text-align: center;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 40px rgba(0, 255, 200, 0.5);
 }
 
 .update-version-info {
-  align-items: center;
-  display: flex;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
+  @apply flex items-center gap-[var(--spacing-lg)] mb-[var(--spacing-lg)];
 }
 
 .update-old-version {
+  @apply line-through text-2xl font-bold;
   color: rgba(255, 255, 255, 0.5);
   font-family: var(--font-family-display);
-  font-size: 24px;
-  font-weight: var(--font-weight-bold);
-  text-decoration: line-through;
 }
 
 .update-arrow {
+  @apply text-[32px];
   animation: arrowPulse 1.5s ease-in-out infinite;
   color: #00ffc8;
-  font-size: 32px;
   text-shadow: 0 0 20px rgba(0, 255, 200, 0.8);
 }
 

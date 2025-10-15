@@ -48,8 +48,7 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 📚 **Music Library** - Track all songs you've played with timestamps
 - 🏆 **Most Played** - View your top 20 most-played workout tracks
 - 💖 **Favorite Songs** - Save your favorite tracks for quick access
-- 🔀 **Shuffle Favorites** - Randomly play from your favorited collection
-- 📤 **Export/Import** - Backup and restore your favorites as JSON
+- 🔀 **Random Favorites** - Randomly play from your favorited collection
 - 🖼️ **Visual Library** - Thumbnails, titles, play counts, and durations with enhanced styling
 - 🔄 **Quick Replay** - Click any library item to instantly reload that song
 - ⭐ **Favorite Highlighting** - Favorited songs stand out with pink gradient effects
@@ -169,9 +168,7 @@ The app is configured for Netlify deployment:
    - **Favorited Songs**: Highlighted with pink gradient backgrounds
    - Click any song to instantly replay it
    - **Favorites Actions**:
-     - 🔀 **Shuffle** - Play a random song from your favorites
-     - 📤 **Export** - Download your favorites as a JSON file
-     - 📥 **Import** - Upload a previously exported favorites file
+     - 🔀 **Random** - Play a random song from your favorites
 
 3. **Start Your Workout**
    - Click START button (or press Space, or double-tap timer)
@@ -385,7 +382,7 @@ src/
 - **Audio State:** audioContext, vibrationEnabled, volumeDucking
 - **Settings State:** Persisted in localStorage, auto-saved on change
 - **Library State:** Song play history, play counts, timestamps (localStorage)
-- **Favorites State:** Favorited songs with metadata, export/import support (localStorage)
+- **Favorites State:** Favorited songs with metadata (localStorage)
 - **Music Library:** 18 categories (8 moods + 10 genres) with metadata
 
 ### Music Library System
@@ -492,7 +489,7 @@ This project deliberately avoids frameworks for several advantages:
 - [x] **URL Detection** - Auto-detects URLs vs search terms
 - [x] **Music Library System** - Recent + Most Played + Favorites tabs
 - [x] **Favorite Songs** - Save, manage, and highlight your favorite tracks
-- [x] **Favorites Management** - Shuffle, export, and import favorites
+- [x] **Favorites Management** - Random playback from your saved favorites
 - [x] **Enhanced Library Styling** - Beautiful gradient effects matching music selection UI
 - [x] **Auto-Updating Library** - 30-day refresh automation
 - [x] **Smart Error Recovery** - Error 150 fallback with alternatives
@@ -577,7 +574,7 @@ MIT License - See LICENSE file for details
 🎮 **Key Features:**
 - 🔍 **Live YouTube Search** - Find any song or mix instantly with real-time search
 - 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
-- 💖 **Favorite Songs** - Save, shuffle, export/import your favorite tracks
+- 💖 **Favorite Songs** - Save and play random favorites from your collection
 - ⏱️ **Precision Timer** with work/rest cycles
 - 📚 **Music Library** - Beautiful visual library tracking your workout music with favorites
 - 🎨 **Cyberpunk Theme** with neon gradient animations

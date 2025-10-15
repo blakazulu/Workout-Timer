@@ -1,3 +1,5 @@
+@reference "../../global.css";
+
 /* Music Mode Toggle */
 .music-mode-toggle {
   background: rgba(0, 0, 0, 0.4);

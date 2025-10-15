@@ -1,3 +1,5 @@
+@reference "../../global.css";
+
 /* YouTube Controls */
 .youtube-controls {
   display: flex;

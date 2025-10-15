@@ -1,3 +1,5 @@
+@reference "../../global.css";
+
 /* Mood Tags - Hexagonal Honeycomb Layout */
 .mood-tags {
   display: flex;

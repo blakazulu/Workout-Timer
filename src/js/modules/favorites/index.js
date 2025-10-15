@@ -21,11 +21,3 @@ export {
   getRandomFavorite,
   getShuffledFavorites
 } from "./shuffle.js";
-
-// Import/export operations
-export {
-  exportFavorites,
-  importFavorites,
-  downloadFavoritesFile,
-  uploadFavoritesFile
-} from "./import-export.js";

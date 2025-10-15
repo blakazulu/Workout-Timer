@@ -119,7 +119,7 @@ function extractSongData(element) {
   const durationEl = element.querySelector(".history-item-meta, .music-selection-item-duration, .search-dropdown-item-duration");
 
   const title = titleEl ? titleEl.textContent.trim() : element.dataset.title || "Unknown Title";
-  const author = authorEl ? authorEl.textContent.trim() : element.dataset.author || "Unknown Artist";
+  const channel = authorEl ? authorEl.textContent.trim() : element.dataset.channel || "Unknown Channel";
 
   // Try to extract duration (it might be in text like "3:45" or as a data attribute)
   let duration = 0;
@@ -133,7 +133,7 @@ function extractSongData(element) {
   return {
     videoId,
     title,
-    author,
+    channel,
     duration,
     url: url || `https://www.youtube.com/watch?v=${videoId}`,
     thumbnail: element.dataset.thumbnail || `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`

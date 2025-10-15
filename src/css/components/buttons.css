@@ -1,75 +1,44 @@
+@reference "../global.css";
+
 /* Control Buttons */
 .controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  /* Prevent scrolling and touch issues on the entire button container */
-  overflow: hidden;
+  @apply flex flex-wrap gap-[var(--spacing-md)] overflow-hidden w-full select-none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-touch-action: manipulation;
   touch-action: manipulation;
-  -webkit-user-select: none;
-  /* Prevent overflow in PWA mode */
-  user-select: none;
-  width: 100%;
 }
 
 .btn {
-  border: none;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  flex: 1;
+  @apply flex-1 border-0 rounded-[var(--radius-lg)] cursor-pointer overflow-hidden relative p-[var(--spacing-md)] uppercase select-none;
+  @apply text-[var(--font-size-sm)] font-bold tracking-[var(--letter-spacing-wide)] transition-all duration-200;
   font-family: var(--font-family-base);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-wide);
-  overflow: hidden;
-  padding: var(--spacing-md);
-  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   -webkit-tap-highlight-color: transparent;
-  text-transform: uppercase;
-  /* Prevent double-tap zoom and unwanted scrolling on mobile */
-  -webkit-touch-action: manipulation;
   touch-action: manipulation;
-  transition: all var(--transition-fast);
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 .btn::before {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full z-0;
+  @apply w-0 h-0 transition-all duration-[600ms];
   content: '';
-  height: 0;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-  width: 0;
-  z-index: 0;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .btn:hover::before {
-  height: 300px;
-  width: 300px;
+  @apply w-[300px] h-[300px];
 }
 
 .btn:hover {
+  @apply -translate-y-0.5;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
 }
 
 .btn:active {
-  transform: scale(0.98);
+  @apply scale-[0.98];
 }
 
 .btn-start {
+  @apply text-black text-2xl font-extrabold;
   background: linear-gradient(135deg, #00ffc8, #6464ff);
-  color: #000;
-  font-size: 24px;
-  font-weight: var(--font-weight-extra-bold);
   text-shadow: none;
 }
 
@@ -78,10 +47,8 @@
 }
 
 .btn-reset {
+  @apply text-white text-2xl font-extrabold;
   background: linear-gradient(135deg, #ff0096, #6464ff);
-  color: var(--text-primary);
-  font-size: 24px;
-  font-weight: var(--font-weight-extra-bold);
 }
 
 .btn-reset:hover {
@@ -89,12 +56,9 @@
 }
 
 .btn-clear-all {
+  @apply text-white text-base font-bold w-full;
   background: linear-gradient(135deg, #ff0040, #8b0000);
-  color: var(--text-primary);
   flex: unset;
-  font-size: 16px;
-  font-weight: var(--font-weight-bold);
-  width: 100%;
 }
 
 .btn-clear-all:hover {
@@ -102,41 +66,33 @@
 }
 
 .btn.hidden {
-  display: none;
+  @apply hidden;
 }
 
 /* Install Button */
 .btn-install {
-  align-items: center;
+  @apply hidden items-center flex-shrink-0 cursor-pointer whitespace-nowrap;
+  @apply gap-[var(--spacing-xs)] px-[var(--spacing-md)] py-[var(--spacing-xs)];
+  @apply rounded-[var(--radius-lg)] text-[var(--font-size-xs)] font-semibold;
+  @apply border border-solid transition-all duration-200;
   background: rgba(0, 255, 200, 0.1);
-  border: 1px solid rgba(0, 255, 200, 0.3);
-  border-radius: var(--radius-lg);
+  border-color: rgba(0, 255, 200, 0.3);
   box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
   color: #00ffc8;
-  cursor: pointer;
-  display: none;
-  flex-shrink: 0;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-md);
-  transition: all var(--transition-fast);
-  white-space: nowrap;
 }
 
 .btn-install:hover {
+  @apply -translate-y-0.5;
   background: rgba(0, 255, 200, 0.2);
   border-color: #00ffc8;
   box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
-  transform: translateY(-2px);
 }
 
 .btn-install:active {
-  transform: scale(0.98);
+  @apply scale-[0.98];
 }
 
 .btn-install svg {
+  @apply w-4 h-4;
   filter: drop-shadow(0 0 5px rgba(0, 255, 200, 0.5));
-  height: 16px;
-  width: 16px;
 }

@@ -1,11 +1,14 @@
+@reference "../../global.css";
+
 /* ============================================
    FAVORITES SYSTEM - ITEM STATES & CONTROLS
    ============================================ */
 
 /* Favorited History Items */
 .history-item.is-favorited {
+  @apply border-l-2 border-solid;
   background: linear-gradient(90deg, rgba(255, 0, 150, 0.05), transparent);
-  border-left: 2px solid rgba(255, 0, 150, 0.5);
+  border-left-color: rgba(255, 0, 150, 0.5);
 }
 
 .history-item.is-favorited:hover {
@@ -36,77 +39,60 @@
 
 /* Favorite Item Specific Styling */
 .favorite-item {
-  position: relative;
+  @apply relative;
 }
 
 /* Favorite Icon in Meta */
 .history-item-favorite-icon {
-  align-items: center;
+  @apply flex items-center;
   color: #ff0096;
-  display: flex;
   filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.6));
 }
 
 .history-item-favorite-icon svg {
-  height: 13px;
-  width: 13px;
+  @apply w-[13px] h-[13px];
 }
 
 /* Remove Button on Favorite Items */
 .history-item-remove {
-  align-items: center;
+  @apply flex items-center justify-center flex-shrink-0 absolute cursor-pointer;
+  @apply w-7 h-7 p-0 rounded-full border border-solid opacity-0;
+  @apply right-3 top-1/2 -translate-y-1/2 scale-80;
   background: rgba(255, 0, 64, 0.1);
-  border: 1px solid rgba(255, 0, 64, 0.3);
-  border-radius: 50%;
+  border-color: rgba(255, 0, 64, 0.3);
   color: rgba(255, 0, 64, 0.7);
-  cursor: pointer;
-  display: flex;
-  flex-shrink: 0;
-  height: 28px;
-  justify-content: center;
-  opacity: 0;
-  padding: 0;
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%) scale(0.8);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 28px;
 }
 
 .history-item:hover .history-item-remove {
-  opacity: 1;
-  transform: translateY(-50%) scale(1);
+  @apply opacity-100 -translate-y-1/2 scale-100;
 }
 
 .history-item-remove:hover {
+  @apply -translate-y-1/2 scale-110;
   background: rgba(255, 0, 64, 0.2);
   border-color: rgba(255, 0, 64, 0.6);
   box-shadow: 0 0 15px rgba(255, 0, 64, 0.5);
   color: #ff0040;
-  transform: translateY(-50%) scale(1.1);
 }
 
 .history-item-remove:active {
-  transform: translateY(-50%) scale(0.95);
+  @apply -translate-y-1/2 scale-95;
 }
 
 .history-item-remove svg {
-  height: 14px;
-  width: 14px;
+  @apply w-[14px] h-[14px];
 }
 
 /* Favorite Item Hover State Adjustment */
 .favorite-item:hover .history-item-info {
-  padding-right: 40px;
+  @apply pr-10;
 }
 
 /* Empty Favorites State */
 .history-empty small {
+  @apply block mt-2 text-[13px];
   color: rgba(255, 255, 255, 0.3);
-  display: block;
-  font-size: 13px;
-  margin-top: 8px;
 }
 
 /* Favorite Tab Content Animation */
@@ -117,71 +103,61 @@
 /* Mobile Responsive for Favorites */
 @media (max-width: 768px) {
   .music-favorite-btn {
-    height: 28px;
-    width: 28px;
+    @apply w-7 h-7;
   }
 
   .music-favorite-btn svg {
-    height: 15px;
-    width: 15px;
+    @apply w-[15px] h-[15px];
   }
 
   /* Make inline favorite buttons slightly larger on mobile for better touch targets */
   .song-favorite-btn.favorite-btn-small {
-    height: 28px;
-    width: 28px;
+    @apply w-7 h-7;
   }
 
   .song-favorite-btn.favorite-btn-small svg {
-    height: 14px;
-    width: 14px;
+    @apply w-[14px] h-[14px];
   }
 
   .song-favorite-btn.favorite-btn-medium {
-    height: 30px;
-    width: 30px;
+    @apply w-[30px] h-[30px];
   }
 
   .song-favorite-btn.favorite-btn-medium svg {
-    height: 15px;
-    width: 15px;
+    @apply w-[15px] h-[15px];
   }
 
   /* Adjust spacing for mobile */
   .history-item-info {
-    padding-right: 36px;
+    @apply pr-9;
   }
 
   .music-selection-item-info {
-    padding-right: 36px;
+    @apply pr-9;
   }
 
   .search-dropdown-item-content {
-    padding-right: 36px;
+    @apply pr-9;
   }
 
   .history-action-btn {
-    font-size: 12px;
-    padding: 8px 10px;
+    @apply text-xs px-2.5 py-2;
   }
 
   .history-action-btn span {
-    display: none;
+    @apply hidden;
   }
 
   .history-actions {
-    gap: 6px;
-    padding: 10px 12px;
+    @apply gap-1.5 px-3 py-2.5;
   }
 
   .favorites-badge {
-    font-size: 9px;
-    min-width: 16px;
-    padding: 1px 4px;
+    @apply text-[9px] min-w-4 px-1 py-px;
   }
 
   .history-item-remove {
-    opacity: 1;
+    @apply opacity-100;
   }
 }
 
@@ -191,6 +167,6 @@
   .favorites-badge,
   .history-actions,
   .history-item-remove {
-    display: none;
+    @apply hidden;
   }
 }

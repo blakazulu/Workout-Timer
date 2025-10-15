@@ -51,7 +51,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
     });
   });
 
-  // Setup favorites actions (shuffle, export, import)
+  // Setup favorites actions (random, export, import)
   setupFavoritesActions(loadYouTubeModule, showNotification, () => renderLibrary(currentTab));
 
   /**

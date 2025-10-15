@@ -32,7 +32,13 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(for file in \"/mnt/c/My Stuff/workout-timer-pro/src/js/utils/song_fetcher\"/*.js)",
       "Bash(find:*)",
-      "Bash(for:*)"
+      "Bash(for:*)",
+      "Bash(do if ! head -1 \"$file\")",
+      "Bash(then sed -i '1i@reference \"\"\"\"../global.css\"\"\"\";\\n' \"$file\" echo \"Added to $file\" fi done)",
+      "Bash(do sed -i '1i@reference \"\"../../global.css\"\";\\n' \"$file\")",
+      "Bash(do sed -i '1i@reference \"\"../global.css\"\";\\n' \"$file\")",
+      "Bash(do sed -i '/@reference/d' \"$file\" sed -i '/^$/d' \"$file\")",
+      "Bash(head -1 echo \"Removed @reference from $file\" done)"
     ],
     "deny": [],
     "ask": []
