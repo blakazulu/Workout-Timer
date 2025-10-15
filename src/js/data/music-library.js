@@ -40,7 +40,8 @@ export function isMoodQuery(query) {
     "aggressive workout music",
     "pump up workout music",
     "focus workout music",
-    "motivational workout music"
+    "motivational workout music",
+    "steady workout music"
   ];
   return moodKeys.includes(query);
 }
@@ -58,7 +59,8 @@ export function getAllMoods() {
     "aggressive workout music",
     "pump up workout music",
     "focus workout music",
-    "motivational workout music"
+    "motivational workout music",
+    "steady workout music"
   ];
 }
 
@@ -77,7 +79,7 @@ export function getAllGenres() {
     "hardstyle workout music",
     "techno workout music",
     "phonk workout music",
-    "drum and bass workout music"
+    "tabata workout music"
   ];
 }
 

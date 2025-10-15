@@ -2,7 +2,9 @@
 
 /* Settings Panel */
 .settings {
-  @apply p-[var(--spacing-lg)] rounded-[var(--radius-xl)] border border-solid;
+  @apply border border-solid;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.7);
   border-color: rgba(100, 100, 255, 0.2);
@@ -16,16 +18,19 @@
 }
 
 .settings-header {
-  @apply flex items-center justify-between mb-[var(--spacing-md)];
+  @apply flex items-center justify-between;
+  margin-bottom: var(--spacing-md);
 }
 
 .settings-header label {
-  @apply block mb-0 opacity-90 uppercase;
-  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
+  @apply block mb-0 opacity-90 uppercase font-bold;
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing);
 }
 
 .settings-grid {
-  @apply grid grid-cols-2 gap-[var(--spacing-md)];
+  @apply grid grid-cols-2;
+  gap: var(--spacing-md);
 }
 
 .setting-group {
@@ -33,13 +38,16 @@
 }
 
 .setting-group label {
-  @apply block mb-[var(--spacing-xs)] opacity-90;
-  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
+  @apply block opacity-90 font-bold;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing);
 }
 
 .setting-group input {
-  @apply w-full p-3 outline-none rounded-[var(--radius-md)] border border-solid;
-  @apply text-[var(--font-size-md)] font-semibold transition-all duration-300;
+  @apply w-full p-3 outline-none border border-solid font-semibold transition-all duration-300;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
   background: rgba(0, 0, 0, 0.5);
   border-color: rgba(0, 255, 200, 0.2);
   color: #00ffc8;
@@ -54,7 +62,9 @@
 
 /* YouTube Section */
 .youtube-section {
-  @apply p-[var(--spacing-lg)] rounded-[var(--radius-xl)] border border-solid;
+  @apply border border-solid;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.7);
   border-color: rgba(100, 100, 255, 0.2);
@@ -68,10 +78,12 @@
 }
 
 .youtube-header {
-  @apply flex items-center justify-between mb-[var(--spacing-md)];
+  @apply flex items-center justify-between;
+  margin-bottom: var(--spacing-md);
 }
 
 .youtube-section label {
-  @apply block mb-0 opacity-90 uppercase;
-  @apply text-[var(--font-size-xs)] font-bold tracking-[var(--letter-spacing)];
+  @apply block mb-0 opacity-90 uppercase font-bold;
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing);
 }

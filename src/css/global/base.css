@@ -53,12 +53,15 @@ body {
 
 /* Header */
 .header {
-  @apply flex flex-col items-center justify-center flex-nowrap gap-[var(--spacing-md)];
+  @apply flex flex-col items-center justify-center flex-nowrap;
+  gap: var(--spacing-md);
 }
 
 /* Three-section flex layout */
 .app-header {
-  @apply flex-shrink-0 p-[var(--spacing-md)] rounded-[var(--radius-xl)];
+  @apply flex-shrink-0;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-xl);
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.5);
   border: 1px solid rgba(100, 100, 255, 0.15);
@@ -68,11 +71,15 @@ body {
 }
 
 .app-content {
-  @apply flex flex-1 flex-col gap-[var(--spacing-lg)] overflow-y-auto py-[var(--spacing-xs)] px-0;
+  @apply flex flex-1 flex-col overflow-y-auto px-0;
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
 }
 
 .app-footer {
-  @apply flex-shrink-0 pt-[var(--spacing-md)];
+  @apply flex-shrink-0;
+  padding-top: var(--spacing-md);
   /* Prevent touch scrolling issues in the footer area */
   touch-action: manipulation;
 }

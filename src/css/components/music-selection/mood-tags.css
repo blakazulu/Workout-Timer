@@ -7,6 +7,7 @@
   gap: 8px;
   justify-content: center;
   max-width: 100%;
+  min-width: 430px;
   padding: 20px 10px;
   position: relative;
 }
@@ -21,7 +22,7 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base);
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   font-weight: 700;
   gap: 8px;
   height: 140px;
@@ -35,13 +36,26 @@
   width: 130px;
 }
 
-/* Hexagon offset for honeycomb effect */
-.mood-tag:nth-child(2n) {
+/* Hexagon offset for honeycomb effect - 3x3 grid */
+/* Row 1: items 1, 2, 3 - no offset */
+.mood-tag:nth-child(1),
+.mood-tag:nth-child(2),
+.mood-tag:nth-child(3) {
   margin-top: 0px;
 }
 
-.mood-tag:nth-child(2n+1) {
+/* Row 2: items 4, 5, 6 - offset for honeycomb */
+.mood-tag:nth-child(4),
+.mood-tag:nth-child(5),
+.mood-tag:nth-child(6) {
   margin-top: -12px;
+}
+
+/* Row 3: items 7, 8, 9 - align with row 1 */
+.mood-tag:nth-child(7),
+.mood-tag:nth-child(8),
+.mood-tag:nth-child(9) {
+  margin-top: 0px;
 }
 
 /* Animated background gradient */

@@ -69,6 +69,11 @@ export const categories = {
     "gym motivation mix 60 minutes",
     "motivational speech music 1 hour"
   ],
+  "steady workout music": [
+    "steady workout music 1 hour",
+    "steady pace gym music 60 minutes",
+    "consistent workout mix 1 hour"
+  ],
 
   // GENRES
   "edm workout music": [
@@ -116,9 +121,9 @@ export const categories = {
     "drift phonk gym 60 minutes",
     "phonk trap workout 1 hour"
   ],
-  "drum and bass workout music": [
-    "drum and bass workout mix 1 hour",
-    "dnb gym music 60 minutes",
-    "neurofunk workout 1 hour"
+  "tabata workout music": [
+    "tabata workout mix 1 hour",
+    "tabata training music 60 minutes",
+    "high intensity tabata music 1 hour"
   ]
 };

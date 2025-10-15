@@ -42,7 +42,7 @@
   cursor: pointer;
   display: flex;
   font-family: var(--font-family-base);
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   font-weight: 800;
   height: 70px;
   justify-content: center;

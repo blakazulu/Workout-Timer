@@ -2,14 +2,18 @@
 
 /* Control Buttons */
 .controls {
-  @apply flex flex-wrap gap-[var(--spacing-md)] overflow-hidden w-full select-none;
+  @apply flex flex-wrap overflow-hidden w-full select-none;
+  gap: var(--spacing-md);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
 .btn {
-  @apply flex-1 border-0 rounded-[var(--radius-lg)] cursor-pointer overflow-hidden relative p-[var(--spacing-md)] uppercase select-none;
-  @apply text-[var(--font-size-sm)] font-bold tracking-[var(--letter-spacing-wide)] transition-all duration-200;
+  @apply flex-1 border-0 cursor-pointer overflow-hidden relative uppercase select-none font-bold transition-all duration-200;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-wide);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   font-family: var(--font-family-base);
   -webkit-tap-highlight-color: transparent;
@@ -71,10 +75,14 @@
 
 /* Install Button */
 .btn-install {
-  @apply hidden items-center flex-shrink-0 cursor-pointer whitespace-nowrap;
-  @apply gap-[var(--spacing-xs)] px-[var(--spacing-md)] py-[var(--spacing-xs)];
-  @apply rounded-[var(--radius-lg)] text-[var(--font-size-xs)] font-semibold;
-  @apply border border-solid transition-all duration-200;
+  @apply hidden items-center flex-shrink-0 cursor-pointer whitespace-nowrap font-semibold border border-solid transition-all duration-200;
+  gap: var(--spacing-xs);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-xs);
   background: rgba(0, 255, 200, 0.1);
   border-color: rgba(0, 255, 200, 0.3);
   box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);

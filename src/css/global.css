@@ -32,7 +32,7 @@
   --radius-xxl: 20px;
 
   /* Font sizes - matches existing CSS variables */
-  --font-size-xxs: 11px;
+  --font-size-xxs: 12px;  /* Updated from 11px for mobile accessibility */
   --font-size-xs: 14px;
   --font-size-sm: 16px;
   --font-size-md: 18px;

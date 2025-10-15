@@ -2,8 +2,9 @@
 
 /* Timer Display */
 .timer-display {
-  @apply relative overflow-hidden text-center p-[var(--spacing-xxl)] rounded-[var(--radius-xxl)];
-  @apply border-2 border-solid;
+  @apply relative overflow-hidden text-center border-2 border-solid;
+  padding: var(--spacing-xxl);
+  border-radius: var(--radius-xxl);
   backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(0, 255, 200, 0.3);
@@ -25,7 +26,8 @@
 }
 
 .timer-display::after {
-  @apply absolute p-0.5 opacity-50 rounded-[var(--radius-xxl)];
+  @apply absolute p-0.5 opacity-50;
+  border-radius: var(--radius-xxl);
   animation: borderGlow 3s ease-in-out infinite;
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.5), rgba(255, 0, 150, 0.5));
   bottom: 0;
@@ -78,8 +80,10 @@
 }
 
 .timer-value {
-  @apply relative z-10 mb-[var(--spacing-md)];
-  @apply text-[var(--font-size-xl)] font-black tracking-[var(--letter-spacing-wide)];
+  @apply relative z-10 font-black;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--letter-spacing-wide);
   color: #00ffc8;
   filter: drop-shadow(0 4px 8px rgba(0, 255, 200, 0.3));
   font-family: var(--font-family-display);
@@ -114,15 +118,17 @@
 
 .rep-counter {
   @apply relative z-10 uppercase font-bold;
-  @apply text-[var(--font-size-md)] tracking-[var(--letter-spacing)];
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing);
   color: #6464ff;
   font-family: var(--font-family-base);
   text-shadow: 0 0 10px rgba(100, 100, 255, 0.5);
 }
 
 .gesture-hint {
-  @apply relative z-10 text-center mt-[var(--spacing-sm)] opacity-40;
-  @apply text-[var(--font-size-xxs)];
+  @apply relative z-10 text-center opacity-40;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xxs);
   color: var(--text-primary);
 }
 

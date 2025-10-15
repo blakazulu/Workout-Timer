@@ -2,8 +2,8 @@
 
 /* Loading Overlay */
 .loading-overlay {
-  @apply fixed top-0 left-0 w-full h-full z-[9999];
-  @apply flex flex-col items-center justify-center gap-[var(--spacing-lg)];
+  @apply fixed top-0 left-0 w-full h-full z-[9999] flex flex-col items-center justify-center;
+  gap: var(--spacing-lg);
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.95);
 }
@@ -23,8 +23,9 @@
 }
 
 .loading-text {
-  @apply uppercase font-bold tracking-[var(--letter-spacing-wide)];
-  @apply text-[var(--font-size-md)];
+  @apply uppercase font-bold;
+  letter-spacing: var(--letter-spacing-wide);
+  font-size: var(--font-size-md);
   color: #00ffc8;
   font-family: var(--font-family-base);
   text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
@@ -38,8 +39,8 @@
 
 /* Update Overlay */
 .update-overlay {
-  @apply fixed top-0 left-0 w-full h-full z-[99999];
-  @apply flex flex-col items-center justify-center gap-[var(--spacing-xl)];
+  @apply fixed top-0 left-0 w-full h-full z-[99999] flex flex-col items-center justify-center;
+  gap: var(--spacing-xl);
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.98), rgba(10, 10, 20, 0.98));
 }
@@ -49,7 +50,8 @@
 }
 
 .update-icon {
-  @apply w-[140px] h-[140px] mb-[var(--spacing-md)];
+  @apply w-[140px] h-[140px];
+  margin-bottom: var(--spacing-md);
   animation: updatePulse 2s ease-in-out infinite;
   filter: drop-shadow(0 0 30px rgba(0, 255, 200, 0.6));
 }
@@ -76,7 +78,9 @@
 }
 
 .update-version-info {
-  @apply flex items-center gap-[var(--spacing-lg)] mb-[var(--spacing-lg)];
+  @apply flex items-center;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .update-old-version {

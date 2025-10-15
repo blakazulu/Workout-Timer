@@ -109,7 +109,11 @@ async function forceUpdate(oldVersion, newVersion) {
     activateStep(step2);
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    const preserveKeys = ["cycleSettings", "cycleHistory"];
+    const preserveKeys = [
+      "workout-timer-settings",      // Timer settings
+      "workout-timer-favorites",     // Favorite songs
+      "workout-timer-song-history"   // Song history
+    ];
     const dataToPreserve = {};
     preserveKeys.forEach(key => {
       const value = localStorage.getItem(key);

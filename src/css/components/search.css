@@ -2,9 +2,8 @@
 
 /* YouTube Search Dropdown */
 .youtube-search-dropdown {
-  @apply fixed z-[10000] max-h-[400px] overflow-y-auto;
-  @apply rounded-[var(--radius-lg)] border-2 border-solid;
-  @apply text-white transition-all duration-300;
+  @apply fixed z-[10000] max-h-[400px] overflow-y-auto border-2 border-solid text-white transition-all duration-300;
+  border-radius: var(--radius-lg);
   backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.98);
   border-color: rgba(255, 0, 150, 0.5);

@@ -212,7 +212,7 @@
   align-items: center;
   color: rgba(100, 100, 255, 0.8);
   display: flex;
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   gap: 8px;
 }
 

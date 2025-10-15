@@ -2,7 +2,9 @@
 
 /* Music Controls */
 .music-controls {
-  @apply p-[var(--spacing-md)] rounded-[var(--radius-xl)] border border-solid;
+  @apply border border-solid;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-xl);
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(255, 0, 150, 0.3);
@@ -16,12 +18,14 @@
 }
 
 .music-info {
-  @apply flex items-center gap-[var(--spacing-xs)] mb-[var(--spacing-sm)];
+  @apply flex items-center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
 }
 
 .music-title {
-  @apply flex-1 overflow-hidden truncate whitespace-nowrap;
-  @apply text-[var(--font-size-xs)] font-bold tracking-wider;
+  @apply flex-1 overflow-hidden truncate whitespace-nowrap font-bold tracking-wider;
+  font-size: var(--font-size-xs);
   color: #ff0096;
   font-family: var(--font-family-base);
 }
@@ -46,10 +50,10 @@
      Works in Chromium 125+, Firefox 128+
      JavaScript fallback provided for older browsers
      Polyfill available: https://github.com/oddbird/css-anchor-positioning */
-  @apply fixed m-0 mt-2 p-[var(--spacing-md)] overflow-y-auto;
-  @apply rounded-[var(--radius-lg)] border-2 border-solid;
-  @apply text-white text-[var(--font-size-sm)] font-semibold leading-relaxed;
-  @apply -translate-x-1/2 transition-all duration-200;
+  @apply fixed m-0 mt-2 overflow-y-auto border-2 border-solid text-white font-semibold leading-relaxed -translate-x-1/2 transition-all duration-200;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.98);
   border-color: #ff0096;
@@ -66,25 +70,37 @@
 }
 
 /* Position fallbacks for when tooltip doesn't fit in viewport */
-@position-try --tooltip-left {
-  @apply mt-2 translate-x-0;
-  inset: auto;
-  left: anchor(left);
-  top: anchor(bottom);
+/* Using @supports for progressive enhancement - works in browsers with anchor positioning support */
+@supports (anchor-name: --test) {
+  @position-try --tooltip-left {
+    @apply mt-2 translate-x-0;
+    inset: auto;
+    left: anchor(left);
+    top: anchor(bottom);
+  }
+
+  @position-try --tooltip-right {
+    @apply mt-2 translate-x-0;
+    inset: auto;
+    right: anchor(right);
+    top: anchor(bottom);
+  }
+
+  @position-try --tooltip-above {
+    @apply mt-0 mb-2 -translate-x-1/2;
+    inset: auto;
+    left: anchor(center);
+    bottom: anchor(top);
+  }
 }
 
-@position-try --tooltip-right {
-  @apply mt-2 translate-x-0;
-  inset: auto;
-  right: anchor(right);
-  top: anchor(bottom);
-}
-
-@position-try --tooltip-above {
-  @apply mt-0 mb-2 -translate-x-1/2;
-  inset: auto;
-  left: anchor(center);
-  bottom: anchor(top);
+/* Fallback positioning for browsers without anchor positioning support */
+@supports not (anchor-name: --test) {
+  .music-tooltip {
+    left: 50% !important;
+    top: 100% !important;
+    transform: translateX(-50%);
+  }
 }
 
 /* Popover animations */
@@ -117,17 +133,20 @@
 }
 
 .music-tooltip-title {
-  @apply mb-[var(--spacing-sm)] break-words;
-  @apply text-[var(--font-size-md)] font-bold;
+  @apply break-words font-bold;
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-md);
   color: #ff0096;
 }
 
 .music-tooltip-info {
-  @apply flex flex-col gap-[var(--spacing-xs)];
+  @apply flex flex-col;
+  gap: var(--spacing-xs);
 }
 
 .music-tooltip-row {
-  @apply flex gap-[var(--spacing-xs)];
+  @apply flex;
+  gap: var(--spacing-xs);
 }
 
 .music-tooltip-label {
@@ -141,7 +160,8 @@
 }
 
 .music-player {
-  @apply flex items-center gap-[var(--spacing-md)];
+  @apply flex items-center;
+  gap: var(--spacing-md);
 }
 
 .music-btn {
@@ -177,12 +197,13 @@
 }
 
 .music-progress {
-  @apply flex flex-1 items-center gap-[var(--spacing-sm)];
+  @apply flex flex-1 items-center;
+  gap: var(--spacing-sm);
 }
 
 .music-time {
-  @apply text-center min-w-[35px];
-  @apply text-[var(--font-size-xxs)] font-semibold;
+  @apply text-center min-w-[35px] font-semibold;
+  font-size: var(--font-size-xxs);
   color: #6464ff;
   font-family: var(--font-family-display);
 }
