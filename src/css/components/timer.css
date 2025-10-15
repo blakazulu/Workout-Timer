@@ -3,14 +3,14 @@
 /* Timer Display */
 .timer-display {
   @apply relative overflow-hidden text-center border-2 border-solid;
-  padding: var(--spacing-xxl);
-  border-radius: var(--radius-xxl);
   backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(0, 255, 200, 0.3);
+  border-radius: var(--radius-xxl);
   box-shadow: 0 0 40px rgba(0, 255, 200, 0.2),
   0 8px 32px rgba(0, 0, 0, 0.6),
   inset 0 1px 0 rgba(0, 255, 200, 0.2);
+  padding: var(--spacing-xxl);
 }
 
 .timer-display::before {
@@ -27,9 +27,9 @@
 
 .timer-display::after {
   @apply absolute p-0.5 opacity-50;
-  border-radius: var(--radius-xxl);
   animation: borderGlow 3s ease-in-out infinite;
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.5), rgba(255, 0, 150, 0.5));
+  border-radius: var(--radius-xxl);
   bottom: 0;
   content: '';
   left: 0;
@@ -81,12 +81,12 @@
 
 .timer-value {
   @apply relative z-10 font-black;
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-xl);
-  letter-spacing: var(--letter-spacing-wide);
   color: #00ffc8;
   filter: drop-shadow(0 4px 8px rgba(0, 255, 200, 0.3));
   font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--spacing-md);
   text-shadow: 0 0 30px rgba(0, 255, 200, 0.8),
   0 0 60px rgba(0, 255, 200, 0.4);
 }
@@ -118,18 +118,18 @@
 
 .rep-counter {
   @apply relative z-10 uppercase font-bold;
-  font-size: var(--font-size-md);
-  letter-spacing: var(--letter-spacing);
   color: #6464ff;
   font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing);
   text-shadow: 0 0 10px rgba(100, 100, 255, 0.5);
 }
 
 .gesture-hint {
   @apply relative z-10 text-center opacity-40;
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-size-xxs);
   color: var(--text-primary);
+  font-size: var(--font-size-xxs);
+  margin-top: var(--spacing-sm);
 }
 
 @media (hover: hover) and (pointer: fine) {

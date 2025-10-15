@@ -3,14 +3,14 @@
 /* Music Controls */
 .music-controls {
   @apply border border-solid;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-xl);
   backdrop-filter: blur(15px);
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(255, 0, 150, 0.3);
+  border-radius: var(--radius-xl);
   box-shadow: 0 0 30px rgba(255, 0, 150, 0.2),
   0 8px 32px rgba(0, 0, 0, 0.5),
   inset 0 1px 0 rgba(255, 0, 150, 0.1);
+  padding: var(--spacing-md);
 }
 
 .music-controls.hidden {
@@ -25,9 +25,9 @@
 
 .music-title {
   @apply flex-1 overflow-hidden truncate whitespace-nowrap font-bold tracking-wider;
-  font-size: var(--font-size-xs);
   color: #ff0096;
   font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
 }
 
 .music-info-btn {
@@ -51,18 +51,18 @@
      JavaScript fallback provided for older browsers
      Polyfill available: https://github.com/oddbird/css-anchor-positioning */
   @apply fixed m-0 mt-2 overflow-y-auto border-2 border-solid text-white font-semibold leading-relaxed -translate-x-1/2 transition-all duration-200;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-sm);
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.98);
   border-color: #ff0096;
+  border-radius: var(--radius-lg);
   box-shadow: 0 0 30px rgba(255, 0, 150, 0.6);
+  font-size: var(--font-size-sm);
   inset: auto;
   left: anchor(center);
   max-height: 300px;
   max-width: min(400px, calc(100vw - 20px));
   min-width: min(280px, calc(100vw - 20px));
+  padding: var(--spacing-md);
   position-anchor: --music-info-btn;
   position-try-fallbacks: --tooltip-left, --tooltip-right, --tooltip-above;
   top: anchor(bottom);
@@ -134,9 +134,9 @@
 
 .music-tooltip-title {
   @apply break-words font-bold;
-  margin-bottom: var(--spacing-sm);
-  font-size: var(--font-size-md);
   color: #ff0096;
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .music-tooltip-info {
@@ -203,9 +203,9 @@
 
 .music-time {
   @apply text-center min-w-[35px] font-semibold;
-  font-size: var(--font-size-xxs);
   color: #6464ff;
   font-family: var(--font-family-display);
+  font-size: var(--font-size-xxs);
 }
 
 .progress-bar-container {

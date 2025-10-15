@@ -40,7 +40,7 @@
 
   /* Typography */
   --font-size-xs: 14px;
-  --font-size-xxs: 12px;  /* Updated from 11px for mobile accessibility */
+  --font-size-xxs: 12px; /* Updated from 11px for mobile accessibility */
   --radius-sm: 5px;
   --spacing-sm: 10px;
   --letter-spacing: 2px;

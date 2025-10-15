@@ -11,11 +11,11 @@
 .btn {
   @apply flex-1 border-0 cursor-pointer overflow-hidden relative uppercase select-none font-bold transition-all duration-200;
   border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
-  font-size: var(--font-size-sm);
-  letter-spacing: var(--letter-spacing-wide);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-wide);
+  padding: var(--spacing-md);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -76,17 +76,17 @@
 /* Install Button */
 .btn-install {
   @apply hidden items-center flex-shrink-0 cursor-pointer whitespace-nowrap font-semibold border border-solid transition-all duration-200;
+  background: rgba(0, 255, 200, 0.1);
+  border-color: rgba(0, 255, 200, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+  color: #00ffc8;
+  font-size: var(--font-size-xs);
   gap: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
   padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-xs);
-  background: rgba(0, 255, 200, 0.1);
-  border-color: rgba(0, 255, 200, 0.3);
-  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
-  color: #00ffc8;
 }
 
 .btn-install:hover {

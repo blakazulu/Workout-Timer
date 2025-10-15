@@ -3,9 +3,9 @@
 /* Loading Overlay */
 .loading-overlay {
   @apply fixed top-0 left-0 w-full h-full z-[9999] flex flex-col items-center justify-center;
-  gap: var(--spacing-lg);
   backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.95);
+  gap: var(--spacing-lg);
 }
 
 .loading-overlay.hidden {
@@ -24,10 +24,10 @@
 
 .loading-text {
   @apply uppercase font-bold;
-  letter-spacing: var(--letter-spacing-wide);
-  font-size: var(--font-size-md);
   color: #00ffc8;
   font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing-wide);
   text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
 }
 
@@ -40,9 +40,9 @@
 /* Update Overlay */
 .update-overlay {
   @apply fixed top-0 left-0 w-full h-full z-[99999] flex flex-col items-center justify-center;
-  gap: var(--spacing-xl);
   backdrop-filter: blur(20px);
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.98), rgba(10, 10, 20, 0.98));
+  gap: var(--spacing-xl);
 }
 
 .update-overlay.hidden {
@@ -51,9 +51,9 @@
 
 .update-icon {
   @apply w-[140px] h-[140px];
-  margin-bottom: var(--spacing-md);
   animation: updatePulse 2s ease-in-out infinite;
   filter: drop-shadow(0 0 30px rgba(0, 255, 200, 0.6));
+  margin-bottom: var(--spacing-md);
 }
 
 @keyframes updatePulse {
