@@ -9,7 +9,7 @@
   background: rgba(10, 10, 10, 0.98);
   border-color: rgba(255, 0, 150, 0.5);
   box-shadow: 0 0 40px rgba(255, 0, 150, 0.3),
-              0 8px 32px rgba(0, 0, 0, 0.8);
+  0 8px 32px rgba(0, 0, 0, 0.8);
 }
 
 .youtube-search-dropdown.hidden {
@@ -64,8 +64,8 @@
 
 .search-dropdown-item::before {
   @apply absolute left-0 top-0 bottom-0 w-0.5 opacity-0 transition-opacity duration-200;
-  content: '';
   background: linear-gradient(90deg, #ff0096, #6464ff);
+  content: '';
 }
 
 .search-dropdown-item:hover::before {

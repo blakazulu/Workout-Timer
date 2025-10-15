@@ -10,8 +10,8 @@
 .btn {
   @apply flex-1 border-0 rounded-[var(--radius-lg)] cursor-pointer overflow-hidden relative p-[var(--spacing-md)] uppercase select-none;
   @apply text-[var(--font-size-sm)] font-bold tracking-[var(--letter-spacing-wide)] transition-all duration-200;
-  font-family: var(--font-family-base);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-family: var(--font-family-base);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -19,8 +19,8 @@
 .btn::before {
   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full z-0;
   @apply w-0 h-0 transition-all duration-[600ms];
-  content: '';
   background: rgba(255, 255, 255, 0.1);
+  content: '';
 }
 
 .btn:hover::before {

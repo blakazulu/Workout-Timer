@@ -9,9 +9,9 @@
   background: rgba(10, 10, 10, 0.98);
   border-color: rgba(100, 100, 255, 0.5);
   box-shadow: 0 0 40px rgba(100, 100, 255, 0.3),
-              0 8px 32px rgba(0, 0, 0, 0.8);
-  width: min(480px, 90vw);
+  0 8px 32px rgba(0, 0, 0, 0.8);
   transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
+  width: min(480px, 90vw);
 }
 
 .music-library-popover:popover-open {

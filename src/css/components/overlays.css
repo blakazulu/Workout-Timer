@@ -19,7 +19,7 @@
   border-right-color: #ff0096;
   border-top-color: #00ffc8;
   box-shadow: 0 0 30px rgba(0, 255, 200, 0.5),
-              inset 0 0 20px rgba(0, 255, 200, 0.2);
+  inset 0 0 20px rgba(0, 255, 200, 0.2);
 }
 
 .loading-text {

@@ -8,8 +8,8 @@
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(0, 255, 200, 0.3);
   box-shadow: 0 0 40px rgba(0, 255, 200, 0.2),
-              0 8px 32px rgba(0, 0, 0, 0.6),
-              inset 0 1px 0 rgba(0, 255, 200, 0.2);
+  0 8px 32px rgba(0, 0, 0, 0.6),
+  inset 0 1px 0 rgba(0, 255, 200, 0.2);
 }
 
 .timer-display::before {
@@ -31,11 +31,11 @@
   bottom: 0;
   content: '';
   left: 0;
-  right: 0;
-  top: 0;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+  right: 0;
+  top: 0;
 }
 
 @keyframes shimmer {
@@ -65,16 +65,16 @@
   animation: pulse var(--transition-medium) infinite;
   border-color: #ff0096;
   box-shadow: 0 0 60px rgba(255, 0, 150, 0.5),
-              0 8px 32px rgba(0, 0, 0, 0.6),
-              inset 0 1px 0 rgba(255, 0, 150, 0.3);
+  0 8px 32px rgba(0, 0, 0, 0.6),
+  inset 0 1px 0 rgba(255, 0, 150, 0.3);
 }
 
 .timer-display.resting {
   background: rgba(0, 255, 200, 0.05);
   border-color: #00ffc8;
   box-shadow: 0 0 40px rgba(0, 255, 200, 0.3),
-              0 8px 32px rgba(0, 0, 0, 0.6),
-              inset 0 1px 0 rgba(0, 255, 200, 0.2);
+  0 8px 32px rgba(0, 0, 0, 0.6),
+  inset 0 1px 0 rgba(0, 255, 200, 0.2);
 }
 
 .timer-value {
@@ -84,7 +84,7 @@
   filter: drop-shadow(0 4px 8px rgba(0, 255, 200, 0.3));
   font-family: var(--font-family-display);
   text-shadow: 0 0 30px rgba(0, 255, 200, 0.8),
-               0 0 60px rgba(0, 255, 200, 0.4);
+  0 0 60px rgba(0, 255, 200, 0.4);
 }
 
 .timer-value.warning {

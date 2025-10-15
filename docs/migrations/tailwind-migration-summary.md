@@ -8,63 +8,65 @@
 ### Phase 1: Installation & Configuration ✅
 
 1. **Installed Tailwind CSS v4.1.14**
-   - Package: `tailwindcss@4.1.14`
-   - Vite Plugin: `@tailwindcss/vite@4.1.14`
+    - Package: `tailwindcss@4.1.14`
+    - Vite Plugin: `@tailwindcss/vite@4.1.14`
 
 2. **Updated Vite Configuration** (`vite.config.js:4,21`)
-   - Added `@tailwindcss/vite` plugin import
-   - Added `tailwindcss()` to plugins array
+    - Added `@tailwindcss/vite` plugin import
+    - Added `tailwindcss()` to plugins array
 
 3. **Configured CSS Entry Point** (`src/css/global.css:2`)
-   - Added `@import "tailwindcss";` at the top
-   - Configured `@theme` directive with existing CSS variables:
-     - Spacing scale (xs, sm, md, lg, xl, xxl)
-     - Border radius (sm, md, lg, xl, xxl)
-     - Font sizes (xxs, xs, sm, md, lg, xl)
+    - Added `@import "tailwindcss";` at the top
+    - Configured `@theme` directive with existing CSS variables:
+        - Spacing scale (xs, sm, md, lg, xl, xxl)
+        - Border radius (sm, md, lg, xl, xxl)
+        - Font sizes (xxs, xs, sm, md, lg, xl)
 
 4. **Tested Dev Server**
-   - ✅ Server starts without errors
-   - ✅ Tailwind processing working correctly
-   - ✅ @apply directives compiling properly
+    - ✅ Server starts without errors
+    - ✅ Tailwind processing working correctly
+    - ✅ @apply directives compiling properly
 
 ### Phase 2: CSS Conversion ✅ (ALL Core Files Complete - 19 files)
 
 **Global Styles:**
+
 5. **Converted `src/css/global/base.css` (116 lines)**
-   - Body styles: Using `@apply` for flexbox, overflow, positioning
-   - Container: flex, width, overflow, z-index utilities
-   - Header: flex utilities
-   - App layout sections: padding, flex properties
-   - Timer-active state: Tailwind utilities
+    - Body styles: Using `@apply` for flexbox, overflow, positioning
+    - Container: flex, width, overflow, z-index utilities
+    - Header: flex utilities
+    - App layout sections: padding, flex properties
+    - Timer-active state: Tailwind utilities
 
 **Component Styles:**
+
 6. **Converted `src/css/components/buttons.css` (143 lines)**
-   - `.controls`: Flex layout, gap, overflow
-   - `.btn`: Border, padding, typography, transitions
-   - Button variants: Typography converted, gradients kept
-   - `.btn-install`: Full utility conversion
-   - Hover/active states: Transform and scale utilities
-   - Pseudo-elements: Position and transform utilities
+    - `.controls`: Flex layout, gap, overflow
+    - `.btn`: Border, padding, typography, transitions
+    - Button variants: Typography converted, gradients kept
+    - `.btn-install`: Full utility conversion
+    - Hover/active states: Transform and scale utilities
+    - Pseudo-elements: Position and transform utilities
 
 7. **Converted `src/css/components/timer.css` (128 lines)**
-   - `.timer-display`: Layout, border, padding utilities
-   - `.timer-value`: Typography and positioning
-   - `.rep-counter`: Text styling
-   - Alert/rest states: Custom effects preserved
-   - Animations: Kept @keyframes intact
+    - `.timer-display`: Layout, border, padding utilities
+    - `.timer-value`: Typography and positioning
+    - `.rep-counter`: Text styling
+    - Alert/rest states: Custom effects preserved
+    - Animations: Kept @keyframes intact
 
 8. **Converted `src/css/components/music-controls.css` (214 lines)**
-   - `.music-controls`: Layout and border utilities
-   - `.music-player`: Flex utilities
-   - Progress bars: Width, height, positioning
-   - Tooltips: Popover positioning (anchor API preserved)
-   - Scrollbar styling: Vendor-specific preserved
+    - `.music-controls`: Layout and border utilities
+    - `.music-player`: Flex utilities
+    - Progress bars: Width, height, positioning
+    - Tooltips: Popover positioning (anchor API preserved)
+    - Scrollbar styling: Vendor-specific preserved
 
 9. **Converted `src/css/components/settings.css` (85+ lines)**
-   - `.settings`: Padding, border, layout utilities
-   - `.settings-grid`: Grid layout utilities
-   - Input fields: Border, padding, focus states
-   - YouTube section: Matching layout conversion
+    - `.settings`: Padding, border, layout utilities
+    - `.settings-grid`: Grid layout utilities
+    - Input fields: Border, padding, focus states
+    - YouTube section: Matching layout conversion
 
 10. **Converted `src/css/components/search.css` (198 lines)**
     - `.youtube-search-dropdown`: Fixed positioning, z-index
@@ -127,7 +129,8 @@ The following CSS files were intentionally NOT converted because they contain on
 
 **Decision: NO HTML conversion needed**
 
-The HTML templates use semantic class names (`.timer-display`, `.music-controls`, `.btn`, etc.) which is the **recommended approach** for this project because:
+The HTML templates use semantic class names (`.timer-display`, `.music-controls`, `.btn`, etc.) which is the *
+*recommended approach** for this project because:
 
 ✅ **Better Maintainability** - Component styles centralized in CSS files
 ✅ **Semantic Naming** - `.timer-display` is clearer than 20+ utility classes
@@ -136,6 +139,7 @@ The HTML templates use semantic class names (`.timer-display`, `.music-controls`
 ✅ **Easier Refactoring** - Change all timers by editing one CSS class
 
 **HTML/EJS Templates (~15 files):**
+
 ```
 index.html
 src/partials/
@@ -146,6 +150,7 @@ src/partials/
 ```
 
 **Current Approach (Optimal):**
+
 ```html
 <!-- Semantic class with Tailwind utilities via @apply -->
 <div class="timer-display">
@@ -154,6 +159,7 @@ src/partials/
 ```
 
 **Alternative NOT Chosen (Verbose):**
+
 ```html
 <!-- Direct utilities - harder to maintain -->
 <div class="relative overflow-hidden text-center p-[var(--spacing-xxl)] rounded-[var(--radius-xxl)] border-2 [backdrop-filter:blur(20px)] [background:rgba(10,10,10,0.8)]">
@@ -176,6 +182,7 @@ src/partials/
 ## 🎯 Conversion Strategy
 
 ### What to Convert to Tailwind:
+
 - **Layout**: flex, grid, spacing, sizing
 - **Typography**: font-size, weight, letter-spacing
 - **Colors & backgrounds**: (solid colors)
@@ -184,6 +191,7 @@ src/partials/
 - **Transforms & transitions**
 
 ### What to Keep as Custom CSS:
+
 - **Complex gradients** (linear-gradient, radial-gradient)
 - **Custom animations** (@keyframes)
 - **Pseudo-element effects** (::before, ::after with content)
@@ -194,6 +202,7 @@ src/partials/
 ## 📝 Example Conversion Patterns
 
 ### Before:
+
 ```css
 .example {
   display: flex;
@@ -207,6 +216,7 @@ src/partials/
 ```
 
 ### After:
+
 ```css
 .example {
   @apply flex flex-col gap-[20px] p-[15px] rounded-[10px] text-base font-bold;
@@ -231,6 +241,7 @@ src/partials/
 ## 🌐 Browser Support
 
 Tailwind CSS v4 targets:
+
 - Safari 16.4+
 - Chrome 111+
 - Firefox 128+
