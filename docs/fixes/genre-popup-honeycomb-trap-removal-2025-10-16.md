@@ -5,13 +5,15 @@
 
 ## Summary
 
-Removed the "Trap" genre from the application and redesigned the genre popup from a radial dial layout to a honeycomb hexagonal layout (matching the mood popup style) with redish color scheme.
+Removed the "Trap" genre from the application and redesigned the genre popup from a radial dial layout to a honeycomb
+hexagonal layout (matching the mood popup style) with redish color scheme.
 
 ## Changes Made
 
 ### 1. Removed Trap Genre
 
 **Files Modified:**
+
 - `src/partials/popovers/genre-selector.html:23-25` - Removed Trap button from HTML
 - `src/js/data/music-library.js:77` - Removed "trap workout music" from getAllGenres()
 - `src/js/utils/song_fetcher/config.js:99-103` - Removed Trap category and queries from fetching script
@@ -23,6 +25,7 @@ Removed the "Trap" genre from the application and redesigned the genre popup fro
 **File:** `src/css/components/music-selection/genre-tags.css`
 
 **Changed From:**
+
 - Radial dial layout with genres positioned in a circle
 - Pill-shaped buttons (border-radius: 50px)
 - Pink/purple gradient color scheme (#ff0096)
@@ -30,6 +33,7 @@ Removed the "Trap" genre from the application and redesigned the genre popup fro
 - 10 genres positioned at 36° intervals
 
 **Changed To:**
+
 - Honeycomb hexagonal grid layout
 - Hexagonal buttons using clip-path polygon
 - Redish gradient color scheme (#ff3232)
@@ -39,25 +43,31 @@ Removed the "Trap" genre from the application and redesigned the genre popup fro
 ### 3. Color Scheme Update
 
 **New Redish Theme:**
+
 - Primary color: `#ff3232`
 - Background gradient: `rgba(255, 50, 50, 0.08)` to `rgba(255, 100, 100, 0.1)`
 - Border: `rgba(255, 50, 50, 0.3)`
 - Hover glow: `rgba(255, 50, 50, 0.5)`
 
 **Comparison with Mood Popup:**
+
 - Moods: Green honeycomb (`#00ffc8`)
 - Genres: Redish honeycomb (`#ff3232`)
 
 ## Layout Details
 
 ### Honeycomb Pattern
+
 The hexagonal cells are arranged in a 3x3 grid with alternating row offsets:
+
 - Row 1 (items 1-3): No offset
 - Row 2 (items 4-6): -12px offset for honeycomb effect
 - Row 3 (items 7-9): No offset (aligned with row 1)
 
 ### Hexagon Shape
+
 Created using CSS clip-path:
+
 ```css
 clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 ```

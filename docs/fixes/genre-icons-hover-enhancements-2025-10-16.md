@@ -5,7 +5,8 @@
 
 ## Summary
 
-Added icons to all genre buttons and enhanced hover effects to match the mood popup interaction patterns, including white text on hover and animated icon effects.
+Added icons to all genre buttons and enhanced hover effects to match the mood popup interaction patterns, including
+white text on hover and animated icon effects.
 
 ## Changes Made
 
@@ -15,17 +16,17 @@ Added icons to all genre buttons and enhanced hover effects to match the mood po
 
 Each genre now has a representative Phosphor icon:
 
-| Genre | Icon | Phosphor Class |
-|-------|------|----------------|
-| EDM | Music Notes | `ph-music-notes-simple` |
-| Rock | Guitar | `ph-guitar` |
-| Hip Hop | Microphone | `ph-microphone-stage` |
-| Metal | Skull | `ph-skull` |
-| Dubstep | Speaker | `ph-speaker-high` |
-| Hardstyle | Lightning | `ph-lightning` |
-| Techno | Robot | `ph-robot` |
-| Phonk | Car | `ph-car` |
-| Tabata | Timer | `ph-timer` |
+| Genre     | Icon        | Phosphor Class          |
+|-----------|-------------|-------------------------|
+| EDM       | Music Notes | `ph-music-notes-simple` |
+| Rock      | Guitar      | `ph-guitar`             |
+| Hip Hop   | Microphone  | `ph-microphone-stage`   |
+| Metal     | Skull       | `ph-skull`              |
+| Dubstep   | Speaker     | `ph-speaker-high`       |
+| Hardstyle | Lightning   | `ph-lightning`          |
+| Techno    | Robot       | `ph-robot`              |
+| Phonk     | Car         | `ph-car`                |
+| Tabata    | Timer       | `ph-timer`              |
 
 ### 2. Icon Styling
 
@@ -44,6 +45,7 @@ Added `.genre-icon` styling matching mood popup:
 ```
 
 **Features:**
+
 - 38px icon size (same as mood icons)
 - Redish drop-shadow glow (matching genre color scheme)
 - Smooth transitions for hover effects
@@ -63,6 +65,7 @@ Added animated hover effect matching mood popup:
 ```
 
 **Animation Details:**
+
 - Icon scales up to 115% size
 - Rotates 5 degrees for dynamic effect
 - Drop-shadow intensifies to full opacity
@@ -88,12 +91,14 @@ Enhanced hover state with white text:
 ## Hover Effect Comparison
 
 ### Before
+
 - Plain text labels
 - No icons
 - Redish text on hover
 - Scale-only animation
 
 ### After
+
 - Icons + text labels (matching mood popup structure)
 - White text on hover (better contrast)
 - Icon scales + rotates on hover
@@ -104,18 +109,20 @@ Enhanced hover state with white text:
 
 Both popups now share identical interaction patterns:
 
-| Feature | Moods (Green) | Genres (Redish) |
-|---------|--------------|-----------------|
-| Layout | Honeycomb hexagons | Honeycomb hexagons ✓ |
-| Icons | 38px with glow | 38px with glow ✓ |
-| Hover text | White | White ✓ |
-| Hover animation | Scale + rotate | Scale + rotate ✓ |
-| Glow effect | Enhanced on hover | Enhanced on hover ✓ |
+| Feature         | Moods (Green)      | Genres (Redish)      |
+|-----------------|--------------------|----------------------|
+| Layout          | Honeycomb hexagons | Honeycomb hexagons ✓ |
+| Icons           | 38px with glow     | 38px with glow ✓     |
+| Hover text      | White              | White ✓              |
+| Hover animation | Scale + rotate     | Scale + rotate ✓     |
+| Glow effect     | Enhanced on hover  | Enhanced on hover ✓  |
 
 ## Implementation Notes
 
 ### HTML Structure
+
 Each genre button now follows this structure:
+
 ```html
 <button class="genre-tag" data-query="...">
   <i class="genre-icon ph-bold ph-{icon-name}"></i>
@@ -124,6 +131,7 @@ Each genre button now follows this structure:
 ```
 
 ### Icon Selection Rationale
+
 - **EDM:** Music notes represent electronic music composition
 - **Rock:** Guitar is the iconic rock instrument
 - **Hip Hop:** Microphone represents rap/vocals
@@ -135,6 +143,7 @@ Each genre button now follows this structure:
 - **Tabata:** Timer represents interval training
 
 ### CSS Architecture
+
 - Icons use same `.genre-icon` / `.mood-icon` pattern
 - Hover effects use child selector (`.genre-tag:hover .genre-icon`)
 - All transitions set to 0.3s for consistent timing

@@ -132,7 +132,7 @@ function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModu
       const duration = formatDuration(item.duration);
       const videoId = extractVideoIdFromUrl(item.url);
       return `
-        <div class="music-selection-item" data-url="${escapeHtml(item.url)}" data-video-id="${escapeHtml(videoId)}" data-index="${index}" data-duration="${item.duration}">
+        <div class="music-selection-item" data-url="${escapeHtml(item.url)}" data-video-id="${escapeHtml(videoId)}" data-index="${index}" data-duration="${item.duration}" data-title="${escapeHtml(item.title)}" data-channel="${escapeHtml(item.channel)}" data-thumbnail="${escapeHtml(item.thumbnail)}">
           <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="music-selection-item-thumbnail" loading="lazy">
           <div class="music-selection-item-info">
             <div class="music-selection-item-title">${escapeHtml(item.title)}</div>

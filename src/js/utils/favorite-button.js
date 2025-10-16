@@ -115,7 +115,7 @@ function extractSongData(element) {
 
   // Try to find title and author from child elements
   const titleEl = element.querySelector(".history-item-title, .music-selection-item-title, .search-dropdown-item-title");
-  const authorEl = element.querySelector(".music-selection-item-artist, .search-dropdown-item-artist");
+  const authorEl = element.querySelector(".music-selection-item-artist, .search-dropdown-item-artist, .search-dropdown-item-description");
   const durationEl = element.querySelector(".history-item-meta, .music-selection-item-duration, .search-dropdown-item-duration");
 
   const title = titleEl ? titleEl.textContent.trim() : element.dataset.title || "Unknown Title";

@@ -104,17 +104,16 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
           removeBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             const videoId = removeBtn.dataset.videoId;
+            const title = item.dataset.title;
 
-            if (confirm("Remove this song from favorites?")) {
-              removeFromFavorites(videoId);
-              updateFavoritesBadge();
-              renderLibrary(currentTab);
-              showNotification("Removed from favorites", false);
+            removeFromFavorites(videoId);
+            updateFavoritesBadge();
+            renderLibrary(currentTab);
+            showNotification(`Removed from favorites: ${title}`, false);
 
-              // Update favorite button if this is the currently playing song
-              if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
-                updateFavoriteButton(videoId);
-              }
+            // Update favorite button if this is the currently playing song
+            if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
+              updateFavoriteButton(videoId);
             }
           });
         }
@@ -142,7 +141,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
            </div>`;
 
       return `
-        <div class="music-selection-item" data-url="${escapeHtml(song.url)}" data-video-id="${escapeHtml(song.videoId)}" data-duration="${song.duration}">
+        <div class="music-selection-item" data-url="${escapeHtml(song.url)}" data-video-id="${escapeHtml(song.videoId)}" data-duration="${song.duration}" data-title="${escapeHtml(song.title)}" data-channel="${escapeHtml(song.channel || "Unknown Channel")}" data-thumbnail="${escapeHtml(song.thumbnail || "")}">
           ${thumbnail}
           <div class="music-selection-item-info">
             <div class="music-selection-item-title">${escapeHtml(song.title)}</div>

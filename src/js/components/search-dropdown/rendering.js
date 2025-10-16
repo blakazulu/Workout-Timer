@@ -66,7 +66,9 @@ export function render(instance) {
            data-video-id="${isVideo ? escapeHtml(result.id) : ""}"
            data-url="${isVideo ? escapeHtml(result.url) : ""}"
            data-title="${escapeHtml(result.title)}"
-           data-author="${escapeHtml(result.description || "")}">
+           data-channel="${escapeHtml(result.description || "")}"
+           data-thumbnail="${isVideo ? escapeHtml(result.thumbnail || "") : ""}"
+           data-duration="${isVideo ? (result.duration || 0) : ""}">
         ${hasThumbnail ? `
           <img src="${escapeHtml(result.thumbnail)}"
                alt="${escapeHtml(result.title)}"
