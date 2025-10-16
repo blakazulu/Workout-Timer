@@ -96,11 +96,6 @@ export const categories = {
     "hard rock gym music 60 minutes",
     "power metal workout 1 hour"
   ],
-  "trap workout music": [
-    "trap workout mix 1 hour",
-    "aggressive trap gym music 60 minutes",
-    "phonk trap workout 1 hour"
-  ],
   "dubstep workout music": [
     "dubstep workout mix 1 hour",
     "bass workout mix 60 minutes",

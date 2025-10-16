@@ -74,7 +74,6 @@ export function getAllGenres() {
     "rock workout music",
     "hip hop workout music",
     "metal workout music",
-    "trap workout music",
     "dubstep workout music",
     "hardstyle workout music",
     "techno workout music",
