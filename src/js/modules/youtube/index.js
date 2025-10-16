@@ -212,6 +212,15 @@ class YouTubeModule {
   getMetadata() {
     return this.player.getVideoMetadata();
   }
+
+  /**
+   * Format time in seconds to MM:SS
+   * @param {number} seconds - Time in seconds
+   * @returns {string} Formatted time
+   */
+  formatTime(seconds) {
+    return this.uiControls.formatTime(seconds);
+  }
 }
 
 // Singleton instance

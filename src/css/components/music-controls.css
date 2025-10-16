@@ -209,28 +209,107 @@
 }
 
 .progress-bar-container {
-  @apply flex-1 relative h-1.5 cursor-pointer;
+  @apply flex-1 relative cursor-pointer select-none;
+  /* Increased height for better touch target */
+  height: 8px;
+  /* Add padding for larger touch area */
+  padding: 12px 0;
+  /* Transition for active state */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-bar-bg {
-  @apply absolute w-full h-full rounded;
-  background: rgba(100, 100, 255, 0.2);
+  @apply absolute w-full rounded-full;
+  /* Centered within the touch area */
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  background: rgba(100, 100, 255, 0.15);
+  /* Smooth shadow for depth */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .progress-bar-fill {
-  @apply absolute h-full w-0 rounded transition-all duration-100;
+  @apply absolute rounded-full w-0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
   background: linear-gradient(90deg, #ff0096, #6464ff);
-  box-shadow: 0 0 10px rgba(255, 0, 150, 0.5);
+  box-shadow: 0 0 12px rgba(255, 0, 150, 0.6), 0 2px 8px rgba(100, 100, 255, 0.3);
+  /* Smooth width transitions only, not when dragging */
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Prevent transition during drag */
+  will-change: width;
+}
+
+.progress-bar-fill.no-transition {
+  transition: none;
 }
 
 .progress-bar-handle {
-  @apply absolute top-1/2 -translate-x-1/2 -translate-y-1/2;
-  @apply w-3.5 h-3.5 rounded-full border-2 border-white opacity-0 transition-all duration-100;
-  background: #ff0096;
-  box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+  @apply absolute rounded-full pointer-events-none;
+  top: 50%;
   left: 0%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  margin-top: -8px;
+  background: #ff0096;
+  border: 2px solid white;
+  box-shadow: 0 0 8px rgba(255, 0, 150, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, width 0.15s ease, height 0.15s ease, margin 0.15s ease;
+  z-index: 10;
 }
 
-.progress-bar-container:hover .progress-bar-handle {
-  @apply opacity-100;
+/* Desktop hover state */
+@media (hover: hover) and (pointer: fine) {
+  .progress-bar-container:hover .progress-bar-handle {
+    opacity: 1;
+  }
+
+  .progress-bar-container:hover .progress-bar-bg {
+    background: rgba(100, 100, 255, 0.25);
+  }
+}
+
+/* Touch devices - always show handle */
+@media (hover: none) and (pointer: coarse) {
+  .progress-bar-container {
+    /* Larger touch target on mobile */
+    padding: 16px 0;
+    height: 10px;
+  }
+
+  .progress-bar-bg,
+  .progress-bar-fill {
+    height: 10px;
+  }
+
+  .progress-bar-handle {
+    /* Always visible and larger on mobile */
+    opacity: 1;
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: -10px;
+  }
+}
+
+/* Active/dragging state */
+.progress-bar-container.dragging .progress-bar-handle {
+  opacity: 1;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  box-shadow: 0 0 16px rgba(255, 0, 150, 1), 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.progress-bar-container.dragging .progress-bar-fill {
+  box-shadow: 0 0 16px rgba(255, 0, 150, 0.8), 0 3px 8px rgba(100, 100, 255, 0.4);
+}
+
+.progress-bar-container.dragging .progress-bar-bg {
+  background: rgba(100, 100, 255, 0.3);
 }
