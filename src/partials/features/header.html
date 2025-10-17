@@ -6,9 +6,26 @@
       <span>CYCLE</span>
       <span class="app-version" id="appVersion">Loading...</span>
     </h1>
-    <button class="btn-install" id="installBtn" style="display: none;">
-      <i class="ph-bold ph-download-simple"></i>
-      Install App
+  </div>
+</div>
+
+<!-- PWA Install Banner (Mobile Only) -->
+<div class="install-banner" id="installBanner">
+  <div class="install-banner-logo">
+    <img alt="CYCLE" src="/icons/icon.svg">
+  </div>
+  <div class="install-banner-right">
+    <button class="install-banner-btn-close" id="installBannerClose" aria-label="Close">
+      <i class="ph-bold ph-x"></i>
     </button>
+    <button class="install-banner-btn-primary" id="installBannerBtn">
+      <i class="ph-bold ph-download-simple"></i>
+      Install CYCLE
+    </button>
+    <p class="install-banner-subtitle">Get the full app experience</p>
+  </div>
+  <div class="install-banner-swipe-indicator">
+    <span>Swipe up to close</span>
+    <i class="ph-bold ph-caret-double-up"></i>
   </div>
 </div>
