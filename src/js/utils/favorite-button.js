@@ -54,7 +54,7 @@ export function setupFavoriteButtons(container, showNotification, onToggle = nul
     if (!videoId) return;
 
     // Get song data from parent element (skip the button itself and find the container)
-    const songElement = button.closest(".music-selection-item, .history-item, .search-dropdown-item, .favorite-item");
+    const songElement = button.closest(".song-card, .search-dropdown-item");
     if (!songElement) {
       showNotification("Unable to favorite: song data not found", true);
       return;
@@ -114,9 +114,9 @@ function extractSongData(element) {
   const videoId = element.dataset.videoId || extractVideoIdFromUrl(url);
 
   // Try to find title and author from child elements
-  const titleEl = element.querySelector(".history-item-title, .music-selection-item-title, .search-dropdown-item-title");
-  const authorEl = element.querySelector(".music-selection-item-artist, .search-dropdown-item-artist, .search-dropdown-item-description");
-  const durationEl = element.querySelector(".history-item-meta, .music-selection-item-duration, .search-dropdown-item-duration");
+  const titleEl = element.querySelector(".song-card-title, .search-dropdown-item-title");
+  const authorEl = element.querySelector(".song-card-channel, .search-dropdown-item-artist, .search-dropdown-item-description");
+  const durationEl = element.querySelector(".song-card-duration, .search-dropdown-item-duration");
 
   const title = titleEl ? titleEl.textContent.trim() : element.dataset.title || "Unknown Title";
   const channel = authorEl ? authorEl.textContent.trim() : element.dataset.channel || "Unknown Channel";
@@ -235,27 +235,8 @@ function syncFavoriteButtons(videoId, isFavorited) {
   historyItems.forEach(item => {
     if (isFavorited) {
       item.classList.add("is-favorited");
-
-      // Add heart badge if not already present (for history lists)
-      if (!item.querySelector(".history-item-favorite-badge") && item.classList.contains("history-item")) {
-        const favoriteBadge = document.createElement("div");
-        favoriteBadge.className = "history-item-favorite-badge";
-        favoriteBadge.innerHTML = "<i class=\"ph-bold ph-heart-fill\"></i>";
-        favoriteBadge.title = "Favorited";
-
-        const info = item.querySelector(".history-item-info");
-        if (info) {
-          info.appendChild(favoriteBadge);
-        }
-      }
     } else {
       item.classList.remove("is-favorited");
-
-      // Remove heart badge if present
-      const favoriteBadge = item.querySelector(".history-item-favorite-badge");
-      if (favoriteBadge) {
-        favoriteBadge.remove();
-      }
     }
   });
 }
@@ -309,7 +290,7 @@ export function addFavoriteButtonToElement(songElement, videoId, options = {}) {
   const button = tempDiv.firstElementChild;
 
   // Find appropriate place to insert button (depends on element structure)
-  const info = songElement.querySelector(".history-item-info, .music-selection-item-info, .search-dropdown-item-content");
+  const info = songElement.querySelector(".song-card-info, .search-dropdown-item-content");
   if (info) {
     info.appendChild(button);
   } else {

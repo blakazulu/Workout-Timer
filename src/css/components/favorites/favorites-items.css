@@ -4,35 +4,7 @@
    FAVORITES SYSTEM - ITEM STATES & CONTROLS
    ============================================ */
 
-/* Favorited History Items */
-.history-item.is-favorited {
-  @apply border-l-2 border-solid;
-  background: linear-gradient(90deg, rgba(255, 0, 150, 0.05), transparent);
-  border-left-color: rgba(255, 0, 150, 0.5);
-}
-
-.history-item.is-favorited:hover {
-  background: linear-gradient(90deg, rgba(255, 0, 150, 0.12), rgba(100, 100, 255, 0.08));
-  border-left-color: #ff0096;
-}
-
-/* Music Selection Item - Favorited state */
-.music-selection-item.is-favorited {
-  background: linear-gradient(90deg, rgba(255, 0, 150, 0.08), rgba(0, 0, 0, 0.3));
-}
-
-.music-selection-item.is-favorited::before {
-  background: linear-gradient(180deg, #ff0096, #6464ff);
-  opacity: 0.8;
-}
-
-.music-selection-item.is-favorited:hover {
-  background: linear-gradient(90deg, rgba(255, 0, 150, 0.18), rgba(100, 100, 255, 0.15));
-}
-
-.music-selection-item.is-favorited:hover::before {
-  opacity: 1;
-}
+/* Note: Favorited state styles are now in song-card.css as .song-card.is-favorited */
 
 /* Favorite Badge on History Items - Removed to avoid conflict with favorite button */
 /* The favorite button now handles showing favorited status */
@@ -53,41 +25,7 @@
   @apply w-[13px] h-[13px];
 }
 
-/* Remove Button on Favorite Items */
-.history-item-remove {
-  @apply flex items-center justify-center flex-shrink-0 absolute cursor-pointer;
-  @apply w-7 h-7 p-0 rounded-full border border-solid opacity-0;
-  @apply right-3 top-1/2 -translate-y-1/2 scale-80;
-  background: rgba(255, 0, 64, 0.1);
-  border-color: rgba(255, 0, 64, 0.3);
-  color: rgba(255, 0, 64, 0.7);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.history-item:hover .history-item-remove {
-  @apply opacity-100 -translate-y-1/2 scale-100;
-}
-
-.history-item-remove:hover {
-  @apply -translate-y-1/2 scale-110;
-  background: rgba(255, 0, 64, 0.2);
-  border-color: rgba(255, 0, 64, 0.6);
-  box-shadow: 0 0 15px rgba(255, 0, 64, 0.5);
-  color: #ff0040;
-}
-
-.history-item-remove:active {
-  @apply -translate-y-1/2 scale-95;
-}
-
-.history-item-remove svg {
-  @apply w-[14px] h-[14px];
-}
-
-/* Favorite Item Hover State Adjustment */
-.favorite-item:hover .history-item-info {
-  @apply pr-10;
-}
+/* Note: Remove button styles moved to song-card.css as .song-card-remove */
 
 /* Empty Favorites State */
 .history-empty small {
@@ -127,15 +65,7 @@
     @apply w-[15px] h-[15px];
   }
 
-  /* Adjust spacing for mobile */
-  .history-item-info {
-    @apply pr-9;
-  }
-
-  .music-selection-item-info {
-    @apply pr-9;
-  }
-
+  /* Adjust spacing for mobile - note: layout changed to card-style */
   .search-dropdown-item-content {
     @apply pr-9;
   }
@@ -156,17 +86,15 @@
     @apply text-[9px] min-w-4 px-1 py-px;
   }
 
-  .history-item-remove {
-    @apply opacity-100;
-  }
+  /* Note: Mobile responsive styles for song cards moved to song-card.css */
 }
 
 /* Print Styles */
 @media print {
   .music-favorite-btn,
   .favorites-badge,
-  .history-actions,
-  .history-item-remove {
+  .history-actions {
     @apply hidden;
   }
+  /* Note: .song-card-remove print styles in song-card.css */
 }

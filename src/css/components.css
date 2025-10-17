@@ -20,6 +20,9 @@
 /* Overlay Components */
 @import './components/overlays.css';
 
+/* Unified Song Card Component */
+@import './components/song-card.css';
+
 /* Library & History Components */
 @import './components/library.css';
 

@@ -132,17 +132,18 @@ function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModu
       const duration = formatDuration(item.duration);
       const videoId = extractVideoIdFromUrl(item.url);
       return `
-        <div class="music-selection-item" data-url="${escapeHtml(item.url)}" data-video-id="${escapeHtml(videoId)}" data-index="${index}" data-duration="${item.duration}" data-title="${escapeHtml(item.title)}" data-channel="${escapeHtml(item.channel)}" data-thumbnail="${escapeHtml(item.thumbnail)}">
-          <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="music-selection-item-thumbnail" loading="lazy">
-          <div class="music-selection-item-info">
-            <div class="music-selection-item-title">${escapeHtml(item.title)}</div>
-            <div class="music-selection-item-artist">${escapeHtml(item.channel)}</div>
+        <div class="song-card" data-url="${escapeHtml(item.url)}" data-video-id="${escapeHtml(videoId)}" data-index="${index}" data-duration="${item.duration}" data-title="${escapeHtml(item.title)}" data-channel="${escapeHtml(item.channel)}" data-thumbnail="${escapeHtml(item.thumbnail)}">
+          <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="song-card-thumbnail" loading="lazy">
+          <div class="song-card-bottom">
+            <div class="song-card-info">
+              <div class="song-card-title">${escapeHtml(item.title)}</div>
+              <div class="song-card-channel">${escapeHtml(item.channel)}</div>
+            </div>
+            <div class="song-card-controls">
+              ${videoId ? createFavoriteButtonHTML(videoId, {size: "small", className: "song-card-favorite"}) : ""}
+              <div class="song-card-duration">${duration}</div>
+            </div>
           </div>
-          <div class="music-selection-item-duration">${duration}</div>
-          ${videoId ? createFavoriteButtonHTML(videoId, {
-        size: "small",
-        className: "music-selection-item-favorite"
-      }) : ""}
         </div>
       `;
     }).join("");
@@ -156,7 +157,7 @@ function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModu
     });
 
     // Add click handlers
-    content.querySelectorAll(".music-selection-item").forEach(itemEl => {
+    content.querySelectorAll(".song-card").forEach(itemEl => {
       itemEl.addEventListener("click", async (e) => {
         // Don't trigger if clicking favorite button
         if (e.target.closest("[data-action='toggle-favorite']")) {

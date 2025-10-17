@@ -32,8 +32,8 @@ export function renderFavorites(loadYouTubeModule, showNotification) {
     console.log(`  ${index + 1}. ${title} - ${channel} (${videoId})`);
 
     const thumbnail = song.thumbnail
-      ? `<img src="${song.thumbnail}" alt="${escapeHtml(title)}" class="history-item-thumbnail" loading="lazy">`
-      : `<div class="history-item-no-thumbnail">
+      ? `<img src="${song.thumbnail}" alt="${escapeHtml(title)}" class="song-card-thumbnail" loading="lazy">`
+      : `<div class="song-card-no-thumbnail">
            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
              <polygon points="5 3 19 12 5 21 5 3"></polygon>
            </svg>
@@ -42,22 +42,20 @@ export function renderFavorites(loadYouTubeModule, showNotification) {
     const favoritedAt = song.favoritedAt ? new Date(song.favoritedAt).toLocaleDateString() : "Unknown date";
 
     return `
-      <div class="history-item favorite-item" data-url="${escapeHtml(url)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(title)}" data-channel="${escapeHtml(channel)}">
+      <div class="song-card favorite-item" data-url="${escapeHtml(url)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(title)}" data-channel="${escapeHtml(channel)}">
         ${thumbnail}
-        <div class="history-item-info">
-          <div class="history-item-title">${escapeHtml(title)}</div>
-          <div class="history-item-meta">
-            <div class="history-item-favorite-icon">
-              <i class="ph-bold ph-heart-fill"></i>
-            </div>
-            <span>Added ${favoritedAt}</span>
-            <span>•</span>
-            <span>${duration}</span>
+        <div class="song-card-bottom">
+          <div class="song-card-info">
+            <div class="song-card-title">${escapeHtml(title)}</div>
+            <div class="song-card-channel">${escapeHtml(channel)} • Added ${favoritedAt}</div>
+          </div>
+          <div class="song-card-controls">
+            <button class="song-card-remove" data-video-id="${escapeHtml(videoId)}" title="Remove from favorites">
+              <i class="ph-bold ph-x"></i>
+            </button>
+            <div class="song-card-duration">${duration}</div>
           </div>
         </div>
-        <button class="history-item-remove" data-video-id="${escapeHtml(videoId)}" title="Remove from favorites">
-          <i class="ph-bold ph-x"></i>
-        </button>
       </div>
     `;
   }).join("");

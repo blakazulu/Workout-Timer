@@ -1,0 +1,215 @@
+@reference "../global.css";
+
+/* ============================================
+   SONG CARD COMPONENT - Unified song display
+   Used in: Music Library, Favorites, Search
+   ============================================ */
+
+/* Card Container */
+.song-card {
+  @apply flex flex-col cursor-pointer relative overflow-hidden;
+  @apply border border-solid rounded-xl mb-3;
+  background: rgba(0, 0, 0, 0.3);
+  border-color: transparent;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.song-card:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.12), rgba(100, 100, 255, 0.12));
+  border-color: rgba(0, 255, 200, 0.4);
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.3),
+  0 4px 16px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.song-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Left accent bar - starts BELOW the thumbnail */
+.song-card::before {
+  background: linear-gradient(180deg, #00ffc8, #6464ff);
+  content: '';
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  /* Position it below the thumbnail */
+  top: 140px;
+  bottom: 0;
+  transition: opacity 0.3s ease;
+  width: 3px;
+  z-index: 1;
+}
+
+.song-card:hover::before {
+  opacity: 1;
+}
+
+/* Thumbnail */
+.song-card-thumbnail {
+  @apply w-full border-b border-solid;
+  border-color: rgba(0, 255, 200, 0.3);
+  border-radius: 12px 12px 0 0;
+  height: 140px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.song-card:hover .song-card-thumbnail {
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+}
+
+/* No thumbnail fallback */
+.song-card-no-thumbnail {
+  @apply w-full flex items-center justify-center border-b border-solid;
+  background: rgba(100, 100, 255, 0.1);
+  border-color: rgba(0, 255, 200, 0.3);
+  border-radius: 12px 12px 0 0;
+  height: 140px;
+}
+
+.song-card-no-thumbnail svg {
+  color: rgba(100, 100, 255, 0.4);
+  height: 40px;
+  width: 40px;
+}
+
+.song-card:hover .song-card-no-thumbnail {
+  border-color: rgba(0, 255, 200, 0.6);
+}
+
+/* Bottom section - 2 column grid */
+.song-card-bottom {
+  @apply grid grid-cols-[1fr_auto] gap-0;
+}
+
+/* Left column - Title and Channel */
+.song-card-info {
+  @apply flex flex-col gap-2 p-3 min-w-0;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.song-card:hover .song-card-info {
+  border-right-color: rgba(255, 255, 255, 0.4);
+}
+
+.song-card-title {
+  color: #00ffc8;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-card-channel {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-card:hover .song-card-channel {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Right column - Favorite button and Duration */
+.song-card-controls {
+  @apply flex flex-col items-center justify-center gap-2 px-3 py-2 flex-shrink-0;
+  min-width: 80px;
+}
+
+.song-card-duration {
+  color: #6464ff;
+  flex-shrink: 0;
+  font-family: var(--font-family-display);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(100, 100, 255, 0.5);
+}
+
+.song-card:hover .song-card-duration {
+  color: #ff0096;
+  text-shadow: 0 0 12px rgba(255, 0, 150, 0.6);
+}
+
+/* ============================================
+   FAVORITED STATE
+   ============================================ */
+
+.song-card.is-favorited::before {
+  background: linear-gradient(180deg, #ff0096, #6464ff);
+  opacity: 0.8;
+}
+
+.song-card.is-favorited:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   REMOVE BUTTON (Favorites only)
+   ============================================ */
+
+.song-card-remove {
+  @apply flex items-center justify-center flex-shrink-0 cursor-pointer;
+  @apply w-7 h-7 p-0 rounded-full border border-solid;
+  background: rgba(255, 0, 64, 0.1);
+  border-color: rgba(255, 0, 64, 0.3);
+  color: rgba(255, 0, 64, 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.song-card-remove:hover {
+  @apply scale-110;
+  background: rgba(255, 0, 64, 0.2);
+  border-color: rgba(255, 0, 64, 0.6);
+  box-shadow: 0 0 15px rgba(255, 0, 64, 0.5);
+  color: #ff0040;
+}
+
+.song-card-remove:active {
+  @apply scale-95;
+}
+
+.song-card-remove svg {
+  @apply w-[14px] h-[14px];
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .song-card-thumbnail,
+  .song-card-no-thumbnail {
+    height: 120px;
+  }
+
+  /* Adjust the ::before bar position for smaller thumbnail */
+  .song-card::before {
+    top: 120px;
+  }
+
+  .song-card-controls {
+    min-width: 70px;
+    padding: 8px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .song-card-remove,
+  .song-card::before {
+    @apply hidden;
+  }
+}

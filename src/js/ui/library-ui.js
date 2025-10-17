@@ -79,7 +79,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
         // Click on item to play
         item.addEventListener("click", async (e) => {
           // Don't trigger if clicking remove button
-          if (e.target.closest(".history-item-remove")) return;
+          if (e.target.closest(".song-card-remove")) return;
 
           // Close popover
           musicLibraryPopover.hidePopover();
@@ -99,7 +99,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
         });
 
         // Remove button handler
-        const removeBtn = item.querySelector(".history-item-remove");
+        const removeBtn = item.querySelector(".song-card-remove");
         if (removeBtn) {
           removeBtn.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -133,22 +133,26 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
     libraryContent.innerHTML = songs.map(song => {
       const duration = formatDuration(song.duration);
       const thumbnail = song.thumbnail
-        ? `<img src="${song.thumbnail}" alt="${escapeHtml(song.title)}" class="music-selection-item-thumbnail" loading="lazy">`
-        : `<div class="music-selection-item-thumbnail" style="background: rgba(100, 100, 255, 0.1); display: flex; align-items: center; justify-content: center;">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 40px; height: 40px; opacity: 0.3;">
+        ? `<img src="${song.thumbnail}" alt="${escapeHtml(song.title)}" class="song-card-thumbnail" loading="lazy">`
+        : `<div class="song-card-no-thumbnail">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                <polygon points="5 3 19 12 5 21 5 3"></polygon>
              </svg>
            </div>`;
 
       return `
-        <div class="music-selection-item" data-url="${escapeHtml(song.url)}" data-video-id="${escapeHtml(song.videoId)}" data-duration="${song.duration}" data-title="${escapeHtml(song.title)}" data-channel="${escapeHtml(song.channel || "Unknown Channel")}" data-thumbnail="${escapeHtml(song.thumbnail || "")}">
+        <div class="song-card" data-url="${escapeHtml(song.url)}" data-video-id="${escapeHtml(song.videoId)}" data-duration="${song.duration}" data-title="${escapeHtml(song.title)}" data-channel="${escapeHtml(song.channel || "Unknown Channel")}" data-thumbnail="${escapeHtml(song.thumbnail || "")}">
           ${thumbnail}
-          <div class="music-selection-item-info">
-            <div class="music-selection-item-title">${escapeHtml(song.title)}</div>
-            <div class="music-selection-item-artist">${escapeHtml(song.channel || "Unknown Channel")} • ${song.playCount} plays</div>
+          <div class="song-card-bottom">
+            <div class="song-card-info">
+              <div class="song-card-title">${escapeHtml(song.title)}</div>
+              <div class="song-card-channel">${escapeHtml(song.channel || "Unknown Channel")} • ${song.playCount} plays</div>
+            </div>
+            <div class="song-card-controls">
+              ${createFavoriteButtonHTML(song.videoId, {size: "small", className: "song-card-favorite"})}
+              <div class="song-card-duration">${duration}</div>
+            </div>
           </div>
-          <div class="music-selection-item-duration">${duration}</div>
-          ${createFavoriteButtonHTML(song.videoId, {size: "small", className: "music-selection-item-favorite"})}
         </div>
       `;
     }).join("");
@@ -167,7 +171,7 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
     });
 
     // Add click handlers to library items
-    document.querySelectorAll(".music-selection-item").forEach(item => {
+    document.querySelectorAll(".song-card").forEach(item => {
       item.addEventListener("click", async (e) => {
         // Don't trigger if clicking favorite button
         if (e.target.closest("[data-action='toggle-favorite']")) {
