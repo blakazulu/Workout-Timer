@@ -96,5 +96,6 @@
   .history-actions {
     @apply hidden;
   }
+
   /* Note: .song-card-remove print styles in song-card.css */
 }

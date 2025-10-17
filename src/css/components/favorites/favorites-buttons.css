@@ -30,8 +30,8 @@
 
 .music-favorite-btn i {
   @apply transition-all duration-300;
-  font-size: 18px;
   color: inherit;
+  font-size: 18px;
 }
 
 /* Favorited State */
@@ -234,8 +234,8 @@
 
 .song-favorite-btn i {
   @apply transition-all duration-200;
-  font-size: 16px;
   color: inherit;
+  font-size: 16px;
 }
 
 /* Favorited State */

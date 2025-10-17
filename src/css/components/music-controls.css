@@ -221,21 +221,21 @@
 .progress-bar-bg {
   @apply absolute w-full rounded-full;
   /* Centered within the touch area */
-  top: 50%;
-  transform: translateY(-50%);
-  height: 8px;
   background: rgba(100, 100, 255, 0.15);
-  /* Smooth shadow for depth */
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  height: 8px;
+  top: 50%;
+  /* Smooth shadow for depth */
+  transform: translateY(-50%);
 }
 
 .progress-bar-fill {
   @apply absolute rounded-full w-0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 8px;
   background: linear-gradient(90deg, #ff0096, #6464ff);
   box-shadow: 0 0 12px rgba(255, 0, 150, 0.6), 0 2px 8px rgba(100, 100, 255, 0.3);
+  height: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   /* Smooth width transitions only, not when dragging */
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   /* Prevent transition during drag */
@@ -248,17 +248,17 @@
 
 .progress-bar-handle {
   @apply absolute rounded-full pointer-events-none;
-  top: 50%;
-  left: 0%;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
-  margin-top: -8px;
   background: #ff0096;
   border: 2px solid white;
   box-shadow: 0 0 8px rgba(255, 0, 150, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+  height: 16px;
+  left: 0%;
+  margin-left: -8px;
+  margin-top: -8px;
   opacity: 0;
+  top: 50%;
   transition: opacity 0.15s ease, box-shadow 0.15s ease, width 0.15s ease, height 0.15s ease, margin 0.15s ease;
+  width: 16px;
   z-index: 10;
 }
 
@@ -277,8 +277,8 @@
 @media (hover: none) and (pointer: coarse) {
   .progress-bar-container {
     /* Larger touch target on mobile */
-    padding: 16px 0;
     height: 10px;
+    padding: 16px 0;
   }
 
   .progress-bar-bg,
@@ -288,22 +288,22 @@
 
   .progress-bar-handle {
     /* Always visible and larger on mobile */
-    opacity: 1;
-    width: 20px;
     height: 20px;
     margin-left: -10px;
     margin-top: -10px;
+    opacity: 1;
+    width: 20px;
   }
 }
 
 /* Active/dragging state */
 .progress-bar-container.dragging .progress-bar-handle {
-  opacity: 1;
-  width: 20px;
+  box-shadow: 0 0 16px rgba(255, 0, 150, 1), 0 3px 8px rgba(0, 0, 0, 0.4);
   height: 20px;
   margin-left: -10px;
   margin-top: -10px;
-  box-shadow: 0 0 16px rgba(255, 0, 150, 1), 0 3px 8px rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  width: 20px;
 }
 
 .progress-bar-container.dragging .progress-bar-fill {

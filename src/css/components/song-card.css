@@ -30,13 +30,13 @@
 /* Left accent bar - starts BELOW the thumbnail */
 .song-card::before {
   background: linear-gradient(180deg, #00ffc8, #6464ff);
+  bottom: 0;
   content: '';
   left: 0;
   opacity: 0;
-  position: absolute;
   /* Position it below the thumbnail */
+  position: absolute;
   top: 180px;
-  bottom: 0;
   transition: opacity 0.3s ease;
   width: 3px;
   z-index: 1;

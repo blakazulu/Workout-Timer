@@ -81,11 +81,22 @@ async function searchAndLoadMusic(query, sourcePopover, loadYouTubeModule, showN
  * @param {Function} showNotification - Notification display function
  */
 function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModule, showNotification) {
-  const selectionPopover = $("#musicSelectionPopover");
+  let selectionPopover = $("#musicSelectionPopover");
   if (!selectionPopover) {
     // Create popover if it doesn't exist
     createMusicSelectionPopover();
-    return showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModule, showNotification);
+    selectionPopover = $("#musicSelectionPopover");
+  }
+
+  // Set up favorite buttons once on the popover (event delegation) if not already set up
+  if (!selectionPopover.dataset.favoritesInitialized) {
+    setupFavoriteButtons(selectionPopover, showNotification, ({videoId}) => {
+      // Update favorite button in music controls if this is the currently playing song
+      if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
+        updateFavoriteButton(videoId);
+      }
+    });
+    selectionPopover.dataset.favoritesInitialized = "true";
   }
 
   // Update title
@@ -147,14 +158,6 @@ function showMusicSelection(items, query, isMood, sourcePopover, loadYouTubeModu
         </div>
       `;
     }).join("");
-
-    // Set up favorite buttons
-    setupFavoriteButtons(content, showNotification, ({videoId}) => {
-      // Update favorite button in music controls if this is the currently playing song
-      if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
-        updateFavoriteButton(videoId);
-      }
-    });
 
     // Add click handlers
     content.querySelectorAll(".song-card").forEach(itemEl => {

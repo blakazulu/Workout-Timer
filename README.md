@@ -1,10 +1,13 @@
 # CYCLE
 
-A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, curated workout music library, and an immersive cyberpunk aesthetic. Features 180+ verified tracks across 8 moods and 10 genres, all 30+ minutes long for uninterrupted workouts.
+A futuristic Progressive Web App (PWA) designed for high-intensity workout sessions with precision timing, curated
+workout music library, and an immersive cyberpunk aesthetic. Features 180+ verified tracks across 8 moods and 10 genres,
+all 30+ minutes long for uninterrupted workouts.
 
 ## ✨ Features
 
 ### Core Timer Functions
+
 - ⏱️ **Customizable Work/Rest Cycles** - Set workout duration (5s-1hr) and rest periods (0-300s)
 - 🔁 **Multiple Repetitions** - Track up to 99 consecutive workout sets with automatic progression
 - 🔊 **Audio Alerts** - Web Audio API beeps with custom frequencies (no audio files needed)
@@ -15,13 +18,15 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 ### Music Integration
 
 #### Three Music Modes
+
 - 🔗 **Link Mode** - Load any YouTube video by pasting URL
 - 😄 **Mood Mode** - Choose from 8 curated workout moods:
-  - Beast Mode • Intense • Energetic • Power • Aggressive • Pump Up • Focus • Motivated
+    - Beast Mode • Intense • Energetic • Power • Aggressive • Pump Up • Focus • Motivated
 - 🎸 **Genre Mode** - Select from 10 workout music genres:
-  - EDM • Rock • Hip Hop • Metal • Trap • Dubstep • Hardstyle • Techno • Phonk • DnB
+    - EDM • Rock • Hip Hop • Metal • Trap • Dubstep • Hardstyle • Techno • Phonk • DnB
 
 #### Live YouTube Search
+
 - 🔍 **Smart Search Input** - Type any song or artist name to search YouTube in real-time
 - 🎬 **Video Results with Thumbnails** - See actual videos (not just suggestions) with preview images
 - ⏱️ **Duration Display** - Each result shows video length (MM:SS or HH:MM:SS format)
@@ -32,12 +37,14 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🎵 **No Filters** - Find songs (3-4 min) or long mixes (1+ hour) - complete flexibility
 
 #### Curated Music Library
+
 - 📚 **180+ Verified Tracks** - Curated collection of 30+ minute workout mixes
 - 🎯 **Quality Filtered** - All tracks have 10K+ views and verified playability
 - 🔄 **Auto-Updating** - Music library refreshes every 30 days for compliance
 - 🎲 **Smart Fallback** - Auto-loads alternative song if embedding is disabled (Error 150)
 
 #### Playback Features
+
 - 🎵 **Fullscreen Background Video** - YouTube videos as immersive 30% opacity backgrounds
 - 🎛️ **Music Controls Widget** - Play/pause, progress bar with seeking, time display
 - 📊 **Song Information** - Title, artist, duration in detailed tooltip
@@ -45,6 +52,7 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🎼 **Music Selection UI** - Beautiful grid with thumbnails, duration, and artist info
 
 ### Media Library & Favorites
+
 - 📚 **Music Library** - Track all songs you've played with timestamps
 - 🏆 **Most Played** - View your top 20 most-played workout tracks
 - 💖 **Favorite Songs** - Save your favorite tracks for quick access
@@ -54,6 +62,7 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - ⭐ **Favorite Highlighting** - Favorited songs stand out with pink gradient effects
 
 ### User Experience
+
 - 👆 **Touch Gestures** - Double tap to start/pause, swipe down to reset (mobile)
 - ⌨️ **Keyboard Shortcuts** - Space to start/pause, R to reset (desktop)
 - 💾 **Settings Persistence** - All preferences saved via localStorage
@@ -67,6 +76,7 @@ A futuristic Progressive Web App (PWA) designed for high-intensity workout sessi
 - 🏷️ **Dynamic Version Display** - Real-time version info synced from package.json
 
 ### Visual Design
+
 - 🎨 **Cyberpunk Theme** - Neon colors, animated grid, scanlines, floating orbs
 - 🌈 **Animated Background** - Tech grid pattern with neon orbs and scanlines
 - ✨ **Dynamic Glow Effects** - State-based color transitions (cyan/pink/purple)
@@ -106,102 +116,107 @@ The app is configured for Netlify deployment:
 ### Setting Up Your Workout
 
 1. **Configure Timer Settings** (2x2 grid layout)
-   - **Duration**: Work time per set (default: 30 seconds)
-   - **Alert Time**: Countdown warning starts this many seconds before finish (default: 3 seconds)
-   - **Repetitions**: Number of sets to complete (default: 3)
-   - **Rest Time**: Break between sets (default: 10 seconds)
-   - Settings auto-save on every change
+    - **Duration**: Work time per set (default: 30 seconds)
+    - **Alert Time**: Countdown warning starts this many seconds before finish (default: 3 seconds)
+    - **Repetitions**: Number of sets to complete (default: 3)
+    - **Rest Time**: Break between sets (default: 10 seconds)
+    - Settings auto-save on every change
 
 2. **Choose Your Workout Music** (Optional but recommended)
 
    **Option A: Link Mode** (Direct YouTube URL or Live Search)
 
    **URL Paste:**
-   - Paste any YouTube URL (`youtube.com/watch?v=` or `youtu.be/`)
-   - Click magnifying glass icon or press Enter
-   - Video loads as fullscreen background with music controls widget
+    - Paste any YouTube URL (`youtube.com/watch?v=` or `youtu.be/`)
+    - Click magnifying glass icon or press Enter
+    - Video loads as fullscreen background with music controls widget
 
    **Live Search:**
-   - Type any song name or artist (e.g., "golden", "eminem workout")
-   - See real video results with thumbnails and duration
-   - Use arrow keys (↑↓) to navigate, Enter to select
-   - Or click any video to play instantly
-   - Dropdown shows 6 most relevant videos with channel names
+    - Type any song name or artist (e.g., "golden", "eminem workout")
+    - See real video results with thumbnails and duration
+    - Use arrow keys (↑↓) to navigate, Enter to select
+    - Or click any video to play instantly
+    - Dropdown shows 6 most relevant videos with channel names
 
    **Option B: Mood Mode** (Curated playlists by feeling)
-   - Click the "Mood" button (smiley icon)
-   - Select from 8 workout moods:
-     - **Beast Mode** - Maximum intensity, dominating workouts
-     - **Intense** - Hard-hitting, extreme training music
-     - **Energetic** - High energy, upbeat motivation
-     - **Power** - Strength and powerlifting focus
-     - **Aggressive** - Raw, aggressive trap/hardstyle
-     - **Pump Up** - Hype and motivational anthems
-     - **Focus** - Instrumental, concentration-focused
-     - **Motivated** - Inspirational speeches + music
-   - Browse 10+ verified mixes per mood with thumbnails
-   - Click any track to load instantly
+    - Click the "Mood" button (smiley icon)
+    - Select from 8 workout moods:
+        - **Beast Mode** - Maximum intensity, dominating workouts
+        - **Intense** - Hard-hitting, extreme training music
+        - **Energetic** - High energy, upbeat motivation
+        - **Power** - Strength and powerlifting focus
+        - **Aggressive** - Raw, aggressive trap/hardstyle
+        - **Pump Up** - Hype and motivational anthems
+        - **Focus** - Instrumental, concentration-focused
+        - **Motivated** - Inspirational speeches + music
+    - Browse 10+ verified mixes per mood with thumbnails
+    - Click any track to load instantly
 
    **Option C: Genre Mode** (Curated by music style)
-   - Click the "Genre" button (music notes icon)
-   - Select from 10 workout genres:
-     - **EDM** - Electronic dance music and cyberpunk vibes
-     - **Rock** - Alternative and hard rock anthems
-     - **Hip Hop** - Rap and hip hop workout bangers
-     - **Metal** - Heavy metal and power metal
-     - **Trap** - Aggressive trap and phonk
-     - **Dubstep** - Heavy bass and drops
-     - **Hardstyle** - Euphoric and raw hardstyle
-     - **Techno** - Hard techno and industrial beats
-     - **Phonk** - Drift phonk and Memphis rap
-     - **DnB** - Drum and bass / neurofunk
-   - Browse 10+ verified mixes per genre with thumbnails
-   - Click any track to load instantly
+    - Click the "Genre" button (music notes icon)
+    - Select from 10 workout genres:
+        - **EDM** - Electronic dance music and cyberpunk vibes
+        - **Rock** - Alternative and hard rock anthems
+        - **Hip Hop** - Rap and hip hop workout bangers
+        - **Metal** - Heavy metal and power metal
+        - **Trap** - Aggressive trap and phonk
+        - **Dubstep** - Heavy bass and drops
+        - **Hardstyle** - Euphoric and raw hardstyle
+        - **Techno** - Hard techno and industrial beats
+        - **Phonk** - Drift phonk and Memphis rap
+        - **DnB** - Drum and bass / neurofunk
+    - Browse 10+ verified mixes per genre with thumbnails
+    - Click any track to load instantly
 
    **Option D: Music Library** (Your tracks & favorites)
-   - Click the Library button (clock icon) in the header
-   - **Recent Tab**: See your last 20 played songs with enhanced card styling
-   - **Most Played Tab**: View your top 20 tracks with beautiful gradient effects
-   - **Favorites Tab**: Access all your favorited songs in one place
-   - Each song shows: thumbnail, title, play count, duration, and favorite button
-   - **Favorite Button**: Click the heart icon to save/unsave any song
-   - **Favorited Songs**: Highlighted with pink gradient backgrounds
-   - Click any song to instantly replay it
-   - **Favorites Actions**:
-     - 🔀 **Random** - Play a random song from your favorites
+    - Click the Library button (clock icon) in the header
+    - **Recent Tab**: See your last 20 played songs with enhanced card styling
+    - **Most Played Tab**: View your top 20 tracks with beautiful gradient effects
+    - **Favorites Tab**: Access all your favorited songs in one place
+    - Each song shows: thumbnail, title, play count, duration, and favorite button
+    - **Favorite Button**: Click the heart icon to save/unsave any song
+    - **Favorited Songs**: Highlighted with pink gradient backgrounds
+    - Click any song to instantly replay it
+    - **Favorites Actions**:
+        - 🔀 **Random** - Play a random song from your favorites
 
 3. **Start Your Workout**
-   - Click START button (or press Space, or double-tap timer)
-   - Settings panel hides, timer display appears
-   - NEW TIMER and CLEAR ALL buttons appear
-   - YouTube music starts playing automatically
-   - Timer counts down with cyan neon glow
+    - Click START button (or press Space, or double-tap timer)
+    - Settings panel hides, timer display appears
+    - NEW TIMER and CLEAR ALL buttons appear
+    - YouTube music starts playing automatically
+    - Timer counts down with cyan neon glow
 
 ### During Workout
 
 **Work Period:**
+
 - Timer displays in cyan (#00ffc8) with glow effects
 - Rep counter shows "Rep X / Y"
 - Music plays at normal volume
 
 **Alert Period** (Final 3 seconds):
+
 - Timer glows pink (#ff0096) with pulsing animation
 - Music volume ducks to 25%
 - Rapid beep sounds (800Hz)
 - Vibration on mobile devices
 
 **Rest Period:**
+
 - Timer displays "REST - Next: Rep X / Y"
 - Background tints cyan
 - Music continues at normal volume
 - Alert beeps in final 3 seconds
 
 **Between Reps:**
+
 - Double beep melody (523Hz + 659Hz)
 - Double vibration pattern
 - Automatic progression to next rep after rest
 
 **Completion:**
+
 - Triple beep melody (523Hz + 659Hz + 784Hz)
 - Triple vibration pattern
 - "✓ Complete!" message
@@ -210,23 +225,28 @@ The app is configured for Netlify deployment:
 ### Controls
 
 **Buttons:**
+
 - **START/PAUSE** - Toggle timer (cyan gradient button, always visible)
 - **NEW TIMER** - Stop timer, return to home, keep music playing (pink gradient, visible only when timer active)
 - **CLEAR ALL** - Stop timer and music, clear everything, return to home (red gradient, visible only when timer active)
 
 **Button Visibility:**
+
 - **Home Page:** Only START button visible
 - **Timer Active:** All three buttons (START/PAUSE, NEW TIMER, CLEAR ALL) visible
 
 **Keyboard Shortcuts:**
+
 - `Space` - Start/Pause timer
 - `R` - Start new timer (keeps music playing)
 
 **Touch Gestures (Mobile):**
+
 - Double tap timer display - Start/Pause
 - Swipe down on timer - Start new timer (with confirmation, keeps music playing)
 
 **Music Controls Widget:**
+
 - Play/Pause button - Toggle music independently
 - Progress bar - Click to seek to specific time
 - Info button (ℹ️) - Show song details tooltip
@@ -234,6 +254,7 @@ The app is configured for Netlify deployment:
 ## 🛠️ Technology Stack
 
 ### Core Technologies
+
 - **Vite 7.1.9** - Lightning-fast build tool and dev server
 - **Vanilla JavaScript (ES6+)** - No framework overhead, pure performance
 - **HTML5** - Semantic markup with modern APIs
@@ -241,11 +262,13 @@ The app is configured for Netlify deployment:
 - **Node.js 18+** - Backend automation for music library curation
 
 ### PWA Technologies
+
 - **vite-plugin-pwa 1.0.3** - Service worker generation and PWA manifest
 - **Workbox 7.3.0** - Advanced caching strategies with auto-update
 - **Web App Manifest** - Installation metadata for all icon sizes
 
 ### Music Library System
+
 - **YouTube Data API v3** - Automated music curation and verification
 - **Smart Caching** - 30-day refresh cycle with timestamp tracking
 - **Quality Filters** - 30+ min duration, 10K+ views, visible stats
@@ -253,6 +276,7 @@ The app is configured for Netlify deployment:
 - **JSON Data Store** - Fast, offline-first music metadata
 
 ### Browser APIs
+
 - **Web Audio API** - Programmatic beep generation with frequency/duration control
 - **YouTube IFrame Player API** - Full playback control, metadata access, error handling
 - **YouTube Data API v3** - Music library curation, auto-updating, and live search (backend)
@@ -263,18 +287,21 @@ The app is configured for Netlify deployment:
 - **Intersection Observer** - Performance optimization for thumbnails (lazy loading)
 
 ### Backend & Serverless
+
 - **Netlify Functions** - TypeScript serverless functions for secure API access
 - **YouTube Search API** - Real-time video search with thumbnails, duration, and metadata
 - **Environment Variables** - Secure API key storage in Netlify (YT_API_KEY)
 - **Edge Functions** - `/api/youtube-search` endpoint for client-side searches
 
 ### Fonts & Typography
+
 - **Orbitron** - Display font for timer and headers (Google Fonts)
 - **Rajdhani** - Body font for UI elements (Google Fonts)
 
 ## 🎨 Design System
 
 ### Color Palette (Cyberpunk Neon)
+
 - **Primary (Cyan):** `#00ffc8` - Timer, borders, success states
 - **Accent (Hot Pink):** `#ff0096` - Alerts, music controls, CTA buttons
 - **Secondary (Purple):** `#6464ff` - Rep counter, progress bars, info
@@ -282,6 +309,7 @@ The app is configured for Netlify deployment:
 - **Gradients:** Multi-color (cyan → pink → purple) for headers and effects
 
 ### Visual Effects
+
 - Animated tech grid pattern with 40px cells
 - Scanlines overlay (CRT monitor aesthetic)
 - 3 floating neon orbs (400-500px, blurred, animated)
@@ -291,12 +319,14 @@ The app is configured for Netlify deployment:
 - Border glow pulses with gradient
 
 ### Typography
+
 - **Display (Orbitron):** Timer value (80px), headers (36px)
 - **Body (Rajdhani):** Settings, labels, counters (14-18px)
 - **Letter Spacing:** 2-4px for cyberpunk aesthetic
 - **Text Shadow:** Neon glow effects on all text
 
 ### Animations
+
 - 60fps GPU-accelerated transforms
 - Gradient flow on headers (4s infinite)
 - Grid movement (30s linear)
@@ -308,12 +338,14 @@ The app is configured for Netlify deployment:
 ## 📱 Browser Compatibility
 
 ### Fully Supported
+
 - ✅ Chrome/Edge (Chromium 90+)
 - ✅ Firefox 88+
 - ✅ Safari 14+ (iOS and macOS)
 - ✅ Samsung Internet 15+
 
 ### Feature Support
+
 - **PWA Installation:** Requires HTTPS (auto on localhost)
 - **Vibration API:** Mobile devices only
 - **Popover API:** Chrome 114+, fallback positioning for others
@@ -323,6 +355,7 @@ The app is configured for Netlify deployment:
 ## ⚡ Performance Metrics
 
 ### Target Benchmarks
+
 - **Lighthouse PWA Score:** 90+
 - **Time to Interactive:** <3s
 - **First Contentful Paint:** <1.5s
@@ -330,6 +363,7 @@ The app is configured for Netlify deployment:
 - **Animation Frame Rate:** 60fps constant
 
 ### Optimization Strategies
+
 - Lazy-loaded YouTube module (code splitting)
 - CSS animations on GPU (transform/opacity only)
 - Debounced progress updates (500ms interval)
@@ -339,6 +373,7 @@ The app is configured for Netlify deployment:
 ## 🏗️ Architecture
 
 ### Module Structure
+
 ```
 src/
 ├── js/
@@ -377,6 +412,7 @@ src/
 ```
 
 ### State Management
+
 - **Timer State:** currentTime, currentRep, isRunning, isResting
 - **YouTube State:** player instance, isReady, currentVideoId, lazy-loaded
 - **Audio State:** audioContext, vibrationEnabled, volumeDucking
@@ -386,9 +422,11 @@ src/
 - **Music Library:** 18 categories (8 moods + 10 genres) with metadata
 
 ### Music Library System
+
 The app includes a sophisticated music curation system:
 
 **song_fetcher.js** (Backend automation):
+
 - YouTube Data API v3 integration with quota management
 - Fetches 10 verified tracks per category (180+ total)
 - Filters: 30+ minute videos, 10K+ views, no live/upcoming
@@ -397,32 +435,38 @@ The app includes a sophisticated music curation system:
 - Outputs: `workout_music.json` (clean) + `workout_music_cache.json` (timestamps)
 
 **music-library.js** (Frontend API):
+
 - Imports curated JSON data
 - Provides functions: `getMoodPlaylists()`, `getGenreSongs()`, `getRandomSong()`
 - Handles duplicate detection across categories
 - Powers mood/genre selection UI
 
 **Error Handling**:
+
 - Error 150 (embedding disabled) detection
 - Auto-loads random alternative track from library
 - User notifications for errors and recoveries
 
 ### Version Check System
+
 The app includes robust client-server version synchronization with visual feedback:
 
 **Build-Time Generation** (`scripts/generate-version.js`):
+
 - Reads version from `package.json` (single source of truth)
 - Generates `version.json` with version, build time, build ID
 - Runs automatically before every dev/build command
 - Injected into client code via Vite define plugin
 
 **Dynamic Version Display**:
+
 - Version number in HTML header auto-updates on app load
 - Reads from embedded `__APP_VERSION__` constant
 - Single source of truth eliminates hardcoded versions
 - Always displays current version from package.json
 
 **Client-Side Checking** (`src/js/utils/version-check.js`):
+
 - Fetches `/version.json` from server with cache-busting
 - Compares client version (injected at build) with server version
 - Checks every 5 minutes for active users
@@ -430,16 +474,18 @@ The app includes robust client-server version synchronization with visual feedba
 
 **Visual Update Overlay**:
 When version mismatch detected, displays animated cyberpunk overlay with:
+
 - **Version Transition** - Shows old version → new version (e.g., `v1.0.4 → v1.0.5`)
 - **Animated Icon** - Rotating, pulsing cyberpunk logo with color shifts
 - **Progress Steps** - 3 animated steps with checkmarks:
-  1. ✓ Clearing caches... (spins while active)
-  2. ✓ Preserving your data... (spins while active)
-  3. ✓ Loading new version... (spins while active)
+    1. ✓ Clearing caches... (spins while active)
+    2. ✓ Preserving your data... (spins while active)
+    3. ✓ Loading new version... (spins while active)
 - **Smooth Animations** - Cyan/pink glows, slide-ins, checkmark pops
 - **Professional UX** - Users see exactly what's happening during update
 
 **Force Update Flow**:
+
 1. Version mismatch detected
 2. Show visual update overlay with version numbers
 3. Step 1: Unregister service workers + clear caches (animated)
@@ -448,6 +494,7 @@ When version mismatch detected, displays animated cyberpunk overlay with:
 6. Page reloads with new version (~3-4 seconds total)
 
 **Benefits**:
+
 - ✅ Guarantees users run latest deployed version
 - ✅ Critical fixes reach users immediately
 - ✅ Prevents stale cache issues
@@ -468,6 +515,7 @@ This project deliberately avoids frameworks for several advantages:
 6. **Future-Proof** - No framework versioning or breaking changes
 
 ### Codebase Statistics
+
 - **Total Lines:** ~3,200+ lines of production code
 - **JavaScript:** ~2,000 lines (ES6 modules)
 - **CSS:** ~800 lines (custom properties, animations)
@@ -478,6 +526,7 @@ This project deliberately avoids frameworks for several advantages:
 ## 🎯 Project Status
 
 ### ✅ Completed Features (v1.0.5)
+
 - [x] Core timer with work/rest cycles
 - [x] YouTube background video integration
 - [x] Music controls widget with seeking
@@ -515,6 +564,7 @@ This project deliberately avoids frameworks for several advantages:
 ### 🔮 Future Enhancements
 
 **Phase 2 - User Customization:**
+
 - Custom workout presets (save/load configurations)
 - Workout session history tracking with statistics (duration, sets, dates)
 - Export/import settings as JSON
@@ -524,6 +574,7 @@ This project deliberately avoids frameworks for several advantages:
 - Advanced search filters (duration range, channel, upload date)
 
 **Phase 3 - Advanced Features:**
+
 - Push notifications for workout reminders
 - Background sync for workout logs
 - Social features (share workouts, challenges, leaderboards)
@@ -534,6 +585,7 @@ This project deliberately avoids frameworks for several advantages:
 - Spotify integration as alternative to YouTube
 
 **Technical Improvements:**
+
 - TypeScript migration for type safety
 - Unit tests with Vitest
 - E2E tests with Playwright
@@ -572,6 +624,7 @@ MIT License - See LICENSE file for details
 🔗 **Live Demo:** [https://workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)
 
 🎮 **Key Features:**
+
 - 🔍 **Live YouTube Search** - Find any song or mix instantly with real-time search
 - 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
 - 💖 **Favorite Songs** - Save and play random favorites from your collection
