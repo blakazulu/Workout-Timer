@@ -54,6 +54,90 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
   // Setup favorites actions (random, export, import)
   setupFavoritesActions(loadYouTubeModule, showNotification, () => renderLibrary(currentTab));
 
+  // Setup favorite buttons event delegation ONCE for the library content
+  // This handles favorite button clicks in recent/top tabs
+  setupFavoriteButtons(libraryContent, showNotification, ({videoId, isFavorited}) => {
+    // Update favorite button in music controls if this is the currently playing song
+    if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
+      updateFavoriteButton(videoId);
+    }
+    // Refresh the library display to show/hide badges
+    highlightFavoritesInHistory();
+  });
+
+  // Setup click handlers for library items using event delegation
+  libraryContent.addEventListener("click", async (e) => {
+    // Handle remove button clicks (favorites tab)
+    const removeBtn = e.target.closest(".song-card-remove");
+    if (removeBtn) {
+      e.stopPropagation();
+      const videoId = removeBtn.dataset.videoId;
+      const favoriteItem = removeBtn.closest(".favorite-item");
+      const title = favoriteItem ? favoriteItem.dataset.title : "Unknown";
+
+      removeFromFavorites(videoId);
+      updateFavoritesBadge();
+      renderLibrary(currentTab);
+      showNotification(`Removed from favorites: ${title}`, false);
+
+      // Update favorite button if this is the currently playing song
+      if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
+        updateFavoriteButton(videoId);
+      }
+      return;
+    }
+
+    // Handle favorite item clicks (favorites tab)
+    const favoriteItem = e.target.closest(".favorite-item");
+    if (favoriteItem && currentTab === "favorites") {
+      const url = favoriteItem.dataset.url;
+
+      // Close popover
+      musicLibraryPopover.hidePopover();
+
+      // Load video
+      const youtubeUrl = $("#youtubeUrl");
+      if (youtubeUrl) {
+        youtubeUrl.value = url;
+      }
+
+      const youtube = await loadYouTubeModule();
+      await youtube.loadVideo(url);
+
+      // Connect YouTube player to timer
+      const timer = getTimer();
+      timer.setYouTubePlayer(youtube);
+      return;
+    }
+
+    // Handle song card clicks (recent/top tabs)
+    const songCard = e.target.closest(".song-card");
+    if (songCard && !favoriteItem) {
+      // Don't trigger if clicking favorite button
+      if (e.target.closest("[data-action='toggle-favorite']")) {
+        return;
+      }
+
+      const url = songCard.dataset.url;
+
+      // Close popover
+      musicLibraryPopover.hidePopover();
+
+      // Load video
+      const youtubeUrl = $("#youtubeUrl");
+      if (youtubeUrl) {
+        youtubeUrl.value = url;
+      }
+
+      const youtube = await loadYouTubeModule();
+      await youtube.loadVideo(url);
+
+      // Connect YouTube player to timer
+      const timer = getTimer();
+      timer.setYouTubePlayer(youtube);
+    }
+  });
+
   /**
    * Render library items
    * @param {string} tab - 'recent', 'top', or 'favorites'
@@ -71,54 +155,6 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
     // Render favorites tab differently
     if (tab === "favorites") {
       libraryContent.innerHTML = renderFavorites(loadYouTubeModule, showNotification);
-
-      // Add click handlers for favorite items
-      document.querySelectorAll(".favorite-item").forEach(item => {
-        const url = item.dataset.url;
-
-        // Click on item to play
-        item.addEventListener("click", async (e) => {
-          // Don't trigger if clicking remove button
-          if (e.target.closest(".song-card-remove")) return;
-
-          // Close popover
-          musicLibraryPopover.hidePopover();
-
-          // Load video
-          const youtubeUrl = $("#youtubeUrl");
-          if (youtubeUrl) {
-            youtubeUrl.value = url;
-          }
-
-          const youtube = await loadYouTubeModule();
-          await youtube.loadVideo(url);
-
-          // Connect YouTube player to timer
-          const timer = getTimer();
-          timer.setYouTubePlayer(youtube);
-        });
-
-        // Remove button handler
-        const removeBtn = item.querySelector(".song-card-remove");
-        if (removeBtn) {
-          removeBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const videoId = removeBtn.dataset.videoId;
-            const title = item.dataset.title;
-
-            removeFromFavorites(videoId);
-            updateFavoritesBadge();
-            renderLibrary(currentTab);
-            showNotification(`Removed from favorites: ${title}`, false);
-
-            // Update favorite button if this is the currently playing song
-            if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
-              updateFavoriteButton(videoId);
-            }
-          });
-        }
-      });
-
       return;
     }
 
@@ -159,44 +195,6 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
 
     // Highlight favorited songs in library
     highlightFavoritesInHistory();
-
-    // Set up favorite buttons for library items
-    setupFavoriteButtons(libraryContent, showNotification, ({videoId, isFavorited}) => {
-      // Update favorite button in music controls if this is the currently playing song
-      if (window.youtubeModule && window.youtubeModule.videoId === videoId) {
-        updateFavoriteButton(videoId);
-      }
-      // Refresh the library display to show/hide badges
-      highlightFavoritesInHistory();
-    });
-
-    // Add click handlers to library items
-    document.querySelectorAll(".song-card").forEach(item => {
-      item.addEventListener("click", async (e) => {
-        // Don't trigger if clicking favorite button
-        if (e.target.closest("[data-action='toggle-favorite']")) {
-          return;
-        }
-
-        const url = item.dataset.url;
-
-        // Close popover
-        musicLibraryPopover.hidePopover();
-
-        // Load video
-        const youtubeUrl = $("#youtubeUrl");
-        if (youtubeUrl) {
-          youtubeUrl.value = url;
-        }
-
-        const youtube = await loadYouTubeModule();
-        await youtube.loadVideo(url);
-
-        // Connect YouTube player to timer
-        const timer = getTimer();
-        timer.setYouTubePlayer(youtube);
-      });
-    });
   }
 }
 

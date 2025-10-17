@@ -20,14 +20,18 @@ export function createFavoriteButtonHTML(videoId, options = {}) {
   const favoritedClass = favorited ? "favorited" : "";
   const sizeClass = `favorite-btn-${size}`;
 
+  // Show correct icon based on favorited state
+  const emptyHeartClass = favorited ? "hidden" : "";
+  const filledHeartClass = favorited ? "" : "hidden";
+
   return `
     <button class="song-favorite-btn ${sizeClass} ${favoritedClass} ${className}"
             data-video-id="${escapeHtml(videoId)}"
             data-action="toggle-favorite"
             title="${favorited ? "Remove from favorites" : "Add to favorites"}"
             aria-label="${favorited ? "Remove from favorites" : "Add to favorites"}">
-      <i class="favorite-icon ph-bold ph-heart"></i>
-      <i class="favorited-icon ph-bold ph-heart-fill"></i>
+      <i class="favorite-icon ph-bold ph-heart ${emptyHeartClass}"></i>
+      <i class="favorited-icon ph-bold ph-heart-fill ${filledHeartClass}"></i>
     </button>
   `;
 }
@@ -113,21 +117,26 @@ function extractSongData(element) {
   const url = element.dataset.url || "";
   const videoId = element.dataset.videoId || extractVideoIdFromUrl(url);
 
-  // Try to find title and author from child elements
-  const titleEl = element.querySelector(".song-card-title, .search-dropdown-item-title");
-  const authorEl = element.querySelector(".song-card-channel, .search-dropdown-item-artist, .search-dropdown-item-description");
-  const durationEl = element.querySelector(".song-card-duration, .search-dropdown-item-duration");
+  // Prefer data attributes for clean data (important for library items that have "• X plays" in text)
+  // Fall back to parsing DOM elements if data attributes are missing
+  const title = element.dataset.title ||
+    element.querySelector(".song-card-title, .search-dropdown-item-title")?.textContent.trim() ||
+    "Unknown Title";
 
-  const title = titleEl ? titleEl.textContent.trim() : element.dataset.title || "Unknown Title";
-  const channel = authorEl ? authorEl.textContent.trim() : element.dataset.channel || "Unknown Channel";
+  const channel = element.dataset.channel ||
+    element.querySelector(".song-card-channel, .search-dropdown-item-artist, .search-dropdown-item-description")?.textContent.trim() ||
+    "Unknown Channel";
 
   // Try to extract duration (it might be in text like "3:45" or as a data attribute)
   let duration = 0;
   if (element.dataset.duration) {
     duration = parseInt(element.dataset.duration, 10);
-  } else if (durationEl) {
-    const durationText = durationEl.textContent.trim();
-    duration = parseDurationString(durationText);
+  } else {
+    const durationEl = element.querySelector(".song-card-duration, .search-dropdown-item-duration");
+    if (durationEl) {
+      const durationText = durationEl.textContent.trim();
+      duration = parseDurationString(durationText);
+    }
   }
 
   return {

@@ -147,8 +147,24 @@ export class VideoLoader {
     try {
       const videoData = this.player.player.getVideoData();
       this.player.videoTitle = videoData.title || "YouTube Music";
-      this.player.videoChannel = videoData.author || "Unknown Channel";
+      this.player.videoChannel = videoData.author || "";
       this.player.videoId = videoData.video_id || this.player.currentVideoId;
+
+      // If channel name is missing, fetch from oEmbed API (more reliable)
+      if (!this.player.videoChannel || this.player.videoChannel.trim() === "") {
+        console.log("📡 Channel name missing, fetching from oEmbed...");
+        this.fetchChannelFromOEmbed(this.player.videoId).then(channelName => {
+          if (channelName) {
+            this.player.videoChannel = channelName;
+            console.log("✅ Channel name from oEmbed:", channelName);
+          } else {
+            this.player.videoChannel = "Unknown Channel";
+          }
+        }).catch(() => {
+          this.player.videoChannel = "Unknown Channel";
+        });
+      }
+
       console.log("✅ Video data:", {
         title: this.player.videoTitle,
         channel: this.player.videoChannel,
@@ -256,5 +272,28 @@ export class VideoLoader {
     // Show error message to user (you can enhance this with a toast notification)
     console.error("YouTube Error:", message);
     alert(message);
+  }
+
+  /**
+   * Fetch channel name from YouTube oEmbed API (no API key needed)
+   * @param {string} videoId - YouTube video ID
+   * @returns {Promise<string|null>} Channel name or null
+   */
+  async fetchChannelFromOEmbed(videoId) {
+    try {
+      const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        console.warn("⚠️ oEmbed fetch failed:", response.status);
+        return null;
+      }
+
+      const data = await response.json();
+      return data.author_name || null;
+    } catch (error) {
+      console.error("❌ Error fetching from oEmbed:", error);
+      return null;
+    }
   }
 }

@@ -30,7 +30,7 @@
   @apply scale-95;
 }
 
-.music-favorite-btn svg {
+.music-favorite-btn i {
   @apply w-[14px] h-[14px] transition-all duration-300;
   filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.5));
 }
@@ -47,7 +47,7 @@
   box-shadow: 0 0 25px rgba(255, 0, 150, 0.8);
 }
 
-.music-favorite-btn.favorited svg {
+.music-favorite-btn.favorited i {
   color: #ff0096;
   filter: drop-shadow(0 0 8px rgba(255, 0, 150, 1));
 }
@@ -158,12 +158,12 @@
   @apply translate-y-0 scale-[0.98];
 }
 
-.history-action-btn svg {
+.history-action-btn i {
   @apply w-4 h-4 transition-[filter] duration-200;
   filter: drop-shadow(0 0 4px currentColor);
 }
 
-.history-action-btn:hover svg {
+.history-action-btn:hover i {
   filter: drop-shadow(0 0 8px currentColor);
 }
 
@@ -197,7 +197,7 @@
   @apply w-6 h-6;
 }
 
-.song-favorite-btn.favorite-btn-small svg {
+.song-favorite-btn.favorite-btn-small i {
   @apply w-[13px] h-[13px];
 }
 
@@ -205,7 +205,7 @@
   @apply w-[26px] h-[26px];
 }
 
-.song-favorite-btn.favorite-btn-medium svg {
+.song-favorite-btn.favorite-btn-medium i {
   @apply w-[14px] h-[14px];
 }
 
@@ -213,13 +213,12 @@
   @apply w-[30px] h-[30px];
 }
 
-.song-favorite-btn.favorite-btn-large svg {
+.song-favorite-btn.favorite-btn-large i {
   @apply w-4 h-4;
 }
 
 /* Show button on parent hover or when favorited */
-.history-item:hover .song-favorite-btn,
-.music-selection-item:hover .song-favorite-btn,
+.song-card:hover .song-favorite-btn,
 .search-dropdown-item:hover .song-favorite-btn,
 .song-favorite-btn.favorited {
   @apply opacity-100;
@@ -247,7 +246,7 @@
   @apply scale-90;
 }
 
-.song-favorite-btn svg {
+.song-favorite-btn i {
   @apply transition-all duration-200;
   filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.5));
 }
@@ -266,7 +265,7 @@
   box-shadow: 0 0 25px rgba(255, 0, 150, 0.8);
 }
 
-.song-favorite-btn.favorited svg {
+.song-favorite-btn.favorited i {
   color: #ff0096;
   filter: drop-shadow(0 0 8px rgba(255, 0, 150, 1));
 }
@@ -282,26 +281,9 @@
 
 /* Positioning for different list types - Consistent System */
 
-/* History Items - Favorite button positioning (info container already has padding-right) */
-.history-item-favorite {
-  @apply absolute right-0.5 top-0.5;
-}
-
-/* Music Selection Items - Absolute positioning outside flex flow */
-.music-selection-item {
-  @apply relative;
-}
-
-.music-selection-item-info {
-  @apply pr-8;
-}
-
-.music-selection-item-favorite {
-  @apply absolute right-2 top-[20%];
-}
-
-.music-selection-item-favorite:hover {
-  @apply scale-110;
+/* Song Card - Favorite button is now part of controls column */
+.song-card-favorite {
+  /* Button is positioned within .song-card-controls flexbox */
 }
 
 /* Search Dropdown Items - Absolute positioning to avoid duration overlap */
