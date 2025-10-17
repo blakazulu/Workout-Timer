@@ -5,6 +5,7 @@
 import {$, addClass, removeClass} from "../utils/dom.js";
 import {formatTime} from "../utils/time.js";
 import {getAudio} from "./audio.js";
+import {eventBus} from "../core/event-bus.js";
 
 export class Timer {
   constructor(options = {}) {
@@ -54,8 +55,11 @@ export class Timer {
       this.repetitions = parseInt($("#repetitions").value);
       this.restTime = parseInt($("#restTime").value);
 
+      // Track if this is a fresh start or resume
+      const isFreshStart = !this.currentTime;
+
       // Initialize timer if starting fresh
-      if (!this.currentTime) {
+      if (isFreshStart) {
         this.currentTime = this.duration;
         this.currentRep = 1;
         this.isResting = false;
@@ -79,6 +83,21 @@ export class Timer {
       // Play YouTube video if loaded
       if (this.youtube) {
         this.youtube.play();
+      }
+
+      // Emit analytics event
+      if (isFreshStart) {
+        eventBus.emit('timer:started', {
+          duration: this.duration,
+          repetitions: this.repetitions,
+          restTime: this.restTime,
+          hasMusic: !!this.youtube,
+        });
+      } else {
+        eventBus.emit('timer:resumed', {
+          currentRep: this.currentRep,
+          timeRemaining: this.currentTime,
+        });
       }
     } else {
       this.pause();
@@ -106,6 +125,12 @@ export class Timer {
     if (this.youtube) {
       this.youtube.pause();
     }
+
+    // Emit analytics event
+    eventBus.emit('timer:paused', {
+      currentRep: this.currentRep,
+      timeRemaining: this.currentTime,
+    });
   }
 
   /**
@@ -137,6 +162,9 @@ export class Timer {
    * Reset the timer to initial state
    */
   reset() {
+    const wasRunning = this.isRunning;
+    const currentRep = this.currentRep;
+
     this.stop();
     this.currentTime = 0;
     this.currentRep = 1;
@@ -158,6 +186,12 @@ export class Timer {
     if (this.youtube) {
       this.youtube.stop();
     }
+
+    // Emit analytics event
+    eventBus.emit('timer:reset', {
+      wasRunning,
+      currentRep,
+    });
   }
 
   /**
@@ -228,6 +262,12 @@ export class Timer {
         // Work period ended, more reps to go - start rest
         this.audio.playComplete();
 
+        // Emit rep completed event
+        eventBus.emit('timer:rep_completed', {
+          repNumber: this.currentRep,
+          totalReps: this.repetitions,
+        });
+
         if (this.restTime > 0) {
           this.isResting = true;
           this.currentTime = this.restTime;
@@ -241,9 +281,18 @@ export class Timer {
         }
       } else {
         // All reps completed
+        const completionTime = Date.now();
+
         this.stop();
         this.audio.playFinalComplete();
         this.repCounter.textContent = "✓ Complete!";
+
+        // Emit workout completed event
+        eventBus.emit('timer:completed', {
+          duration: this.duration,
+          repetitions: this.repetitions,
+          completionTime,
+        });
       }
     }
   }

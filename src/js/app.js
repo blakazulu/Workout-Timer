@@ -23,6 +23,9 @@ import {setupMusicTooltipPositioning} from "./ui/tooltip-handler.js";
 import {setupMusicLibrary} from "./ui/library-ui.js";
 import {setupMusicModeToggle} from "./ui/mode-toggle.js";
 import {setupYouTubeSearch} from "./search/youtube-search-ui.js";
+// Import analytics modules
+import {analytics} from "./core/analytics.js";
+import {initAnalyticsTracking} from "./core/analytics-tracker.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -115,6 +118,15 @@ async function handleEmbeddingError(errorMessage) {
 function init() {
   // Initialize PWA install handlers
   initPWAInstall();
+
+  // Initialize analytics (with debug mode for development)
+  analytics.init({
+    // API key will be set via environment variable VITE_POSTHOG_KEY
+    debug: false, // Set to true for development debugging
+  });
+
+  // Initialize analytics event tracking
+  initAnalyticsTracking();
 
   // Load saved settings
   const settings = loadSettings();

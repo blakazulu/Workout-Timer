@@ -3,6 +3,8 @@
  * Manages localStorage operations for favorites
  */
 
+import {eventBus} from "../../core/event-bus.js";
+
 const FAVORITES_KEY = "workout-timer-favorites";
 const MAX_FAVORITES = 100; // Limit to prevent localStorage overflow
 
@@ -84,6 +86,14 @@ export function addToFavorites(songData) {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
     console.log(`✅ Song added to favorites: ${songData.title} (Total favorites: ${favorites.length})`);
+
+    // Emit analytics event
+    eventBus.emit('favorite:added', {
+      videoId: songData.videoId,
+      title: songData.title,
+      totalFavorites: favorites.length,
+    });
+
     return true;
   } catch (error) {
     console.error("❌ Failed to add song to favorites:", error);
@@ -108,6 +118,13 @@ export function removeFromFavorites(videoId) {
 
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(filtered));
     console.log(`Song removed from favorites: ${videoId}`);
+
+    // Emit analytics event
+    eventBus.emit('favorite:removed', {
+      videoId,
+      totalFavorites: filtered.length,
+    });
+
     return true;
   } catch (error) {
     console.error("Failed to remove song from favorites:", error);

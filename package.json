@@ -1,7 +1,7 @@
 {
   "name": "cycle",
   "private": true,
-  "version": "1.0.31",
+  "version": "1.0.32",
   "type": "module",
   "scripts": {
     "dev": "node scripts/generate-version.js && vite",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
+    "posthog-js": "^1.276.0",
     "sharp": "^0.34.4",
     "tailwindcss": "^4.1.14",
     "workbox-window": "^7.3.0"

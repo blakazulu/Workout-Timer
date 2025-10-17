@@ -38,7 +38,8 @@
       "Bash(do sed -i '1i@reference \"\"../../global.css\"\";\\n' \"$file\")",
       "Bash(do sed -i '1i@reference \"\"../global.css\"\";\\n' \"$file\")",
       "Bash(do sed -i '/@reference/d' \"$file\" sed -i '/^$/d' \"$file\")",
-      "Bash(head -1 echo \"Removed @reference from $file\" done)"
+      "Bash(head -1 echo \"Removed @reference from $file\" done)",
+      "WebFetch(domain:posthog.com)"
     ],
     "deny": [],
     "ask": []

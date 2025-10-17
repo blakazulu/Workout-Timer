@@ -3,6 +3,7 @@
  */
 
 import {saveSongToHistory} from "../storage.js";
+import {eventBus} from "../../core/event-bus.js";
 
 export class PlaybackControls {
   constructor(player) {
@@ -33,6 +34,12 @@ export class PlaybackControls {
           console.error("Failed to save song to history:", error);
         }
 
+        // Emit analytics event
+        eventBus.emit('music:played', {
+          videoId: this.player.videoId,
+          title: this.player.videoTitle,
+        });
+
         // Call callback after short delay to allow state to update
         if (onPlayCallback) {
           setTimeout(() => onPlayCallback(), 100);
@@ -52,6 +59,11 @@ export class PlaybackControls {
       try {
         this.player.player.pauseVideo();
 
+        // Emit analytics event
+        eventBus.emit('music:paused', {
+          videoId: this.player.videoId,
+        });
+
         // Call callback after short delay to allow state to update
         if (onPauseCallback) {
           setTimeout(() => onPauseCallback(), 100);
@@ -69,6 +81,11 @@ export class PlaybackControls {
     if (this.player.player && this.player.isReady) {
       try {
         this.player.player.stopVideo();
+
+        // Emit analytics event
+        eventBus.emit('music:stopped', {
+          videoId: this.player.videoId,
+        });
       } catch (error) {
         console.error("Failed to stop video:", error);
       }
