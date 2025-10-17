@@ -255,9 +255,10 @@ The app is configured for Netlify deployment:
 
 ### Core Technologies
 
-- **Vite 7.1.9** - Lightning-fast build tool and dev server
+- **Vite 7.1.10** - Lightning-fast build tool and dev server
 - **Vanilla JavaScript (ES6+)** - No framework overhead, pure performance
-- **HTML5** - Semantic markup with modern APIs
+- **Tailwind CSS v4** - Utility-first CSS framework with custom design tokens
+- **HTML5 with EJS** - Semantic markup with template partials
 - **CSS3** - Custom properties, Grid, Flexbox, animations
 - **Node.js 18+** - Backend automation for music library curation
 
@@ -266,6 +267,12 @@ The app is configured for Netlify deployment:
 - **vite-plugin-pwa 1.0.3** - Service worker generation and PWA manifest
 - **Workbox 7.3.0** - Advanced caching strategies with auto-update
 - **Web App Manifest** - Installation metadata for all icon sizes
+
+### Development Tools
+
+- **vite-plugin-ejs 1.7.0** - EJS templating for HTML partials
+- **sharp 0.34.4** - Image optimization
+- **@tailwindcss/vite 4.1.14** - Tailwind CSS v4 integration
 
 ### Music Library System
 
@@ -376,39 +383,96 @@ The app is configured for Netlify deployment:
 
 ```
 src/
-├── js/
-│   ├── modules/
-│   │   ├── timer.js       # Core timer logic + work/rest cycles
-│   │   ├── youtube.js     # IFrame Player API integration
-│   │   ├── audio.js       # Web Audio API + vibration
-│   │   └── storage.js     # localStorage persistence + history tracking
-│   ├── components/
-│   │   └── search-dropdown.js  # YouTube search dropdown UI with thumbnails
-│   ├── utils/
-│   │   ├── dom.js         # DOM helper functions
-│   │   ├── time.js        # Time formatting utilities
-│   │   ├── gestures.js    # Touch gesture detection
-│   │   ├── youtube-search.js   # YouTube search API + URL detection
-│   │   ├── song_fetcher.js     # YouTube API music library automation
-│   │   └── version-check.js    # Client-server version comparison + force update
+├── js/                     # 57 JavaScript modules (~2,800 lines)
+│   ├── core/               # Core infrastructure (6 modules)
+│   │   ├── app-state.js        # Centralized state management
+│   │   ├── event-bus.js        # Pub/sub event system
+│   │   ├── events.js           # Event definitions
+│   │   ├── gesture-handler.js  # Touch gesture factory
+│   │   ├── notifications.js    # Toast notification system
+│   │   └── pwa-install.js      # PWA installation prompt
+│   ├── modules/            # Business logic modules
+│   │   ├── timer.js            # Core timer logic + work/rest cycles (334 lines)
+│   │   ├── youtube/            # IFrame Player API (5 submodules)
+│   │   │   ├── index.js
+│   │   │   ├── player.js
+│   │   │   ├── video-loader.js
+│   │   │   ├── playback-controls.js
+│   │   │   └── ui-controls.js
+│   │   ├── favorites/          # Favorites storage (3 submodules)
+│   │   │   ├── index.js
+│   │   │   ├── storage.js
+│   │   │   └── shuffle.js
+│   │   ├── favorites-ui/       # Favorites UI (6 submodules)
+│   │   │   ├── index.js
+│   │   │   ├── actions.js
+│   │   │   ├── rendering.js
+│   │   │   ├── state.js
+│   │   │   ├── initialization.js
+│   │   │   └── utils.js
+│   │   ├── audio.js            # Web Audio API + vibration
+│   │   └── storage.js          # localStorage persistence + history (207 lines)
+│   ├── components/         # UI components
+│   │   └── search-dropdown/    # YouTube search UI (6 submodules)
+│   │       ├── index.js
+│   │       ├── core.js
+│   │       ├── events.js
+│   │       ├── rendering.js
+│   │       ├── navigation.js
+│   │       └── utils.js
+│   ├── ui/                 # UI controllers (4 modules)
+│   │   ├── event-handlers.js   # Central event coordination
+│   │   ├── library-ui.js       # Music library popover
+│   │   ├── mode-toggle.js      # Mood/Genre selector
+│   │   └── tooltip-handler.js  # Music info tooltip
+│   ├── utils/              # Utilities (8 modules)
+│   │   ├── dom.js
+│   │   ├── time.js
+│   │   ├── gestures.js
+│   │   ├── youtube-search.js
+│   │   ├── favorite-button.js
+│   │   ├── version-check.js    # Version system (238 lines)
+│   │   └── song_fetcher/       # YouTube API automation (5 submodules)
+│   │       ├── index.js
+│   │       ├── config.js
+│   │       ├── youtube-api.js
+│   │       ├── filters.js
+│   │       └── cache.js
 │   ├── data/
-│   │   ├── music-library.js        # Music library API + queries
-│   │   ├── workout_music.json      # Curated music data (180+ tracks)
-│   │   └── workout_music_cache.json # Cache with timestamps for refresh
-│   └── app.js             # Main orchestrator + event handlers
-├── css/
-│   ├── variables.css      # Design tokens (colors, spacing, etc.)
-│   ├── global.css         # Layout + background effects
-│   ├── components.css     # UI element styles (includes search dropdown)
-│   └── animations.css     # Keyframe animations
+│   │   ├── music-library.js        # Music library API
+│   │   ├── workout_music.json      # 180+ curated tracks
+│   │   └── workout_music_cache.json # Cache timestamps
+│   ├── app.js              # Main orchestrator + event handlers
+│   └── main.js             # Entry point + PWA registration
+├── css/                    # 25+ CSS files (~3,514 lines)
+│   ├── variables.css       # Design tokens (colors, spacing)
+│   ├── global/             # Global styles (4 files)
+│   │   ├── base.css
+│   │   ├── background.css
+│   │   ├── branding.css
+│   │   └── responsive.css
+│   ├── components/         # Component styles (20+ files)
+│   │   ├── buttons.css
+│   │   ├── timer.css
+│   │   ├── music-controls.css
+│   │   ├── favorites/          # Favorites styling (2 files)
+│   │   ├── library/            # Library styling (3 files)
+│   │   ├── music-selection/    # Music selection (4 files)
+│   │   └── ...
+│   └── animations.css      # Keyframe animations
+├── partials/               # HTML template partials (14 files)
+│   ├── features/           # Feature components (7 files)
+│   ├── layout/             # Layout templates (3 files)
+│   ├── meta/               # Head & meta tags (2 files)
+│   └── popovers/           # Popover dialogs (3 files)
 ├── scripts/
-│   └── generate-version.js # Build script for version.json generation
+│   └── generate-version.js # Build-time version generation
 ├── public/
-│   └── version.json       # Generated version metadata (v, build time)
+│   └── version.json        # Generated version metadata
 ├── netlify/
 │   └── functions/
-│       └── youtube-search.mts  # Serverless function for secure YouTube API access
-└── main.js                # Entry point + PWA registration
+│       └── youtube-search.mts  # TypeScript serverless function (174 lines)
+└── index.html              # Main HTML entry point (35 lines with EJS)
 ```
 
 ### State Management
@@ -516,16 +580,23 @@ This project deliberately avoids frameworks for several advantages:
 
 ### Codebase Statistics
 
-- **Total Lines:** ~3,200+ lines of production code
-- **JavaScript:** ~2,000 lines (ES6 modules)
-- **CSS:** ~800 lines (custom properties, animations)
-- **HTML:** ~360 lines (semantic markup)
+- **Total Lines:** ~6,500+ lines of production code
+- **JavaScript:** ~2,800 lines across 57 ES6 modules
+- **CSS:** ~3,514 lines across 25+ files (Tailwind + custom components)
+- **HTML:** ~360 lines (index.html + 14 EJS partials)
+- **TypeScript:** ~174 lines (Netlify serverless function)
 - **Data:** ~180 curated tracks with metadata
-- **Dependencies:** Just 2 runtime deps (vite-plugin-pwa, workbox-window)
+- **Dependencies:** 4 production deps (Tailwind CSS v4, vite-plugin-pwa, workbox-window, sharp)
+
+### Key Modules by Size
+- `timer.js` - 334 lines (core timer logic)
+- `version-check.js` - 238 lines (version sync system)
+- `storage.js` - 207 lines (localStorage + history)
+- `youtube-search.mts` - 174 lines (serverless backend)
 
 ## 🎯 Project Status
 
-### ✅ Completed Features (v1.0.5)
+### ✅ Completed Features (v1.0.31)
 
 - [x] Core timer with work/rest cycles
 - [x] YouTube background video integration
@@ -560,6 +631,24 @@ This project deliberately avoids frameworks for several advantages:
 - [x] **Dynamic Version Display** - Auto-synced version number in HTML header
 - [x] Netlify deployment configuration
 - [x] Anchor positioning fallback for older browsers
+
+### 🎨 UI/UX Enhancements (v1.0.25+)
+- [x] **Phosphor Icons** - Modern icon system with consistent styling
+- [x] **Event Bus Architecture** - Decoupled pub/sub communication pattern
+- [x] **Centralized App State** - Framework-free state management
+- [x] **HTML Partials System** - Modular EJS templates for maintainability
+- [x] **Mobile Font Accessibility** - Enhanced font sizing for better readability
+- [x] **Genre Icon Hover Effects** - Visual feedback improvements
+- [x] **Video Progress Bar Mobile Redesign** - Touch-optimized seeking
+- [x] **Tailwind CSS v4 Migration** - Modern utility-first styling system
+- [x] **Favorites System Enhancements** - Visual highlights and gradient effects
+- [x] **Song Card Unification** - Consistent styling across all music views
+
+### 🏗️ Architecture Improvements (v1.0.20+)
+- [x] **Modular Refactoring** - Split monolithic files into 57 focused modules
+- [x] **Test Infrastructure** - Testing utilities and setup
+- [x] **Component Architecture** - Separated core, modules, components, UI, utils
+- [x] **Submodule Organization** - YouTube (5), Favorites (3+6), Search (6), Song Fetcher (5)
 
 ### 🔮 Future Enhancements
 
