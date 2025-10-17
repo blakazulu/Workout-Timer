@@ -20,18 +20,13 @@ export function createFavoriteButtonHTML(videoId, options = {}) {
   const favoritedClass = favorited ? "favorited" : "";
   const sizeClass = `favorite-btn-${size}`;
 
-  // Show correct icon based on favorited state
-  const emptyHeartClass = favorited ? "hidden" : "";
-  const filledHeartClass = favorited ? "" : "hidden";
-
   return `
     <button class="song-favorite-btn ${sizeClass} ${favoritedClass} ${className}"
             data-video-id="${escapeHtml(videoId)}"
             data-action="toggle-favorite"
             title="${favorited ? "Remove from favorites" : "Add to favorites"}"
             aria-label="${favorited ? "Remove from favorites" : "Add to favorites"}">
-      <i class="favorite-icon ph-bold ph-heart ${emptyHeartClass}"></i>
-      <i class="favorited-icon ph-bold ph-heart-fill ${filledHeartClass}"></i>
+      <i class="ph-bold ph-heart"></i>
     </button>
   `;
 }
@@ -209,21 +204,14 @@ function parseDurationString(durationStr) {
  * @param {boolean} isFavorited - Whether the song is favorited
  */
 function updateButtonState(button, isFavorited) {
-  const favoriteIcon = button.querySelector(".favorite-icon");
-  const favoritedIcon = button.querySelector(".favorited-icon");
-
   if (isFavorited) {
     button.classList.add("favorited");
     button.title = "Remove from favorites";
     button.setAttribute("aria-label", "Remove from favorites");
-    if (favoriteIcon) favoriteIcon.classList.add("hidden");
-    if (favoritedIcon) favoritedIcon.classList.remove("hidden");
   } else {
     button.classList.remove("favorited");
     button.title = "Add to favorites";
     button.setAttribute("aria-label", "Add to favorites");
-    if (favoriteIcon) favoriteIcon.classList.remove("hidden");
-    if (favoritedIcon) favoritedIcon.classList.add("hidden");
   }
 }
 

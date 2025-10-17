@@ -90,19 +90,12 @@ export function updateFavoriteButton(videoId) {
   const favoriteBtn = $("#musicFavoriteBtn");
   if (!favoriteBtn) return;
 
-  const favoriteIcon = favoriteBtn.querySelector(".favorite-icon");
-  const favoritedIcon = favoriteBtn.querySelector(".favorited-icon");
-
   const isCurrentlyFavorited = isFavorite(videoId);
 
   if (isCurrentlyFavorited) {
-    favoriteIcon.classList.add("hidden");
-    favoritedIcon.classList.remove("hidden");
     favoriteBtn.classList.add("favorited");
     favoriteBtn.title = "Remove from favorites";
   } else {
-    favoriteIcon.classList.remove("hidden");
-    favoritedIcon.classList.add("hidden");
     favoriteBtn.classList.remove("favorited");
     favoriteBtn.title = "Add to favorites";
   }
