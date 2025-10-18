@@ -5,11 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>CYCLE Analytics | Admin Dashboard</title>
+  
+  <!-- Enhanced Meta Tags for Accessibility -->
+  <meta name="description" content="CYCLE Workout Timer Pro - Advanced Analytics Dashboard for workout session insights and user engagement metrics">
+  <meta name="theme-color" content="#0f0f23">
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" as="style">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" as="style">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" as="style">
 
-  <!-- Google Fonts - Inter for clean, modern typography -->
+  <!-- Google Fonts - Enhanced Inter with more weights -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Phosphor Icons (Web Font) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -17,275 +26,445 @@
 
   <!-- Admin Stylesheet -->
   <link rel="stylesheet" href="/src/css/admin.css">
+  
+  <!-- Skip to main content for screen readers -->
+  <style>
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--primary-500);
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      z-index: 1000;
+      transition: top 0.3s;
+      font-weight: 600;
+    }
+    .skip-link:focus {
+      top: 6px;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Animated Background -->
-  <div class="admin-background"></div>
+  <!-- Skip to main content link for screen readers -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Login Modal -->
-  <div id="login-modal" class="login-modal">
-    <div class="login-backdrop"></div>
+  <div id="login-modal" class="login-modal" role="dialog" aria-labelledby="login-title" aria-describedby="login-description" aria-modal="true">
+    <div class="login-backdrop" aria-hidden="true"></div>
     <div class="login-content">
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <div class="admin-logo-icon" style="margin: 0 auto 1rem;">
-          <i class="ph-fill ph-shield-check" style="font-size: 1.5rem; color: white;"></i>
+      <div class="login-header">
+        <div class="login-logo">
+          <div class="logo-icon">
+            <i class="ph-fill ph-shield-check" aria-hidden="true"></i>
+          </div>
+          <h1 id="login-title" class="login-title">Welcome Back</h1>
+          <p id="login-description" class="login-subtitle">Sign in to access your analytics dashboard</p>
         </div>
-        <h2 class="admin-heading-2" style="margin-bottom: 0.5rem;">Admin Access</h2>
-        <p class="admin-text-sm">Enter password to continue</p>
       </div>
 
-      <form id="login-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <div>
-          <label for="password-input" class="admin-text-sm" style="display: block; margin-bottom: 0.5rem;">Password</label>
-          <input
-            type="password"
-            id="password-input"
-            class="login-input"
-            placeholder="Enter admin password"
-            autocomplete="current-password"
-            required
-          >
+      <form id="login-form" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="password-input" class="form-label">
+            Password
+            <span class="required-indicator" aria-label="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="password-input"
+              class="form-input"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+              aria-describedby="password-error"
+              aria-invalid="false"
+            >
+            <div class="input-icon" aria-hidden="true">
+              <i class="ph-fill ph-lock"></i>
+            </div>
+          </div>
+          <div id="password-error" class="error-message" role="alert" aria-live="polite"></div>
         </div>
 
-        <div id="login-error" class="hidden" style="padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--admin-radius-md); color: var(--admin-accent-red); font-size: 0.875rem;"></div>
+        <div id="login-error" class="login-error hidden" role="alert" aria-live="assertive">
+          <i class="ph-fill ph-warning" aria-hidden="true"></i>
+          <span class="error-text">Invalid password. Please try again.</span>
+        </div>
 
-        <button type="submit" class="admin-btn admin-btn-primary">
-          <i class="ph-fill ph-sign-in" style="font-size: 1.125rem;"></i>
-          Access Dashboard
+        <button type="submit" class="btn btn-primary login-submit">
+          <span class="btn-text">Sign In</span>
+          <div class="btn-loading" aria-hidden="true">
+            <div class="spinner"></div>
+          </div>
         </button>
       </form>
     </div>
   </div>
 
   <!-- Main Dashboard -->
-  <div id="dashboard-container" class="hidden">
-
-    <!-- Header -->
-    <header class="admin-header">
-      <div class="container flex items-center justify-between">
-        <div class="flex items-center gap-md">
-          <a href="/" class="admin-logo">
-            <div class="admin-logo-icon">
-              <i class="ph-fill ph-barbell" style="font-size: 1.25rem; color: white;"></i>
-            </div>
-            <span>CYCLE</span>
-          </a>
-          <div class="admin-badge">Analytics</div>
-        </div>
-
-        <div class="flex items-center gap-sm">
-          <span id="last-refresh" class="admin-text-xs" style="display: none;"></span>
-          <button id="refresh-btn" class="admin-btn-icon admin-btn-secondary" title="Refresh data">
-            <i class="ph ph-arrow-clockwise" style="font-size: 1.25rem;"></i>
-          </button>
-          <button id="logout-btn" class="admin-btn admin-btn-danger">
-            <i class="ph ph-sign-out"></i>
-            <span style="display: none;">Logout</span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-
-      <!-- Hero Section -->
-      <div class="container" style="padding-top: 3rem; padding-bottom: 2rem;">
-        <div style="text-align: center; margin-bottom: 3rem;" class="fade-in">
-          <h1 class="admin-heading-1" style="margin-bottom: 0.75rem;">Analytics Hub</h1>
-          <p class="admin-text-sm" style="margin-bottom: 1rem;">Real-time insights into your workout ecosystem</p>
-          <div id="last-sync" class="admin-badge" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <span class="status-dot online"></span>
-            <span>Last synced: Just now</span>
+  <div id="dashboard-container" class="dashboard-container hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <div class="logo-icon">
+            <i class="ph-fill ph-barbell" aria-hidden="true"></i>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">CYCLE</span>
+            <span class="logo-subtitle">Analytics</span>
           </div>
         </div>
+        <button class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="false">
+          <i class="ph ph-list" aria-hidden="true"></i>
+        </button>
+      </div>
 
-        <!-- Key Metrics Grid -->
-        <div id="metrics-grid" class="admin-grid admin-grid-4 fade-in" style="margin-bottom: 2rem;">
-          <!-- Stat cards will be dynamically inserted here -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list" role="list">
+          <li class="nav-item">
+            <a href="#hero-section" class="nav-link active" aria-current="page">
+              <i class="ph-fill ph-house" aria-hidden="true"></i>
+              <span class="nav-text">Overview</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#metrics-section" class="nav-link">
+              <i class="ph-fill ph-chart-pie" aria-hidden="true"></i>
+              <span class="nav-text">Key Metrics</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#charts-section" class="nav-link">
+              <i class="ph-fill ph-chart-line" aria-hidden="true"></i>
+              <span class="nav-text">Data Visualization</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#activity-section" class="nav-link">
+              <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+              <span class="nav-text">Recent Activity</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#system-section" class="nav-link">
+              <i class="ph-fill ph-gear" aria-hidden="true"></i>
+              <span class="nav-text">System & Actions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#users-section" class="nav-link">
+              <i class="ph-fill ph-users" aria-hidden="true"></i>
+              <span class="nav-text">User Analytics</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#events-section" class="nav-link">
+              <i class="ph-fill ph-calendar" aria-hidden="true"></i>
+              <span class="nav-text">Event Analytics</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="ph-fill ph-user" aria-hidden="true"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name">Admin</span>
+            <span class="user-role">Administrator</span>
+          </div>
         </div>
+        <button id="logout-btn" class="btn btn-ghost logout-btn" aria-label="Sign Out">
+          <i class="ph ph-sign-out" aria-hidden="true"></i>
+          <span class="btn-text">Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+            <i class="ph ph-list" aria-hidden="true"></i>
+          </button>
+          <div class="breadcrumb">
+            <span class="breadcrumb-item">Dashboard</span>
+            <i class="ph ph-caret-right" aria-hidden="true"></i>
+            <span class="breadcrumb-item current">Overview</span>
+          </div>
+        </div>
+        
+        <div class="header-right">
+          <div class="header-actions">
+            <button id="refresh-btn" class="btn btn-ghost" aria-label="Refresh data" title="Refresh (Ctrl+R)">
+              <i class="ph ph-arrow-clockwise" aria-hidden="true"></i>
+            </button>
+            <div class="status-indicator">
+              <div class="status-dot online" aria-hidden="true"></div>
+              <span class="status-text">Live</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main id="main-content" class="content" role="main" tabindex="-1">
+        
+        <!-- Hero Section -->
+        <section id="hero-section" class="hero-section">
+          <div class="hero-content">
+            <h1 class="hero-title">Analytics Dashboard</h1>
+            <p class="hero-description">Real-time insights into your workout ecosystem with comprehensive user engagement metrics</p>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <span class="stat-value" id="total-users">0</span>
+                <span class="stat-label">Total Users</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="active-sessions">0</span>
+                <span class="stat-label">Active Sessions</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="total-workouts">0</span>
+                <span class="stat-label">Total Workouts</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Metrics Grid -->
+        <section id="metrics-section" class="metrics-section">
+          <div class="section-header">
+            <h2 class="section-title">Key Metrics</h2>
+            <div class="section-actions">
+              <select class="time-filter" aria-label="Select time period">
+                <option value="7d">Last 7 days</option>
+                <option value="30d">Last 30 days</option>
+                <option value="90d">Last 90 days</option>
+              </select>
+            </div>
+          </div>
+          <div id="metrics-grid" class="metrics-grid">
+            <!-- Metrics cards will be dynamically inserted here -->
+          </div>
+        </section>
 
         <!-- Charts Section -->
-        <div class="admin-grid admin-grid-1" style="gap: 2rem;">
-
-          <!-- Activity Over Time Chart -->
-          <div class="admin-card chart-container fade-in">
-            <div class="chart-header">
-              <div class="chart-title">
-                <div class="chart-icon" style="--icon-color-1: #3b82f6; --icon-color-2: #8b5cf6;">
-                  <i class="ph-fill ph-chart-line" style="font-size: 1.125rem; color: white;"></i>
-                </div>
-                <span>Activity Trend</span>
-              </div>
-              <div class="admin-text-xs">Last 7 days</div>
-            </div>
-            <div class="chart-wrapper">
-              <canvas id="activity-chart"></canvas>
+        <section id="charts-section" class="charts-section">
+          <div class="section-header">
+            <h2 class="section-title">Data Visualization</h2>
+            <div class="section-actions">
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-download-simple" aria-hidden="true"></i>
+                Export
+              </button>
             </div>
           </div>
-
-          <!-- Two Column Charts -->
-          <div class="admin-grid admin-grid-2">
-
-            <!-- Genre Distribution -->
-            <div class="admin-card chart-container fade-in">
+          
+          <div class="charts-grid">
+            <!-- Activity Chart -->
+            <div class="chart-card">
               <div class="chart-header">
                 <div class="chart-title">
-                  <div class="chart-icon" style="--icon-color-1: #ec4899; --icon-color-2: #f59e0b;">
-                    <i class="ph-fill ph-music-notes" style="font-size: 1.125rem; color: white;"></i>
+                  <div class="chart-icon activity">
+                    <i class="ph-fill ph-chart-line" aria-hidden="true"></i>
                   </div>
-                  <span>Genre Mix</span>
+                  <h3>Activity Trend</h3>
+                </div>
+                <div class="chart-period">Last 7 days</div>
+              </div>
+              <div class="chart-content">
+                <canvas id="activity-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Genre Distribution -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <div class="chart-icon genre">
+                    <i class="ph-fill ph-music-notes" aria-hidden="true"></i>
+                  </div>
+                  <h3>Genre Mix</h3>
                 </div>
               </div>
-              <div class="chart-wrapper">
+              <div class="chart-content">
                 <canvas id="genre-chart"></canvas>
               </div>
             </div>
 
             <!-- Top Songs -->
-            <div class="admin-card chart-container fade-in">
+            <div class="chart-card">
               <div class="chart-header">
                 <div class="chart-title">
-                  <div class="chart-icon" style="--icon-color-1: #10b981; --icon-color-2: #06b6d4;">
-                    <i class="ph-fill ph-star" style="font-size: 1.125rem; color: white;"></i>
+                  <div class="chart-icon songs">
+                    <i class="ph-fill ph-star" aria-hidden="true"></i>
                   </div>
-                  <span>Top Songs</span>
+                  <h3>Top Songs</h3>
                 </div>
               </div>
-              <div class="chart-wrapper">
+              <div class="chart-content">
                 <canvas id="top-songs-chart"></canvas>
               </div>
             </div>
 
-          </div>
-
-          <!-- Session Duration Chart -->
-          <div class="admin-card chart-container fade-in">
-            <div class="chart-header">
-              <div class="chart-title">
-                <div class="chart-icon" style="--icon-color-1: #06b6d4; --icon-color-2: #3b82f6;">
-                  <i class="ph-fill ph-timer" style="font-size: 1.125rem; color: white;"></i>
+            <!-- Session Duration -->
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <div class="chart-icon duration">
+                    <i class="ph-fill ph-timer" aria-hidden="true"></i>
+                  </div>
+                  <h3>Session Duration</h3>
                 </div>
-                <span>Session Duration Distribution</span>
+              </div>
+              <div class="chart-content">
+                <canvas id="duration-chart"></canvas>
               </div>
             </div>
-            <div class="chart-wrapper">
-              <canvas id="duration-chart"></canvas>
+          </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section id="activity-section" class="activity-section">
+          <div class="section-header">
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="section-actions">
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-funnel" aria-hidden="true"></i>
+                Filter
+              </button>
             </div>
           </div>
-
-          <!-- Users Section -->
-          <div id="users-section" class="fade-in">
-            <!-- Users will be loaded here -->
-          </div>
-
-          <!-- Events Section -->
-          <div id="events-section" class="fade-in" style="margin-top: 2rem;">
-            <!-- Events will be loaded here -->
-          </div>
-
-          <!-- Recent Activity Timeline -->
-          <div class="admin-card fade-in" style="padding: var(--admin-space-xl); margin-top: 2rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--admin-space-lg);">
-              <div class="chart-title">
-                <div class="chart-icon" style="--icon-color-1: #8b5cf6; --icon-color-2: #ec4899;">
-                  <i class="ph-fill ph-clock-counter-clockwise" style="font-size: 1.125rem; color: white;"></i>
-                </div>
-                <span>Recent Activity</span>
-              </div>
-              <span id="activity-count" class="admin-text-xs"></span>
-            </div>
-            <div id="recent-activity" class="admin-scrollbar" style="max-height: 400px; overflow-y: auto;">
+          <div class="activity-card">
+            <div id="recent-activity" class="activity-list" role="log" aria-label="Recent user activity">
               <!-- Activity items will be inserted here -->
             </div>
           </div>
+        </section>
 
-          <!-- System & Actions Grid -->
-          <div class="admin-grid admin-grid-3">
-
+        <!-- System Info & Actions -->
+        <section id="system-section" class="system-section">
+          <div class="section-header">
+            <h2 class="section-title">System & Actions</h2>
+          </div>
+          
+          <div class="system-grid">
             <!-- System Info -->
-            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
-              <div style="margin-bottom: var(--admin-space-lg);">
-                <div class="chart-title" style="margin-bottom: var(--admin-space-md);">
-                  <div class="chart-icon" style="--icon-color-1: #8b5cf6; --icon-color-2: #ec4899;">
-                    <i class="ph-fill ph-info" style="font-size: 1.125rem; color: white;"></i>
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon system">
+                    <i class="ph-fill ph-info" aria-hidden="true"></i>
                   </div>
-                  <span>System Info</span>
+                  <h3>System Info</h3>
                 </div>
               </div>
-              <div id="system-info" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <!-- System info items will be inserted here -->
+              <div id="system-info" class="card-content">
+                <!-- System info will be inserted here -->
               </div>
             </div>
 
-            <!-- PostHog Integration -->
-            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
-              <div style="margin-bottom: var(--admin-space-lg);">
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                  <div class="chart-title">
-                    <div class="chart-icon" style="--icon-color-1: #10b981; --icon-color-2: #06b6d4;">
-                      <i class="ph-fill ph-chart-line-up" style="font-size: 1.125rem; color: white;"></i>
-                    </div>
-                    <span>PostHog</span>
+            <!-- PostHog Status -->
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon posthog">
+                    <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
                   </div>
-                  <span id="posthog-status" class="status-dot online" title="Connected"></span>
+                  <h3>PostHog</h3>
+                </div>
+                <div class="status-badge online">
+                  <div class="status-dot" aria-hidden="true"></div>
+                  <span>Connected</span>
                 </div>
               </div>
-              <div id="posthog-panel" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div id="posthog-panel" class="card-content">
                 <!-- PostHog data will be inserted here -->
               </div>
             </div>
 
             <!-- Quick Actions -->
-            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
-              <div style="margin-bottom: var(--admin-space-lg);">
-                <div class="chart-title">
-                  <div class="chart-icon" style="--icon-color-1: #f59e0b; --icon-color-2: #ef4444;">
-                    <i class="ph-fill ph-lightning" style="font-size: 1.125rem; color: white;"></i>
+            <div class="info-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon actions">
+                    <i class="ph-fill ph-lightning" aria-hidden="true"></i>
                   </div>
-                  <span>Quick Actions</span>
+                  <h3>Quick Actions</h3>
                 </div>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <button id="export-data-btn" class="admin-btn admin-btn-secondary" style="width: 100%; justify-content: center;">
-                  <i class="ph-fill ph-download-simple"></i>
-                  Export Data
-                </button>
-                <button id="posthog-link-btn" class="admin-btn admin-btn-secondary" style="width: 100%; justify-content: center;">
-                  <i class="ph-fill ph-chart-line-up"></i>
-                  Open PostHog
-                </button>
-                <button id="clear-cache-btn" class="admin-btn admin-btn-danger" style="width: 100%; justify-content: center;">
-                  <i class="ph-fill ph-trash"></i>
-                  Clear Data
-                </button>
+              <div class="card-content">
+                <div class="actions-list">
+                  <button id="export-data-btn" class="btn btn-secondary action-btn">
+                    <i class="ph-fill ph-download-simple" aria-hidden="true"></i>
+                    <span>Export Data</span>
+                  </button>
+                  <button id="posthog-link-btn" class="btn btn-secondary action-btn">
+                    <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
+                    <span>Open PostHog</span>
+                  </button>
+                  <button id="clear-cache-btn" class="btn btn-danger action-btn">
+                    <i class="ph-fill ph-trash" aria-hidden="true"></i>
+                    <span>Clear Data</span>
+                  </button>
+                </div>
               </div>
             </div>
-
           </div>
+        </section>
 
-        </div>
+        <!-- Users Section -->
+        <section id="users-section" class="users-section">
+          <div class="section-header">
+            <h2 class="section-title">User Analytics</h2>
+            <div class="section-actions">
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+                Search
+              </button>
+            </div>
+          </div>
+          <!-- Users will be loaded here -->
+        </section>
+
+        <!-- Events Section -->
+        <section id="events-section" class="events-section">
+          <div class="section-header">
+            <h2 class="section-title">Event Analytics</h2>
+            <div class="section-actions">
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-funnel" aria-hidden="true"></i>
+                Filter
+              </button>
+            </div>
+          </div>
+          <!-- Events will be loaded here -->
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Refresh Loading Overlay -->
+  <div id="refresh-overlay" class="refresh-overlay">
+    <div class="refresh-content">
+      <div class="refresh-icon">
+        <i class="ph ph-arrow-clockwise" aria-hidden="true"></i>
       </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer style="border-top: 1px solid var(--admin-border); background: var(--admin-glass); backdrop-filter: blur(20px); margin-top: 3rem;">
-      <div class="container" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
-        <div class="flex items-center justify-between admin-text-xs" style="flex-wrap: wrap; gap: 1rem;">
-          <div class="flex items-center gap-sm">
-            <i class="ph ph-shield-warning"></i>
-            <span>Development Dashboard</span>
-          </div>
-          <div class="flex items-center gap-sm">
-            <span class="status-dot online"></span>
-            <span>Auto-refresh: 30s</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-
+      <h3 class="refresh-title">Refreshing Data</h3>
+      <p class="refresh-description">Please wait while we update your dashboard...</p>
+    </div>
   </div>
 
   <!-- Chart.js -->

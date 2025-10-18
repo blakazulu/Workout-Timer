@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set up login form
   setupLoginForm();
 
+  // Set up keyboard shortcuts
+  setupKeyboardShortcuts();
+
+  // Set up navigation functionality
+  setupNavigation();
+
+  // Set up refresh functionality
+  setupRefreshButton();
+
+  // Set up logout functionality
+  setupLogoutButton();
+
+  // Set up scroll-based navigation highlighting
+  setupScrollNavigation();
+
   // Clean up on page unload
   window.addEventListener('beforeunload', cleanup);
 });
@@ -84,15 +99,22 @@ function setupLoginForm() {
 
     if (!password) {
       showError('Please enter a password');
+      passwordInput.setAttribute('aria-invalid', 'true');
+      passwordInput.focus();
       return;
     }
 
-    // Disable form during authentication
-    form.classList.add('loading');
+    // Show loading state with enhanced accessibility
     const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn?.querySelector('span');
+    const btnLoading = submitBtn?.querySelector('.btn-loading');
+    
     if (submitBtn) {
+      submitBtn.classList.add('loading');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Authenticating...';
+      submitBtn.setAttribute('aria-label', 'Authenticating...');
+      if (btnText) btnText.style.opacity = '0';
+      if (btnLoading) btnLoading.style.opacity = '1';
     }
 
     // Attempt authentication
@@ -100,9 +122,13 @@ function setupLoginForm() {
       const success = await authenticate(password);
 
       if (success) {
-        // Clear form
+        // Clear form and reset states
         passwordInput.value = '';
+        passwordInput.setAttribute('aria-invalid', 'false');
         hideError();
+
+        // Announce success to screen readers
+        announceToScreenReader('Login successful. Loading dashboard...');
 
         // Show dashboard
         setTimeout(() => {
@@ -111,25 +137,48 @@ function setupLoginForm() {
       } else {
         showError('Invalid password. Please try again.');
         passwordInput.select();
+        passwordInput.setAttribute('aria-invalid', 'true');
+        announceToScreenReader('Login failed. Invalid password.');
 
         // Re-enable form
-        form.classList.remove('loading');
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="ph ph-sign-in"></i> Login';
-        }
+        resetFormState();
       }
     } catch (error) {
       console.error('[Admin] Authentication error:', error);
       showError('An error occurred. Please try again.');
-
+      announceToScreenReader('Login error occurred. Please try again.');
+      
       // Re-enable form
-      form.classList.remove('loading');
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="ph ph-sign-in"></i> Login';
-      }
+      resetFormState();
     }
+  });
+
+  function resetFormState() {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnText = submitBtn?.querySelector('span');
+    const btnLoading = submitBtn?.querySelector('.btn-loading');
+    
+    if (submitBtn) {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+      submitBtn.setAttribute('aria-label', 'Access Dashboard');
+      if (btnText) btnText.style.opacity = '1';
+      if (btnLoading) btnLoading.style.opacity = '0';
+    }
+  }
+
+  // Enhanced keyboard navigation
+  passwordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideError();
+      passwordInput.setAttribute('aria-invalid', 'false');
+    }
+  });
+
+  // Real-time validation feedback
+  passwordInput.addEventListener('input', () => {
+    hideError();
+    passwordInput.setAttribute('aria-invalid', 'false');
   });
 
   /**
@@ -150,4 +199,287 @@ function setupLoginForm() {
       errorDiv.classList.add('hidden');
     }
   }
+}
+
+/**
+ * Set up keyboard shortcuts for enhanced accessibility
+ */
+function setupKeyboardShortcuts() {
+  document.addEventListener('keydown', (e) => {
+    // Only handle shortcuts when not in an input field
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      return;
+    }
+
+    // Ctrl/Cmd + R: Refresh dashboard
+    if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+      e.preventDefault();
+      const refreshBtn = document.getElementById('refresh-btn');
+      if (refreshBtn) {
+        refreshBtn.click();
+        announceToScreenReader('Dashboard refreshed');
+      }
+    }
+
+    // Ctrl/Cmd + L: Focus on logout button
+    if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+      e.preventDefault();
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.focus();
+        announceToScreenReader('Logout button focused');
+      }
+    }
+
+    // Escape: Close any open modals or go back
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('login-modal');
+      if (modal && !modal.classList.contains('hidden')) {
+        // Don't close login modal with Escape for security
+        return;
+      }
+      
+      // Focus on main content
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) {
+        mainContent.focus();
+      }
+    }
+  });
+}
+
+/**
+ * Set up navigation functionality
+ */
+function setupNavigation() {
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sidebar = document.querySelector('.sidebar');
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+
+  // Handle navigation clicks
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Remove active class from all links
+      navLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add active class to clicked link
+      link.classList.add('active');
+      
+      // Get the target section
+      const href = link.getAttribute('href');
+      const targetSection = document.querySelector(href);
+      
+      if (targetSection) {
+        // Scroll to section with smooth behavior
+        targetSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Announce to screen readers
+        const sectionName = link.querySelector('.nav-text').textContent;
+        announceToScreenReader(`Navigated to ${sectionName} section`);
+      }
+      
+      // Close mobile menu if open
+      if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+      }
+    });
+  });
+
+  // Handle mobile menu toggle
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+      if (sidebar) {
+        sidebar.classList.toggle('open');
+        const isOpen = sidebar.classList.contains('open');
+        mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+        announceToScreenReader(isOpen ? 'Mobile menu opened' : 'Mobile menu closed');
+      }
+    });
+  }
+
+  // Handle sidebar toggle
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener('click', () => {
+      if (sidebar) {
+        sidebar.classList.toggle('collapsed');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        sidebarToggle.setAttribute('aria-expanded', !isCollapsed);
+        announceToScreenReader(isCollapsed ? 'Sidebar collapsed' : 'Sidebar expanded');
+      }
+    });
+  }
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (sidebar && sidebar.classList.contains('open')) {
+      if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+}
+
+/**
+ * Set up refresh button functionality
+ */
+function setupRefreshButton() {
+  const refreshBtn = document.getElementById('refresh-btn');
+  const refreshOverlay = document.getElementById('refresh-overlay');
+
+  if (refreshBtn && refreshOverlay) {
+    refreshBtn.addEventListener('click', async () => {
+      // Show refresh overlay
+      refreshOverlay.classList.add('show');
+      refreshBtn.disabled = true;
+      
+      // Announce to screen readers
+      announceToScreenReader('Refreshing dashboard data');
+      
+      try {
+        // Simulate refresh process with minimum 3 seconds
+        const startTime = Date.now();
+        const minDuration = 3000; // 3 seconds minimum
+        
+        // Call the actual refresh function
+        await refreshDashboardData();
+        
+        // Ensure minimum duration
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, minDuration - elapsed);
+        
+        if (remaining > 0) {
+          await new Promise(resolve => setTimeout(resolve, remaining));
+        }
+        
+      } catch (error) {
+        console.error('[Admin] Refresh error:', error);
+        announceToScreenReader('Error refreshing data');
+      } finally {
+        // Hide refresh overlay
+        refreshOverlay.classList.remove('show');
+        refreshBtn.disabled = false;
+        announceToScreenReader('Dashboard data refreshed');
+      }
+    });
+  }
+}
+
+/**
+ * Set up logout button functionality
+ */
+function setupLogoutButton() {
+  const logoutBtn = document.getElementById('logout-btn');
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      // Confirm logout
+      if (confirm('Are you sure you want to sign out?')) {
+        // Call logout function
+        logout();
+        
+        // Announce to screen readers
+        announceToScreenReader('Signing out...');
+        
+        // Redirect to home page after a short delay
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 500);
+      }
+    });
+  }
+}
+
+/**
+ * Refresh dashboard data
+ */
+async function refreshDashboardData() {
+  try {
+    // Import the dashboard refresh function
+    const { renderDashboard } = await import('./admin-dashboard.js');
+    
+    // Call the refresh function
+    await renderDashboard();
+    
+    // Update last refresh time
+    updateLastRefreshTime();
+    
+  } catch (error) {
+    console.error('[Admin] Error refreshing dashboard:', error);
+    throw error;
+  }
+}
+
+/**
+ * Update last refresh time display
+ */
+function updateLastRefreshTime() {
+  const lastRefreshElement = document.getElementById('last-refresh');
+  if (lastRefreshElement) {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    lastRefreshElement.textContent = `Last refreshed: ${timeString}`;
+    lastRefreshElement.classList.remove('sr-only');
+  }
+}
+
+/**
+ * Set up scroll-based navigation highlighting
+ */
+function setupScrollNavigation() {
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+  
+  // Function to update active nav link based on scroll position
+  function updateActiveNavLink() {
+    const scrollPos = window.scrollY + 150; // Offset for header
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id');
+      
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        // Remove active class from all nav links
+        navLinks.forEach(link => link.classList.remove('active'));
+        
+        // Add active class to corresponding nav link
+        const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+        }
+      }
+    });
+  }
+  
+  // Update on scroll
+  window.addEventListener('scroll', updateActiveNavLink);
+  
+  // Update on page load
+  updateActiveNavLink();
+}
+
+/**
+ * Announce messages to screen readers
+ */
+function announceToScreenReader(message) {
+  const announcement = document.createElement('div');
+  announcement.setAttribute('aria-live', 'polite');
+  announcement.setAttribute('aria-atomic', 'true');
+  announcement.className = 'sr-only';
+  announcement.textContent = message;
+  
+  document.body.appendChild(announcement);
+  
+  setTimeout(() => {
+    if (document.body.contains(announcement)) {
+      document.body.removeChild(announcement);
+    }
+  }, 1000);
 }
