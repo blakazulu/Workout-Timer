@@ -639,25 +639,25 @@ export function formatEventName(eventName) {
  */
 export function getEventIcon(eventName) {
   const icons = {
-    "workout_started": "ph-play-circle",
-    "workout_reset": "ph-arrow-counter-clockwise",
-    "rep_completed": "ph-check-circle",
-    "music_played": "ph-music-note",
-    "music_paused": "ph-pause-circle",
-    "music_stopped": "ph-stop-circle",
-    "favorite_removed": "ph-star",
-    "session_started": "ph-sign-in",
-    "session_ended": "ph-sign-out",
-    "app_visible": "ph-eye",
-    "app_hidden": "ph-eye-slash",
-    "search_opened": "ph-magnifying-glass",
-    "genre_selected": "ph-tag",
-    "mood_selected": "ph-smiley",
-    "$pageview": "ph-browsers",
-    "$web_vitals": "ph-gauge"
+    "workout_started": "ph-fill ph-play-circle",
+    "workout_reset": "ph-fill ph-arrow-counter-clockwise",
+    "rep_completed": "ph-fill ph-check-circle",
+    "music_played": "ph-fill ph-music-note",
+    "music_paused": "ph-fill ph-pause-circle",
+    "music_stopped": "ph-fill ph-stop-circle",
+    "favorite_removed": "ph-fill ph-star",
+    "session_started": "ph-fill ph-sign-in",
+    "session_ended": "ph-fill ph-sign-out",
+    "app_visible": "ph-fill ph-eye",
+    "app_hidden": "ph-fill ph-eye-slash",
+    "search_opened": "ph-fill ph-magnifying-glass",
+    "genre_selected": "ph-fill ph-tag",
+    "mood_selected": "ph-fill ph-smiley",
+    "$pageview": "ph-fill ph-browsers",
+    "$web_vitals": "ph-fill ph-gauge"
   };
 
-  return icons[eventName] || "ph-circle";
+  return icons[eventName] || "ph-fill ph-circle";
 }
 
 /**

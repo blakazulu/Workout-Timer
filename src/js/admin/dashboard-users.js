@@ -56,31 +56,16 @@ export function initializeUserModal() {
  * Render users section with list and stats
  */
 export async function renderUsersSection() {
-  const container = document.getElementById("users-section");
-  if (!container) return;
-
   // Show loading state
-  container.innerHTML = `
-    <div class="analytics-grid">
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon total-users">
-              <i class="ph-fill ph-users" aria-hidden="true"></i>
-            </div>
-            <div class="stat-info">
-              <span class="stat-value">Loading...</span>
-              <span class="stat-label">Total Users</span>
-            </div>
-          </div>
-          <div class="stat-change positive">
-            <i class="ph ph-trend-up" aria-hidden="true"></i>
-            <span>Calculating...</span>
-          </div>
-        </div>
+  const usersTable = document.getElementById('users-table');
+  if (usersTable) {
+    usersTable.innerHTML = `
+      <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
+        <i class="ph ph-spinner" style="font-size: 3rem; animation: spin 1s linear infinite;"></i>
+        <p style="margin-top: 1rem;">Loading users...</p>
       </div>
-    </div>
-  `;
+    `;
+  }
 
   try {
     // Fetch all user data
@@ -92,7 +77,7 @@ export async function renderUsersSection() {
 
     // Update the stats in the existing analytics section
     updateUserStats(users, engagement, cohorts);
-    
+
     // Populate the users table
     populateUsersTable(users);
 
@@ -121,6 +106,16 @@ function updateUserStats(users, engagement, cohorts) {
 function populateUsersTable(users) {
   const usersTable = document.getElementById('users-table');
   if (!usersTable) return;
+
+  if (!users || users.length === 0) {
+    usersTable.innerHTML = `
+      <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
+        <i class="ph ph-users" style="font-size: 3rem; opacity: 0.3;"></i>
+        <p style="margin-top: 1rem;">No users found</p>
+      </div>
+    `;
+    return;
+  }
 
   usersTable.innerHTML = users.map(user => {
     const engagementLevel = user.totalEvents >= 50 ? "power" : user.totalEvents >= 10 ? "active" : "casual";
@@ -157,23 +152,14 @@ function populateUsersTable(users) {
  * Show error state
  */
 function showUsersError(error) {
-  const container = document.getElementById("users-section");
-  if (!container) return;
+  const usersTable = document.getElementById('users-table');
+  if (!usersTable) return;
 
-  container.innerHTML = `
-    <div class="analytics-grid">
-      <div class="table-card">
-        <div class="table-header">
-          <h3>User Analytics</h3>
-        </div>
-        <div class="table-container">
-          <div style="text-align: center; padding: 3rem; color: var(--error-500);">
-            <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-            <h3 style="margin-bottom: 0.5rem;">Failed to load users</h3>
-            <p style="color: var(--text-tertiary); font-size: 0.875rem;">${error.message}</p>
-          </div>
-        </div>
-      </div>
+  usersTable.innerHTML = `
+    <div style="text-align: center; padding: 3rem; color: var(--error-500);">
+      <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+      <h3 style="margin-bottom: 0.5rem;">Failed to load users</h3>
+      <p style="color: var(--text-tertiary); font-size: 0.875rem;">${error.message}</p>
     </div>
   `;
 }
