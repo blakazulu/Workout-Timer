@@ -8,7 +8,7 @@
  * See: /netlify/functions/posthog-proxy.js
  */
 
-const PROJECT_ID = '235590'; // Your PostHog project ID
+const PROJECT_ID = "235590"; // Your PostHog project ID
 
 /**
  * Query PostHog API via Netlify function proxy
@@ -17,12 +17,12 @@ const PROJECT_ID = '235590'; // Your PostHog project ID
  */
 export async function queryPostHog(query) {
   try {
-    const response = await fetch('/.netlify/functions/posthog-proxy', {
-      method: 'POST',
+    const response = await fetch("/.netlify/functions/posthog-proxy", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ query })
+      body: JSON.stringify({query})
     });
 
     if (!response.ok) {
@@ -33,7 +33,7 @@ export async function queryPostHog(query) {
     return data;
 
   } catch (error) {
-    console.error('[PostHog Client] Query failed:', error);
+    console.error("[PostHog Client] Query failed:", error);
     throw error;
   }
 }
@@ -45,7 +45,7 @@ export async function queryPostHog(query) {
  */
 function parseTrendResults(results) {
   if (!results || !results.results || results.results.length === 0) {
-    return { labels: [], datasets: [] };
+    return {labels: [], datasets: []};
   }
 
   return {
@@ -69,36 +69,36 @@ function parseTrendResults(results) {
  */
 export async function getWorkoutTrend(days = 7) {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'TrendsQuery',
+      kind: "TrendsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'workout_started',
-          custom_name: 'Workouts Started',
-          math: 'total'
+          kind: "EventsNode",
+          event: "workout_started",
+          custom_name: "Workouts Started",
+          math: "total"
         },
         {
-          kind: 'EventsNode',
-          event: 'rep_completed',
-          custom_name: 'Reps Completed',
-          math: 'total'
+          kind: "EventsNode",
+          event: "rep_completed",
+          custom_name: "Reps Completed",
+          math: "total"
         },
         {
-          kind: 'EventsNode',
-          event: 'workout_reset',
-          custom_name: 'Resets',
-          math: 'total'
+          kind: "EventsNode",
+          event: "workout_reset",
+          custom_name: "Resets",
+          math: "total"
         }
       ],
-      interval: 'day',
+      interval: "day",
       dateRange: {
         date_from: `-${days}d`,
         date_to: null
       },
       trendsFilter: {
-        display: 'ActionsLineGraph'
+        display: "ActionsLineGraph"
       }
     }
   };
@@ -114,36 +114,36 @@ export async function getWorkoutTrend(days = 7) {
  */
 export async function getMusicTrend(days = 7) {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'TrendsQuery',
+      kind: "TrendsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'music_played',
-          custom_name: 'Songs Played',
-          math: 'total'
+          kind: "EventsNode",
+          event: "music_played",
+          custom_name: "Songs Played",
+          math: "total"
         },
         {
-          kind: 'EventsNode',
-          event: 'music_paused',
-          custom_name: 'Paused',
-          math: 'total'
+          kind: "EventsNode",
+          event: "music_paused",
+          custom_name: "Paused",
+          math: "total"
         },
         {
-          kind: 'EventsNode',
-          event: 'favorite_removed',
-          custom_name: 'Favorites',
-          math: 'total'
+          kind: "EventsNode",
+          event: "favorite_removed",
+          custom_name: "Favorites",
+          math: "total"
         }
       ],
-      interval: 'day',
+      interval: "day",
       dateRange: {
         date_from: `-${days}d`,
         date_to: null
       },
       trendsFilter: {
-        display: 'ActionsLineGraph'
+        display: "ActionsLineGraph"
       }
     }
   };
@@ -159,24 +159,24 @@ export async function getMusicTrend(days = 7) {
  */
 export async function getDailyActiveUsers(days = 30) {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'TrendsQuery',
+      kind: "TrendsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'session_started',
-          custom_name: 'Daily Active Users',
-          math: 'dau'  // Daily Active Users calculation
+          kind: "EventsNode",
+          event: "session_started",
+          custom_name: "Daily Active Users",
+          math: "dau"  // Daily Active Users calculation
         }
       ],
-      interval: 'day',
+      interval: "day",
       dateRange: {
         date_from: `-${days}d`,
         date_to: null
       },
       trendsFilter: {
-        display: 'ActionsLineGraph'
+        display: "ActionsLineGraph"
       }
     }
   };
@@ -192,27 +192,27 @@ export async function getDailyActiveUsers(days = 30) {
  */
 export async function getMusicGenreBreakdown(days = 30) {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'TrendsQuery',
+      kind: "TrendsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'genre_selected',
-          custom_name: 'Genre Plays',
-          math: 'total'
+          kind: "EventsNode",
+          event: "genre_selected",
+          custom_name: "Genre Plays",
+          math: "total"
         }
       ],
       breakdownFilter: {
-        breakdown: 'genre',
-        breakdown_type: 'event'
+        breakdown: "genre",
+        breakdown_type: "event"
       },
       dateRange: {
         date_from: `-${days}d`,
         date_to: null
       },
       trendsFilter: {
-        display: 'ActionsPie'
+        display: "ActionsPie"
       }
     }
   };
@@ -222,7 +222,7 @@ export async function getMusicGenreBreakdown(days = 30) {
   // Format for pie chart
   if (results.results) {
     const genreData = results.results.map(result => ({
-      genre: result.breakdown_value || 'Unknown',
+      genre: result.breakdown_value || "Unknown",
       count: result.count
     }));
 
@@ -232,7 +232,7 @@ export async function getMusicGenreBreakdown(days = 30) {
     };
   }
 
-  return { labels: [], data: [] };
+  return {labels: [], data: []};
 }
 
 /**
@@ -241,33 +241,33 @@ export async function getMusicGenreBreakdown(days = 30) {
  */
 export async function getWorkoutFunnel() {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'FunnelsQuery',
+      kind: "FunnelsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'session_started',
-          custom_name: 'Session Started'
+          kind: "EventsNode",
+          event: "session_started",
+          custom_name: "Session Started"
         },
         {
-          kind: 'EventsNode',
-          event: 'workout_started',
-          custom_name: 'Workout Started'
+          kind: "EventsNode",
+          event: "workout_started",
+          custom_name: "Workout Started"
         },
         {
-          kind: 'EventsNode',
-          event: 'rep_completed',
-          custom_name: 'Rep Completed'
+          kind: "EventsNode",
+          event: "rep_completed",
+          custom_name: "Rep Completed"
         }
       ],
       funnelsFilter: {
         funnelWindowInterval: 30,
-        funnelWindowIntervalUnit: 'minute',
-        funnelVizType: 'steps'
+        funnelWindowIntervalUnit: "minute",
+        funnelVizType: "steps"
       },
       dateRange: {
-        date_from: '-30d',
+        date_from: "-30d",
         date_to: null
       }
     }
@@ -295,9 +295,9 @@ export async function getWorkoutFunnel() {
  */
 export async function getTopEvents(days = 30, limit = 10) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           event,
@@ -330,9 +330,9 @@ export async function getTopEvents(days = 30, limit = 10) {
  */
 export async function getSessionDurations(days = 30) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           avg(properties.duration) as avg_duration,
@@ -358,7 +358,7 @@ export async function getSessionDurations(days = 30) {
     };
   }
 
-  return { average: 0, minimum: 0, maximum: 0, median: 0 };
+  return {average: 0, minimum: 0, maximum: 0, median: 0};
 }
 
 /**
@@ -368,9 +368,9 @@ export async function getSessionDurations(days = 30) {
  */
 export async function getKeyMetrics(days = 30) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           countIf(event = 'workout_started') as total_workouts,
@@ -415,9 +415,9 @@ export async function getKeyMetrics(days = 30) {
  */
 export async function getRecentActivity(limit = 50) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           event,
@@ -450,24 +450,24 @@ export async function getRecentActivity(limit = 50) {
  */
 export async function getAppVisibilityStats(days = 7) {
   const query = {
-    kind: 'InsightVizNode',
+    kind: "InsightVizNode",
     source: {
-      kind: 'TrendsQuery',
+      kind: "TrendsQuery",
       series: [
         {
-          kind: 'EventsNode',
-          event: 'app_visible',
-          custom_name: 'App Visible',
-          math: 'total'
+          kind: "EventsNode",
+          event: "app_visible",
+          custom_name: "App Visible",
+          math: "total"
         },
         {
-          kind: 'EventsNode',
-          event: 'app_hidden',
-          custom_name: 'App Hidden',
-          math: 'total'
+          kind: "EventsNode",
+          event: "app_hidden",
+          custom_name: "App Hidden",
+          math: "total"
         }
       ],
-      interval: 'day',
+      interval: "day",
       dateRange: {
         date_from: `-${days}d`,
         date_to: null
@@ -486,9 +486,9 @@ export async function getAppVisibilityStats(days = 7) {
  */
 export async function getPWAStats(days = 30) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           countIf(event = 'pwa_install_prompt_shown') as prompts_shown,
@@ -564,7 +564,7 @@ export async function getDashboardData() {
     };
 
   } catch (error) {
-    console.error('[PostHog Client] Failed to load dashboard data:', error);
+    console.error("[PostHog Client] Failed to load dashboard data:", error);
     throw error;
   }
 }
@@ -595,7 +595,7 @@ export async function exportAllData() {
     genres,
     visibility,
     pwa: pwaStats,
-    source: 'PostHog Analytics',
+    source: "PostHog Analytics",
     projectId: PROJECT_ID
   };
 }
@@ -611,22 +611,22 @@ export async function exportAllData() {
  */
 export function formatEventName(eventName) {
   const eventNames = {
-    'workout_started': 'Workout Started',
-    'workout_reset': 'Workout Reset',
-    'rep_completed': 'Rep Completed',
-    'music_played': 'Music Played',
-    'music_paused': 'Music Paused',
-    'music_stopped': 'Music Stopped',
-    'favorite_removed': 'Favorite Removed',
-    'session_started': 'Session Started',
-    'session_ended': 'Session Ended',
-    'app_visible': 'App Visible',
-    'app_hidden': 'App Hidden',
-    'search_opened': 'Search Opened',
-    'genre_selected': 'Genre Selected',
-    'mood_selected': 'Mood Selected',
-    '$pageview': 'Page View',
-    '$web_vitals': 'Web Vitals'
+    "workout_started": "Workout Started",
+    "workout_reset": "Workout Reset",
+    "rep_completed": "Rep Completed",
+    "music_played": "Music Played",
+    "music_paused": "Music Paused",
+    "music_stopped": "Music Stopped",
+    "favorite_removed": "Favorite Removed",
+    "session_started": "Session Started",
+    "session_ended": "Session Ended",
+    "app_visible": "App Visible",
+    "app_hidden": "App Hidden",
+    "search_opened": "Search Opened",
+    "genre_selected": "Genre Selected",
+    "mood_selected": "Mood Selected",
+    "$pageview": "Page View",
+    "$web_vitals": "Web Vitals"
   };
 
   return eventNames[eventName] || eventName;
@@ -639,25 +639,25 @@ export function formatEventName(eventName) {
  */
 export function getEventIcon(eventName) {
   const icons = {
-    'workout_started': 'ph-play-circle',
-    'workout_reset': 'ph-arrow-counter-clockwise',
-    'rep_completed': 'ph-check-circle',
-    'music_played': 'ph-music-note',
-    'music_paused': 'ph-pause-circle',
-    'music_stopped': 'ph-stop-circle',
-    'favorite_removed': 'ph-star',
-    'session_started': 'ph-sign-in',
-    'session_ended': 'ph-sign-out',
-    'app_visible': 'ph-eye',
-    'app_hidden': 'ph-eye-slash',
-    'search_opened': 'ph-magnifying-glass',
-    'genre_selected': 'ph-tag',
-    'mood_selected': 'ph-smiley',
-    '$pageview': 'ph-browsers',
-    '$web_vitals': 'ph-gauge'
+    "workout_started": "ph-play-circle",
+    "workout_reset": "ph-arrow-counter-clockwise",
+    "rep_completed": "ph-check-circle",
+    "music_played": "ph-music-note",
+    "music_paused": "ph-pause-circle",
+    "music_stopped": "ph-stop-circle",
+    "favorite_removed": "ph-star",
+    "session_started": "ph-sign-in",
+    "session_ended": "ph-sign-out",
+    "app_visible": "ph-eye",
+    "app_hidden": "ph-eye-slash",
+    "search_opened": "ph-magnifying-glass",
+    "genre_selected": "ph-tag",
+    "mood_selected": "ph-smiley",
+    "$pageview": "ph-browsers",
+    "$web_vitals": "ph-gauge"
   };
 
-  return icons[eventName] || 'ph-circle';
+  return icons[eventName] || "ph-circle";
 }
 
 /**
@@ -668,9 +668,9 @@ export function getEventIcon(eventName) {
  */
 export async function getUsers(days = 30, limit = 100) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           distinct_id,
@@ -716,9 +716,9 @@ export async function getUsers(days = 30, limit = 100) {
  */
 export async function getUserActivity(userId, limit = 50) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           event,
@@ -752,9 +752,9 @@ export async function getUserActivity(userId, limit = 50) {
  */
 export async function getUserCohorts(days = 30) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           countIf(sessions = 1) as new_users,
@@ -784,7 +784,7 @@ export async function getUserCohorts(days = 30) {
     };
   }
 
-  return { newUsers: 0, returningUsers: 0, totalUsers: 0, returnRate: 0 };
+  return {newUsers: 0, returningUsers: 0, totalUsers: 0, returnRate: 0};
 }
 
 /**
@@ -794,9 +794,9 @@ export async function getUserCohorts(days = 30) {
  */
 export async function getUserEngagement(days = 30) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           countIf(total_events >= 50) as power_users,
@@ -825,7 +825,7 @@ export async function getUserEngagement(days = 30) {
       activeUsers: activeUsers || 0,
       casualUsers: casualUsers || 0,
       total,
-      labels: ['Power Users (50+ events)', 'Active Users (10-49 events)', 'Casual Users (<10 events)'],
+      labels: ["Power Users (50+ events)", "Active Users (10-49 events)", "Casual Users (<10 events)"],
       data: [powerUsers || 0, activeUsers || 0, casualUsers || 0]
     };
   }
@@ -847,9 +847,9 @@ export async function getUserEngagement(days = 30) {
  */
 export async function getUserRetention(days = 7) {
   const query = {
-    kind: 'DataVisualizationNode',
+    kind: "DataVisualizationNode",
     source: {
-      kind: 'HogQLQuery',
+      kind: "HogQLQuery",
       query: `
         SELECT
           toDate(timestamp) as date,
@@ -880,22 +880,22 @@ export async function getUserRetention(days = 7) {
  */
 export async function checkProxyHealth() {
   try {
-    const response = await fetch('/.netlify/functions/posthog-proxy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/.netlify/functions/posthog-proxy", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         query: {
-          kind: 'TrendsQuery',
-          series: [{ event: '$pageview', math: 'total' }],
-          interval: 'day',
-          dateRange: { date_from: '-1d' }
+          kind: "TrendsQuery",
+          series: [{event: "$pageview", math: "total"}],
+          interval: "day",
+          dateRange: {date_from: "-1d"}
         }
       })
     });
 
     return response.ok;
   } catch (error) {
-    console.error('[PostHog Client] Proxy health check failed:', error);
+    console.error("[PostHog Client] Proxy health check failed:", error);
     return false;
   }
 }
