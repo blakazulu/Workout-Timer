@@ -417,14 +417,20 @@ function renderSessions(activity) {
     `;
   }
 
+  // Events come in reverse chronological order (newest first)
+  // Reverse them to process chronologically
+  const chronologicalActivity = [...activity].reverse();
+
   // Group events by session (session_started to session_ended or next session_started)
   const sessions = [];
   let currentSession = null;
 
-  activity.forEach((event, index) => {
+  chronologicalActivity.forEach((event, index) => {
     if (event.event === 'session_started' || event.event === 'app_visible') {
       // Start new session
       if (currentSession) {
+        // Previous session ended without explicit end event
+        currentSession.endTime = event.timestamp; // Use next session start as end time
         sessions.push(currentSession);
       }
       currentSession = {
@@ -448,9 +454,13 @@ function renderSessions(activity) {
 
   // Push last session if still open
   if (currentSession) {
-    currentSession.endTime = new Date(); // Mark as ongoing
+    // Session is still ongoing, use current time as end
+    currentSession.endTime = new Date();
     sessions.push(currentSession);
   }
+
+  // Reverse sessions to show most recent first
+  sessions.reverse();
 
   console.log('[renderSessions] Found', sessions.length, 'sessions');
 
@@ -466,7 +476,15 @@ function renderSessions(activity) {
   const html = sessions.map((session, index) => {
     console.log(`[renderSessions] Session ${index}:`, session);
 
-    const duration = Math.floor((session.endTime - session.startTime) / 1000 / 60); // minutes
+    // Calculate duration, ensuring we have valid dates
+    const startTime = session.startTime instanceof Date ? session.startTime : new Date(session.startTime);
+    const endTime = session.endTime instanceof Date ? session.endTime : new Date(session.endTime);
+
+    const durationMs = endTime - startTime;
+    const duration = Math.max(0, Math.floor(durationMs / 1000 / 60)); // minutes, ensure positive
+
+    console.log(`[renderSessions] Session ${index} duration: ${duration} min (${durationMs}ms)`);
+
     const date = new Date(session.startTime);
     const dateStr = date.toLocaleDateString();
     const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -481,7 +499,7 @@ function renderSessions(activity) {
           <i class="ph-fill ph-calendar-check" aria-hidden="true"></i>
         </div>
         <div class="timeline-content">
-          <div class="timeline-title">Session ${sessions.length - index}</div>
+          <div class="timeline-title">Session ${index + 1}</div>
           <div class="timeline-description">
             ${duration} min • ${workouts} workouts • ${songs} songs
           </div>
