@@ -9,18 +9,31 @@ import * as posthog from "./posthog-client.js";
  * Render events section with breakdown and statistics
  */
 export async function renderEventsSection() {
+  console.log('[Events Section] ========== STARTING renderEventsSection ==========');
+
   const container = document.getElementById("events-section");
-  if (!container) return;
+  console.log('[Events Section] events-section element:', container);
+
+  if (!container) {
+    console.error('[Events Section] events-section element NOT FOUND!');
+    return;
+  }
 
   try {
+    console.log('[Events Section] Fetching data from PostHog...');
+
     // Get top events and recent activity
     const [topEvents, recentActivity] = await Promise.all([
       posthog.getTopEvents(30, 20),
       posthog.getRecentActivity(100)
     ]);
 
+    console.log('[Events Section] Fetched topEvents:', topEvents);
+    console.log('[Events Section] Fetched recentActivity:', recentActivity);
+
     // Calculate event statistics
     const stats = calculateEventStats(topEvents);
+    console.log('[Events Section] Calculated stats:', stats);
 
     // Update the stats in the existing analytics section
     updateEventStats(stats);
@@ -28,8 +41,12 @@ export async function renderEventsSection() {
     // Populate the events table
     populateEventsTable(recentActivity);
 
+    console.log('[Events Section] ========== COMPLETED renderEventsSection ==========');
+
   } catch (error) {
-    console.error("[Events Section] Error loading events:", error);
+    console.error("[Events Section] ========== ERROR in renderEventsSection ==========");
+    console.error("[Events Section] Error:", error);
+    console.error("[Events Section] Error stack:", error.stack);
     showEventsError(error);
   }
 }

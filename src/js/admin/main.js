@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupScrollNavigation();
 
   // Set up user journey modal
-  setupUserJourneyModal();
+  // DISABLED: Using PostHog-integrated modal initialization from admin-dashboard.js instead
+  // setupUserJourneyModal();
 
   // Load sample data
   loadSampleData();
@@ -626,7 +627,8 @@ function setupUserJourneyModal() {
   });
 
   // Make openUserModal globally available
-  window.openUserModal = openUserModal;
+  // DISABLED: Using PostHog-integrated version from dashboard-users.js instead
+  // window.openUserModal = openUserModal;
 }
 
 /**
