@@ -429,13 +429,91 @@
           <div class="section-header">
             <h2 class="section-title">User Analytics</h2>
             <div class="section-actions">
-              <button class="btn btn-ghost btn-sm">
+              <div class="search-box">
                 <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                Search
+                <input type="text" placeholder="Search users..." class="search-input">
+              </div>
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-funnel" aria-hidden="true"></i>
+                Filter
+              </button>
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-download-simple" aria-hidden="true"></i>
+                Export
               </button>
             </div>
           </div>
-          <!-- Users will be loaded here -->
+          
+          <div class="analytics-grid">
+            <!-- User Stats Cards -->
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon total-users">
+                    <i class="ph-fill ph-users" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="total-users-count">0</span>
+                    <span class="stat-label">Total Users</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+12% this week</span>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon active-users">
+                    <i class="ph-fill ph-user-circle" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="active-users-count">0</span>
+                    <span class="stat-label">Active Users</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+8% this week</span>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon new-users">
+                    <i class="ph-fill ph-user-plus" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="new-users-count">0</span>
+                    <span class="stat-label">New Users</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+15% this week</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Users Table -->
+            <div class="table-card">
+              <div class="table-header">
+                <h3>Recent Users</h3>
+                <div class="table-actions">
+                  <button class="btn btn-ghost btn-sm">
+                    <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+                    Refresh
+                  </button>
+                </div>
+              </div>
+              <div class="table-container">
+                <div id="users-table" class="users-table">
+                  <!-- Users will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- Events Section -->
@@ -443,13 +521,91 @@
           <div class="section-header">
             <h2 class="section-title">Event Analytics</h2>
             <div class="section-actions">
+              <div class="search-box">
+                <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" placeholder="Search events..." class="search-input">
+              </div>
               <button class="btn btn-ghost btn-sm">
                 <i class="ph ph-funnel" aria-hidden="true"></i>
                 Filter
               </button>
+              <button class="btn btn-ghost btn-sm">
+                <i class="ph ph-download-simple" aria-hidden="true"></i>
+                Export
+              </button>
             </div>
           </div>
-          <!-- Events will be loaded here -->
+          
+          <div class="analytics-grid">
+            <!-- Event Stats Cards -->
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon total-events">
+                    <i class="ph-fill ph-calendar" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="total-events-count">0</span>
+                    <span class="stat-label">Total Events</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+25% this week</span>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon session-events">
+                    <i class="ph-fill ph-play" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="session-events-count">0</span>
+                    <span class="stat-label">Session Events</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+18% this week</span>
+                </div>
+              </div>
+              
+              <div class="stat-card">
+                <div class="stat-header">
+                  <div class="stat-icon music-events">
+                    <i class="ph-fill ph-music-notes" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="music-events-count">0</span>
+                    <span class="stat-label">Music Events</span>
+                  </div>
+                </div>
+                <div class="stat-change positive">
+                  <i class="ph ph-trend-up" aria-hidden="true"></i>
+                  <span>+22% this week</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Events Table -->
+            <div class="table-card">
+              <div class="table-header">
+                <h3>Recent Events</h3>
+                <div class="table-actions">
+                  <button class="btn btn-ghost btn-sm">
+                    <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+                    Refresh
+                  </button>
+                </div>
+              </div>
+              <div class="table-container">
+                <div id="events-table" class="events-table">
+                  <!-- Events will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
       </main>
@@ -464,6 +620,84 @@
       </div>
       <h3 class="refresh-title">Refreshing Data</h3>
       <p class="refresh-description">Please wait while we update your dashboard...</p>
+    </div>
+  </div>
+
+  <!-- User Journey Modal -->
+  <div id="user-journey-modal" class="user-modal" role="dialog" aria-labelledby="user-modal-title" aria-modal="true">
+    <div class="user-modal-backdrop" aria-hidden="true"></div>
+    <div class="user-modal-content">
+      <div class="user-modal-header">
+        <div class="user-info-header">
+          <div class="user-avatar-large">
+            <i class="ph-fill ph-user" aria-hidden="true"></i>
+          </div>
+          <div class="user-details">
+            <h2 id="user-modal-title" class="user-name">User Journey</h2>
+            <p class="user-id">ID: <span id="user-id-display">Loading...</span></p>
+            <div class="user-stats">
+              <div class="user-stat">
+                <span class="stat-value" id="user-total-sessions">0</span>
+                <span class="stat-label">Total Sessions</span>
+              </div>
+              <div class="user-stat">
+                <span class="stat-value" id="user-total-time">0h</span>
+                <span class="stat-label">Total Time</span>
+              </div>
+              <div class="user-stat">
+                <span class="stat-value" id="user-last-seen">Never</span>
+                <span class="stat-label">Last Seen</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="user-modal-close" aria-label="Close user journey">
+          <i class="ph ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <div class="user-modal-body">
+        <div class="journey-tabs">
+          <button class="journey-tab active" data-tab="timeline">
+            <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+            <span>Timeline</span>
+          </button>
+          <button class="journey-tab" data-tab="sessions">
+            <i class="ph-fill ph-play" aria-hidden="true"></i>
+            <span>Sessions</span>
+          </button>
+          <button class="journey-tab" data-tab="preferences">
+            <i class="ph-fill ph-heart" aria-hidden="true"></i>
+            <span>Preferences</span>
+          </button>
+        </div>
+        
+        <div class="journey-content">
+          <div id="timeline-tab" class="journey-tab-content active">
+            <div class="timeline-container">
+              <div id="user-timeline" class="user-timeline">
+                <!-- Timeline events will be loaded here -->
+              </div>
+            </div>
+          </div>
+          
+          <div id="sessions-tab" class="journey-tab-content">
+            <div class="sessions-container">
+              <div id="user-sessions" class="user-sessions">
+                <!-- User sessions will be loaded here -->
+              </div>
+            </div>
+          </div>
+          
+          <div id="preferences-tab" class="journey-tab-content">
+            <div class="preferences-container">
+              <div id="user-preferences" class="user-preferences">
+                <!-- User preferences will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

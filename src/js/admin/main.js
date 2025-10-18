@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up scroll-based navigation highlighting
   setupScrollNavigation();
 
+  // Set up user journey modal
+  setupUserJourneyModal();
+
+  // Load sample data
+  loadSampleData();
+
   // Clean up on page unload
   window.addEventListener("beforeunload", cleanup);
 });
@@ -158,9 +164,9 @@ function setupLoginForm() {
     const btnText = submitBtn?.querySelector("span");
     const btnLoading = submitBtn?.querySelector(".btn-loading");
 
-    if (submitBtn) {
+      if (submitBtn) {
       submitBtn.classList.remove("loading");
-      submitBtn.disabled = false;
+        submitBtn.disabled = false;
       submitBtn.setAttribute("aria-label", "Access Dashboard");
       if (btnText) btnText.style.opacity = "1";
       if (btnLoading) btnLoading.style.opacity = "0";
@@ -463,6 +469,338 @@ function setupScrollNavigation() {
 
   // Update on page load
   updateActiveNavLink();
+}
+
+/**
+ * Set up user journey modal functionality
+ */
+function setupUserJourneyModal() {
+  const userModal = document.getElementById('user-journey-modal');
+  const userModalClose = document.querySelector('.user-modal-close');
+  const userModalBackdrop = document.querySelector('.user-modal-backdrop');
+  const journeyTabs = document.querySelectorAll('.journey-tab');
+  const journeyTabContents = document.querySelectorAll('.journey-tab-content');
+
+  // Close modal functions
+  function closeUserModal() {
+    if (userModal) {
+      userModal.classList.remove('show');
+      document.body.style.overflow = '';
+      announceToScreenReader('User journey modal closed');
+    }
+  }
+
+  // Open modal function
+  function openUserModal(userData) {
+    if (userModal) {
+      // Populate user data
+      populateUserData(userData);
+      
+      // Show modal
+      userModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      
+      // Focus on close button
+      setTimeout(() => {
+        if (userModalClose) {
+          userModalClose.focus();
+        }
+      }, 100);
+      
+      announceToScreenReader(`User journey opened for ${userData.name || 'User'}`);
+    }
+  }
+
+  // Populate user data in modal
+  function populateUserData(userData) {
+    const userIdDisplay = document.getElementById('user-id-display');
+    const userTotalSessions = document.getElementById('user-total-sessions');
+    const userTotalTime = document.getElementById('user-total-time');
+    const userLastSeen = document.getElementById('user-last-seen');
+
+    if (userIdDisplay) userIdDisplay.textContent = userData.id || 'Unknown';
+    if (userTotalSessions) userTotalSessions.textContent = userData.totalSessions || '0';
+    if (userTotalTime) userTotalTime.textContent = userData.totalTime || '0h';
+    if (userLastSeen) userLastSeen.textContent = userData.lastSeen || 'Never';
+
+    // Populate timeline, sessions, and preferences
+    populateUserTimeline(userData.timeline || []);
+    populateUserSessions(userData.sessions || []);
+    populateUserPreferences(userData.preferences || {});
+  }
+
+  // Populate user timeline
+  function populateUserTimeline(timeline) {
+    const timelineContainer = document.getElementById('user-timeline');
+    if (!timelineContainer) return;
+
+    timelineContainer.innerHTML = timeline.map(event => `
+      <div class="timeline-event">
+        <div class="timeline-icon">
+          <i class="ph-fill ph-${event.icon || 'circle'}" aria-hidden="true"></i>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-title">${event.title || 'Event'}</div>
+          <div class="timeline-description">${event.description || 'No description'}</div>
+          <div class="timeline-time">${event.time || 'Unknown time'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Populate user sessions
+  function populateUserSessions(sessions) {
+    const sessionsContainer = document.getElementById('user-sessions');
+    if (!sessionsContainer) return;
+
+    sessionsContainer.innerHTML = sessions.map(session => `
+      <div class="session-item">
+        <div class="session-icon">
+          <i class="ph-fill ph-play" aria-hidden="true"></i>
+        </div>
+        <div class="session-content">
+          <div class="session-title">${session.title || 'Workout Session'}</div>
+          <div class="session-description">${session.description || 'No description'}</div>
+          <div class="session-time">${session.duration || 'Unknown duration'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Populate user preferences
+  function populateUserPreferences(preferences) {
+    const preferencesContainer = document.getElementById('user-preferences');
+    if (!preferencesContainer) return;
+
+    const prefs = Object.entries(preferences).map(([key, value]) => `
+      <div class="preference-item">
+        <div class="preference-icon">
+          <i class="ph-fill ph-heart" aria-hidden="true"></i>
+        </div>
+        <div class="preference-content">
+          <div class="preference-title">${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</div>
+          <div class="preference-description">${value}</div>
+        </div>
+      </div>
+    `).join('');
+
+    preferencesContainer.innerHTML = prefs || '<div class="preference-item"><div class="preference-content"><div class="preference-title">No preferences available</div></div></div>';
+  }
+
+  // Event listeners
+  if (userModalClose) {
+    userModalClose.addEventListener('click', closeUserModal);
+  }
+
+  if (userModalBackdrop) {
+    userModalBackdrop.addEventListener('click', closeUserModal);
+  }
+
+  // Journey tab switching
+  journeyTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.getAttribute('data-tab');
+      
+      // Remove active class from all tabs and contents
+      journeyTabs.forEach(t => t.classList.remove('active'));
+      journeyTabContents.forEach(content => content.classList.remove('active'));
+      
+      // Add active class to clicked tab and corresponding content
+      tab.classList.add('active');
+      const targetContent = document.getElementById(`${targetTab}-tab`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+      
+      announceToScreenReader(`Switched to ${tab.textContent.trim()} tab`);
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (userModal && userModal.classList.contains('show')) {
+      if (e.key === 'Escape') {
+        closeUserModal();
+      }
+    }
+  });
+
+  // Make openUserModal globally available
+  window.openUserModal = openUserModal;
+}
+
+/**
+ * Load sample data for analytics sections
+ */
+function loadSampleData() {
+  // Sample users data
+  const sampleUsers = [
+    {
+      id: 'user_001',
+      name: 'Alex Johnson',
+      status: 'active',
+      lastSeen: '2 hours ago',
+      totalSessions: 45,
+      totalTime: '12h 30m',
+      timeline: [
+        { icon: 'play', title: 'Started Workout', description: 'High-intensity cardio session', time: '2 hours ago' },
+        { icon: 'heart', title: 'Favorited Song', description: 'Added "Eye of the Tiger" to favorites', time: '3 hours ago' },
+        { icon: 'timer', title: 'Completed Session', description: 'Finished 30-minute workout', time: '1 day ago' }
+      ],
+      sessions: [
+        { title: 'Morning Cardio', description: 'High-intensity interval training', duration: '30 min' },
+        { title: 'Evening Strength', description: 'Upper body strength training', duration: '45 min' }
+      ],
+      preferences: {
+        favoriteGenre: 'Electronic',
+        workoutDuration: '30-45 minutes',
+        musicVolume: 'High'
+      }
+    },
+    {
+      id: 'user_002',
+      name: 'Sarah Chen',
+      status: 'active',
+      lastSeen: '1 hour ago',
+      totalSessions: 32,
+      totalTime: '8h 15m',
+      timeline: [
+        { icon: 'music-notes', title: 'Changed Genre', description: 'Switched to Rock music', time: '1 hour ago' },
+        { icon: 'play', title: 'Started Workout', description: 'Yoga session', time: '2 hours ago' }
+      ],
+      sessions: [
+        { title: 'Yoga Flow', description: 'Gentle yoga practice', duration: '25 min' },
+        { title: 'Meditation', description: 'Mindfulness meditation', duration: '15 min' }
+      ],
+      preferences: {
+        favoriteGenre: 'Rock',
+        workoutDuration: '20-30 minutes',
+        musicVolume: 'Medium'
+      }
+    },
+    {
+      id: 'user_003',
+      name: 'Mike Rodriguez',
+      status: 'inactive',
+      lastSeen: '3 days ago',
+      totalSessions: 18,
+      totalTime: '6h 45m',
+      timeline: [
+        { icon: 'timer', title: 'Completed Session', description: 'Full body workout', time: '3 days ago' },
+        { icon: 'heart', title: 'Favorited Song', description: 'Added "Stronger" to favorites', time: '5 days ago' }
+      ],
+      sessions: [
+        { title: 'Full Body HIIT', description: 'High-intensity full body workout', duration: '40 min' }
+      ],
+      preferences: {
+        favoriteGenre: 'Pop',
+        workoutDuration: '35-45 minutes',
+        musicVolume: 'High'
+      }
+    }
+  ];
+
+  // Sample events data
+  const sampleEvents = [
+    {
+      id: 'event_001',
+      name: 'Session Started',
+      type: 'session',
+      status: 'active',
+      time: '2 hours ago',
+      description: 'User started a new workout session'
+    },
+    {
+      id: 'event_002',
+      name: 'Music Changed',
+      type: 'music',
+      status: 'active',
+      time: '3 hours ago',
+      description: 'User changed music genre to Electronic'
+    },
+    {
+      id: 'event_003',
+      name: 'Session Completed',
+      type: 'session',
+      status: 'completed',
+      time: '1 day ago',
+      description: 'User completed a 30-minute workout'
+    }
+  ];
+
+  // Populate users table
+  populateUsersTable(sampleUsers);
+  
+  // Populate events table
+  populateEventsTable(sampleEvents);
+  
+  // Update stats
+  updateAnalyticsStats(sampleUsers, sampleEvents);
+}
+
+/**
+ * Populate users table
+ */
+function populateUsersTable(users) {
+  const usersTable = document.getElementById('users-table');
+  if (!usersTable) return;
+
+  usersTable.innerHTML = users.map(user => `
+    <div class="user-row" onclick="openUserModal(${JSON.stringify(user).replace(/"/g, '&quot;')})">
+      <div class="user-avatar">
+        <i class="ph-fill ph-user" aria-hidden="true"></i>
+      </div>
+      <div class="user-info">
+        <div class="user-name">${user.name}</div>
+        <div class="user-details">
+          <span class="user-status ${user.status}">${user.status}</span>
+          <span class="user-time">${user.lastSeen}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/**
+ * Populate events table
+ */
+function populateEventsTable(events) {
+  const eventsTable = document.getElementById('events-table');
+  if (!eventsTable) return;
+
+  eventsTable.innerHTML = events.map(event => `
+    <div class="event-row">
+      <div class="event-icon">
+        <i class="ph-fill ph-${event.type === 'session' ? 'play' : 'music-notes'}" aria-hidden="true"></i>
+      </div>
+      <div class="event-info">
+        <div class="event-name">${event.name}</div>
+        <div class="event-details">
+          <span class="event-status ${event.status}">${event.status}</span>
+          <span class="event-time">${event.time}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/**
+ * Update analytics stats
+ */
+function updateAnalyticsStats(users, events) {
+  const totalUsers = document.getElementById('total-users-count');
+  const activeUsers = document.getElementById('active-users-count');
+  const newUsers = document.getElementById('new-users-count');
+  const totalEvents = document.getElementById('total-events-count');
+  const sessionEvents = document.getElementById('session-events-count');
+  const musicEvents = document.getElementById('music-events-count');
+
+  if (totalUsers) totalUsers.textContent = users.length;
+  if (activeUsers) activeUsers.textContent = users.filter(u => u.status === 'active').length;
+  if (newUsers) newUsers.textContent = Math.floor(users.length * 0.3); // Simulate new users
+  if (totalEvents) totalEvents.textContent = events.length;
+  if (sessionEvents) sessionEvents.textContent = events.filter(e => e.type === 'session').length;
+  if (musicEvents) musicEvents.textContent = events.filter(e => e.type === 'music').length;
 }
 
 /**
