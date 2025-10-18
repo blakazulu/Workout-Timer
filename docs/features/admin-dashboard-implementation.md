@@ -243,7 +243,7 @@ const REFRESH_RATE = 30000; // 30 seconds
 The dashboard can read PostHog analytics status:
 
 ```javascript
-import { analytics } from '../core/analytics.js';
+import {analytics} from '../core/analytics.js';
 
 // Check if PostHog is enabled
 const isEnabled = analytics.isEnabled();

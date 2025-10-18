@@ -162,9 +162,9 @@ function setupLoginForm() {
     const btnText = submitBtn?.querySelector("span");
     const btnLoading = submitBtn?.querySelector(".btn-loading");
 
-      if (submitBtn) {
+    if (submitBtn) {
       submitBtn.classList.remove("loading");
-        submitBtn.disabled = false;
+      submitBtn.disabled = false;
       submitBtn.setAttribute("aria-label", "Access Dashboard");
       if (btnText) btnText.style.opacity = "1";
       if (btnLoading) btnLoading.style.opacity = "0";
@@ -473,18 +473,18 @@ function setupScrollNavigation() {
  * Set up user journey modal functionality
  */
 function setupUserJourneyModal() {
-  const userModal = document.getElementById('user-journey-modal');
-  const userModalClose = document.querySelector('.user-modal-close');
-  const userModalBackdrop = document.querySelector('.user-modal-backdrop');
-  const journeyTabs = document.querySelectorAll('.journey-tab');
-  const journeyTabContents = document.querySelectorAll('.journey-tab-content');
+  const userModal = document.getElementById("user-journey-modal");
+  const userModalClose = document.querySelector(".user-modal-close");
+  const userModalBackdrop = document.querySelector(".user-modal-backdrop");
+  const journeyTabs = document.querySelectorAll(".journey-tab");
+  const journeyTabContents = document.querySelectorAll(".journey-tab-content");
 
   // Close modal functions
   function closeUserModal() {
     if (userModal) {
-      userModal.classList.remove('show');
-      document.body.style.overflow = '';
-      announceToScreenReader('User journey modal closed');
+      userModal.classList.remove("show");
+      document.body.style.overflow = "";
+      announceToScreenReader("User journey modal closed");
     }
   }
 
@@ -493,33 +493,33 @@ function setupUserJourneyModal() {
     if (userModal) {
       // Populate user data
       populateUserData(userData);
-      
+
       // Show modal
-      userModal.classList.add('show');
-      document.body.style.overflow = 'hidden';
-      
+      userModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+
       // Focus on close button
       setTimeout(() => {
         if (userModalClose) {
           userModalClose.focus();
         }
       }, 100);
-      
-      announceToScreenReader(`User journey opened for ${userData.name || 'User'}`);
+
+      announceToScreenReader(`User journey opened for ${userData.name || "User"}`);
     }
   }
 
   // Populate user data in modal
   function populateUserData(userData) {
-    const userIdDisplay = document.getElementById('user-id-display');
-    const userTotalSessions = document.getElementById('user-total-sessions');
-    const userTotalTime = document.getElementById('user-total-time');
-    const userLastSeen = document.getElementById('user-last-seen');
+    const userIdDisplay = document.getElementById("user-id-display");
+    const userTotalSessions = document.getElementById("user-total-sessions");
+    const userTotalTime = document.getElementById("user-total-time");
+    const userLastSeen = document.getElementById("user-last-seen");
 
-    if (userIdDisplay) userIdDisplay.textContent = userData.id || 'Unknown';
-    if (userTotalSessions) userTotalSessions.textContent = userData.totalSessions || '0';
-    if (userTotalTime) userTotalTime.textContent = userData.totalTime || '0h';
-    if (userLastSeen) userLastSeen.textContent = userData.lastSeen || 'Never';
+    if (userIdDisplay) userIdDisplay.textContent = userData.id || "Unknown";
+    if (userTotalSessions) userTotalSessions.textContent = userData.totalSessions || "0";
+    if (userTotalTime) userTotalTime.textContent = userData.totalTime || "0h";
+    if (userLastSeen) userLastSeen.textContent = userData.lastSeen || "Never";
 
     // Populate timeline, sessions, and preferences
     populateUserTimeline(userData.timeline || []);
@@ -529,26 +529,26 @@ function setupUserJourneyModal() {
 
   // Populate user timeline
   function populateUserTimeline(timeline) {
-    const timelineContainer = document.getElementById('user-timeline');
+    const timelineContainer = document.getElementById("user-timeline");
     if (!timelineContainer) return;
 
     timelineContainer.innerHTML = timeline.map(event => `
       <div class="timeline-event">
         <div class="timeline-icon">
-          <i class="ph-fill ph-${event.icon || 'circle'}" aria-hidden="true"></i>
+          <i class="ph-fill ph-${event.icon || "circle"}" aria-hidden="true"></i>
         </div>
         <div class="timeline-content">
-          <div class="timeline-title">${event.title || 'Event'}</div>
-          <div class="timeline-description">${event.description || 'No description'}</div>
-          <div class="timeline-time">${event.time || 'Unknown time'}</div>
+          <div class="timeline-title">${event.title || "Event"}</div>
+          <div class="timeline-description">${event.description || "No description"}</div>
+          <div class="timeline-time">${event.time || "Unknown time"}</div>
         </div>
       </div>
-    `).join('');
+    `).join("");
   }
 
   // Populate user sessions
   function populateUserSessions(sessions) {
-    const sessionsContainer = document.getElementById('user-sessions');
+    const sessionsContainer = document.getElementById("user-sessions");
     if (!sessionsContainer) return;
 
     sessionsContainer.innerHTML = sessions.map(session => `
@@ -557,17 +557,17 @@ function setupUserJourneyModal() {
           <i class="ph-fill ph-play" aria-hidden="true"></i>
         </div>
         <div class="session-content">
-          <div class="session-title">${session.title || 'Workout Session'}</div>
-          <div class="session-description">${session.description || 'No description'}</div>
-          <div class="session-time">${session.duration || 'Unknown duration'}</div>
+          <div class="session-title">${session.title || "Workout Session"}</div>
+          <div class="session-description">${session.description || "No description"}</div>
+          <div class="session-time">${session.duration || "Unknown duration"}</div>
         </div>
       </div>
-    `).join('');
+    `).join("");
   }
 
   // Populate user preferences
   function populateUserPreferences(preferences) {
-    const preferencesContainer = document.getElementById('user-preferences');
+    const preferencesContainer = document.getElementById("user-preferences");
     if (!preferencesContainer) return;
 
     const prefs = Object.entries(preferences).map(([key, value]) => `
@@ -576,48 +576,48 @@ function setupUserJourneyModal() {
           <i class="ph-fill ph-heart" aria-hidden="true"></i>
         </div>
         <div class="preference-content">
-          <div class="preference-title">${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</div>
+          <div class="preference-title">${key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}</div>
           <div class="preference-description">${value}</div>
         </div>
       </div>
-    `).join('');
+    `).join("");
 
-    preferencesContainer.innerHTML = prefs || '<div class="preference-item"><div class="preference-content"><div class="preference-title">No preferences available</div></div></div>';
+    preferencesContainer.innerHTML = prefs || "<div class=\"preference-item\"><div class=\"preference-content\"><div class=\"preference-title\">No preferences available</div></div></div>";
   }
 
   // Event listeners
   if (userModalClose) {
-    userModalClose.addEventListener('click', closeUserModal);
+    userModalClose.addEventListener("click", closeUserModal);
   }
 
   if (userModalBackdrop) {
-    userModalBackdrop.addEventListener('click', closeUserModal);
+    userModalBackdrop.addEventListener("click", closeUserModal);
   }
 
   // Journey tab switching
   journeyTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTab = tab.getAttribute('data-tab');
-      
+    tab.addEventListener("click", () => {
+      const targetTab = tab.getAttribute("data-tab");
+
       // Remove active class from all tabs and contents
-      journeyTabs.forEach(t => t.classList.remove('active'));
-      journeyTabContents.forEach(content => content.classList.remove('active'));
-      
+      journeyTabs.forEach(t => t.classList.remove("active"));
+      journeyTabContents.forEach(content => content.classList.remove("active"));
+
       // Add active class to clicked tab and corresponding content
-      tab.classList.add('active');
+      tab.classList.add("active");
       const targetContent = document.getElementById(`${targetTab}-tab`);
       if (targetContent) {
-        targetContent.classList.add('active');
+        targetContent.classList.add("active");
       }
-      
+
       announceToScreenReader(`Switched to ${tab.textContent.trim()} tab`);
     });
   });
 
   // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (userModal && userModal.classList.contains('show')) {
-      if (e.key === 'Escape') {
+  document.addEventListener("keydown", (e) => {
+    if (userModal && userModal.classList.contains("show")) {
+      if (e.key === "Escape") {
         closeUserModal();
       }
     }

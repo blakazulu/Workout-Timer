@@ -299,14 +299,13 @@ export async function getTopEvents(days = 30, limit = 10) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          event,
-          count() as total
-        FROM events
-        WHERE timestamp >= now() - interval ${days} day
-        GROUP BY event
-        ORDER BY total DESC
-        LIMIT ${limit}
+          SELECT event,
+                 count() as total
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
+          GROUP BY event
+          ORDER BY total DESC
+              LIMIT ${limit}
       `
     }
   };
@@ -334,14 +333,13 @@ export async function getSessionDurations(days = 30) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          avg(properties.duration) as avg_duration,
-          min(properties.duration) as min_duration,
-          max(properties.duration) as max_duration,
-          median(properties.duration) as median_duration
-        FROM events
-        WHERE event = 'session_ended'
-          AND timestamp >= now() - interval ${days} day
+          SELECT avg(properties.duration)    as avg_duration,
+                 min(properties.duration)    as min_duration,
+                 max(properties.duration)    as max_duration,
+                 median(properties.duration) as median_duration
+          FROM events
+          WHERE event = 'session_ended'
+            AND timestamp >= now() - interval ${days} day
       `
     }
   };
@@ -372,14 +370,13 @@ export async function getKeyMetrics(days = 30) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          countIf(event = 'workout_started') as total_workouts,
-          countIf(event = 'rep_completed') as total_reps,
-          countIf(event = 'music_played') as total_songs,
-          countIf(event = 'favorite_removed') as total_favorites,
-          uniq(distinct_id) as unique_users
-        FROM events
-        WHERE timestamp >= now() - interval ${days} day
+          SELECT countIf(event = 'workout_started')  as total_workouts,
+                 countIf(event = 'rep_completed')    as total_reps,
+                 countIf(event = 'music_played')     as total_songs,
+                 countIf(event = 'favorite_removed') as total_favorites,
+                 uniq(distinct_id)                   as unique_users
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
       `
     }
   };
@@ -419,13 +416,10 @@ export async function getRecentActivity(limit = 50) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          event,
-          timestamp,
-          properties
-        FROM events
-        ORDER BY timestamp DESC
-        LIMIT ${limit}
+          SELECT event, timestamp, properties
+          FROM events
+          ORDER BY timestamp DESC
+              LIMIT ${limit}
       `
     }
   };
@@ -490,12 +484,11 @@ export async function getPWAStats(days = 30) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          countIf(event = 'pwa_install_prompt_shown') as prompts_shown,
-          countIf(event = 'pwa_installed') as installs,
-          countIf(event = 'pwa_launched') as launches
-        FROM events
-        WHERE timestamp >= now() - interval ${days} day
+          SELECT countIf(event = 'pwa_install_prompt_shown') as prompts_shown,
+                 countIf(event = 'pwa_installed')            as installs,
+                 countIf(event = 'pwa_launched')             as launches
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
       `
     }
   };
@@ -672,19 +665,18 @@ export async function getUsers(days = 30, limit = 100) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          distinct_id,
-          count() as total_events,
-          min(timestamp) as first_seen,
-          max(timestamp) as last_seen,
-          countIf(event = 'workout_started') as workouts,
-          countIf(event = 'music_played') as songs_played,
-          countIf(event = 'session_started') as sessions
-        FROM events
-        WHERE timestamp >= now() - interval ${days} day
-        GROUP BY distinct_id
-        ORDER BY last_seen DESC
-        LIMIT ${limit}
+          SELECT distinct_id,
+                 count()                            as total_events,
+                 min(timestamp)                     as first_seen,
+                 max(timestamp)                     as last_seen,
+                 countIf(event = 'workout_started') as workouts,
+                 countIf(event = 'music_played')    as songs_played,
+                 countIf(event = 'session_started') as sessions
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
+          GROUP BY distinct_id
+          ORDER BY last_seen DESC
+              LIMIT ${limit}
       `
     }
   };
@@ -715,8 +707,8 @@ export async function getUsers(days = 30, limit = 100) {
  * @returns {Promise<Array>} User's event timeline
  */
 export async function getUserActivity(userId, limit = 50) {
-  console.log('[getUserActivity] Fetching activity for userId:', userId);
-  console.log('[getUserActivity] Limit:', limit);
+  console.log("[getUserActivity] Fetching activity for userId:", userId);
+  console.log("[getUserActivity] Limit:", limit);
 
   const query = {
     kind: "DataVisualizationNode",
@@ -735,11 +727,11 @@ export async function getUserActivity(userId, limit = 50) {
     }
   };
 
-  console.log('[getUserActivity] Query:', query);
+  console.log("[getUserActivity] Query:", query);
 
   const results = await queryPostHog(query);
-  console.log('[getUserActivity] Raw results:', results);
-  console.log('[getUserActivity] Results.results:', results.results);
+  console.log("[getUserActivity] Raw results:", results);
+  console.log("[getUserActivity] Results.results:", results.results);
 
   if (results.results) {
     const mapped = results.results.map(row => ({
@@ -747,12 +739,12 @@ export async function getUserActivity(userId, limit = 50) {
       timestamp: new Date(row[1]),
       properties: row[2]
     }));
-    console.log('[getUserActivity] Mapped results:', mapped);
-    console.log('[getUserActivity] Returning', mapped.length, 'events');
+    console.log("[getUserActivity] Mapped results:", mapped);
+    console.log("[getUserActivity] Returning", mapped.length, "events");
     return mapped;
   }
 
-  console.log('[getUserActivity] No results, returning empty array');
+  console.log("[getUserActivity] No results, returning empty array");
   return [];
 }
 
@@ -767,18 +759,14 @@ export async function getUserCohorts(days = 30) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          countIf(sessions = 1) as new_users,
-          countIf(sessions > 1) as returning_users,
-          count() as total_users
-        FROM (
-          SELECT
-            distinct_id,
-            countIf(event = 'session_started') as sessions
-          FROM events
-          WHERE timestamp >= now() - interval ${days} day
-          GROUP BY distinct_id
-        )
+          SELECT countIf(sessions = 1) as new_users,
+                 countIf(sessions > 1) as returning_users,
+                 count()               as total_users
+          FROM (SELECT distinct_id,
+                       countIf(event = 'session_started') as sessions
+                FROM events
+                WHERE timestamp >= now() - interval ${days} day
+                GROUP BY distinct_id)
       `
     }
   };
@@ -809,18 +797,14 @@ export async function getUserEngagement(days = 30) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          countIf(total_events >= 50) as power_users,
-          countIf(total_events >= 10 AND total_events < 50) as active_users,
-          countIf(total_events < 10) as casual_users
-        FROM (
-          SELECT
-            distinct_id,
-            count() as total_events
-          FROM events
-          WHERE timestamp >= now() - interval ${days} day
-          GROUP BY distinct_id
-        )
+          SELECT countIf(total_events >= 50)                       as power_users,
+                 countIf(total_events >= 10 AND total_events < 50) as active_users,
+                 countIf(total_events < 10)                        as casual_users
+          FROM (SELECT distinct_id,
+                       count() as total_events
+                FROM events
+                WHERE timestamp >= now() - interval ${days} day
+                GROUP BY distinct_id)
       `
     }
   };
@@ -862,13 +846,12 @@ export async function getUserRetention(days = 7) {
     source: {
       kind: "HogQLQuery",
       query: `
-        SELECT
-          toDate(timestamp) as date,
+          SELECT toDate(timestamp) as date,
           uniq(distinct_id) as unique_users
-        FROM events
-        WHERE timestamp >= now() - interval ${days} day
-        GROUP BY date
-        ORDER BY date ASC
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
+          GROUP BY date
+          ORDER BY date ASC
       `
     }
   };

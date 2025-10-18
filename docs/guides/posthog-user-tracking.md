@@ -377,14 +377,27 @@ async function viewUserDetails(userId) {
   {
     userId: "0199f461-30c2-777d-b444-2cfcaf7c0f64",
     totalEvents: 107,
-    firstSeen: Date(2025-10-17T22:53:55),
-    lastSeen: Date(2025-10-18T09:38:17),
-    workouts: 3,
-    songsPlayed: 4,
-    sessions: 2,
-    daysActive: 1
-  }
-  // ... more users
+    firstSeen: Date(2025 - 10 - 17T22: 53
+:
+55
+),
+lastSeen: Date(2025 - 10 - 18
+T09:38
+:
+17
+),
+workouts: 3,
+  songsPlayed
+:
+4,
+  sessions
+:
+2,
+  daysActive
+:
+1
+}
+// ... more users
 ]
 ```
 
@@ -393,11 +406,21 @@ async function viewUserDetails(userId) {
 ```javascript
 {
   powerUsers: 1,      // 50+ events
-  activeUsers: 0,     // 10-49 events
-  casualUsers: 0,     // <10 events
-  total: 1,
-  labels: ["Power Users (50+ events)", "Active Users (10-49 events)", "Casual Users (<10 events)"],
-  data: [1, 0, 0]
+    activeUsers
+:
+  0,     // 10-49 events
+    casualUsers
+:
+  0,     // <10 events
+    total
+:
+  1,
+    labels
+:
+  ["Power Users (50+ events)", "Active Users (10-49 events)", "Casual Users (<10 events)"],
+    data
+:
+  [1, 0, 0]
 }
 ```
 
@@ -406,9 +429,15 @@ async function viewUserDetails(userId) {
 ```javascript
 {
   newUsers: 1,
-  returningUsers: 0,
-  totalUsers: 1,
-  returnRate: "0.0"   // percentage
+    returningUsers
+:
+  0,
+    totalUsers
+:
+  1,
+    returnRate
+:
+  "0.0"   // percentage
 }
 ```
 
@@ -416,8 +445,8 @@ async function viewUserDetails(userId) {
 
 ```javascript
 [
-  { date: "2025-10-17", users: 1 },
-  { date: "2025-10-18", users: 1 }
+  {date: "2025-10-17", users: 1},
+  {date: "2025-10-18", users: 1}
 ]
 ```
 
@@ -427,15 +456,32 @@ async function viewUserDetails(userId) {
 [
   {
     event: "music_played",
-    timestamp: Date(2025-10-18T09:38:17),
-    properties: { videoId: "...", title: "..." }
-  },
-  {
-    event: "workout_started",
-    timestamp: Date(2025-10-18T09:38:27),
-    properties: { duration: 30, repetitions: 3 }
+    timestamp: Date(2025 - 10 - 18T09: 38
+:
+17
+),
+properties: {
+  videoId: "...", title
+:
+  "..."
+}
+},
+{
+  event: "workout_started",
+    timestamp
+:
+  Date(2025 - 10 - 18
+  T09:38
+:
+  27
+),
+  properties: {
+    duration: 30, repetitions
+  :
+    3
   }
-  // ... more events (up to 50)
+}
+// ... more events (up to 50)
 ]
 ```
 

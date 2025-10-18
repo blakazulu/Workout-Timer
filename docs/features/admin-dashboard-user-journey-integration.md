@@ -248,8 +248,18 @@ const activity = await posthog.getUserActivity(userId, 100);
 // Returns array of:
 {
   event: "music_played",
-  timestamp: Date(2025-10-18T09:38:17),
-  properties: { videoId: "...", title: "..." }
+    timestamp
+:
+  Date(2025 - 10 - 18
+  T09:38
+:
+  17
+),
+  properties: {
+    videoId: "...", title
+  :
+    "..."
+  }
 }
 ```
 

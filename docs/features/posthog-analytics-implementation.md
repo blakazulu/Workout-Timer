@@ -242,7 +242,7 @@ eventBus.emit('timer:started', { duration: 30, reps: 3 });
 ### Manual Event Tracking
 
 ```javascript
-import { analytics } from './core/analytics.js';
+import {analytics} from './core/analytics.js';
 
 // Track a custom event
 analytics.track('feature_used', {
@@ -323,7 +323,7 @@ Enable debug logging:
 
 ```javascript
 // In src/js/app.js
-analytics.init({ debug: true });
+analytics.init({debug: true});
 
 // Or programmatically
 analytics.setDebugMode(true);

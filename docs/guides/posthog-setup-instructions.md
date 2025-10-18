@@ -344,7 +344,7 @@ function createLineChart(canvasId, chartData) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top' }
+        legend: {position: 'top'}
       }
     }
   });

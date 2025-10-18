@@ -20,6 +20,7 @@
 The `renderTimeline` function was using CSS classes that **don't exist**:
 
 **Used (wrong):**
+
 - `.timeline-day`
 - `.timeline-date`
 - `.timeline-events`
@@ -31,6 +32,7 @@ The `renderTimeline` function was using CSS classes that **don't exist**:
 - `.timeline-event-subtitle`
 
 **Should use (correct):**
+
 - `.timeline-event`
 - `.timeline-icon`
 - `.timeline-content`
@@ -41,6 +43,7 @@ The `renderTimeline` function was using CSS classes that **don't exist**:
 ### Issue 2: Icon Class Names
 
 `getEventIcon` function returned incomplete class names:
+
 - Returned: `"ph-play-circle"`
 - Needed: `"ph-fill ph-play-circle"`
 
@@ -70,8 +73,8 @@ function renderTimeline(activity) {
     });
     const dateStr = date.toLocaleDateString();
     const eventDetail = event.properties?.title ||
-                       event.properties?.genre ||
-                       event.properties?.mood || '';
+      event.properties?.genre ||
+      event.properties?.mood || '';
 
     return `
       <div class="timeline-event">
@@ -92,6 +95,7 @@ function renderTimeline(activity) {
 ```
 
 **Key Changes:**
+
 - ✅ Uses `.timeline-event` instead of `.timeline-day`
 - ✅ Uses `.timeline-icon` instead of `.timeline-event-icon`
 - ✅ Uses `.timeline-content` instead of `.timeline-event-content`
@@ -133,6 +137,7 @@ export function getEventIcon(eventName) {
 ### 3. Improved Modal Opening (`dashboard-users.js:171-226`)
 
 **Added:**
+
 - ✅ Console logging for debugging
 - ✅ Null checks for all DOM elements
 - ✅ Modal title update with user ID
@@ -140,7 +145,7 @@ export function getEventIcon(eventName) {
 - ✅ Activity count logging
 
 ```javascript
-window.openUserModal = async function(userData) {
+window.openUserModal = async function (userData) {
   console.log('[User Modal] Opening modal for user:', userData);
 
   const modal = document.getElementById('user-journey-modal');
@@ -196,17 +201,21 @@ window.openUserModal = async function(userData) {
 The modal uses these existing CSS classes from `admin.css`:
 
 ### Modal Structure
+
 ```css
-.user-modal              /* Modal container (fixed, full screen) */
-.user-modal.show         /* Active state (visible) */
-.user-modal-backdrop     /* Blurred background */
-.user-modal-content      /* Centered content box */
-.user-modal-header       /* Header with user info */
-.user-modal-body         /* Scrollable body area */
-.user-modal-close        /* Close button */
+.user-modal /* Modal container (fixed, full screen) */
+.user-modal.show /* Active state (visible) */
+.user-modal-backdrop /* Blurred background */
+.user-modal-content /* Centered content box */
+.user-modal-header /* Header with user info */
+.user-modal-body /* Scrollable body area */
+.user-modal-close
+
+/* Close button */
 ```
 
 ### Timeline Components
+
 ```css
 .user-timeline           /* Timeline container (flex column) */
 .timeline-event          /* Individual event row */
@@ -218,12 +227,15 @@ The modal uses these existing CSS classes from `admin.css`:
 ```
 
 ### Tab System
+
 ```css
-.journey-tabs            /* Tab button container */
-.journey-tab             /* Individual tab button */
-.journey-tab.active      /* Active tab (primary color) */
-.journey-content         /* Tab content area */
-.journey-tab-content     /* Individual tab panel */
+.journey-tabs /* Tab button container */
+.journey-tab /* Individual tab button */
+.journey-tab.active /* Active tab (primary color) */
+.journey-content /* Tab content area */
+.journey-tab-content
+
+/* Individual tab panel */
 ```
 
 ---
@@ -231,6 +243,7 @@ The modal uses these existing CSS classes from `admin.css`:
 ## Expected Behavior Now
 
 ### Opening Modal
+
 1. User clicks on user row in table
 2. Modal slides up from center with backdrop blur
 3. User ID shown in header (e.g., "User 0199f461")
@@ -240,12 +253,14 @@ The modal uses these existing CSS classes from `admin.css`:
 7. Timeline renders with all user events
 
 ### Timeline Display
+
 - **Event Icon** - Gradient circle with white filled icon
 - **Event Title** - Event name (e.g., "Music Played")
 - **Event Description** - Song title, genre, or mood (if available)
 - **Event Time** - Full date and time (e.g., "10/19/2025 at 3:45 PM")
 
 ### Styling
+
 - **Gradient icons** - Primary to info color gradient
 - **Hover effects** - Border color change + slight translate
 - **Clean layout** - Icon on left, content on right
@@ -265,11 +280,13 @@ When opening a user modal, you should see:
 ```
 
 If there's an error:
+
 ```
 [User Modal] Error loading timeline: Error: ...
 ```
 
 If no timeline container found:
+
 ```
 [User Modal] Timeline container not found
 ```
@@ -287,10 +304,10 @@ If no timeline container found:
 7. ✅ Verify loading spinner appears briefly
 8. ✅ Verify timeline loads with events
 9. ✅ Verify each event shows:
-   - Icon (colored gradient circle)
-   - Event name
-   - Details (if available)
-   - Full date and time
+    - Icon (colored gradient circle)
+    - Event name
+    - Details (if available)
+    - Full date and time
 10. ✅ Verify hover effects work
 11. ✅ Verify scrolling works if many events
 12. ✅ Verify close button works
@@ -307,4 +324,5 @@ If no timeline container found:
 ✅ **Added null checks** - Prevents errors if elements missing
 ✅ **Better debugging** - Console logs help identify issues
 
-The user journey modal now displays correctly with the proper glassmorphic design and shows all user activity in a clean, scrollable timeline!
+The user journey modal now displays correctly with the proper glassmorphic design and shows all user activity in a
+clean, scrollable timeline!

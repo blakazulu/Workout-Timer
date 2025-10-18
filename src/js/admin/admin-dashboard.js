@@ -6,7 +6,7 @@
 import {logout} from "./auth.js";
 import * as metrics from "./metrics-calculator.js";
 import * as posthogData from "./posthog-data.js";
-import {renderUsersSection, initializeUserModal} from "./dashboard-users.js";
+import {initializeUserModal, renderUsersSection} from "./dashboard-users.js";
 import {renderEventsSection} from "./dashboard-events.js";
 
 // Chart instances

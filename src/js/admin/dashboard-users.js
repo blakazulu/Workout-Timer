@@ -9,44 +9,44 @@ import * as posthog from "./posthog-client.js";
  * Initialize modal event listeners
  */
 export function initializeUserModal() {
-  const modal = document.getElementById('user-journey-modal');
+  const modal = document.getElementById("user-journey-modal");
   if (!modal) return;
 
   // Close button
-  const closeBtn = modal.querySelector('.user-modal-close');
+  const closeBtn = modal.querySelector(".user-modal-close");
   if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('show');
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("show");
     });
   }
 
   // Backdrop click
-  const backdrop = modal.querySelector('.user-modal-backdrop');
+  const backdrop = modal.querySelector(".user-modal-backdrop");
   if (backdrop) {
-    backdrop.addEventListener('click', () => {
-      modal.classList.remove('show');
+    backdrop.addEventListener("click", () => {
+      modal.classList.remove("show");
     });
   }
 
   // Tab switching
-  const tabs = modal.querySelectorAll('.journey-tab');
+  const tabs = modal.querySelectorAll(".journey-tab");
   tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener("click", () => {
       const tabName = tab.dataset.tab;
 
       // Update active tab
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
 
       // Update active content
-      const contents = modal.querySelectorAll('.journey-tab-content');
+      const contents = modal.querySelectorAll(".journey-tab-content");
       contents.forEach(content => {
-        content.classList.remove('active');
+        content.classList.remove("active");
       });
 
       const targetContent = document.getElementById(`${tabName}-tab`);
       if (targetContent) {
-        targetContent.classList.add('active');
+        targetContent.classList.add("active");
       }
     });
   });
@@ -56,11 +56,11 @@ export function initializeUserModal() {
  * Render users section with list and stats
  */
 export async function renderUsersSection() {
-  console.log('[Users Section] ========== STARTING renderUsersSection ==========');
+  console.log("[Users Section] ========== STARTING renderUsersSection ==========");
 
   // Show loading state
-  const usersTable = document.getElementById('users-table');
-  console.log('[Users Section] users-table element:', usersTable);
+  const usersTable = document.getElementById("users-table");
+  console.log("[Users Section] users-table element:", usersTable);
 
   if (usersTable) {
     usersTable.innerHTML = `
@@ -69,13 +69,13 @@ export async function renderUsersSection() {
         <p style="margin-top: 1rem;">Loading users...</p>
       </div>
     `;
-    console.log('[Users Section] Loading state displayed');
+    console.log("[Users Section] Loading state displayed");
   } else {
-    console.error('[Users Section] users-table element NOT FOUND!');
+    console.error("[Users Section] users-table element NOT FOUND!");
   }
 
   try {
-    console.log('[Users Section] Fetching data from PostHog...');
+    console.log("[Users Section] Fetching data from PostHog...");
 
     // Fetch all user data
     const [users, engagement, cohorts] = await Promise.all([
@@ -84,9 +84,9 @@ export async function renderUsersSection() {
       posthog.getUserCohorts(30)
     ]);
 
-    console.log('[Users Section] Fetched users:', users);
-    console.log('[Users Section] Fetched engagement:', engagement);
-    console.log('[Users Section] Fetched cohorts:', cohorts);
+    console.log("[Users Section] Fetched users:", users);
+    console.log("[Users Section] Fetched engagement:", engagement);
+    console.log("[Users Section] Fetched cohorts:", cohorts);
 
     // Update the stats in the existing analytics section
     updateUserStats(users, engagement, cohorts);
@@ -94,7 +94,7 @@ export async function renderUsersSection() {
     // Populate the users table
     populateUsersTable(users);
 
-    console.log('[Users Section] ========== COMPLETED renderUsersSection ==========');
+    console.log("[Users Section] ========== COMPLETED renderUsersSection ==========");
 
   } catch (error) {
     console.error("[Users Section] ========== ERROR in renderUsersSection ==========");
@@ -108,9 +108,9 @@ export async function renderUsersSection() {
  * Update user statistics in the analytics section
  */
 function updateUserStats(users, engagement, cohorts) {
-  const totalUsersEl = document.getElementById('total-users-count');
-  const activeUsersEl = document.getElementById('active-users-count');
-  const newUsersEl = document.getElementById('new-users-count');
+  const totalUsersEl = document.getElementById("total-users-count");
+  const activeUsersEl = document.getElementById("active-users-count");
+  const newUsersEl = document.getElementById("new-users-count");
 
   if (totalUsersEl) totalUsersEl.textContent = users.length;
   if (activeUsersEl) activeUsersEl.textContent = engagement.powerUsers || 0;
@@ -121,19 +121,19 @@ function updateUserStats(users, engagement, cohorts) {
  * Populate users table with modern design
  */
 function populateUsersTable(users) {
-  console.log('[populateUsersTable] Called with users:', users);
-  console.log('[populateUsersTable] Users count:', users ? users.length : 'null/undefined');
+  console.log("[populateUsersTable] Called with users:", users);
+  console.log("[populateUsersTable] Users count:", users ? users.length : "null/undefined");
 
-  const usersTable = document.getElementById('users-table');
-  console.log('[populateUsersTable] usersTable element:', usersTable);
+  const usersTable = document.getElementById("users-table");
+  console.log("[populateUsersTable] usersTable element:", usersTable);
 
   if (!usersTable) {
-    console.error('[populateUsersTable] usersTable NOT FOUND!');
+    console.error("[populateUsersTable] usersTable NOT FOUND!");
     return;
   }
 
   if (!users || users.length === 0) {
-    console.log('[populateUsersTable] No users, showing empty state');
+    console.log("[populateUsersTable] No users, showing empty state");
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-users" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -143,7 +143,7 @@ function populateUsersTable(users) {
     return;
   }
 
-  console.log('[populateUsersTable] Rendering', users.length, 'user rows');
+  console.log("[populateUsersTable] Rendering", users.length, "user rows");
 
   const html = users.map((user, index) => {
     console.log(`[populateUsersTable] User ${index}:`, user);
@@ -166,7 +166,7 @@ function populateUsersTable(users) {
     console.log(`[populateUsersTable] User ${index} data for onclick:`, userData);
 
     return `
-      <div class="user-row" onclick="openUserModal(${JSON.stringify(userData).replace(/"/g, '&quot;')})">
+      <div class="user-row" onclick="openUserModal(${JSON.stringify(userData).replace(/"/g, "&quot;")})">
         <div class="user-avatar" style="background: linear-gradient(135deg, ${engagementColor}, ${engagementColor}80);">
           <i class="ph-fill ph-user" aria-hidden="true"></i>
         </div>
@@ -179,20 +179,20 @@ function populateUsersTable(users) {
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 
-  console.log('[populateUsersTable] Generated HTML length:', html.length);
-  console.log('[populateUsersTable] HTML preview:', html.substring(0, 300));
+  console.log("[populateUsersTable] Generated HTML length:", html.length);
+  console.log("[populateUsersTable] HTML preview:", html.substring(0, 300));
 
   usersTable.innerHTML = html;
-  console.log('[populateUsersTable] Table populated, checking window.openUserModal:', typeof window.openUserModal);
+  console.log("[populateUsersTable] Table populated, checking window.openUserModal:", typeof window.openUserModal);
 }
 
 /**
  * Show error state
  */
 function showUsersError(error) {
-  const usersTable = document.getElementById('users-table');
+  const usersTable = document.getElementById("users-table");
   if (!usersTable) return;
 
   usersTable.innerHTML = `
@@ -208,29 +208,29 @@ function showUsersError(error) {
  * Open user modal with user journey details
  * Made global for onclick access
  */
-window.openUserModal = async function(userData) {
-  console.log('[User Modal] Opening modal for user:', userData);
+window.openUserModal = async function (userData) {
+  console.log("[User Modal] Opening modal for user:", userData);
 
-  const modal = document.getElementById('user-journey-modal');
+  const modal = document.getElementById("user-journey-modal");
   if (!modal) {
-    console.error('[User Modal] Modal element not found');
+    console.error("[User Modal] Modal element not found");
     return;
   }
 
   // Show modal
-  modal.classList.add('show');
+  modal.classList.add("show");
 
   // Update modal title
-  const modalTitle = document.getElementById('user-modal-title');
+  const modalTitle = document.getElementById("user-modal-title");
   if (modalTitle) {
     modalTitle.textContent = `User ${userData.id.substring(0, 8)}`;
   }
 
   // Populate user info
-  const userIdEl = document.getElementById('user-id-display');
-  const sessionsEl = document.getElementById('user-total-sessions');
-  const timeEl = document.getElementById('user-total-time');
-  const lastSeenEl = document.getElementById('user-last-seen');
+  const userIdEl = document.getElementById("user-id-display");
+  const sessionsEl = document.getElementById("user-total-sessions");
+  const timeEl = document.getElementById("user-total-time");
+  const lastSeenEl = document.getElementById("user-last-seen");
 
   if (userIdEl) userIdEl.textContent = userData.id.substring(0, 8);
   if (sessionsEl) sessionsEl.textContent = userData.totalSessions;
@@ -238,9 +238,9 @@ window.openUserModal = async function(userData) {
   if (lastSeenEl) lastSeenEl.textContent = userData.lastSeen;
 
   // Show loading state in timeline
-  const timelineContainer = document.getElementById('user-timeline');
+  const timelineContainer = document.getElementById("user-timeline");
   if (!timelineContainer) {
-    console.error('[User Modal] Timeline container not found');
+    console.error("[User Modal] Timeline container not found");
     return;
   }
 
@@ -253,30 +253,30 @@ window.openUserModal = async function(userData) {
 
   try {
     // Fetch user activity from PostHog
-    console.log('[User Modal] Fetching activity for user:', userData.id);
+    console.log("[User Modal] Fetching activity for user:", userData.id);
     const activity = await posthog.getUserActivity(userData.id, 100);
-    console.log('[User Modal] Retrieved activity:', activity);
-    console.log('[User Modal] Activity length:', activity ? activity.length : 'null/undefined');
-    console.log('[User Modal] First event:', activity && activity[0] ? activity[0] : 'no events');
+    console.log("[User Modal] Retrieved activity:", activity);
+    console.log("[User Modal] Activity length:", activity ? activity.length : "null/undefined");
+    console.log("[User Modal] First event:", activity && activity[0] ? activity[0] : "no events");
 
     // Render timeline
     const html = renderTimeline(activity);
-    console.log('[User Modal] Rendered HTML length:', html.length);
-    console.log('[User Modal] Rendered HTML preview:', html.substring(0, 200));
+    console.log("[User Modal] Rendered HTML length:", html.length);
+    console.log("[User Modal] Rendered HTML preview:", html.substring(0, 200));
 
     timelineContainer.innerHTML = html;
-    console.log('[User Modal] Timeline container updated');
+    console.log("[User Modal] Timeline container updated");
 
     // Render sessions
-    const sessionsContainer = document.getElementById('user-sessions');
+    const sessionsContainer = document.getElementById("user-sessions");
     if (sessionsContainer) {
-      console.log('[User Modal] Rendering sessions...');
+      console.log("[User Modal] Rendering sessions...");
       sessionsContainer.innerHTML = renderSessions(activity);
-      console.log('[User Modal] Sessions rendered');
+      console.log("[User Modal] Sessions rendered");
     }
   } catch (error) {
-    console.error('[User Modal] Error loading timeline:', error);
-    console.error('[User Modal] Error stack:', error.stack);
+    console.error("[User Modal] Error loading timeline:", error);
+    console.error("[User Modal] Error stack:", error.stack);
     timelineContainer.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--error-500);">
         <i class="ph ph-warning-circle" style="font-size: 3rem;"></i>
@@ -291,7 +291,7 @@ window.openUserModal = async function(userData) {
  * Show user details modal (placeholder for future implementation)
  */
 export async function showUserDetails(userId) {
-  console.log('User details for:', userId);
+  console.log("User details for:", userId);
   // This could open a detailed user modal in the future
 }
 
@@ -300,12 +300,12 @@ export async function showUserDetails(userId) {
  */
 function calculateUserSummary(activity, userId) {
   const userActivity = activity.filter(event => event.distinct_id === userId);
-  
+
   return {
     totalEvents: userActivity.length,
-    workouts: userActivity.filter(e => e.event === 'workout_started').length,
-    songs: userActivity.filter(e => e.event === 'music_played').length,
-    sessions: userActivity.filter(e => e.event === 'session_started').length
+    workouts: userActivity.filter(e => e.event === "workout_started").length,
+    songs: userActivity.filter(e => e.event === "music_played").length,
+    sessions: userActivity.filter(e => e.event === "session_started").length
   };
 }
 
@@ -313,12 +313,12 @@ function calculateUserSummary(activity, userId) {
  * Render timeline for user activity
  */
 function renderTimeline(activity) {
-  console.log('[renderTimeline] Called with activity:', activity);
-  console.log('[renderTimeline] Activity type:', typeof activity);
-  console.log('[renderTimeline] Is array?', Array.isArray(activity));
+  console.log("[renderTimeline] Called with activity:", activity);
+  console.log("[renderTimeline] Activity type:", typeof activity);
+  console.log("[renderTimeline] Is array?", Array.isArray(activity));
 
   if (!activity || activity.length === 0) {
-    console.log('[renderTimeline] No activity, showing empty state');
+    console.log("[renderTimeline] No activity, showing empty state");
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-clock-counter-clockwise" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -327,7 +327,7 @@ function renderTimeline(activity) {
     `;
   }
 
-  console.log('[renderTimeline] Rendering', activity.length, 'events');
+  console.log("[renderTimeline] Rendering", activity.length, "events");
 
   // Render events (most recent first)
   const html = activity.map((event, index) => {
@@ -342,17 +342,17 @@ function renderTimeline(activity) {
     // Format timestamp
     const date = new Date(event.timestamp);
     const timeStr = date.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit'
+      hour: "2-digit",
+      minute: "2-digit"
     });
     const dateStr = date.toLocaleDateString();
 
     // Get event details from properties
     const eventDetail = event.properties?.title ||
-                       event.properties?.genre ||
-                       event.properties?.mood ||
-                       event.properties?.videoId ||
-                       '';
+      event.properties?.genre ||
+      event.properties?.mood ||
+      event.properties?.videoId ||
+      "";
 
     console.log(`[renderTimeline] Event ${index} - detail:`, eventDetail);
 
@@ -365,14 +365,14 @@ function renderTimeline(activity) {
           <div class="timeline-title">${eventName}</div>
           ${eventDetail ? `
             <div class="timeline-description">${eventDetail}</div>
-          ` : ''}
+          ` : ""}
           <div class="timeline-time">${dateStr} at ${timeStr}</div>
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 
-  console.log('[renderTimeline] Final HTML length:', html.length);
+  console.log("[renderTimeline] Final HTML length:", html.length);
   return html;
 }
 
@@ -381,26 +381,26 @@ function renderTimeline(activity) {
  */
 function renderEventProperties(properties) {
   if (!properties || Object.keys(properties).length === 0) {
-    return '<div style="color: var(--text-tertiary); font-style: italic;">No properties</div>';
+    return "<div style=\"color: var(--text-tertiary); font-style: italic;\">No properties</div>";
   }
 
   return Object.entries(properties).map(([key, value]) => `
     <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid var(--border-primary);">
       <span style="font-weight: 600; color: var(--text-secondary);">${key}:</span>
-      <span style="color: var(--text-primary);">${typeof value === 'object' ? JSON.stringify(value) : value}</span>
+      <span style="color: var(--text-primary);">${typeof value === "object" ? JSON.stringify(value) : value}</span>
     </div>
-  `).join('');
+  `).join("");
 }
 
 /**
  * Render sessions tab content
  */
 function renderSessions(activity) {
-  console.log('[renderSessions] Called with activity:', activity);
-  console.log('[renderSessions] Activity length:', activity ? activity.length : 'null/undefined');
+  console.log("[renderSessions] Called with activity:", activity);
+  console.log("[renderSessions] Activity length:", activity ? activity.length : "null/undefined");
 
   if (!activity || activity.length === 0) {
-    console.log('[renderSessions] No activity, showing empty state');
+    console.log("[renderSessions] No activity, showing empty state");
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-calendar-blank" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -418,7 +418,7 @@ function renderSessions(activity) {
   let currentSession = null;
 
   chronologicalActivity.forEach((event, index) => {
-    if (event.event === 'session_started' || event.event === 'app_visible') {
+    if (event.event === "session_started" || event.event === "app_visible") {
       // Start new session
       if (currentSession) {
         // Previous session ended without explicit end event
@@ -430,7 +430,7 @@ function renderSessions(activity) {
         endTime: null,
         events: [event]
       };
-    } else if (event.event === 'session_ended' || event.event === 'app_hidden') {
+    } else if (event.event === "session_ended" || event.event === "app_hidden") {
       // End current session
       if (currentSession) {
         currentSession.endTime = event.timestamp;
@@ -454,7 +454,7 @@ function renderSessions(activity) {
   // Reverse sessions to show most recent first
   sessions.reverse();
 
-  console.log('[renderSessions] Found', sessions.length, 'sessions');
+  console.log("[renderSessions] Found", sessions.length, "sessions");
 
   if (sessions.length === 0) {
     return `
@@ -479,11 +479,11 @@ function renderSessions(activity) {
 
     const date = new Date(session.startTime);
     const dateStr = date.toLocaleDateString();
-    const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const timeStr = date.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
 
     // Count event types in this session
-    const workouts = session.events.filter(e => e.event === 'workout_started').length;
-    const songs = session.events.filter(e => e.event === 'music_played').length;
+    const workouts = session.events.filter(e => e.event === "workout_started").length;
+    const songs = session.events.filter(e => e.event === "music_played").length;
 
     return `
       <div class="timeline-event">
@@ -499,8 +499,8 @@ function renderSessions(activity) {
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 
-  console.log('[renderSessions] Final HTML length:', html.length);
+  console.log("[renderSessions] Final HTML length:", html.length);
   return html;
 }

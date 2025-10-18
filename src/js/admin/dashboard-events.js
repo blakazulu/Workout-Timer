@@ -9,18 +9,18 @@ import * as posthog from "./posthog-client.js";
  * Render events section with breakdown and statistics
  */
 export async function renderEventsSection() {
-  console.log('[Events Section] ========== STARTING renderEventsSection ==========');
+  console.log("[Events Section] ========== STARTING renderEventsSection ==========");
 
   const container = document.getElementById("events-section");
-  console.log('[Events Section] events-section element:', container);
+  console.log("[Events Section] events-section element:", container);
 
   if (!container) {
-    console.error('[Events Section] events-section element NOT FOUND!');
+    console.error("[Events Section] events-section element NOT FOUND!");
     return;
   }
 
   try {
-    console.log('[Events Section] Fetching data from PostHog...');
+    console.log("[Events Section] Fetching data from PostHog...");
 
     // Get top events and recent activity
     const [topEvents, recentActivity] = await Promise.all([
@@ -28,12 +28,12 @@ export async function renderEventsSection() {
       posthog.getRecentActivity(100)
     ]);
 
-    console.log('[Events Section] Fetched topEvents:', topEvents);
-    console.log('[Events Section] Fetched recentActivity:', recentActivity);
+    console.log("[Events Section] Fetched topEvents:", topEvents);
+    console.log("[Events Section] Fetched recentActivity:", recentActivity);
 
     // Calculate event statistics
     const stats = calculateEventStats(topEvents);
-    console.log('[Events Section] Calculated stats:', stats);
+    console.log("[Events Section] Calculated stats:", stats);
 
     // Update the stats in the existing analytics section
     updateEventStats(stats);
@@ -41,7 +41,7 @@ export async function renderEventsSection() {
     // Populate the events table
     populateEventsTable(recentActivity);
 
-    console.log('[Events Section] ========== COMPLETED renderEventsSection ==========');
+    console.log("[Events Section] ========== COMPLETED renderEventsSection ==========");
 
   } catch (error) {
     console.error("[Events Section] ========== ERROR in renderEventsSection ==========");
@@ -55,9 +55,9 @@ export async function renderEventsSection() {
  * Update event statistics in the analytics section
  */
 function updateEventStats(stats) {
-  const totalEventsEl = document.getElementById('total-events-count');
-  const sessionEventsEl = document.getElementById('session-events-count');
-  const musicEventsEl = document.getElementById('music-events-count');
+  const totalEventsEl = document.getElementById("total-events-count");
+  const sessionEventsEl = document.getElementById("session-events-count");
+  const musicEventsEl = document.getElementById("music-events-count");
 
   if (totalEventsEl) totalEventsEl.textContent = stats.totalEvents.toLocaleString();
   if (sessionEventsEl) sessionEventsEl.textContent = stats.sessionEvents.toLocaleString();
@@ -68,7 +68,7 @@ function updateEventStats(stats) {
  * Populate events table with modern design
  */
 function populateEventsTable(events) {
-  const eventsTable = document.getElementById('events-table');
+  const eventsTable = document.getElementById("events-table");
   if (!eventsTable) return;
 
   if (events.length === 0) {
@@ -86,9 +86,9 @@ function populateEventsTable(events) {
     const eventName = posthog.formatEventName(event.event);
     const timeAgo = formatTimeAgo(event.timestamp);
     const eventDetail = event.properties?.title ||
-                       event.properties?.genre ||
-                       event.properties?.mood ||
-                       '';
+      event.properties?.genre ||
+      event.properties?.mood ||
+      "";
 
     return `
       <div class="event-row">
@@ -99,12 +99,12 @@ function populateEventsTable(events) {
           <div class="event-name">${eventName}</div>
           <div class="event-details">
             <span class="event-time">${timeAgo}</span>
-            ${eventDetail ? `<span class="event-subtitle">${eventDetail}</span>` : ''}
+            ${eventDetail ? `<span class="event-subtitle">${eventDetail}</span>` : ""}
           </div>
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 }
 
 /**
@@ -140,14 +140,14 @@ function calculateEventStats(events) {
   const uniqueEvents = events.length;
   const mostCommon = events.length > 0 ? events[0].event : "none";
   const mostCommonCount = events.length > 0 ? events[0].count : 0;
-  
+
   // Calculate session and music events
-  const sessionEvents = events.filter(e => 
-    e.event.includes('session') || e.event.includes('workout')
+  const sessionEvents = events.filter(e =>
+    e.event.includes("session") || e.event.includes("workout")
   ).reduce((sum, e) => sum + e.count, 0);
-  
-  const musicEvents = events.filter(e => 
-    e.event.includes('music') || e.event.includes('play') || e.event.includes('song')
+
+  const musicEvents = events.filter(e =>
+    e.event.includes("music") || e.event.includes("play") || e.event.includes("song")
   ).reduce((sum, e) => sum + e.count, 0);
 
   return {

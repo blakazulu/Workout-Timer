@@ -307,7 +307,7 @@ export async function queryPostHog(queryConfig) {
       // WARNING: Do not expose your API key in client code!
       // Use a proxy or public sharing instead
     },
-    body: JSON.stringify({ query: queryConfig })
+    body: JSON.stringify({query: queryConfig})
   });
 
   if (!response.ok) {
@@ -399,9 +399,9 @@ export async function getWorkoutFunnel() {
   const query = {
     kind: 'FunnelsQuery',
     series: [
-      { event: 'session_started' },
-      { event: 'workout_started' },
-      { event: 'rep_completed' }
+      {event: 'session_started'},
+      {event: 'workout_started'},
+      {event: 'rep_completed'}
     ],
     funnelsFilter: {
       funnelWindowInterval: 30,
@@ -512,7 +512,7 @@ Then in your client:
 async function queryPostHog(query) {
   const response = await fetch('/.netlify/functions/posthog-query', {
     method: 'POST',
-    body: JSON.stringify({ query })
+    body: JSON.stringify({query})
   });
   return await response.json();
 }
@@ -796,8 +796,8 @@ Get your API key from PostHog:
 export async function queryPostHog(query) {
   const response = await fetch('/.netlify/functions/posthog-proxy', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query })
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({query})
   });
 
   if (!response.ok) {
@@ -811,26 +811,26 @@ export async function queryPostHog(query) {
 export const queries = {
   workoutTrend: (days = 7) => ({
     kind: 'TrendsQuery',
-    series: [{ event: 'workout_started', math: 'total' }],
+    series: [{event: 'workout_started', math: 'total'}],
     interval: 'day',
-    dateRange: { date_from: `-${days}d` }
+    dateRange: {date_from: `-${days}d`}
   }),
 
   dailyUsers: (days = 30) => ({
     kind: 'TrendsQuery',
-    series: [{ event: 'session_started', math: 'dau' }],
+    series: [{event: 'session_started', math: 'dau'}],
     interval: 'day',
-    dateRange: { date_from: `-${days}d` }
+    dateRange: {date_from: `-${days}d`}
   }),
 
   musicGenres: (days = 30) => ({
     kind: 'TrendsQuery',
-    series: [{ event: 'music_played', math: 'total' }],
+    series: [{event: 'music_played', math: 'total'}],
     breakdownFilter: {
       breakdown: 'genre',
       breakdown_type: 'event'
     },
-    dateRange: { date_from: `-${days}d` }
+    dateRange: {date_from: `-${days}d`}
   })
 };
 ```
@@ -838,7 +838,7 @@ export const queries = {
 ### 4. Use in Dashboard
 
 ```javascript
-import { queryPostHog, queries } from './posthog-client.js';
+import {queryPostHog, queries} from './posthog-client.js';
 
 async function loadDashboard() {
   // Get workout data
