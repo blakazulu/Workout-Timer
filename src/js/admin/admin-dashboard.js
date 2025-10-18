@@ -6,7 +6,7 @@
 import {logout} from "./auth.js";
 import * as metrics from "./metrics-calculator.js";
 import * as posthogData from "./posthog-data.js";
-import {renderUsersSection} from "./dashboard-users.js";
+import {renderUsersSection, initializeUserModal} from "./dashboard-users.js";
 import {renderEventsSection} from "./dashboard-events.js";
 
 // Chart instances
@@ -29,6 +29,9 @@ export function initDashboard() {
 
   // Log dashboard view to PostHog
   posthogData.logDashboardView();
+
+  // Initialize user modal event listeners
+  initializeUserModal();
 
   // Load and render dashboard
   renderDashboard();

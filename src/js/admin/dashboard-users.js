@@ -6,6 +6,53 @@
 import * as posthog from "./posthog-client.js";
 
 /**
+ * Initialize modal event listeners
+ */
+export function initializeUserModal() {
+  const modal = document.getElementById('user-journey-modal');
+  if (!modal) return;
+
+  // Close button
+  const closeBtn = modal.querySelector('.user-modal-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+  }
+
+  // Backdrop click
+  const backdrop = modal.querySelector('.user-modal-backdrop');
+  if (backdrop) {
+    backdrop.addEventListener('click', () => {
+      modal.classList.remove('show');
+    });
+  }
+
+  // Tab switching
+  const tabs = modal.querySelectorAll('.journey-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabName = tab.dataset.tab;
+
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Update active content
+      const contents = modal.querySelectorAll('.journey-tab-content');
+      contents.forEach(content => {
+        content.classList.remove('active');
+      });
+
+      const targetContent = document.getElementById(`${tabName}-tab`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
+}
+
+/**
  * Render users section with list and stats
  */
 export async function renderUsersSection() {
@@ -132,6 +179,49 @@ function showUsersError(error) {
 }
 
 /**
+ * Open user modal with user journey details
+ * Made global for onclick access
+ */
+window.openUserModal = async function(userData) {
+  const modal = document.getElementById('user-journey-modal');
+  if (!modal) return;
+
+  // Show modal
+  modal.classList.add('show');
+
+  // Populate user info
+  document.getElementById('user-id-display').textContent = userData.id.substring(0, 8);
+  document.getElementById('user-total-sessions').textContent = userData.totalSessions;
+  document.getElementById('user-total-time').textContent = userData.totalTime;
+  document.getElementById('user-last-seen').textContent = userData.lastSeen;
+
+  // Show loading state in timeline
+  const timelineContainer = document.getElementById('user-timeline');
+  timelineContainer.innerHTML = `
+    <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
+      <i class="ph ph-spinner" style="font-size: 3rem; animation: spin 1s linear infinite;"></i>
+      <p style="margin-top: 1rem;">Loading timeline...</p>
+    </div>
+  `;
+
+  try {
+    // Fetch user activity from PostHog
+    const activity = await posthog.getUserActivity(userData.id, 100);
+
+    // Render timeline
+    timelineContainer.innerHTML = renderTimeline(activity);
+  } catch (error) {
+    console.error('[User Modal] Error loading timeline:', error);
+    timelineContainer.innerHTML = `
+      <div style="text-align: center; padding: 3rem; color: var(--error-500);">
+        <i class="ph ph-warning-circle" style="font-size: 3rem;"></i>
+        <p style="margin-top: 1rem;">Failed to load timeline</p>
+      </div>
+    `;
+  }
+};
+
+/**
  * Show user details modal (placeholder for future implementation)
  */
 export async function showUserDetails(userId) {
@@ -160,7 +250,7 @@ function renderTimeline(activity) {
   if (activity.length === 0) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-empty" style="font-size: 3rem; opacity: 0.3;"></i>
+        <i class="ph ph-clock-counter-clockwise" style="font-size: 3rem; opacity: 0.3;"></i>
         <p style="margin-top: 1rem;">No activity found</p>
       </div>
     `;
@@ -176,34 +266,50 @@ function renderTimeline(activity) {
     groupedByDate[date].push(event);
   });
 
-  return Object.entries(groupedByDate).map(([date, events]) => {
-    return `
-      <div class="timeline-date" style="font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
-        ${date}
-      </div>
-      <div class="timeline-events" style="position: relative; padding-left: 2rem; border-left: 2px solid var(--border-primary);">
-        ${events.map((event, index) => {
-          const iconClass = posthog.getEventIcon(event.event);
-          const time = new Date(event.timestamp).toLocaleTimeString();
-          
-          return `
-            <div class="timeline-event" style="position: relative; margin-bottom: 1rem;">
-              <div class="timeline-marker" style="position: absolute; left: -2.625rem; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--surface-secondary); border: 2px solid var(--border-primary); display: flex; align-items: center; justify-content: center;">
-                <i class="${iconClass}" style="font-size: 1rem; color: var(--primary-500);"></i>
-              </div>
-              <div class="timeline-content" style="background: var(--surface-primary); border-radius: var(--radius-md); padding: 1rem; border: 1px solid var(--border-primary);">
-                <div style="font-weight: 600; margin-bottom: 0.25rem;">${posthog.formatEventName(event.event)}</div>
-                <div style="font-size: 0.75rem; color: var(--text-tertiary);">${time}</div>
-                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                  ${event.properties?.title || event.event}
+  // Render grouped timeline
+  return Object.entries(groupedByDate)
+    .sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA))
+    .map(([date, events]) => {
+      return `
+        <div class="timeline-day">
+          <div class="timeline-date">
+            <i class="ph-fill ph-calendar-blank" aria-hidden="true"></i>
+            <span>${date}</span>
+          </div>
+          <div class="timeline-events">
+            ${events.map((event) => {
+              const iconClass = posthog.getEventIcon(event.event);
+              const time = new Date(event.timestamp).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+              const eventName = posthog.formatEventName(event.event);
+              const eventDetail = event.properties?.title ||
+                                 event.properties?.genre ||
+                                 event.properties?.mood ||
+                                 '';
+
+              return `
+                <div class="timeline-event">
+                  <div class="timeline-event-icon">
+                    <i class="${iconClass}" aria-hidden="true"></i>
+                  </div>
+                  <div class="timeline-event-content">
+                    <div class="timeline-event-header">
+                      <div class="timeline-event-title">${eventName}</div>
+                      <div class="timeline-event-time">${time}</div>
+                    </div>
+                    ${eventDetail ? `
+                      <div class="timeline-event-subtitle">${eventDetail}</div>
+                    ` : ''}
+                  </div>
                 </div>
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `;
-  }).join('');
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
 }
 
 /**

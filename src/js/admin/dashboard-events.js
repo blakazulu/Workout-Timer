@@ -12,29 +12,6 @@ export async function renderEventsSection() {
   const container = document.getElementById("events-section");
   if (!container) return;
 
-  // Show loading state
-  container.innerHTML = `
-    <div class="analytics-grid">
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon total-events">
-              <i class="ph-fill ph-lightning" aria-hidden="true"></i>
-            </div>
-            <div class="stat-info">
-              <span class="stat-value">Loading...</span>
-              <span class="stat-label">Total Events</span>
-            </div>
-          </div>
-          <div class="stat-change positive">
-            <i class="ph ph-trend-up" aria-hidden="true"></i>
-            <span>Calculating...</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
   try {
     // Get top events and recent activity
     const [topEvents, recentActivity] = await Promise.all([
@@ -47,12 +24,9 @@ export async function renderEventsSection() {
 
     // Update the stats in the existing analytics section
     updateEventStats(stats);
-    
+
     // Populate the events table
     populateEventsTable(recentActivity);
-    
-    // Update the events count in the analytics section
-    updateEventsCount(stats);
 
   } catch (error) {
     console.error("[Events Section] Error loading events:", error);
@@ -69,16 +43,8 @@ function updateEventStats(stats) {
   const musicEventsEl = document.getElementById('music-events-count');
 
   if (totalEventsEl) totalEventsEl.textContent = stats.totalEvents.toLocaleString();
-  if (sessionEventsEl) sessionEventsEl.textContent = stats.sessionEvents || 0;
-  if (musicEventsEl) sessionEventsEl.textContent = stats.musicEvents || 0;
-}
-
-/**
- * Update events count in the main analytics section
- */
-function updateEventsCount(stats) {
-  // This will be handled by the main analytics section
-  console.log("[Events] Stats updated:", stats);
+  if (sessionEventsEl) sessionEventsEl.textContent = stats.sessionEvents.toLocaleString();
+  if (musicEventsEl) musicEventsEl.textContent = stats.musicEvents.toLocaleString();
 }
 
 /**
@@ -88,48 +54,40 @@ function populateEventsTable(events) {
   const eventsTable = document.getElementById('events-table');
   if (!eventsTable) return;
 
+  if (events.length === 0) {
+    eventsTable.innerHTML = `
+      <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
+        <i class="ph ph-calendar-blank" style="font-size: 3rem; opacity: 0.3;"></i>
+        <p style="margin-top: 1rem;">No events found</p>
+      </div>
+    `;
+    return;
+  }
+
   eventsTable.innerHTML = events.map(event => {
     const iconClass = posthog.getEventIcon(event.event);
     const eventName = posthog.formatEventName(event.event);
     const timeAgo = formatTimeAgo(event.timestamp);
-    const eventType = getEventType(event.event);
+    const eventDetail = event.properties?.title ||
+                       event.properties?.genre ||
+                       event.properties?.mood ||
+                       '';
 
     return `
-      <div class="event-row" onclick="showEventDetails('${event.event}', ${JSON.stringify(event).replace(/"/g, '&quot;')})">
+      <div class="event-row">
         <div class="event-icon">
-          <i class="ph-fill ph-${iconClass}" aria-hidden="true"></i>
+          <i class="${iconClass}" aria-hidden="true"></i>
         </div>
         <div class="event-info">
           <div class="event-name">${eventName}</div>
           <div class="event-details">
-            <span class="event-status ${eventType}">${eventType}</span>
             <span class="event-time">${timeAgo}</span>
+            ${eventDetail ? `<span class="event-subtitle">${eventDetail}</span>` : ''}
           </div>
         </div>
       </div>
     `;
   }).join('');
-}
-
-/**
- * Show event details in a modal
- */
-function showEventDetails(eventName, eventData) {
-  // This could open a modal with detailed event information
-  console.log('Event details:', eventName, eventData);
-  
-  // For now, just show an alert - in the future this could open a modal
-  alert(`Event: ${eventName}\nTime: ${formatTimeAgo(eventData.timestamp)}\nProperties: ${JSON.stringify(eventData.properties, null, 2)}`);
-}
-
-/**
- * Get event type for styling
- */
-function getEventType(eventName) {
-  if (eventName.includes('session') || eventName.includes('workout')) return 'active';
-  if (eventName.includes('music') || eventName.includes('play')) return 'active';
-  if (eventName.includes('error') || eventName.includes('failed')) return 'inactive';
-  return 'active';
 }
 
 /**
@@ -184,11 +142,6 @@ function calculateEventStats(events) {
     musicEvents
   };
 }
-
-/**
- * Make showEventDetails globally available
- */
-window.showEventDetails = showEventDetails;
 
 /**
  * Format time ago (e.g., "2 hours ago")
