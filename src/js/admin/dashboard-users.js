@@ -56,8 +56,12 @@ export function initializeUserModal() {
  * Render users section with list and stats
  */
 export async function renderUsersSection() {
+  console.log('[Users Section] ========== STARTING renderUsersSection ==========');
+
   // Show loading state
   const usersTable = document.getElementById('users-table');
+  console.log('[Users Section] users-table element:', usersTable);
+
   if (usersTable) {
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
@@ -65,9 +69,14 @@ export async function renderUsersSection() {
         <p style="margin-top: 1rem;">Loading users...</p>
       </div>
     `;
+    console.log('[Users Section] Loading state displayed');
+  } else {
+    console.error('[Users Section] users-table element NOT FOUND!');
   }
 
   try {
+    console.log('[Users Section] Fetching data from PostHog...');
+
     // Fetch all user data
     const [users, engagement, cohorts] = await Promise.all([
       posthog.getUsers(30, 100),
@@ -75,14 +84,22 @@ export async function renderUsersSection() {
       posthog.getUserCohorts(30)
     ]);
 
+    console.log('[Users Section] Fetched users:', users);
+    console.log('[Users Section] Fetched engagement:', engagement);
+    console.log('[Users Section] Fetched cohorts:', cohorts);
+
     // Update the stats in the existing analytics section
     updateUserStats(users, engagement, cohorts);
 
     // Populate the users table
     populateUsersTable(users);
 
+    console.log('[Users Section] ========== COMPLETED renderUsersSection ==========');
+
   } catch (error) {
-    console.error("[Users Section] Error loading users:", error);
+    console.error("[Users Section] ========== ERROR in renderUsersSection ==========");
+    console.error("[Users Section] Error:", error);
+    console.error("[Users Section] Error stack:", error.stack);
     showUsersError(error);
   }
 }
@@ -104,10 +121,19 @@ function updateUserStats(users, engagement, cohorts) {
  * Populate users table with modern design
  */
 function populateUsersTable(users) {
+  console.log('[populateUsersTable] Called with users:', users);
+  console.log('[populateUsersTable] Users count:', users ? users.length : 'null/undefined');
+
   const usersTable = document.getElementById('users-table');
-  if (!usersTable) return;
+  console.log('[populateUsersTable] usersTable element:', usersTable);
+
+  if (!usersTable) {
+    console.error('[populateUsersTable] usersTable NOT FOUND!');
+    return;
+  }
 
   if (!users || users.length === 0) {
+    console.log('[populateUsersTable] No users, showing empty state');
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-users" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -117,22 +143,30 @@ function populateUsersTable(users) {
     return;
   }
 
-  usersTable.innerHTML = users.map(user => {
+  console.log('[populateUsersTable] Rendering', users.length, 'user rows');
+
+  const html = users.map((user, index) => {
+    console.log(`[populateUsersTable] User ${index}:`, user);
+
     const engagementLevel = user.totalEvents >= 50 ? "power" : user.totalEvents >= 10 ? "active" : "casual";
     const engagementColor = engagementLevel === "power" ? "#00ffc8" : engagementLevel === "active" ? "#ff0096" : "#6464ff";
 
+    const userData = {
+      id: user.userId,
+      name: `User ${user.userId.substring(0, 8)}`,
+      status: engagementLevel,
+      lastSeen: user.lastSeen.toLocaleDateString(),
+      totalSessions: user.sessions || 0,
+      totalTime: `${Math.floor(user.totalEvents / 10)}h`,
+      timeline: [],
+      sessions: [],
+      preferences: {}
+    };
+
+    console.log(`[populateUsersTable] User ${index} data for onclick:`, userData);
+
     return `
-      <div class="user-row" onclick="openUserModal(${JSON.stringify({
-        id: user.userId,
-        name: `User ${user.userId.substring(0, 8)}`,
-        status: engagementLevel,
-        lastSeen: user.lastSeen.toLocaleDateString(),
-        totalSessions: user.sessions || 0,
-        totalTime: `${Math.floor(user.totalEvents / 10)}h`,
-        timeline: [],
-        sessions: [],
-        preferences: {}
-      }).replace(/"/g, '&quot;')})">
+      <div class="user-row" onclick="openUserModal(${JSON.stringify(userData).replace(/"/g, '&quot;')})">
         <div class="user-avatar" style="background: linear-gradient(135deg, ${engagementColor}, ${engagementColor}80);">
           <i class="ph-fill ph-user" aria-hidden="true"></i>
         </div>
@@ -146,6 +180,12 @@ function populateUsersTable(users) {
       </div>
     `;
   }).join('');
+
+  console.log('[populateUsersTable] Generated HTML length:', html.length);
+  console.log('[populateUsersTable] HTML preview:', html.substring(0, 300));
+
+  usersTable.innerHTML = html;
+  console.log('[populateUsersTable] Table populated, checking window.openUserModal:', typeof window.openUserModal);
 }
 
 /**

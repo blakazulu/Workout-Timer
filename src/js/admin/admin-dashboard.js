@@ -49,27 +49,48 @@ export function initDashboard() {
  * Render the complete dashboard
  */
 export async function renderDashboard() {
+  console.log("[Admin Dashboard] ========== STARTING renderDashboard ==========");
   try {
+    console.log("[Admin Dashboard] Getting metrics...");
     const allMetrics = metrics.getAllMetrics();
+    console.log("[Admin Dashboard] Metrics retrieved:", allMetrics);
 
     // Render each section
+    console.log("[Admin Dashboard] Rendering metrics cards...");
     renderMetricsCards(allMetrics.overview);
+    console.log("[Admin Dashboard] Rendering activity chart...");
     renderActivityChart(allMetrics);
+    console.log("[Admin Dashboard] Rendering genre chart...");
     renderGenreChart(allMetrics.musicStats);
+    console.log("[Admin Dashboard] Rendering top songs chart...");
     renderTopSongsChart(allMetrics);
+    console.log("[Admin Dashboard] Rendering duration chart...");
     renderDurationChart(allMetrics);
+    console.log("[Admin Dashboard] Rendering recent activity...");
     renderRecentActivity(allMetrics.recentActivity);
+    console.log("[Admin Dashboard] Rendering system info...");
     renderSystemInfo(allMetrics.system);
+    console.log("[Admin Dashboard] Rendering PostHog panel...");
     renderPostHogPanel();
 
     // Render PostHog user and event sections
+    console.log("[Admin Dashboard] About to render users section...");
     await renderUsersSection();
+    console.log("[Admin Dashboard] Users section complete!");
+
+    console.log("[Admin Dashboard] About to render events section...");
     await renderEventsSection();
+    console.log("[Admin Dashboard] Events section complete!");
 
     // Update last sync time
+    console.log("[Admin Dashboard] Updating sync time...");
     updateSyncTime();
+
+    console.log("[Admin Dashboard] ========== COMPLETED renderDashboard ==========");
   } catch (error) {
-    console.error("[Admin Dashboard] Error rendering dashboard:", error);
+    console.error("[Admin Dashboard] ========== ERROR in renderDashboard ==========");
+    console.error("[Admin Dashboard] Error:", error);
+    console.error("[Admin Dashboard] Error stack:", error.stack);
   }
 }
 
