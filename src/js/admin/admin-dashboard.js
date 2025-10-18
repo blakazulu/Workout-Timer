@@ -115,16 +115,20 @@ function renderMetricsCards(overview) {
   ];
 
   container.innerHTML = metrics_data.map(stat => `
-    <div class="admin-card stat-card fade-in" style="--stat-color: ${stat.color};">
-      <div class="flex items-center justify-between mb-lg">
-        <span class="stat-label">${stat.label}</span>
-        <i class="ph-fill ${stat.icon}" style="font-size: 1.5rem; color: ${stat.color}; opacity: 0.5;"></i>
+    <div class="stat-card fade-in" style="--stat-color: ${stat.color};">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, ${stat.color}, ${stat.color}80);">
+          <i class="ph-fill ${stat.icon}" aria-hidden="true"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">${stat.value}</span>
+          <span class="stat-label">${stat.label}</span>
+        </div>
       </div>
-      <div class="stat-value">${stat.value}</div>
       ${stat.trend !== null ? `
         <div class="stat-change ${stat.trend > 0 ? "positive" : stat.trend < 0 ? "negative" : "neutral"}">
-          <i class="ph-fill ${stat.trend > 0 ? "ph-trend-up" : stat.trend < 0 ? "ph-trend-down" : "ph-minus"}"></i>
-          ${stat.trend > 0 ? "+" : ""}${stat.trend}% vs last week
+          <i class="ph-fill ${stat.trend > 0 ? "ph-trend-up" : stat.trend < 0 ? "ph-trend-down" : "ph-minus"}" aria-hidden="true"></i>
+          <span>${stat.trend > 0 ? "+" : ""}${stat.trend}% vs last week</span>
         </div>
       ` : ""}
     </div>
@@ -583,7 +587,7 @@ function renderRecentActivity(recentActivity) {
 
   if (activities.length === 0) {
     container.innerHTML = `
-      <div class="admin-text-sm" style="text-align: center; padding: 2rem; opacity: 0.5;">
+      <div class="text-center" style="text-align: center; padding: 2rem; opacity: 0.5;">
         <i class="ph ph-clipboard" style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
         No recent activity
       </div>
@@ -603,23 +607,15 @@ function renderRecentActivity(recentActivity) {
         activity.type;
 
     return `
-      <div class="slide-up" style="padding: 1rem; background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: var(--admin-radius-md); transition: all var(--admin-transition-base);">
-        <div class="flex items-center gap-md">
-          <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: ${color}15; border-radius: var(--admin-radius-md);">
-            <i class="${icon}" style="font-size: 1.125rem; color: ${color};"></i>
-          </div>
-          <div style="flex: 1; min-width: 0;">
-            <div class="admin-text-sm" style="font-weight: 600; color: var(--admin-text-primary); margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${description}
-            </div>
-            <div class="admin-text-xs" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${eventType}
-            </div>
-          </div>
-          <div class="admin-text-xs" style="white-space: nowrap;">
-            ${timeAgo}
-          </div>
+      <div class="activity-item">
+        <div class="activity-icon" style="background: linear-gradient(135deg, ${color}, ${color}80);">
+          <i class="${icon}" aria-hidden="true"></i>
         </div>
+        <div class="activity-content">
+          <div class="activity-title">${description}</div>
+          <div class="activity-description">${eventType}</div>
+        </div>
+        <div class="activity-time">${timeAgo}</div>
       </div>
     `;
   }).join("");
@@ -679,17 +675,17 @@ function renderSystemInfo(system) {
   const storageUsed = formatBytes(system.localStorage?.used || 0);
 
   container.innerHTML = `
-    <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-      <span style="color: var(--admin-text-muted);">PWA Status</span>
-      <span style="color: var(--admin-text-primary);">${pwaStatus}</span>
+    <div class="system-info-item">
+      <span class="system-info-label">PWA Status</span>
+      <span class="system-info-value">${pwaStatus}</span>
     </div>
-    <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-      <span style="color: var(--admin-text-muted);">Analytics</span>
-      <span style="color: ${analyticsStatus === "Enabled" ? "var(--admin-accent-green)" : "var(--admin-text-muted)"};">${analyticsStatus}</span>
+    <div class="system-info-item">
+      <span class="system-info-label">Analytics</span>
+      <span class="system-info-value ${analyticsStatus === "Enabled" ? "enabled" : "disabled"}">${analyticsStatus}</span>
     </div>
-    <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
-      <span style="color: var(--admin-text-muted);">Storage</span>
-      <span class="admin-mono" style="color: var(--admin-text-primary); font-size: 0.75rem;">${storageUsed}</span>
+    <div class="system-info-item">
+      <span class="system-info-label">Storage</span>
+      <span class="system-info-value mono">${storageUsed}</span>
     </div>
   `;
 }
@@ -725,21 +721,21 @@ function renderPostHogPanel() {
     const config = analytics.config || {};
 
     container.innerHTML = `
-      <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-        <span style="color: var(--admin-text-muted);">Status</span>
-        <span style="color: var(--admin-accent-green); font-weight: 600;">${analytics.status}</span>
+      <div class="system-info-item">
+        <span class="system-info-label">Status</span>
+        <span class="system-info-value enabled">${analytics.status}</span>
       </div>
-      <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-        <span style="color: var(--admin-text-muted);">Session ID</span>
-        <span class="admin-mono" style="color: var(--admin-text-primary); font-size: 0.7rem;">${session.sessionId ? session.sessionId.substring(0, 12) + "..." : "N/A"}</span>
+      <div class="system-info-item">
+        <span class="system-info-label">Session ID</span>
+        <span class="system-info-value mono">${session.sessionId ? session.sessionId.substring(0, 12) + "..." : "N/A"}</span>
       </div>
-      <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
-        <span style="color: var(--admin-text-muted);">Recording</span>
-        <span style="color: ${config.sessionRecording ? "var(--admin-accent-green)" : "var(--admin-text-muted)"};">${config.sessionRecording ? "Active" : "Inactive"}</span>
+      <div class="system-info-item">
+        <span class="system-info-label">Recording</span>
+        <span class="system-info-value ${config.sessionRecording ? "enabled" : "disabled"}">${config.sessionRecording ? "Active" : "Inactive"}</span>
       </div>
-      <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
-        <span style="color: var(--admin-text-muted);">Tracked Events</span>
-        <span style="color: var(--admin-text-primary);">${analytics.trackedEvents?.length || 0} types</span>
+      <div class="system-info-item">
+        <span class="system-info-label">Tracked Events</span>
+        <span class="system-info-value">${analytics.trackedEvents?.length || 0} types</span>
       </div>
     `;
   } else {
@@ -747,7 +743,7 @@ function renderPostHogPanel() {
     statusDot?.classList.add("offline");
 
     container.innerHTML = `
-      <div class="admin-text-sm" style="text-align: center; padding: 1rem; opacity: 0.5;">
+      <div class="text-center" style="text-align: center; padding: 1rem; opacity: 0.5;">
         <i class="ph ph-warning-circle" style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
         ${analytics.reason || "Not connected"}
       </div>
