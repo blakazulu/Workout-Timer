@@ -173,19 +173,20 @@ export async function showUserDetails(userId) {
   // Create modal overlay
   const modal = document.createElement('div');
   modal.id = 'user-detail-modal';
-  modal.className = 'modal-overlay';
+  modal.className = 'user-detail-modal';
   modal.innerHTML = `
-    <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
-      <div class="modal-header">
-        <h2 style="margin: 0; display: flex; align-items: center; gap: 12px;">
+    <div class="user-detail-backdrop" onclick="this.parentElement.remove()"></div>
+    <div class="user-detail-content">
+      <div class="user-detail-header">
+        <h2 class="admin-heading-2" style="margin: 0; display: flex; align-items: center; gap: 12px;">
           <i class="ph-fill ph-user-circle"></i>
           User Journey
         </h2>
-        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+        <button class="user-detail-close" onclick="this.closest('.user-detail-modal').remove()">
           <i class="ph ph-x"></i>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="user-detail-body">
         <div class="loading">Loading user details...</div>
       </div>
     </div>
@@ -200,7 +201,7 @@ export async function showUserDetails(userId) {
     const summary = calculateUserSummary(activity, userId);
 
     // Render user details
-    const modalBody = modal.querySelector('.modal-body');
+    const modalBody = modal.querySelector('.user-detail-body');
     modalBody.innerHTML = `
       <!-- User Summary -->
       <div class="user-summary" style="margin-bottom: 2rem;">
@@ -276,7 +277,7 @@ export async function showUserDetails(userId) {
 
   } catch (error) {
     console.error('[User Details] Error:', error);
-    const modalBody = modal.querySelector('.modal-body');
+    const modalBody = modal.querySelector('.user-detail-body');
     modalBody.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--admin-accent-red);">
         <i class="ph ph-warning-circle" style="font-size: 4rem;"></i>

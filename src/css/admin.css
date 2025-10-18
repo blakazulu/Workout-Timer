@@ -361,6 +361,12 @@ body {
   height: 2.75rem;
 }
 
+/* Small buttons */
+.admin-btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+}
+
 /* ========================================
    HEADER & NAVIGATION
    ======================================== */
@@ -808,6 +814,30 @@ body {
   padding: var(--admin-space-xl);
   overflow-y: auto;
   flex: 1;
+}
+
+/* Apply custom scrollbar to modal */
+.user-detail-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.3) rgba(148, 163, 184, 0.05);
+}
+
+.user-detail-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.user-detail-body::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.05);
+  border-radius: 4px;
+}
+
+.user-detail-body::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+.user-detail-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
 }
 
 .user-detail-close {
