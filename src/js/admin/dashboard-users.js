@@ -169,20 +169,41 @@ function showUsersError(error) {
  * Made global for onclick access
  */
 window.openUserModal = async function(userData) {
+  console.log('[User Modal] Opening modal for user:', userData);
+
   const modal = document.getElementById('user-journey-modal');
-  if (!modal) return;
+  if (!modal) {
+    console.error('[User Modal] Modal element not found');
+    return;
+  }
 
   // Show modal
   modal.classList.add('show');
 
+  // Update modal title
+  const modalTitle = document.getElementById('user-modal-title');
+  if (modalTitle) {
+    modalTitle.textContent = `User ${userData.id.substring(0, 8)}`;
+  }
+
   // Populate user info
-  document.getElementById('user-id-display').textContent = userData.id.substring(0, 8);
-  document.getElementById('user-total-sessions').textContent = userData.totalSessions;
-  document.getElementById('user-total-time').textContent = userData.totalTime;
-  document.getElementById('user-last-seen').textContent = userData.lastSeen;
+  const userIdEl = document.getElementById('user-id-display');
+  const sessionsEl = document.getElementById('user-total-sessions');
+  const timeEl = document.getElementById('user-total-time');
+  const lastSeenEl = document.getElementById('user-last-seen');
+
+  if (userIdEl) userIdEl.textContent = userData.id.substring(0, 8);
+  if (sessionsEl) sessionsEl.textContent = userData.totalSessions;
+  if (timeEl) timeEl.textContent = userData.totalTime;
+  if (lastSeenEl) lastSeenEl.textContent = userData.lastSeen;
 
   // Show loading state in timeline
   const timelineContainer = document.getElementById('user-timeline');
+  if (!timelineContainer) {
+    console.error('[User Modal] Timeline container not found');
+    return;
+  }
+
   timelineContainer.innerHTML = `
     <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
       <i class="ph ph-spinner" style="font-size: 3rem; animation: spin 1s linear infinite;"></i>
@@ -192,7 +213,9 @@ window.openUserModal = async function(userData) {
 
   try {
     // Fetch user activity from PostHog
+    console.log('[User Modal] Fetching activity for user:', userData.id);
     const activity = await posthog.getUserActivity(userData.id, 100);
+    console.log('[User Modal] Retrieved activity:', activity.length, 'events');
 
     // Render timeline
     timelineContainer.innerHTML = renderTimeline(activity);
@@ -202,6 +225,7 @@ window.openUserModal = async function(userData) {
       <div style="text-align: center; padding: 3rem; color: var(--error-500);">
         <i class="ph ph-warning-circle" style="font-size: 3rem;"></i>
         <p style="margin-top: 1rem;">Failed to load timeline</p>
+        <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
       </div>
     `;
   }
@@ -233,7 +257,7 @@ function calculateUserSummary(activity, userId) {
  * Render timeline for user activity
  */
 function renderTimeline(activity) {
-  if (activity.length === 0) {
+  if (!activity || activity.length === 0) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-clock-counter-clockwise" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -242,60 +266,41 @@ function renderTimeline(activity) {
     `;
   }
 
-  // Group by date
-  const groupedByDate = {};
-  activity.forEach(event => {
-    const date = new Date(event.timestamp).toDateString();
-    if (!groupedByDate[date]) {
-      groupedByDate[date] = [];
-    }
-    groupedByDate[date].push(event);
-  });
+  // Render events (most recent first)
+  return activity.map((event) => {
+    const iconClass = posthog.getEventIcon(event.event);
+    const eventName = posthog.formatEventName(event.event);
 
-  // Render grouped timeline
-  return Object.entries(groupedByDate)
-    .sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA))
-    .map(([date, events]) => {
-      return `
-        <div class="timeline-day">
-          <div class="timeline-date">
-            <i class="ph-fill ph-calendar-blank" aria-hidden="true"></i>
-            <span>${date}</span>
-          </div>
-          <div class="timeline-events">
-            ${events.map((event) => {
-              const iconClass = posthog.getEventIcon(event.event);
-              const time = new Date(event.timestamp).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-              });
-              const eventName = posthog.formatEventName(event.event);
-              const eventDetail = event.properties?.title ||
-                                 event.properties?.genre ||
-                                 event.properties?.mood ||
-                                 '';
+    // Format timestamp
+    const date = new Date(event.timestamp);
+    const timeStr = date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    const dateStr = date.toLocaleDateString();
 
-              return `
-                <div class="timeline-event">
-                  <div class="timeline-event-icon">
-                    <i class="${iconClass}" aria-hidden="true"></i>
-                  </div>
-                  <div class="timeline-event-content">
-                    <div class="timeline-event-header">
-                      <div class="timeline-event-title">${eventName}</div>
-                      <div class="timeline-event-time">${time}</div>
-                    </div>
-                    ${eventDetail ? `
-                      <div class="timeline-event-subtitle">${eventDetail}</div>
-                    ` : ''}
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
+    // Get event details from properties
+    const eventDetail = event.properties?.title ||
+                       event.properties?.genre ||
+                       event.properties?.mood ||
+                       event.properties?.videoId ||
+                       '';
+
+    return `
+      <div class="timeline-event">
+        <div class="timeline-icon">
+          <i class="${iconClass}" aria-hidden="true"></i>
         </div>
-      `;
-    }).join('');
+        <div class="timeline-content">
+          <div class="timeline-title">${eventName}</div>
+          ${eventDetail ? `
+            <div class="timeline-description">${eventDetail}</div>
+          ` : ''}
+          <div class="timeline-time">${dateStr} at ${timeStr}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 /**
