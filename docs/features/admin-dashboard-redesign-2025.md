@@ -5,7 +5,8 @@
 
 ## Overview
 
-Complete ground-up redesign of the admin dashboard with modern 2025 design trends, professional visualizations using Chart.js, and a completely independent design system from the main site.
+Complete ground-up redesign of the admin dashboard with modern 2025 design trends, professional visualizations using
+Chart.js, and a completely independent design system from the main site.
 
 ---
 
@@ -76,6 +77,7 @@ Complete ground-up redesign of the admin dashboard with modern 2025 design trend
 ### Chart Library: Chart.js
 
 **Why Chart.js?**
+
 - Lightweight (11kb gzipped)
 - Most popular charting library (GitHub stars + npm downloads)
 - Responsive and mobile-friendly
@@ -83,6 +85,7 @@ Complete ground-up redesign of the admin dashboard with modern 2025 design trend
 - Excellent documentation
 
 **Chart Types Implemented:**
+
 1. **Line Chart** - Activity over time (7-day trend)
 2. **Doughnut Chart** - Genre distribution
 3. **Horizontal Bar Chart** - Top 5 songs
@@ -104,46 +107,50 @@ Complete ground-up redesign of the admin dashboard with modern 2025 design trend
 Four primary stat cards at the top:
 
 1. **Total Sessions**
-   - Icon: Activity
-   - Color: Blue (#3b82f6)
-   - Trend: % vs last week
+    - Icon: Activity
+    - Color: Blue (#3b82f6)
+    - Trend: % vs last week
 
 2. **Unique Songs**
-   - Icon: Music Notes
-   - Color: Purple (#8b5cf6)
-   - Trend: None
+    - Icon: Music Notes
+    - Color: Purple (#8b5cf6)
+    - Trend: None
 
 3. **Favorite Tracks**
-   - Icon: Heart
-   - Color: Pink (#ec4899)
-   - Trend: % vs last week
+    - Icon: Heart
+    - Color: Pink (#ec4899)
+    - Trend: % vs last week
 
 4. **Total Minutes**
-   - Icon: Timer
-   - Color: Green (#10b981)
-   - Trend: None
+    - Icon: Timer
+    - Color: Green (#10b981)
+    - Trend: None
 
 ### Visualizations
 
 #### 1. Activity Trend (Line Chart)
+
 - Last 7 days of session activity
 - Smooth curve with area fill
 - Responsive tooltips
 - Color: Blue gradient
 
 #### 2. Genre Mix (Doughnut Chart)
+
 - Top genres by play count
 - Color-coded segments
 - Legend at bottom
 - Hover offset effect
 
 #### 3. Top Songs (Horizontal Bar Chart)
+
 - Top 5 most-played songs
 - Truncated titles for readability
 - Full title in tooltip
 - Color: Green
 
 #### 4. Session Duration Distribution (Bar Chart)
+
 - Buckets: <5min, 5-10min, 10-20min, 20-30min, 30+min
 - Vertical bars with rounded corners
 - Color: Cyan
@@ -365,4 +372,5 @@ The admin dashboard has been completely redesigned from the ground up with:
 - ✅ Accessibility compliance
 - ✅ Clean, maintainable codebase
 
-The new dashboard provides a professional, data-driven experience that's completely separate from the main workout timer app, giving you powerful analytics in a beautiful, modern interface.
+The new dashboard provides a professional, data-driven experience that's completely separate from the main workout timer
+app, giving you powerful analytics in a beautiful, modern interface.

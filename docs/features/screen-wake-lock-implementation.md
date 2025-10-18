@@ -5,11 +5,14 @@
 
 ## Overview
 
-Implemented the Screen Wake Lock API to prevent the device screen from automatically locking during active workout timer sessions. This is essential for workout apps where users need continuous visibility of the timer without manual interaction.
+Implemented the Screen Wake Lock API to prevent the device screen from automatically locking during active workout timer
+sessions. This is essential for workout apps where users need continuous visibility of the timer without manual
+interaction.
 
 ## Problem Statement
 
 Users performing workouts with the timer running would experience:
+
 - Screen auto-lock after device timeout period
 - Interruption of workout flow
 - Need to manually unlock device to check timer
@@ -22,6 +25,7 @@ Implemented a wake lock management system using the Web Screen Wake Lock API:
 ### 1. Wake Lock Utility Module (`src/js/utils/wake-lock.js`)
 
 Created a singleton `WakeLockManager` class that:
+
 - Detects browser support for Wake Lock API
 - Requests screen wake lock to prevent sleep
 - Releases wake lock when not needed
@@ -29,6 +33,7 @@ Created a singleton `WakeLockManager` class that:
 - Provides graceful fallback for unsupported browsers
 
 **Key Features:**
+
 ```javascript
 class WakeLockManager {
   request()  // Acquire wake lock
@@ -43,31 +48,38 @@ class WakeLockManager {
 Integrated wake lock into the timer lifecycle:
 
 **When Timer Starts:**
+
 - Requests wake lock to keep screen on
 - Location: `timer.js:84`
 
 **When Timer Pauses:**
+
 - Releases wake lock to allow normal screen sleep
 - Location: `timer.js:126`
 
 **When Timer Stops/Resets:**
+
 - Ensures wake lock is released
 - Locations: `timer.js:161`, `timer.js:190`, `timer.js:226`
 
 ## Technical Details
 
 ### Browser Support
+
 - Chrome/Edge 84+
 - Safari 16.4+
 - Firefox (behind flag, coming soon)
 
 ### Automatic Re-acquisition
+
 The wake lock automatically re-acquires when:
+
 - User switches back to the app tab
 - Page becomes visible after being hidden
 - Device wakes from sleep with timer still running
 
 ### Error Handling
+
 - Graceful degradation for unsupported browsers
 - Console warnings for debugging
 - Continues timer operation even if wake lock fails
@@ -75,9 +87,11 @@ The wake lock automatically re-acquires when:
 ## Code Changes
 
 ### New Files
+
 - `src/js/utils/wake-lock.js` - Wake lock management utility
 
 ### Modified Files
+
 - `src/js/modules/timer.js` - Integrated wake lock requests/releases
 
 ## User Benefits
@@ -90,6 +104,7 @@ The wake lock automatically re-acquires when:
 ## Testing Recommendations
 
 Users can test by:
+
 1. Start a timer on mobile device
 2. Wait for device's auto-lock timeout (usually 30s-2min)
 3. Screen should stay on while timer is running
@@ -99,6 +114,7 @@ Users can test by:
 ## Browser Compatibility Note
 
 For browsers without wake lock support, the app will continue to function normally but screen may auto-lock. Users can:
+
 - Manually disable auto-lock in device settings
 - Periodically tap screen to keep it awake
 - Use supported browsers (Chrome/Safari recommended)
@@ -106,6 +122,7 @@ For browsers without wake lock support, the app will continue to function normal
 ## Future Enhancements
 
 Potential improvements:
+
 - Settings toggle to enable/disable wake lock
 - Visual indicator when wake lock is active
 - Battery impact monitoring

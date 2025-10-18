@@ -3,16 +3,16 @@
  * Displays all events with counts and statistics
  */
 
-import * as posthog from './posthog-client.js';
+import * as posthog from "./posthog-client.js";
 
 /**
  * Render events section with breakdown and statistics
  */
 export async function renderEventsSection() {
-  const container = document.getElementById('events-section');
+  const container = document.getElementById("events-section");
   if (!container) return;
 
-  container.innerHTML = '<div class="loading">Loading events...</div>';
+  container.innerHTML = "<div class=\"loading\">Loading events...</div>";
 
   try {
     // Get top events and recent activity
@@ -86,12 +86,12 @@ export async function renderEventsSection() {
 
           <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
             ${topEvents.map((event, index) => {
-              const percentage = (event.count / stats.totalEvents * 100).toFixed(1);
-              const rank = index + 1;
-              const iconClass = posthog.getEventIcon(event.event);
-              const eventName = posthog.formatEventName(event.event);
+      const percentage = (event.count / stats.totalEvents * 100).toFixed(1);
+      const rank = index + 1;
+      const iconClass = posthog.getEventIcon(event.event);
+      const eventName = posthog.formatEventName(event.event);
 
-              return `
+      return `
                 <div class="event-card" style="background: var(--admin-glass); border-radius: var(--admin-radius-md); padding: 1.25rem; border: 1px solid var(--admin-border); position: relative; overflow: hidden;">
                   <!-- Rank Badge -->
                   <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: var(--admin-accent-cyan); color: var(--admin-bg-primary); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">
@@ -124,7 +124,7 @@ export async function renderEventsSection() {
                   </div>
                 </div>
               `;
-            }).join('')}
+    }).join("")}
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ export async function renderEventsSection() {
     container.innerHTML = overviewHTML + eventsTableHTML + recentActivityHTML;
 
   } catch (error) {
-    console.error('[Events Section] Error loading events:', error);
+    console.error("[Events Section] Error loading events:", error);
     container.innerHTML = `
       <div class="admin-card" style="padding: var(--admin-space-xl);">
         <div style="text-align: center; color: var(--admin-accent-red);">
@@ -170,7 +170,7 @@ export async function renderEventsSection() {
 function calculateEventStats(events) {
   const totalEvents = events.reduce((sum, e) => sum + e.count, 0);
   const uniqueEvents = events.length;
-  const mostCommon = events.length > 0 ? events[0].event : 'none';
+  const mostCommon = events.length > 0 ? events[0].event : "none";
   const mostCommonCount = events.length > 0 ? events[0].count : 0;
 
   return {
@@ -229,7 +229,7 @@ function renderActivityFeed(activities) {
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 }
 
 /**
@@ -247,5 +247,5 @@ function formatTimeAgo(date) {
   if (hours > 0) return `${hours}h ago`;
   if (minutes > 0) return `${minutes}m ago`;
   if (seconds > 30) return `${seconds}s ago`;
-  return 'Just now';
+  return "Just now";
 }

@@ -21,6 +21,7 @@ because it violates the following Content Security Policy directive:
 ```
 
 **Impact:**
+
 - ❌ Events not being sent to PostHog
 - ❌ Analytics not working on main app
 - ✅ Test page and admin dashboard proxy still worked (they use different method)
@@ -30,11 +31,13 @@ because it violates the following Content Security Policy directive:
 ## Root Cause
 
 **Content Security Policy (CSP)** is a security feature that controls which external domains can:
+
 - Load scripts
 - Make API connections
 - Load resources
 
 Our CSP in `netlify.toml` only allowed:
+
 - YouTube domains
 - Google Fonts
 - CDN for Chart.js
@@ -50,10 +53,12 @@ Updated `netlify.toml` to add PostHog domains to the CSP:
 ### Changed File: `netlify.toml` (line 26)
 
 **Added to `script-src-elem`:**
+
 - `https://us-assets.i.posthog.com` - PostHog script loader
 - `https://app.posthog.com` - PostHog config
 
 **Added to `connect-src`:**
+
 - `https://us.i.posthog.com` - PostHog API endpoint
 - `https://us-assets.i.posthog.com` - PostHog assets
 - `https://app.posthog.com` - PostHog config API
@@ -123,12 +128,14 @@ netlify deploy --prod
 After deployment, visit your main app: https://workouttimerpro.netlify.app
 
 **Before fix:**
+
 ```
 ❌ Refused to load script from https://us-assets.i.posthog.com/...
 ❌ Refused to connect to https://us.i.posthog.com/...
 ```
 
 **After fix:**
+
 ```
 ✅ [Analytics] PostHog initialized successfully
 ✅ [Analytics Tracker] Tracking initialized
@@ -153,17 +160,20 @@ After deployment, visit your main app: https://workouttimerpro.netlify.app
 ## Why Test Page Worked But Main App Didn't
 
 **Test Page** (`/test-posthog.html`):
+
 - Uses Netlify function proxy (`.netlify/functions/posthog-proxy`)
 - Proxy runs server-side, not blocked by CSP
 - Only queries data, doesn't send events from client
 
 **Main App** (`/index.html`):
+
 - Uses PostHog SDK directly in browser
 - Loads scripts from PostHog CDN
 - Makes API calls from client JavaScript
 - **Blocked by CSP** because PostHog domains weren't allowed
 
 **Admin Dashboard**:
+
 - Also uses Netlify function proxy
 - Not affected by CSP issues
 - Works for querying data
@@ -179,23 +189,25 @@ After deploying the CSP fix:
 - [ ] Events appear in Network tab (POST to `/e/`)
 - [ ] Events appear in PostHog dashboard (Live Events)
 - [ ] Test all event types:
-  - [ ] `workout_started` - Start a workout
-  - [ ] `music_played` - Play a song
-  - [ ] `favorite_removed` - Toggle favorite
-  - [ ] `session_started` - Page load
-  - [ ] `$pageview` - Automatic page view
+    - [ ] `workout_started` - Start a workout
+    - [ ] `music_played` - Play a song
+    - [ ] `favorite_removed` - Toggle favorite
+    - [ ] `session_started` - Page load
+    - [ ] `$pageview` - Automatic page view
 
 ---
 
 ## What is Content Security Policy?
 
 **CSP** is a security feature that:
+
 - Prevents Cross-Site Scripting (XSS) attacks
 - Controls which external resources can load
 - Blocks malicious scripts from running
 - Protects user data and privacy
 
 **CSP Directives:**
+
 - `script-src-elem` - Controls where scripts can load from
 - `connect-src` - Controls which APIs can be called
 - `img-src` - Controls where images load from
@@ -203,12 +215,14 @@ After deploying the CSP fix:
 - `frame-src` - Controls which sites can be embedded
 
 **Why we use CSP:**
+
 - ✅ Security best practice
 - ✅ Prevents malicious code injection
 - ✅ Required for PWAs
 - ✅ Protects against supply chain attacks
 
 **Trade-off:**
+
 - We need to explicitly allow legitimate third-party services
 - PostHog, YouTube, Google Fonts all need CSP allowances
 - Stricter = more secure, but requires more configuration
@@ -229,18 +243,22 @@ If you add new services (analytics, CDNs, APIs), you may need to update CSP:
 ### Common Services & Their Domains
 
 **Analytics:**
+
 - PostHog: `us.i.posthog.com`, `us-assets.i.posthog.com`, `app.posthog.com`
 - Google Analytics: `www.google-analytics.com`, `www.googletagmanager.com`
 
 **CDNs:**
+
 - jsDelivr: `cdn.jsdelivr.net`
 - unpkg: `unpkg.com`
 - cdnjs: `cdnjs.cloudflare.com`
 
 **Fonts:**
+
 - Google Fonts: `fonts.googleapis.com`, `fonts.gstatic.com`
 
 **Media:**
+
 - YouTube: `www.youtube.com`, `*.googlevideo.com`
 - Vimeo: `player.vimeo.com`, `*.vimeocdn.com`
 
@@ -259,16 +277,19 @@ If you add new services (analytics, CDNs, APIs), you may need to update CSP:
 ## Summary
 
 **What was fixed:**
+
 - ✅ Added PostHog domains to Content Security Policy
 - ✅ Updated `netlify.toml` configuration
 - ✅ PostHog now works on main app
 
 **What needs to be done:**
+
 1. Deploy the changes to Netlify
 2. Verify no CSP errors in console
 3. Confirm events are being tracked
 
 **Result:**
+
 - PostHog analytics fully functional
 - Events tracked from main app
 - Admin dashboard can query data

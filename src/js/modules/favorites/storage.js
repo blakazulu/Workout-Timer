@@ -88,7 +88,7 @@ export function addToFavorites(songData) {
     console.log(`✅ Song added to favorites: ${songData.title} (Total favorites: ${favorites.length})`);
 
     // Emit analytics event
-    eventBus.emit('favorite:added', {
+    eventBus.emit("favorite:added", {
       videoId: songData.videoId,
       title: songData.title,
       totalFavorites: favorites.length,
@@ -120,7 +120,7 @@ export function removeFromFavorites(videoId) {
     console.log(`Song removed from favorites: ${videoId}`);
 
     // Emit analytics event
-    eventBus.emit('favorite:removed', {
+    eventBus.emit("favorite:removed", {
       videoId,
       totalFavorites: filtered.length,
     });

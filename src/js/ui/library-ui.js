@@ -39,12 +39,12 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
 
       // Emit analytics event
       const history = getSongHistory();
-      eventBus.emit('ui:library_opened', {
+      eventBus.emit("ui:library_opened", {
         hasHistory: history.length > 0,
       });
     } else if (e.newState === "closed") {
       // Emit analytics event for close
-      eventBus.emit('ui:library_closed');
+      eventBus.emit("ui:library_closed");
     }
   });
 

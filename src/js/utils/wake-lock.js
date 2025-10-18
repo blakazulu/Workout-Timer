@@ -6,12 +6,12 @@
 class WakeLockManager {
   constructor() {
     this.wakeLock = null;
-    this.isSupported = 'wakeLock' in navigator;
+    this.isSupported = "wakeLock" in navigator;
 
     // Re-acquire wake lock when page becomes visible again
     if (this.isSupported) {
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible' && this.wakeLock !== null) {
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible" && this.wakeLock !== null) {
           this.request();
         }
       });
@@ -27,24 +27,32 @@ class WakeLockManager {
   }
 
   /**
+   * Check if wake lock is currently active
+   * @returns {boolean}
+   */
+  get isActive() {
+    return this.wakeLock !== null;
+  }
+
+  /**
    * Request a wake lock to prevent screen from sleeping
    * @returns {Promise<boolean>} - True if wake lock was acquired
    */
   async request() {
     if (!this.isSupported) {
-      console.warn('Wake Lock API is not supported in this browser');
+      console.warn("Wake Lock API is not supported in this browser");
       return false;
     }
 
     try {
-      this.wakeLock = await navigator.wakeLock.request('screen');
+      this.wakeLock = await navigator.wakeLock.request("screen");
 
       // Wake lock was released (e.g., due to tab switching)
-      this.wakeLock.addEventListener('release', () => {
-        console.log('Wake lock was released');
+      this.wakeLock.addEventListener("release", () => {
+        console.log("Wake lock was released");
       });
 
-      console.log('Wake lock acquired - screen will stay on');
+      console.log("Wake lock acquired - screen will stay on");
       return true;
     } catch (err) {
       // Wake lock request failed - usually because of browser permissions
@@ -62,19 +70,11 @@ class WakeLockManager {
       try {
         await this.wakeLock.release();
         this.wakeLock = null;
-        console.log('Wake lock released - screen can sleep normally');
+        console.log("Wake lock released - screen can sleep normally");
       } catch (err) {
         console.error(`Failed to release wake lock: ${err.name}, ${err.message}`);
       }
     }
-  }
-
-  /**
-   * Check if wake lock is currently active
-   * @returns {boolean}
-   */
-  get isActive() {
-    return this.wakeLock !== null;
   }
 }
 

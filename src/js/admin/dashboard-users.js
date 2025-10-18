@@ -3,16 +3,16 @@
  * Handles user list, drill-downs, and user journey visualization
  */
 
-import * as posthog from './posthog-client.js';
+import * as posthog from "./posthog-client.js";
 
 /**
  * Render users section with list and stats
  */
 export async function renderUsersSection() {
-  const container = document.getElementById('users-section');
+  const container = document.getElementById("users-section");
   if (!container) return;
 
-  container.innerHTML = '<div class="loading">Loading users...</div>';
+  container.innerHTML = "<div class=\"loading\">Loading users...</div>";
 
   try {
     // Fetch all user data
@@ -96,10 +96,10 @@ export async function renderUsersSection() {
               </thead>
               <tbody>
                 ${users.map(user => {
-                  const engagementLevel = user.totalEvents >= 50 ? 'power' : user.totalEvents >= 10 ? 'active' : 'casual';
-                  const engagementColor = engagementLevel === 'power' ? '#00ffc8' : engagementLevel === 'active' ? '#ff0096' : '#6464ff';
+      const engagementLevel = user.totalEvents >= 50 ? "power" : user.totalEvents >= 10 ? "active" : "casual";
+      const engagementColor = engagementLevel === "power" ? "#00ffc8" : engagementLevel === "active" ? "#ff0096" : "#6464ff";
 
-                  return `
+      return `
                     <tr style="border-bottom: 1px solid var(--admin-border); cursor: pointer; transition: background 0.2s;"
                         onclick="window.viewUserDetails('${user.userId}')"
                         onmouseover="this.style.background='rgba(255,255,255,0.02)'"
@@ -136,7 +136,7 @@ export async function renderUsersSection() {
                       </td>
                     </tr>
                   `;
-                }).join('')}
+    }).join("")}
               </tbody>
             </table>
           </div>
@@ -153,7 +153,7 @@ export async function renderUsersSection() {
     container.innerHTML = overviewHTML + userListHTML;
 
   } catch (error) {
-    console.error('[Users Section] Error loading users:', error);
+    console.error("[Users Section] Error loading users:", error);
     container.innerHTML = `
       <div class="admin-card" style="padding: var(--admin-space-xl);">
         <div style="text-align: center; color: var(--admin-accent-red);">
@@ -171,9 +171,9 @@ export async function renderUsersSection() {
  */
 export async function showUserDetails(userId) {
   // Create modal overlay
-  const modal = document.createElement('div');
-  modal.id = 'user-detail-modal';
-  modal.className = 'user-detail-modal';
+  const modal = document.createElement("div");
+  modal.id = "user-detail-modal";
+  modal.className = "user-detail-modal";
   modal.innerHTML = `
     <div class="user-detail-backdrop" onclick="this.parentElement.remove()"></div>
     <div class="user-detail-content">
@@ -201,7 +201,7 @@ export async function showUserDetails(userId) {
     const summary = calculateUserSummary(activity, userId);
 
     // Render user details
-    const modalBody = modal.querySelector('.user-detail-body');
+    const modalBody = modal.querySelector(".user-detail-body");
     modalBody.innerHTML = `
       <!-- User Summary -->
       <div class="user-summary" style="margin-bottom: 2rem;">
@@ -248,8 +248,8 @@ export async function showUserDetails(userId) {
         </h3>
         <div class="admin-grid admin-grid-3" style="gap: 1rem;">
           ${Object.entries(summary.eventCounts)
-            .sort((a, b) => b[1] - a[1])
-            .map(([event, count]) => `
+      .sort((a, b) => b[1] - a[1])
+      .map(([event, count]) => `
               <div style="background: var(--admin-glass); border-radius: var(--admin-radius-md); padding: 1rem; border: 1px solid var(--admin-border);">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
                   <i class="${posthog.getEventIcon(event)}" style="font-size: 1.5rem; color: var(--admin-accent-cyan);"></i>
@@ -259,7 +259,7 @@ export async function showUserDetails(userId) {
                   </div>
                 </div>
               </div>
-            `).join('')}
+            `).join("")}
         </div>
       </div>
 
@@ -276,8 +276,8 @@ export async function showUserDetails(userId) {
     `;
 
   } catch (error) {
-    console.error('[User Details] Error:', error);
-    const modalBody = modal.querySelector('.user-detail-body');
+    console.error("[User Details] Error:", error);
+    const modalBody = modal.querySelector(".user-detail-body");
     modalBody.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--admin-accent-red);">
         <i class="ph ph-warning-circle" style="font-size: 4rem;"></i>
@@ -302,9 +302,9 @@ function calculateUserSummary(activity, userId) {
     eventCounts[event.event] = (eventCounts[event.event] || 0) + 1;
 
     // Count specific types
-    if (event.event === 'workout_started') workouts++;
-    if (event.event === 'music_played') songs++;
-    if (event.event === 'session_started') sessions++;
+    if (event.event === "workout_started") workouts++;
+    if (event.event === "music_played") songs++;
+    if (event.event === "session_started") sessions++;
   });
 
   return {
@@ -348,11 +348,11 @@ function renderTimeline(activity) {
       </div>
       <div class="timeline-events" style="position: relative; padding-left: 2rem; border-left: 2px solid var(--admin-border);">
         ${events.map((event, index) => {
-          const iconClass = posthog.getEventIcon(event.event);
-          const eventName = posthog.formatEventName(event.event);
-          const time = event.timestamp.toLocaleTimeString();
+    const iconClass = posthog.getEventIcon(event.event);
+    const eventName = posthog.formatEventName(event.event);
+    const time = event.timestamp.toLocaleTimeString();
 
-          return `
+    return `
             <div class="timeline-event" style="position: relative; margin-bottom: 1.5rem;">
               <div class="timeline-marker" style="position: absolute; left: -2.625rem; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--admin-bg-secondary); border: 2px solid var(--admin-border); display: flex; align-items: center; justify-content: center;">
                 <i class="${iconClass}" style="font-size: 1rem; color: var(--admin-accent-cyan);"></i>
@@ -366,31 +366,31 @@ function renderTimeline(activity) {
                   <div style="font-size: 0.75rem; color: var(--admin-text-muted); margin-top: 0.5rem;">
                     ${renderEventProperties(event.properties)}
                   </div>
-                ` : ''}
+                ` : ""}
               </div>
             </div>
           `;
-        }).join('')}
+  }).join("")}
       </div>
     </div>
-  `).join('');
+  `).join("");
 }
 
 /**
  * Render event properties in a readable format
  */
 function renderEventProperties(properties) {
-  const importantProps = ['duration', 'repetitions', 'title', 'genre', 'mood', 'videoId'];
+  const importantProps = ["duration", "repetitions", "title", "genre", "mood", "videoId"];
   const filtered = Object.entries(properties)
     .filter(([key]) => importantProps.includes(key))
     .map(([key, value]) => {
-      if (key === 'videoId' && typeof value === 'string') {
+      if (key === "videoId" && typeof value === "string") {
         return `<span style="opacity: 0.7;">${key}:</span> ${value.substring(0, 12)}...`;
       }
       return `<span style="opacity: 0.7;">${key}:</span> ${value}`;
     });
 
-  return filtered.length > 0 ? filtered.join(' • ') : '';
+  return filtered.length > 0 ? filtered.join(" • ") : "";
 }
 
 /**
@@ -404,10 +404,10 @@ function formatRelativeTime(date) {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
-  if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  if (minutes > 0) return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
-  return 'Just now';
+  if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+  if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  if (minutes > 0) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  return "Just now";
 }
 
 // Make viewUserDetails available globally

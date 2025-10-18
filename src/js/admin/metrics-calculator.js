@@ -30,7 +30,7 @@ function getLocalStorageData(key, defaultValue = null) {
  * @returns {Object} Settings object
  */
 export function getSettings() {
-  return getLocalStorageData('workout-timer-settings', {
+  return getLocalStorageData("workout-timer-settings", {
     duration: 30,
     alertTime: 3,
     repetitions: 3,
@@ -43,7 +43,7 @@ export function getSettings() {
  * @returns {Array} Array of favorite songs
  */
 export function getFavorites() {
-  return getLocalStorageData('workout-timer-favorites', []);
+  return getLocalStorageData("workout-timer-favorites", []);
 }
 
 /**
@@ -51,7 +51,7 @@ export function getFavorites() {
  * @returns {Array} Array of played songs
  */
 export function getSongHistory() {
-  return getLocalStorageData('workout-timer-song-history', []);
+  return getLocalStorageData("workout-timer-song-history", []);
 }
 
 /**
@@ -86,14 +86,14 @@ export function getMusicStats() {
   // In a real app, this would parse from song history metadata
   return {
     topGenres: [
-      { name: 'Workout', count: 0 },
-      { name: 'EDM', count: 0 },
-      { name: 'Rock', count: 0 }
+      {name: "Workout", count: 0},
+      {name: "EDM", count: 0},
+      {name: "Rock", count: 0}
     ],
     topMoods: [
-      { name: 'Energetic', count: 0 },
-      { name: 'Intense', count: 0 },
-      { name: 'Focus', count: 0 }
+      {name: "Energetic", count: 0},
+      {name: "Intense", count: 0},
+      {name: "Focus", count: 0}
     ]
   };
 }
@@ -131,13 +131,13 @@ export function getCompletionRate() {
  * @returns {Object} PWA status
  */
 export function getPWAStatus() {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
   const isInstalled = window.navigator.standalone || isStandalone;
 
   return {
     installed: isInstalled,
     standalone: isStandalone,
-    status: isInstalled ? 'Installed' : 'Not Installed'
+    status: isInstalled ? "Installed" : "Not Installed"
   };
 }
 
@@ -153,7 +153,7 @@ export function getRecentEvents(limit = 50) {
   const history = getSongHistory();
   history.slice(0, limit).forEach(song => {
     events.push({
-      type: 'music_played',
+      type: "music_played",
       timestamp: song.playedAt,
       description: `Played: ${song.title}`,
       metadata: {
@@ -168,7 +168,7 @@ export function getRecentEvents(limit = 50) {
   const favorites = getFavorites();
   favorites.slice(0, 10).forEach(fav => {
     events.push({
-      type: 'favorite_added',
+      type: "favorite_added",
       timestamp: fav.favoritedAt,
       description: `Favorited: ${fav.title}`,
       metadata: {
@@ -283,7 +283,7 @@ export function getEngagementMetrics() {
  */
 export function getSystemInfo() {
   const pwaStatus = getPWAStatus();
-  const analyticsOptOut = localStorage.getItem('analytics_opt_out') === 'true';
+  const analyticsOptOut = localStorage.getItem("analytics_opt_out") === "true";
 
   return {
     pwa: pwaStatus,
@@ -352,16 +352,16 @@ export function exportAllData() {
  */
 export function clearAllData() {
   const keys = [
-    'workout-timer-settings',
-    'workout-timer-favorites',
-    'workout-timer-song-history'
+    "workout-timer-settings",
+    "workout-timer-favorites",
+    "workout-timer-song-history"
   ];
 
   keys.forEach(key => {
     localStorage.removeItem(key);
   });
 
-  console.log('[Metrics] All app data cleared');
+  console.log("[Metrics] All app data cleared");
 }
 
 /**
@@ -384,13 +384,13 @@ export function getLocalStorageSize() {
  * @returns {string} Formatted string
  */
 export function formatBytes(bytes) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
 
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ["Bytes", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + " " + sizes[i];
 }
 
 /**
@@ -402,7 +402,7 @@ export function calculate7DayTrend(data) {
   if (!data || data.length === 0) {
     return {
       trend: 0,
-      direction: 'neutral',
+      direction: "neutral",
       sparkline: [0, 0, 0, 0, 0, 0, 0]
     };
   }
@@ -443,7 +443,7 @@ export function calculate7DayTrend(data) {
 
   return {
     trend: trendPercent,
-    direction: trendPercent > 0 ? 'up' : trendPercent < 0 ? 'down' : 'neutral',
+    direction: trendPercent > 0 ? "up" : trendPercent < 0 ? "down" : "neutral",
     sparkline
   };
 }
@@ -456,18 +456,18 @@ export function getSessionDurationDistribution() {
   const history = getSongHistory();
 
   const ranges = {
-    'under5': 0,    // < 5 minutes
-    '5to15': 0,     // 5-15 minutes
-    '15to30': 0,    // 15-30 minutes
-    'over30': 0     // > 30 minutes
+    "under5": 0,    // < 5 minutes
+    "5to15": 0,     // 5-15 minutes
+    "15to30": 0,    // 15-30 minutes
+    "over30": 0     // > 30 minutes
   };
 
   history.forEach(song => {
     const durationMins = (song.duration || 0) / 60;
 
     if (durationMins < 5) ranges.under5++;
-    else if (durationMins < 15) ranges['5to15']++;
-    else if (durationMins < 30) ranges['15to30']++;
+    else if (durationMins < 15) ranges["5to15"]++;
+    else if (durationMins < 30) ranges["15to30"]++;
     else ranges.over30++;
   });
 

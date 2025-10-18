@@ -10,12 +10,12 @@
  * Session persists until browser close (sessionStorage)
  */
 
-const AUTH_SESSION_KEY = 'admin_authenticated';
-const AUTH_TIMESTAMP_KEY = 'admin_auth_timestamp';
+const AUTH_SESSION_KEY = "admin_authenticated";
+const AUTH_TIMESTAMP_KEY = "admin_auth_timestamp";
 
 // SHA-256 hash of "123" password for basic obfuscation
 // Generated via: echo -n "123" | sha256sum
-const PASSWORD_HASH = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+const PASSWORD_HASH = "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3";
 
 /**
  * Hash a password using SHA-256
@@ -25,9 +25,9 @@ const PASSWORD_HASH = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f
 async function hashPassword(password) {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
   return hashHex;
 }
 
@@ -45,7 +45,7 @@ export function isAuthenticated() {
     }
 
     // Check if auth token is valid (simple check)
-    const isValid = authToken === 'true';
+    const isValid = authToken === "true";
 
     // Optional: Add session timeout (e.g., 2 hours)
     const authTime = parseInt(timestamp, 10);
@@ -59,7 +59,7 @@ export function isAuthenticated() {
 
     return isValid;
   } catch (error) {
-    console.error('[Admin Auth] Error checking authentication:', error);
+    console.error("[Admin Auth] Error checking authentication:", error);
     return false;
   }
 }
@@ -75,17 +75,17 @@ export async function authenticate(password) {
 
     if (hashedInput === PASSWORD_HASH) {
       // Set authentication token in sessionStorage
-      sessionStorage.setItem(AUTH_SESSION_KEY, 'true');
+      sessionStorage.setItem(AUTH_SESSION_KEY, "true");
       sessionStorage.setItem(AUTH_TIMESTAMP_KEY, Date.now().toString());
 
-      console.log('[Admin Auth] Authentication successful');
+      console.log("[Admin Auth] Authentication successful");
       return true;
     } else {
-      console.warn('[Admin Auth] Authentication failed - invalid password');
+      console.warn("[Admin Auth] Authentication failed - invalid password");
       return false;
     }
   } catch (error) {
-    console.error('[Admin Auth] Error during authentication:', error);
+    console.error("[Admin Auth] Error during authentication:", error);
     return false;
   }
 }
@@ -97,9 +97,9 @@ export function logout() {
   try {
     sessionStorage.removeItem(AUTH_SESSION_KEY);
     sessionStorage.removeItem(AUTH_TIMESTAMP_KEY);
-    console.log('[Admin Auth] Logged out');
+    console.log("[Admin Auth] Logged out");
   } catch (error) {
-    console.error('[Admin Auth] Error during logout:', error);
+    console.error("[Admin Auth] Error during logout:", error);
   }
 }
 
@@ -112,7 +112,7 @@ export function getAuthTimestamp() {
     const timestamp = sessionStorage.getItem(AUTH_TIMESTAMP_KEY);
     return timestamp ? parseInt(timestamp, 10) : null;
   } catch (error) {
-    console.error('[Admin Auth] Error getting auth timestamp:', error);
+    console.error("[Admin Auth] Error getting auth timestamp:", error);
     return null;
   }
 }

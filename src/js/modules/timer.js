@@ -46,7 +46,7 @@ export class Timer {
 
     // Bind visibility change handler to sync timer when page becomes visible
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
-    document.addEventListener('visibilitychange', this.handleVisibilityChange);
+    document.addEventListener("visibilitychange", this.handleVisibilityChange);
   }
 
   /**
@@ -62,7 +62,7 @@ export class Timer {
    * This ensures timer stays accurate even when screen is locked
    */
   handleVisibilityChange() {
-    if (document.visibilityState === 'visible' && this.isRunning) {
+    if (document.visibilityState === "visible" && this.isRunning) {
       // Recalculate current time based on actual elapsed time
       this.syncTimeFromTimestamp();
     }
@@ -139,14 +139,14 @@ export class Timer {
 
       // Emit analytics event
       if (isFreshStart) {
-        eventBus.emit('timer:started', {
+        eventBus.emit("timer:started", {
           duration: this.duration,
           repetitions: this.repetitions,
           restTime: this.restTime,
           hasMusic: !!this.youtube,
         });
       } else {
-        eventBus.emit('timer:resumed', {
+        eventBus.emit("timer:resumed", {
           currentRep: this.currentRep,
           timeRemaining: this.currentTime,
         });
@@ -186,7 +186,7 @@ export class Timer {
     }
 
     // Emit analytics event
-    eventBus.emit('timer:paused', {
+    eventBus.emit("timer:paused", {
       currentRep: this.currentRep,
       timeRemaining: this.currentTime,
     });
@@ -261,7 +261,7 @@ export class Timer {
     }
 
     // Emit analytics event
-    eventBus.emit('timer:reset', {
+    eventBus.emit("timer:reset", {
       wasRunning,
       currentRep,
     });
@@ -357,7 +357,7 @@ export class Timer {
       this.audio.playComplete();
 
       // Emit rep completed event
-      eventBus.emit('timer:rep_completed', {
+      eventBus.emit("timer:rep_completed", {
         repNumber: this.currentRep,
         totalReps: this.repetitions,
       });
@@ -396,7 +396,7 @@ export class Timer {
       this.repCounter.textContent = "✓ Complete!";
 
       // Emit workout completed event
-      eventBus.emit('timer:completed', {
+      eventBus.emit("timer:completed", {
         duration: this.duration,
         repetitions: this.repetitions,
         completionTime,

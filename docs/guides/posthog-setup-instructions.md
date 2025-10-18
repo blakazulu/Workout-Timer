@@ -76,11 +76,13 @@ workout-timer-pro/
 If you want to test locally before deploying:
 
 1. Install Netlify CLI:
+
 ```bash
 npm install -g netlify-cli
 ```
 
 2. Run local dev server:
+
 ```bash
 netlify dev
 ```
@@ -198,6 +200,7 @@ function updateWorkoutChart(data) {
 Currently, your admin dashboard loads data from localStorage. Now you can switch to PostHog:
 
 ### Before (localStorage):
+
 ```javascript
 // Load from localStorage
 const history = JSON.parse(localStorage.getItem('cycleHistory') || '[]');
@@ -205,6 +208,7 @@ const totalSongs = history.length;
 ```
 
 ### After (PostHog):
+
 ```javascript
 // Load from PostHog
 const metrics = await posthogClient.getKeyMetrics(30);
@@ -218,6 +222,7 @@ const totalSongs = metrics.totalSongs;
 Your new `posthog-client.js` module provides these ready-to-use functions:
 
 ### Basic Metrics
+
 ```javascript
 // Get key numbers
 const metrics = await posthogClient.getKeyMetrics(30);
@@ -225,6 +230,7 @@ const metrics = await posthogClient.getKeyMetrics(30);
 ```
 
 ### Trends
+
 ```javascript
 // Workout trend (last 7 days)
 const workouts = await posthogClient.getWorkoutTrend(7);
@@ -237,6 +243,7 @@ const users = await posthogClient.getDailyActiveUsers(30);
 ```
 
 ### Breakdowns
+
 ```javascript
 // Music by genre
 const genres = await posthogClient.getMusicGenreBreakdown(30);
@@ -244,6 +251,7 @@ const genres = await posthogClient.getMusicGenreBreakdown(30);
 ```
 
 ### Funnels
+
 ```javascript
 // Workout completion funnel
 const funnel = await posthogClient.getWorkoutFunnel();
@@ -255,6 +263,7 @@ const funnel = await posthogClient.getWorkoutFunnel();
 ```
 
 ### Advanced
+
 ```javascript
 // Recent activity
 const activity = await posthogClient.getRecentActivity(50);
@@ -366,6 +375,7 @@ setInterval(() => initDashboard(), 30000);
 **Cause:** Netlify function not deployed or API key missing
 
 **Fix:**
+
 1. Check Netlify deployment logs
 2. Verify `POSTHOG_PERSONAL_API_KEY` is set in Netlify
 3. Redeploy your site
@@ -374,13 +384,15 @@ setInterval(() => initDashboard(), 30000);
 
 **Cause:** Trying to call PostHog API directly from browser
 
-**Fix:** Always use the Netlify function proxy (`/.netlify/functions/posthog-proxy`), never call PostHog API directly from client code.
+**Fix:** Always use the Netlify function proxy (`/.netlify/functions/posthog-proxy`), never call PostHog API directly
+from client code.
 
 ### "No data returned"
 
 **Cause:** No events in your PostHog project yet
 
 **Fix:**
+
 1. Visit your main app (index.html)
 2. Perform some actions (start workout, play music)
 3. Wait 1-2 minutes for PostHog to process events
@@ -391,6 +403,7 @@ setInterval(() => initDashboard(), 30000);
 **Cause:** Wrong API key or insufficient permissions
 
 **Fix:**
+
 1. Get a new Personal API Key from PostHog
 2. Make sure it has **Read** permissions
 3. Update Netlify environment variable
@@ -401,11 +414,13 @@ setInterval(() => initDashboard(), 30000);
 ## Security Notes
 
 ✅ **Secure:**
+
 - API key is stored in Netlify environment (server-side)
 - Netlify function acts as proxy
 - Client never sees the API key
 
 ❌ **Insecure:**
+
 - Never put API key in JavaScript files
 - Never commit API key to git
 - Never use PostHog API directly from browser
@@ -427,6 +442,7 @@ Once you have PostHog data showing in your admin dashboard:
 ## Quick Reference
 
 ### Get Your Data
+
 ```javascript
 import * as posthog from './posthog-client.js';
 
@@ -447,6 +463,7 @@ const all = await posthog.getDashboardData();
 ```
 
 ### Utility Functions
+
 ```javascript
 // Format event names
 posthog.formatEventName('workout_started'); // "Workout Started"

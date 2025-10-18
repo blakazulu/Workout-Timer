@@ -11,8 +11,8 @@
  * initAnalyticsTracking();
  */
 
-import { eventBus } from './event-bus.js';
-import { analytics } from './analytics.js';
+import {eventBus} from "./event-bus.js";
+import {analytics} from "./analytics.js";
 
 /**
  * Event mapping configuration
@@ -20,8 +20,8 @@ import { analytics } from './analytics.js';
  */
 const EVENT_MAPPINGS = {
   // Timer events
-  'timer:started': {
-    analyticsEvent: 'workout_started',
+  "timer:started": {
+    analyticsEvent: "workout_started",
     getProperties: (data) => ({
       duration: data?.duration,
       repetitions: data?.repetitions,
@@ -29,37 +29,37 @@ const EVENT_MAPPINGS = {
       has_music: !!data?.hasMusic,
     }),
   },
-  'timer:paused': {
-    analyticsEvent: 'workout_paused',
+  "timer:paused": {
+    analyticsEvent: "workout_paused",
     getProperties: (data) => ({
       current_rep: data?.currentRep,
       time_remaining: data?.timeRemaining,
     }),
   },
-  'timer:resumed': {
-    analyticsEvent: 'workout_resumed',
+  "timer:resumed": {
+    analyticsEvent: "workout_resumed",
     getProperties: (data) => ({
       current_rep: data?.currentRep,
       time_remaining: data?.timeRemaining,
     }),
   },
-  'timer:completed': {
-    analyticsEvent: 'workout_completed',
+  "timer:completed": {
+    analyticsEvent: "workout_completed",
     getProperties: (data) => ({
       duration: data?.duration,
       repetitions: data?.repetitions,
       completion_time: data?.completionTime,
     }),
   },
-  'timer:reset': {
-    analyticsEvent: 'workout_reset',
+  "timer:reset": {
+    analyticsEvent: "workout_reset",
     getProperties: (data) => ({
       was_running: data?.wasRunning,
       current_rep: data?.currentRep,
     }),
   },
-  'timer:rep_completed': {
-    analyticsEvent: 'rep_completed',
+  "timer:rep_completed": {
+    analyticsEvent: "rep_completed",
     getProperties: (data) => ({
       rep_number: data?.repNumber,
       total_reps: data?.totalReps,
@@ -67,102 +67,102 @@ const EVENT_MAPPINGS = {
   },
 
   // Music events
-  'music:played': {
-    analyticsEvent: 'music_played',
+  "music:played": {
+    analyticsEvent: "music_played",
     getProperties: (data) => ({
       mode: data?.mode, // 'mood' or 'genre'
       selection: data?.selection,
       video_id: data?.videoId,
     }),
   },
-  'music:paused': {
-    analyticsEvent: 'music_paused',
+  "music:paused": {
+    analyticsEvent: "music_paused",
     getProperties: (data) => ({
       video_id: data?.videoId,
     }),
   },
-  'music:stopped': {
-    analyticsEvent: 'music_stopped',
+  "music:stopped": {
+    analyticsEvent: "music_stopped",
     getProperties: (data) => ({
       video_id: data?.videoId,
     }),
   },
-  'music:mode_changed': {
-    analyticsEvent: 'music_mode_changed',
+  "music:mode_changed": {
+    analyticsEvent: "music_mode_changed",
     getProperties: (data) => ({
       from_mode: data?.fromMode,
       to_mode: data?.toMode,
     }),
   },
-  'music:genre_selected': {
-    analyticsEvent: 'genre_selected',
+  "music:genre_selected": {
+    analyticsEvent: "genre_selected",
     getProperties: (data) => ({
       genre: data?.genre,
     }),
   },
-  'music:mood_selected': {
-    analyticsEvent: 'mood_selected',
+  "music:mood_selected": {
+    analyticsEvent: "mood_selected",
     getProperties: (data) => ({
       mood: data?.mood,
     }),
   },
 
   // Favorites events
-  'favorite:added': {
-    analyticsEvent: 'favorite_added',
+  "favorite:added": {
+    analyticsEvent: "favorite_added",
     getProperties: (data) => ({
       video_id: data?.videoId,
       title: data?.title,
       total_favorites: data?.totalFavorites,
     }),
   },
-  'favorite:removed': {
-    analyticsEvent: 'favorite_removed',
+  "favorite:removed": {
+    analyticsEvent: "favorite_removed",
     getProperties: (data) => ({
       video_id: data?.videoId,
       total_favorites: data?.totalFavorites,
     }),
   },
-  'favorite:shuffled': {
-    analyticsEvent: 'favorites_shuffled',
+  "favorite:shuffled": {
+    analyticsEvent: "favorites_shuffled",
     getProperties: (data) => ({
       total_favorites: data?.totalFavorites,
     }),
   },
-  'favorite:random_played': {
-    analyticsEvent: 'random_favorite_played',
+  "favorite:random_played": {
+    analyticsEvent: "random_favorite_played",
     getProperties: (data) => ({
       video_id: data?.videoId,
     }),
   },
 
   // UI events
-  'ui:library_opened': {
-    analyticsEvent: 'library_opened',
+  "ui:library_opened": {
+    analyticsEvent: "library_opened",
     getProperties: (data) => ({
       has_history: data?.hasHistory,
     }),
   },
-  'ui:library_closed': {
-    analyticsEvent: 'library_closed',
+  "ui:library_closed": {
+    analyticsEvent: "library_closed",
   },
-  'ui:search_opened': {
-    analyticsEvent: 'search_opened',
+  "ui:search_opened": {
+    analyticsEvent: "search_opened",
   },
-  'ui:search_performed': {
-    analyticsEvent: 'search_performed',
+  "ui:search_performed": {
+    analyticsEvent: "search_performed",
     getProperties: (data) => ({
       query_length: data?.query?.length,
       results_count: data?.resultsCount,
     }),
   },
-  'ui:settings_opened': {
-    analyticsEvent: 'settings_opened',
+  "ui:settings_opened": {
+    analyticsEvent: "settings_opened",
   },
 
   // Settings events
-  'settings:changed': {
-    analyticsEvent: 'setting_changed',
+  "settings:changed": {
+    analyticsEvent: "setting_changed",
     getProperties: (data) => ({
       setting_name: data?.settingName,
       new_value: data?.newValue,
@@ -175,25 +175,25 @@ const EVENT_MAPPINGS = {
  */
 function trackStateChanges() {
   // Listen to all state changes
-  eventBus.on('state:changed', ({ path, value, oldValue }) => {
+  eventBus.on("state:changed", ({path, value, oldValue}) => {
     // Track important state changes
-    if (path === 'music.mode') {
-      analytics.track('music_mode_changed', {
+    if (path === "music.mode") {
+      analytics.track("music_mode_changed", {
         from_mode: oldValue,
         to_mode: value,
       });
     }
 
-    if (path === 'settings.soundEnabled') {
-      analytics.track('setting_changed', {
-        setting_name: 'sound_enabled',
+    if (path === "settings.soundEnabled") {
+      analytics.track("setting_changed", {
+        setting_name: "sound_enabled",
         new_value: value,
       });
     }
 
-    if (path === 'settings.autoplay') {
-      analytics.track('setting_changed', {
-        setting_name: 'autoplay',
+    if (path === "settings.autoplay") {
+      analytics.track("setting_changed", {
+        setting_name: "autoplay",
         new_value: value,
       });
     }
@@ -205,7 +205,7 @@ function trackStateChanges() {
  */
 function trackSessionMetrics() {
   // Track session start
-  analytics.track('session_started', {
+  analytics.track("session_started", {
     timestamp: Date.now(),
     user_agent: navigator.userAgent,
     screen_width: window.screen.width,
@@ -217,21 +217,21 @@ function trackSessionMetrics() {
   // Track session duration on page unload
   let sessionStartTime = Date.now();
 
-  window.addEventListener('beforeunload', () => {
+  window.addEventListener("beforeunload", () => {
     const sessionDuration = Date.now() - sessionStartTime;
 
-    analytics.track('session_ended', {
+    analytics.track("session_ended", {
       duration_ms: sessionDuration,
       duration_minutes: Math.round(sessionDuration / 1000 / 60),
     });
   });
 
   // Track visibility changes (user switching tabs)
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      analytics.track('app_hidden');
+      analytics.track("app_hidden");
     } else {
-      analytics.track('app_visible');
+      analytics.track("app_visible");
     }
   });
 }
@@ -241,20 +241,20 @@ function trackSessionMetrics() {
  */
 function trackPWAInstallation() {
   // Track PWA install prompt
-  window.addEventListener('beforeinstallprompt', (e) => {
-    analytics.track('pwa_install_prompt_shown');
+  window.addEventListener("beforeinstallprompt", (e) => {
+    analytics.track("pwa_install_prompt_shown");
   });
 
   // Track successful PWA installation
-  window.addEventListener('appinstalled', () => {
-    analytics.track('pwa_installed', {
+  window.addEventListener("appinstalled", () => {
+    analytics.track("pwa_installed", {
       timestamp: Date.now(),
     });
   });
 
   // Check if app is running in standalone mode (already installed)
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-    analytics.track('pwa_launched', {
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    analytics.track("pwa_launched", {
       is_standalone: true,
     });
   }
@@ -266,7 +266,7 @@ function trackPWAInstallation() {
  */
 export function initAnalyticsTracking() {
   if (!analytics.isEnabled()) {
-    console.log('[Analytics Tracker] Analytics disabled, skipping tracking setup');
+    console.log("[Analytics Tracker] Analytics disabled, skipping tracking setup");
     return;
   }
 
@@ -289,9 +289,9 @@ export function initAnalyticsTracking() {
   trackPWAInstallation();
 
   // Track initial page view
-  analytics.trackPageView('app_home');
+  analytics.trackPageView("app_home");
 
-  console.log('[Analytics Tracker] Tracking initialized');
+  console.log("[Analytics Tracker] Tracking initialized");
 }
 
 /**
@@ -309,7 +309,7 @@ export function trackEvent(eventName, properties = {}) {
  * @param {Object} metadata - Additional metadata
  */
 export function trackFeatureUsage(featureName, metadata = {}) {
-  analytics.track('feature_used', {
+  analytics.track("feature_used", {
     feature_name: featureName,
     ...metadata,
   });

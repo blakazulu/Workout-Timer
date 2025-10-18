@@ -7,7 +7,7 @@
  * Check if PostHog is available and initialized
  */
 export function isPostHogAvailable() {
-  return typeof window.posthog !== 'undefined' && window.posthog !== null;
+  return typeof window.posthog !== "undefined" && window.posthog !== null;
 }
 
 /**
@@ -25,7 +25,7 @@ export function getDistinctId() {
  */
 export async function getRecentPostHogEvents(limit = 50) {
   if (!isPostHogAvailable()) {
-    console.warn('[PostHog] PostHog not available');
+    console.warn("[PostHog] PostHog not available");
     return [];
   }
 
@@ -36,14 +36,14 @@ export async function getRecentPostHogEvents(limit = 50) {
   // Get events from localStorage that PostHog has captured
   // Note: PostHog stores events in its own queue before sending
   try {
-    const posthogQueue = localStorage.getItem('posthog_queue');
+    const posthogQueue = localStorage.getItem("posthog_queue");
     if (posthogQueue) {
       const queueData = JSON.parse(posthogQueue);
       // PostHog queue format varies, this is illustrative
-      console.log('[PostHog] Queue data available:', queueData);
+      console.log("[PostHog] Queue data available:", queueData);
     }
   } catch (error) {
-    console.error('[PostHog] Error reading queue:', error);
+    console.error("[PostHog] Error reading queue:", error);
   }
 
   return events;
@@ -65,8 +65,8 @@ export function getSessionMetrics() {
   return {
     sessionId: window.posthog.get_session_id?.() || null,
     distinctId: getDistinctId(),
-    isIdentified: window.posthog.get_property?.('$is_identified') || false,
-    deviceId: window.posthog.get_property?.('$device_id') || null
+    isIdentified: window.posthog.get_property?.("$is_identified") || false,
+    deviceId: window.posthog.get_property?.("$device_id") || null
   };
 }
 
@@ -79,7 +79,7 @@ export function getFeatureFlags() {
   try {
     return window.posthog.getAllFlags?.() || {};
   } catch (error) {
-    console.error('[PostHog] Error getting feature flags:', error);
+    console.error("[PostHog] Error getting feature flags:", error);
     return {};
   }
 }
@@ -93,7 +93,7 @@ export function getPostHogConfig() {
   return {
     apiKey: window.posthog.config?.api_key || null,
     apiHost: window.posthog.config?.api_host || null,
-    persistence: window.posthog.config?.persistence || 'localStorage',
+    persistence: window.posthog.config?.persistence || "localStorage",
     sessionRecording: window.posthog.sessionRecordingStarted?.() || false,
     autocapture: window.posthog.config?.autocapture !== false
   };
@@ -107,7 +107,7 @@ export function captureAdminEvent(eventName, properties = {}) {
 
   window.posthog.capture(eventName, {
     ...properties,
-    source: 'admin_dashboard',
+    source: "admin_dashboard",
     timestamp: new Date().toISOString()
   });
 }
@@ -119,8 +119,8 @@ export function getPostHogAnalytics() {
   if (!isPostHogAvailable()) {
     return {
       available: false,
-      status: 'Not Connected',
-      reason: 'PostHog SDK not loaded'
+      status: "Not Connected",
+      reason: "PostHog SDK not loaded"
     };
   }
 
@@ -130,7 +130,7 @@ export function getPostHogAnalytics() {
 
   return {
     available: true,
-    status: 'Connected',
+    status: "Connected",
     config,
     session,
     featureFlags: flags,
@@ -138,18 +138,18 @@ export function getPostHogAnalytics() {
 
     // Track what events we're capturing
     trackedEvents: [
-      'session_started',
-      'session_ended',
-      'workout_started',
-      'workout_reset',
-      'rep_completed',
-      'music_played',
-      'music_paused',
-      'favorite_removed',
-      'app_visible',
-      'app_hidden',
-      '$pageview',
-      '$web_vitals'
+      "session_started",
+      "session_ended",
+      "workout_started",
+      "workout_reset",
+      "rep_completed",
+      "music_played",
+      "music_paused",
+      "favorite_removed",
+      "app_visible",
+      "app_hidden",
+      "$pageview",
+      "$web_vitals"
     ]
   };
 }
@@ -163,7 +163,7 @@ export async function exportPostHogData() {
   return {
     exportDate: new Date().toISOString(),
     posthog: analytics,
-    notes: 'For full event history, use PostHog dashboard'
+    notes: "For full event history, use PostHog dashboard"
   };
 }
 
@@ -171,8 +171,8 @@ export async function exportPostHogData() {
  * Log admin dashboard view
  */
 export function logDashboardView() {
-  captureAdminEvent('admin_dashboard_viewed', {
-    path: '/admin.html'
+  captureAdminEvent("admin_dashboard_viewed", {
+    path: "/admin.html"
   });
 }
 
@@ -180,7 +180,7 @@ export function logDashboardView() {
  * Log admin action
  */
 export function logAdminAction(action, metadata = {}) {
-  captureAdminEvent('admin_action', {
+  captureAdminEvent("admin_action", {
     action,
     ...metadata
   });

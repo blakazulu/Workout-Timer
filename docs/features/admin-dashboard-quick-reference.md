@@ -10,6 +10,7 @@
 ## File Locations
 
 ### JavaScript Modules
+
 ```
 /src/js/admin/
 ├── auth.js                 # Authentication logic
@@ -19,6 +20,7 @@
 ```
 
 ### HTML & CSS
+
 ```
 /admin.html                 # Admin page
 /src/css/admin.css         # Admin styles
@@ -29,6 +31,7 @@
 ## Quick Commands
 
 ### Development
+
 ```bash
 # Start dev server
 npm run dev
@@ -38,6 +41,7 @@ http://localhost:5173/admin
 ```
 
 ### Build
+
 ```bash
 # Build for production
 npm run build
@@ -50,22 +54,23 @@ dist/admin.html
 
 ## Dashboard Sections
 
-| Section | Description |
-|---------|-------------|
-| Overview | Total workouts, sessions, favorites, avg duration |
-| Workout Stats | Completion rate, settings, duration |
-| Music Analytics | Top genres/moods (placeholder) |
-| Favorites | Count, top 5 favorited songs |
-| Engagement | Session duration, active days, return rate |
-| Recent Activity | Last 20 events timeline |
-| System Info | PWA status, analytics, storage usage |
-| Quick Actions | Export data, PostHog link, clear cache |
+| Section         | Description                                       |
+|-----------------|---------------------------------------------------|
+| Overview        | Total workouts, sessions, favorites, avg duration |
+| Workout Stats   | Completion rate, settings, duration               |
+| Music Analytics | Top genres/moods (placeholder)                    |
+| Favorites       | Count, top 5 favorited songs                      |
+| Engagement      | Session duration, active days, return rate        |
+| Recent Activity | Last 20 events timeline                           |
+| System Info     | PWA status, analytics, storage usage              |
+| Quick Actions   | Export data, PostHog link, clear cache            |
 
 ---
 
 ## Key Functions
 
 ### Authentication
+
 ```javascript
 import { isAuthenticated, authenticate, logout } from './auth.js';
 
@@ -80,6 +85,7 @@ logout();
 ```
 
 ### Metrics
+
 ```javascript
 import * as metrics from './metrics-calculator.js';
 
@@ -99,6 +105,7 @@ metrics.clearAllData();
 ```
 
 ### Dashboard
+
 ```javascript
 import { initDashboard, renderDashboard, cleanup } from './admin-dashboard.js';
 
@@ -125,6 +132,7 @@ cleanup();
 ## Data Sources
 
 ### localStorage Keys
+
 ```javascript
 'workout-timer-settings'      // User settings
 'workout-timer-favorites'     // Favorite songs
@@ -133,6 +141,7 @@ cleanup();
 ```
 
 ### sessionStorage Keys
+
 ```javascript
 'admin_authenticated'         // Auth status
 'admin_auth_timestamp'        // Login time
@@ -143,12 +152,14 @@ cleanup();
 ## Security Notes
 
 ### Current Implementation (Development)
+
 - Password: `123` (SHA-256 hashed)
 - Client-side only validation
 - Session timeout: 2 hours
 - Session-only persistence
 
 ### Production Recommendations
+
 - Implement server-side authentication
 - Use JWT tokens
 - Add rate limiting
@@ -161,15 +172,19 @@ cleanup();
 ## Troubleshooting
 
 ### Dashboard shows no data
+
 **Fix:** Use the main app to generate data (play songs, add favorites)
 
 ### Can't log in
+
 **Fix:** Check password is `123`, verify sessionStorage is enabled
 
 ### Metrics not updating
+
 **Fix:** Click manual refresh button, check auto-refresh is running
 
 ### Export doesn't work
+
 **Fix:** Check browser allows downloads, verify localStorage has data
 
 ---
@@ -194,6 +209,7 @@ cleanup();
 ## Metrics Calculation
 
 ### Total Workouts
+
 ```javascript
 // Unique days with song plays
 const uniqueDates = new Set(
@@ -203,12 +219,14 @@ return uniqueDates.size;
 ```
 
 ### Completion Rate
+
 ```javascript
 // Currently fixed at 85% (placeholder)
 // Future: Track actual starts vs. completions
 ```
 
 ### Average Duration
+
 ```javascript
 // Average from song durations
 const totalDuration = history.reduce((sum, song) =>
@@ -218,6 +236,7 @@ return Math.round(avgSeconds / 60); // minutes
 ```
 
 ### Return Rate
+
 ```javascript
 // Active days / total days * 100
 const daysDiff = (newestDate - oldestDate) / (1000 * 60 * 60 * 24);
@@ -247,6 +266,7 @@ Uses Phosphor Icons (https://phosphoricons.com/)
 ## Grid Layout
 
 ### Desktop (>= 1024px)
+
 ```css
 grid-template-columns: repeat(3, 1fr);
 
@@ -256,6 +276,7 @@ grid-template-columns: repeat(3, 1fr);
 ```
 
 ### Mobile (< 1024px)
+
 ```css
 grid-template-columns: 1fr;  /* Single column stack */
 ```
@@ -305,18 +326,21 @@ console.log(metrics.getAllMetrics());
 ## Future Enhancements Priority
 
 ### High Priority
+
 1. Genre/mood tracking from song metadata
 2. Chart visualizations (Chart.js)
 3. PostHog API integration
 4. Date range filters
 
 ### Medium Priority
+
 1. Custom event log storage
 2. CSV/PDF export
 3. Alert system
 4. User journey mapping
 
 ### Low Priority
+
 1. Multi-user support
 2. Custom dashboards
 3. A/B testing views
@@ -327,6 +351,7 @@ console.log(metrics.getAllMetrics());
 ## Common Use Cases
 
 ### Daily Check-In
+
 1. Navigate to `/admin`
 2. Login
 3. Review overview stats
@@ -334,17 +359,20 @@ console.log(metrics.getAllMetrics());
 5. Monitor engagement trends
 
 ### Data Analysis
+
 1. Export data (JSON)
 2. Import to analysis tool
 3. Generate custom reports
 
 ### Debugging
+
 1. Check system info
 2. Verify PWA status
 3. Review localStorage usage
 4. Check analytics status
 
 ### Maintenance
+
 1. Clear old data
 2. Export backup
 3. Review user behavior

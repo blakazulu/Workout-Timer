@@ -5,7 +5,8 @@
 
 ## Overview
 
-Integrated real PostHog analytics data into the admin dashboard, replacing mock data with actual tracking information from the PostHog SDK.
+Integrated real PostHog analytics data into the admin dashboard, replacing mock data with actual tracking information
+from the PostHog SDK.
 
 ---
 
@@ -18,12 +19,14 @@ Created `src/js/admin/posthog-data.js` to interface with PostHog SDK:
 #### Core Functions
 
 **Connection Status:**
+
 ```javascript
 isPostHogAvailable()  // Check if PostHog SDK is loaded
 getDistinctId()       // Get user's distinct ID
 ```
 
 **Session Metrics:**
+
 ```javascript
 getSessionMetrics()   // Returns current session info
 {
@@ -35,6 +38,7 @@ getSessionMetrics()   // Returns current session info
 ```
 
 **Configuration:**
+
 ```javascript
 getPostHogConfig()    // Get PostHog configuration
 {
@@ -47,12 +51,14 @@ getPostHogConfig()    // Get PostHog configuration
 ```
 
 **Feature Flags:**
+
 ```javascript
 getFeatureFlags()     // Get all active feature flags
 getAllFlags()         // Returns object of all flags
 ```
 
 **Event Tracking:**
+
 ```javascript
 captureAdminEvent(eventName, properties)  // Capture custom events
 logDashboardView()                        // Log dashboard view
@@ -60,6 +66,7 @@ logAdminAction(action, metadata)          // Log admin actions
 ```
 
 **Comprehensive Analytics:**
+
 ```javascript
 getPostHogAnalytics() // Get all analytics data
 {
@@ -80,12 +87,14 @@ getPostHogAnalytics() // Get all analytics data
 Shows real-time PostHog connection status with:
 
 **When Connected:**
+
 - ✅ Status: "Connected" (green)
 - Session ID (truncated for display)
 - Session Recording status (Active/Inactive)
 - Number of tracked event types (12 events)
 
 **When Disconnected:**
+
 - ⚠️ Status: "Not Connected"
 - Reason for disconnection
 - Offline indicator
@@ -93,6 +102,7 @@ Shows real-time PostHog connection status with:
 #### Tracked Events
 
 The dashboard now tracks these PostHog events:
+
 1. `session_started` - User starts workout session
 2. `session_ended` - User completes/exits session
 3. `workout_started` - Workout timer begins
@@ -138,6 +148,7 @@ src/js/admin/
 ### Integration Points
 
 **1. Dashboard Initialization** (admin-dashboard.js:29)
+
 ```javascript
 export function initDashboard() {
   posthogData.logDashboardView();  // Log view on load
@@ -146,6 +157,7 @@ export function initDashboard() {
 ```
 
 **2. PostHog Panel Rendering** (admin-dashboard.js:705)
+
 ```javascript
 function renderPostHogPanel() {
   const analytics = posthogData.getPostHogAnalytics();
@@ -154,6 +166,7 @@ function renderPostHogPanel() {
 ```
 
 **3. Event Listeners** (admin-dashboard.js:810, 818, 829)
+
 ```javascript
 // Export button
 exportBtn.addEventListener('click', () => {
@@ -207,18 +220,21 @@ clearBtn.addEventListener('click', () => {
 ## Benefits
 
 ### Real-Time Analytics
+
 - ✅ Live session tracking
 - ✅ Real user identification
 - ✅ Actual feature flag status
 - ✅ Session recording status
 
 ### Admin Action Tracking
+
 - ✅ Track all admin interactions
 - ✅ Monitor data exports
 - ✅ Log dashboard usage
 - ✅ Audit data clearing
 
 ### Better Insights
+
 - ✅ See actual PostHog configuration
 - ✅ Verify event tracking is working
 - ✅ Confirm session recording
@@ -262,6 +278,7 @@ if (posthogData.isPostHogAvailable()) {
 ## Event Schema
 
 ### admin_dashboard_viewed
+
 ```javascript
 {
   event: 'admin_dashboard_viewed',
@@ -274,6 +291,7 @@ if (posthogData.isPostHogAvailable()) {
 ```
 
 ### admin_action
+
 ```javascript
 {
   event: 'admin_action',
@@ -325,12 +343,14 @@ async function fetchRecentEvents() {
 **Symptoms:** Red status indicator, "Not Connected" message
 
 **Possible Causes:**
+
 1. PostHog SDK not loaded
 2. PostHog blocked by ad blocker
 3. PostHog initialization failed
 4. User opted out of analytics
 
 **Solutions:**
+
 1. Check browser console for errors
 2. Verify PostHog script tag in index.html
 3. Disable ad blockers
@@ -379,10 +399,12 @@ async function fetchRecentEvents() {
 ## Summary
 
 The admin dashboard now has real-time PostHog integration showing:
+
 - ✅ Live connection status
 - ✅ Current session information
 - ✅ Recording status
 - ✅ Tracked event types
 - ✅ Admin action logging
 
-All admin interactions are tracked, providing valuable insights into how the admin dashboard is being used and ensuring proper audit trails for data operations.
+All admin interactions are tracked, providing valuable insights into how the admin dashboard is being used and ensuring
+proper audit trails for data operations.

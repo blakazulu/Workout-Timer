@@ -73,7 +73,7 @@ export function setupYouTubeSearch(loadYouTubeModule, showNotification) {
         searchDropdown.show(results);
 
         // Emit analytics event for search performed
-        eventBus.emit('ui:search_performed', {
+        eventBus.emit("ui:search_performed", {
           query,
           resultsCount: results.length,
         });
@@ -108,7 +108,7 @@ export function setupYouTubeSearch(loadYouTubeModule, showNotification) {
   // Show dropdown again when input gets focus (if there's content)
   youtubeUrl.addEventListener("focus", () => {
     // Emit analytics event for search opened
-    eventBus.emit('ui:search_opened');
+    eventBus.emit("ui:search_opened");
 
     const query = youtubeUrl.value;
     if (query && query.trim().length >= 2 && !isYouTubeUrl(query)) {

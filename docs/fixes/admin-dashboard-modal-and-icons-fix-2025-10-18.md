@@ -10,14 +10,17 @@
 ### 1. ❌ Phosphor Icons Not Showing
 
 **Problem:**
+
 - Icons were not displaying at all
 - JavaScript-based icon library not loading correctly from CDN
 
 **Root Cause:**
+
 - Used JavaScript UMD version which wasn't compatible
 - CDN path was incorrect
 
 **Solution:**
+
 - Switched to **CSS web font** version of Phosphor Icons
 - More reliable and performant than JavaScript version
 - Added both regular and fill icon styles
@@ -25,6 +28,7 @@
 **Changes Made:**
 
 **`admin.html`** (lines 14-16):
+
 ```html
 <!-- OLD (JavaScript - didn't work) -->
 <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
@@ -41,15 +45,18 @@
 ### 2. ❌ User Modal Appearing Below Page
 
 **Problem:**
+
 - Clicking a user opened the modal but it appeared below the content instead of as a centered overlay
 - Modal wasn't positioned correctly
 
 **Root Cause:**
+
 - CSS class names in JavaScript didn't match the CSS definitions
 - JavaScript used: `modal-overlay`, `modal-content`, `modal-body`
 - CSS expected: `user-detail-modal`, `user-detail-backdrop`, `user-detail-content`, `user-detail-body`
 
 **Solution:**
+
 - Updated JavaScript to use correct CSS classes
 - Added backdrop with click-to-close functionality
 - Fixed modal structure to match CSS
@@ -57,6 +64,7 @@
 **Changes Made:**
 
 **`dashboard-users.js`** (lines 172-194):
+
 ```javascript
 // OLD
 modal.className = 'modal-overlay';
@@ -79,10 +87,12 @@ modal.innerHTML = `
 ```
 
 **Also Updated:**
+
 - Line 204: Changed `.querySelector('.modal-body')` → `.querySelector('.user-detail-body')`
 - Line 280: Changed `.querySelector('.modal-body')` → `.querySelector('.user-detail-body')`
 
 **Result:** ✅ Modal now appears centered on screen with:
+
 - Blurred backdrop overlay
 - Centered modal content
 - Click backdrop or X button to close
@@ -93,6 +103,7 @@ modal.innerHTML = `
 ### 3. ✅ Additional Improvements
 
 **Small Button Style** - `admin.css` (lines 365-368):
+
 ```css
 .admin-btn-sm {
   padding: 0.5rem 1rem;
@@ -101,6 +112,7 @@ modal.innerHTML = `
 ```
 
 **Modal Scrollbar** - `admin.css` (lines 819-841):
+
 ```css
 .user-detail-body {
   scrollbar-width: thin;
@@ -118,12 +130,15 @@ modal.innerHTML = `
 ## Files Modified
 
 ### JavaScript
+
 - ✅ `src/js/admin/dashboard-users.js` - Fixed modal class names and selectors
 
 ### HTML
+
 - ✅ `admin.html` - Switched to CSS version of Phosphor Icons
 
 ### CSS
+
 - ✅ `src/css/admin.css` - Added small button and scrollbar styles
 
 ---
@@ -131,6 +146,7 @@ modal.innerHTML = `
 ## Testing
 
 ### Icons Test
+
 1. ✅ User icon in table rows
 2. ✅ Stats card icons (users, fire, user-plus, arrow-bend)
 3. ✅ Chart title icons
@@ -140,6 +156,7 @@ modal.innerHTML = `
 7. ✅ Event breakdown icons
 
 ### Modal Test
+
 1. ✅ Click user row → Modal opens centered
 2. ✅ Click backdrop → Modal closes
 3. ✅ Click X button → Modal closes
@@ -154,12 +171,14 @@ modal.innerHTML = `
 ## Before vs After
 
 ### Before
+
 - ❌ No icons visible anywhere
 - ❌ Modal appeared in page flow below content
 - ❌ Modal not centered or overlaid
 - ❌ No backdrop
 
 ### After
+
 - ✅ All icons display correctly
 - ✅ Modal appears as centered overlay
 - ✅ Click backdrop to close
@@ -172,17 +191,20 @@ modal.innerHTML = `
 ## How to Use
 
 ### View User Journey
+
 1. Open admin dashboard at `/admin.html`
 2. Scroll to "All Users" table
 3. Click any user row (or "View" button)
 4. Modal opens showing:
-   - User summary (events, workouts, songs, sessions)
-   - Event breakdown by type
-   - Complete activity timeline grouped by date
+    - User summary (events, workouts, songs, sessions)
+    - Event breakdown by type
+    - Complete activity timeline grouped by date
 5. Click backdrop or X to close
 
 ### Icons Usage
+
 Icons now work with simple CSS classes:
+
 ```html
 <!-- Regular icons -->
 <i class="ph ph-users"></i>
@@ -201,4 +223,5 @@ Icons now work with simple CSS classes:
 ✅ **Fixed Modal Display** - Updated class names to match CSS definitions
 ✅ **Added Improvements** - Small button style and custom scrollbar
 
-All icons now display correctly and the user modal opens as a proper centered overlay with backdrop! The admin dashboard is now fully functional. 🎉
+All icons now display correctly and the user modal opens as a proper centered overlay with backdrop! The admin dashboard
+is now fully functional. 🎉

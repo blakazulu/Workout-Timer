@@ -3,11 +3,11 @@
  * Chart.js integration with clean, modern visualizations
  */
 
-import { isAuthenticated, logout, getSessionDuration } from './auth.js';
-import * as metrics from './metrics-calculator.js';
-import * as posthogData from './posthog-data.js';
-import { renderUsersSection } from './dashboard-users.js';
-import { renderEventsSection } from './dashboard-events.js';
+import {logout} from "./auth.js";
+import * as metrics from "./metrics-calculator.js";
+import * as posthogData from "./posthog-data.js";
+import {renderUsersSection} from "./dashboard-users.js";
+import {renderEventsSection} from "./dashboard-events.js";
 
 // Chart instances
 let charts = {
@@ -25,7 +25,7 @@ const REFRESH_RATE = 30000; // 30 seconds
  * Initialize the admin dashboard
  */
 export function initDashboard() {
-  console.log('[Admin Dashboard] Initializing modern dashboard...');
+  console.log("[Admin Dashboard] Initializing modern dashboard...");
 
   // Log dashboard view to PostHog
   posthogData.logDashboardView();
@@ -39,7 +39,7 @@ export function initDashboard() {
   // Set up event listeners
   setupEventListeners();
 
-  console.log('[Admin Dashboard] Dashboard initialized');
+  console.log("[Admin Dashboard] Dashboard initialized");
 }
 
 /**
@@ -66,7 +66,7 @@ export async function renderDashboard() {
     // Update last sync time
     updateSyncTime();
   } catch (error) {
-    console.error('[Admin Dashboard] Error rendering dashboard:', error);
+    console.error("[Admin Dashboard] Error rendering dashboard:", error);
   }
 }
 
@@ -74,7 +74,7 @@ export async function renderDashboard() {
  * Render key metrics cards at the top
  */
 function renderMetricsCards(overview) {
-  const container = document.getElementById('metrics-grid');
+  const container = document.getElementById("metrics-grid");
   if (!container) return;
 
   const history = metrics.getSongHistory();
@@ -85,31 +85,31 @@ function renderMetricsCards(overview) {
 
   const metrics_data = [
     {
-      label: 'Total Sessions',
+      label: "Total Sessions",
       value: (overview.totalSessions || 0).toLocaleString(),
-      icon: 'ph-activity',
-      color: '#3b82f6',
+      icon: "ph-activity",
+      color: "#3b82f6",
       trend: calculateTrend(history, 7)
     },
     {
-      label: 'Total Workouts',
+      label: "Total Workouts",
       value: (overview.totalWorkouts || 0).toLocaleString(),
-      icon: 'ph-barbell',
-      color: '#8b5cf6',
+      icon: "ph-barbell",
+      color: "#8b5cf6",
       trend: null
     },
     {
-      label: 'Favorite Tracks',
+      label: "Favorite Tracks",
       value: (overview.totalFavorites || 0).toLocaleString(),
-      icon: 'ph-heart',
-      color: '#ec4899',
+      icon: "ph-heart",
+      color: "#ec4899",
       trend: calculateTrend(favorites, 7)
     },
     {
-      label: 'Avg Duration',
+      label: "Avg Duration",
       value: `${overview.avgWorkoutDuration || 0}min`,
-      icon: 'ph-timer',
-      color: '#10b981',
+      icon: "ph-timer",
+      color: "#10b981",
       trend: null
     }
   ];
@@ -122,13 +122,13 @@ function renderMetricsCards(overview) {
       </div>
       <div class="stat-value">${stat.value}</div>
       ${stat.trend !== null ? `
-        <div class="stat-change ${stat.trend > 0 ? 'positive' : stat.trend < 0 ? 'negative' : 'neutral'}">
-          <i class="ph-fill ${stat.trend > 0 ? 'ph-trend-up' : stat.trend < 0 ? 'ph-trend-down' : 'ph-minus'}"></i>
-          ${stat.trend > 0 ? '+' : ''}${stat.trend}% vs last week
+        <div class="stat-change ${stat.trend > 0 ? "positive" : stat.trend < 0 ? "negative" : "neutral"}">
+          <i class="ph-fill ${stat.trend > 0 ? "ph-trend-up" : stat.trend < 0 ? "ph-trend-down" : "ph-minus"}"></i>
+          ${stat.trend > 0 ? "+" : ""}${stat.trend}% vs last week
         </div>
-      ` : ''}
+      ` : ""}
     </div>
-  `).join('');
+  `).join("");
 }
 
 /**
@@ -159,7 +159,7 @@ function calculateTrend(data, days) {
  * Render activity over time chart (line chart)
  */
 function renderActivityChart(allMetrics) {
-  const canvas = document.getElementById('activity-chart');
+  const canvas = document.getElementById("activity-chart");
   if (!canvas) return;
 
   // Destroy existing chart
@@ -175,7 +175,7 @@ function renderActivityChart(allMetrics) {
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date();
     date.setDate(date.getDate() - i);
-    labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+    labels.push(date.toLocaleDateString("en-US", {month: "short", day: "numeric"}));
 
     // Count activities for this day
     const dayStart = new Date(date.setHours(0, 0, 0, 0)).getTime();
@@ -188,23 +188,23 @@ function renderActivityChart(allMetrics) {
     data.push(count);
   }
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   charts.activity = new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: labels,
       datasets: [{
-        label: 'Sessions',
+        label: "Sessions",
         data: data,
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderColor: "#3b82f6",
+        backgroundColor: "rgba(59, 130, 246, 0.1)",
         borderWidth: 3,
         fill: true,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointBackgroundColor: '#3b82f6',
-        pointBorderColor: '#fff',
+        pointBackgroundColor: "#3b82f6",
+        pointBorderColor: "#fff",
         pointBorderWidth: 2
       }]
     },
@@ -216,10 +216,10 @@ function renderActivityChart(allMetrics) {
           display: false
         },
         tooltip: {
-          backgroundColor: 'rgba(30, 41, 59, 0.9)',
-          titleColor: '#f8fafc',
-          bodyColor: '#cbd5e1',
-          borderColor: '#3b82f6',
+          backgroundColor: "rgba(30, 41, 59, 0.9)",
+          titleColor: "#f8fafc",
+          bodyColor: "#cbd5e1",
+          borderColor: "#3b82f6",
           borderWidth: 1,
           padding: 12,
           displayColors: false,
@@ -232,11 +232,11 @@ function renderActivityChart(allMetrics) {
       scales: {
         x: {
           grid: {
-            color: 'rgba(148, 163, 184, 0.1)',
+            color: "rgba(148, 163, 184, 0.1)",
             drawBorder: false
           },
           ticks: {
-            color: '#64748b',
+            color: "#64748b",
             font: {
               size: 11
             }
@@ -245,11 +245,11 @@ function renderActivityChart(allMetrics) {
         y: {
           beginAtZero: true,
           grid: {
-            color: 'rgba(148, 163, 184, 0.1)',
+            color: "rgba(148, 163, 184, 0.1)",
             drawBorder: false
           },
           ticks: {
-            color: '#64748b',
+            color: "#64748b",
             font: {
               size: 11
             },
@@ -265,7 +265,7 @@ function renderActivityChart(allMetrics) {
  * Render genre distribution chart (doughnut chart)
  */
 function renderGenreChart(musicStats) {
-  const canvas = document.getElementById('genre-chart');
+  const canvas = document.getElementById("genre-chart");
   if (!canvas) return;
 
   if (charts.genre) {
@@ -277,46 +277,46 @@ function renderGenreChart(musicStats) {
   const genreCounts = {};
 
   history.forEach(song => {
-    const genre = song.genre || 'Unknown';
+    const genre = song.genre || "Unknown";
     genreCounts[genre] = (genreCounts[genre] || 0) + 1;
   });
 
   // Convert to array and sort
   const genreData = Object.entries(genreCounts)
-    .map(([genre, count]) => ({ genre, count }))
+    .map(([genre, count]) => ({genre, count}))
     .sort((a, b) => b.count - a.count)
     .slice(0, 7); // Top 7 genres
 
   // Fallback if no data
   if (genreData.length === 0) {
     genreData.push(
-      { genre: 'Workout', count: 1 },
-      { genre: 'EDM', count: 1 },
-      { genre: 'Rock', count: 1 }
+      {genre: "Workout", count: 1},
+      {genre: "EDM", count: 1},
+      {genre: "Rock", count: 1}
     );
   }
 
   const labels = genreData.map(g => g.genre);
   const data = genreData.map(g => g.count);
   const colors = [
-    '#3b82f6',
-    '#8b5cf6',
-    '#ec4899',
-    '#f59e0b',
-    '#10b981',
-    '#06b6d4',
-    '#ef4444'
+    "#3b82f6",
+    "#8b5cf6",
+    "#ec4899",
+    "#f59e0b",
+    "#10b981",
+    "#06b6d4",
+    "#ef4444"
   ];
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   charts.genre = new Chart(ctx, {
-    type: 'doughnut',
+    type: "doughnut",
     data: {
       labels: labels,
       datasets: [{
         data: data,
         backgroundColor: colors.slice(0, labels.length),
-        borderColor: '#0a0e27',
+        borderColor: "#0a0e27",
         borderWidth: 3,
         hoverOffset: 8
       }]
@@ -326,22 +326,22 @@ function renderGenreChart(musicStats) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'bottom',
+          position: "bottom",
           labels: {
-            color: '#cbd5e1',
+            color: "#cbd5e1",
             padding: 15,
             font: {
               size: 11
             },
             usePointStyle: true,
-            pointStyle: 'circle'
+            pointStyle: "circle"
           }
         },
         tooltip: {
-          backgroundColor: 'rgba(30, 41, 59, 0.9)',
-          titleColor: '#f8fafc',
-          bodyColor: '#cbd5e1',
-          borderColor: '#3b82f6',
+          backgroundColor: "rgba(30, 41, 59, 0.9)",
+          titleColor: "#f8fafc",
+          bodyColor: "#cbd5e1",
+          borderColor: "#3b82f6",
           borderWidth: 1,
           padding: 12,
           callbacks: {
@@ -357,7 +357,7 @@ function renderGenreChart(musicStats) {
  * Render top songs chart (horizontal bar chart)
  */
 function renderTopSongsChart(allMetrics) {
-  const canvas = document.getElementById('top-songs-chart');
+  const canvas = document.getElementById("top-songs-chart");
   if (!canvas) return;
 
   if (charts.topSongs) {
@@ -373,7 +373,7 @@ function renderTopSongsChart(allMetrics) {
     const id = song.videoId || song.id || song.title;
     if (!songCounts[id]) {
       songCounts[id] = {
-        title: song.title || 'Unknown',
+        title: song.title || "Unknown",
         playCount: 0
       };
     }
@@ -388,33 +388,33 @@ function renderTopSongsChart(allMetrics) {
   // Fallback if no data
   if (topSongs.length === 0) {
     topSongs.push(
-      { title: 'No songs yet', playCount: 0 }
+      {title: "No songs yet", playCount: 0}
     );
   }
 
   const labels = topSongs.map(s => {
     const maxLength = 30;
-    return s.title.length > maxLength ? s.title.substring(0, maxLength) + '...' : s.title;
+    return s.title.length > maxLength ? s.title.substring(0, maxLength) + "..." : s.title;
   });
   const data = topSongs.map(s => s.playCount);
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   charts.topSongs = new Chart(ctx, {
-    type: 'bar',
+    type: "bar",
     data: {
       labels: labels,
       datasets: [{
-        label: 'Plays',
+        label: "Plays",
         data: data,
-        backgroundColor: 'rgba(16, 185, 129, 0.7)',
-        borderColor: '#10b981',
+        backgroundColor: "rgba(16, 185, 129, 0.7)",
+        borderColor: "#10b981",
         borderWidth: 2,
         borderRadius: 8,
-        hoverBackgroundColor: 'rgba(16, 185, 129, 0.9)'
+        hoverBackgroundColor: "rgba(16, 185, 129, 0.9)"
       }]
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: "y",
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
@@ -422,10 +422,10 @@ function renderTopSongsChart(allMetrics) {
           display: false
         },
         tooltip: {
-          backgroundColor: 'rgba(30, 41, 59, 0.9)',
-          titleColor: '#f8fafc',
-          bodyColor: '#cbd5e1',
-          borderColor: '#10b981',
+          backgroundColor: "rgba(30, 41, 59, 0.9)",
+          titleColor: "#f8fafc",
+          bodyColor: "#cbd5e1",
+          borderColor: "#10b981",
           borderWidth: 1,
           padding: 12,
           callbacks: {
@@ -438,11 +438,11 @@ function renderTopSongsChart(allMetrics) {
         x: {
           beginAtZero: true,
           grid: {
-            color: 'rgba(148, 163, 184, 0.1)',
+            color: "rgba(148, 163, 184, 0.1)",
             drawBorder: false
           },
           ticks: {
-            color: '#64748b',
+            color: "#64748b",
             font: {
               size: 11
             },
@@ -455,7 +455,7 @@ function renderTopSongsChart(allMetrics) {
             drawBorder: false
           },
           ticks: {
-            color: '#cbd5e1',
+            color: "#cbd5e1",
             font: {
               size: 11
             }
@@ -470,7 +470,7 @@ function renderTopSongsChart(allMetrics) {
  * Render session duration distribution chart (bar chart)
  */
 function renderDurationChart(allMetrics) {
-  const canvas = document.getElementById('duration-chart');
+  const canvas = document.getElementById("duration-chart");
   if (!canvas) return;
 
   if (charts.duration) {
@@ -480,40 +480,40 @@ function renderDurationChart(allMetrics) {
   // Get duration buckets
   const history = metrics.getSongHistory();
   const buckets = {
-    '< 5 min': 0,
-    '5-10 min': 0,
-    '10-20 min': 0,
-    '20-30 min': 0,
-    '30+ min': 0
+    "< 5 min": 0,
+    "5-10 min": 0,
+    "10-20 min": 0,
+    "20-30 min": 0,
+    "30+ min": 0
   };
 
   history.forEach(item => {
     const duration = item.duration || 0;
     const minutes = duration / 60;
 
-    if (minutes < 5) buckets['< 5 min']++;
-    else if (minutes < 10) buckets['5-10 min']++;
-    else if (minutes < 20) buckets['10-20 min']++;
-    else if (minutes < 30) buckets['20-30 min']++;
-    else buckets['30+ min']++;
+    if (minutes < 5) buckets["< 5 min"]++;
+    else if (minutes < 10) buckets["5-10 min"]++;
+    else if (minutes < 20) buckets["10-20 min"]++;
+    else if (minutes < 30) buckets["20-30 min"]++;
+    else buckets["30+ min"]++;
   });
 
   const labels = Object.keys(buckets);
   const data = Object.values(buckets);
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
   charts.duration = new Chart(ctx, {
-    type: 'bar',
+    type: "bar",
     data: {
       labels: labels,
       datasets: [{
-        label: 'Sessions',
+        label: "Sessions",
         data: data,
-        backgroundColor: 'rgba(6, 182, 212, 0.7)',
-        borderColor: '#06b6d4',
+        backgroundColor: "rgba(6, 182, 212, 0.7)",
+        borderColor: "#06b6d4",
         borderWidth: 2,
         borderRadius: 8,
-        hoverBackgroundColor: 'rgba(6, 182, 212, 0.9)'
+        hoverBackgroundColor: "rgba(6, 182, 212, 0.9)"
       }]
     },
     options: {
@@ -524,10 +524,10 @@ function renderDurationChart(allMetrics) {
           display: false
         },
         tooltip: {
-          backgroundColor: 'rgba(30, 41, 59, 0.9)',
-          titleColor: '#f8fafc',
-          bodyColor: '#cbd5e1',
-          borderColor: '#06b6d4',
+          backgroundColor: "rgba(30, 41, 59, 0.9)",
+          titleColor: "#f8fafc",
+          bodyColor: "#cbd5e1",
+          borderColor: "#06b6d4",
           borderWidth: 1,
           padding: 12,
           callbacks: {
@@ -542,7 +542,7 @@ function renderDurationChart(allMetrics) {
             drawBorder: false
           },
           ticks: {
-            color: '#cbd5e1',
+            color: "#cbd5e1",
             font: {
               size: 11
             }
@@ -551,11 +551,11 @@ function renderDurationChart(allMetrics) {
         y: {
           beginAtZero: true,
           grid: {
-            color: 'rgba(148, 163, 184, 0.1)',
+            color: "rgba(148, 163, 184, 0.1)",
             drawBorder: false
           },
           ticks: {
-            color: '#64748b',
+            color: "#64748b",
             font: {
               size: 11
             },
@@ -571,8 +571,8 @@ function renderDurationChart(allMetrics) {
  * Render recent activity timeline
  */
 function renderRecentActivity(recentActivity) {
-  const container = document.getElementById('recent-activity');
-  const countElement = document.getElementById('activity-count');
+  const container = document.getElementById("recent-activity");
+  const countElement = document.getElementById("activity-count");
 
   if (!container) return;
 
@@ -597,10 +597,10 @@ function renderRecentActivity(recentActivity) {
     const color = getActivityColor(activity.type);
 
     // Extract info from description or metadata
-    const description = activity.description || 'Activity';
-    const eventType = activity.type === 'music_played' ? 'played' :
-                      activity.type === 'favorite_added' ? 'favorited' :
-                      activity.type;
+    const description = activity.description || "Activity";
+    const eventType = activity.type === "music_played" ? "played" :
+      activity.type === "favorite_added" ? "favorited" :
+        activity.type;
 
     return `
       <div class="slide-up" style="padding: 1rem; background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(148, 163, 184, 0.1); border-radius: var(--admin-radius-md); transition: all var(--admin-transition-base);">
@@ -622,7 +622,7 @@ function renderRecentActivity(recentActivity) {
         </div>
       </div>
     `;
-  }).join('');
+  }).join("");
 }
 
 /**
@@ -630,14 +630,14 @@ function renderRecentActivity(recentActivity) {
  */
 function getActivityIcon(type) {
   const icons = {
-    'music_played': 'ph-fill ph-play-circle',
-    'favorite_added': 'ph-fill ph-heart',
-    'search': 'ph-fill ph-magnifying-glass',
-    'shuffle': 'ph-fill ph-shuffle',
-    'played': 'ph-fill ph-play-circle',
-    'favorited': 'ph-fill ph-heart'
+    "music_played": "ph-fill ph-play-circle",
+    "favorite_added": "ph-fill ph-heart",
+    "search": "ph-fill ph-magnifying-glass",
+    "shuffle": "ph-fill ph-shuffle",
+    "played": "ph-fill ph-play-circle",
+    "favorited": "ph-fill ph-heart"
   };
-  return icons[type] || 'ph-fill ph-activity';
+  return icons[type] || "ph-fill ph-activity";
 }
 
 /**
@@ -645,14 +645,14 @@ function getActivityIcon(type) {
  */
 function getActivityColor(type) {
   const colors = {
-    'music_played': '#3b82f6',
-    'favorite_added': '#ec4899',
-    'search': '#8b5cf6',
-    'shuffle': '#10b981',
-    'played': '#3b82f6',
-    'favorited': '#ec4899'
+    "music_played": "#3b82f6",
+    "favorite_added": "#ec4899",
+    "search": "#8b5cf6",
+    "shuffle": "#10b981",
+    "played": "#3b82f6",
+    "favorited": "#ec4899"
   };
-  return colors[type] || '#64748b';
+  return colors[type] || "#64748b";
 }
 
 /**
@@ -661,7 +661,7 @@ function getActivityColor(type) {
 function getTimeAgo(timestamp) {
   const seconds = Math.floor((Date.now() - timestamp) / 1000);
 
-  if (seconds < 60) return 'Just now';
+  if (seconds < 60) return "Just now";
   if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
   if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
   return `${Math.floor(seconds / 86400)}d ago`;
@@ -671,11 +671,11 @@ function getTimeAgo(timestamp) {
  * Render system information panel
  */
 function renderSystemInfo(system) {
-  const container = document.getElementById('system-info');
+  const container = document.getElementById("system-info");
   if (!container) return;
 
-  const pwaStatus = system.pwa?.status || 'Not Installed';
-  const analyticsStatus = system.analytics?.enabled ? 'Enabled' : 'Disabled';
+  const pwaStatus = system.pwa?.status || "Not Installed";
+  const analyticsStatus = system.analytics?.enabled ? "Enabled" : "Disabled";
   const storageUsed = formatBytes(system.localStorage?.used || 0);
 
   container.innerHTML = `
@@ -685,7 +685,7 @@ function renderSystemInfo(system) {
     </div>
     <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
       <span style="color: var(--admin-text-muted);">Analytics</span>
-      <span style="color: ${analyticsStatus === 'Enabled' ? 'var(--admin-accent-green)' : 'var(--admin-text-muted)'};">${analyticsStatus}</span>
+      <span style="color: ${analyticsStatus === "Enabled" ? "var(--admin-accent-green)" : "var(--admin-text-muted)"};">${analyticsStatus}</span>
     </div>
     <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
       <span style="color: var(--admin-text-muted);">Storage</span>
@@ -698,19 +698,19 @@ function renderSystemInfo(system) {
  * Format bytes to human readable
  */
 function formatBytes(bytes) {
-  if (bytes === 0) return '0 B';
+  if (bytes === 0) return "0 B";
   const k = 1024;
-  const sizes = ['B', 'KB', 'MB'];
+  const sizes = ["B", "KB", "MB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return Math.round((bytes / Math.pow(k, i)) * 10) / 10 + ' ' + sizes[i];
+  return Math.round((bytes / Math.pow(k, i)) * 10) / 10 + " " + sizes[i];
 }
 
 /**
  * Render PostHog integration panel
  */
 function renderPostHogPanel() {
-  const container = document.getElementById('posthog-panel');
-  const statusDot = document.getElementById('posthog-status');
+  const container = document.getElementById("posthog-panel");
+  const statusDot = document.getElementById("posthog-status");
 
   if (!container) return;
 
@@ -718,8 +718,8 @@ function renderPostHogPanel() {
   const analytics = posthogData.getPostHogAnalytics();
 
   if (analytics.available) {
-    statusDot?.classList.remove('offline');
-    statusDot?.classList.add('online');
+    statusDot?.classList.remove("offline");
+    statusDot?.classList.add("online");
 
     const session = analytics.session || {};
     const config = analytics.config || {};
@@ -731,11 +731,11 @@ function renderPostHogPanel() {
       </div>
       <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
         <span style="color: var(--admin-text-muted);">Session ID</span>
-        <span class="admin-mono" style="color: var(--admin-text-primary); font-size: 0.7rem;">${session.sessionId ? session.sessionId.substring(0, 12) + '...' : 'N/A'}</span>
+        <span class="admin-mono" style="color: var(--admin-text-primary); font-size: 0.7rem;">${session.sessionId ? session.sessionId.substring(0, 12) + "..." : "N/A"}</span>
       </div>
       <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(148, 163, 184, 0.1);">
         <span style="color: var(--admin-text-muted);">Recording</span>
-        <span style="color: ${config.sessionRecording ? 'var(--admin-accent-green)' : 'var(--admin-text-muted)'};">${config.sessionRecording ? 'Active' : 'Inactive'}</span>
+        <span style="color: ${config.sessionRecording ? "var(--admin-accent-green)" : "var(--admin-text-muted)"};">${config.sessionRecording ? "Active" : "Inactive"}</span>
       </div>
       <div class="admin-text-sm" style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
         <span style="color: var(--admin-text-muted);">Tracked Events</span>
@@ -743,13 +743,13 @@ function renderPostHogPanel() {
       </div>
     `;
   } else {
-    statusDot?.classList.remove('online');
-    statusDot?.classList.add('offline');
+    statusDot?.classList.remove("online");
+    statusDot?.classList.add("offline");
 
     container.innerHTML = `
       <div class="admin-text-sm" style="text-align: center; padding: 1rem; opacity: 0.5;">
         <i class="ph ph-warning-circle" style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
-        ${analytics.reason || 'Not connected'}
+        ${analytics.reason || "Not connected"}
       </div>
     `;
   }
@@ -759,10 +759,10 @@ function renderPostHogPanel() {
  * Update sync time display
  */
 function updateSyncTime() {
-  const syncElement = document.getElementById('last-sync');
+  const syncElement = document.getElementById("last-sync");
   if (syncElement) {
     const now = new Date().toLocaleTimeString();
-    syncElement.querySelector('span:last-child').textContent = `Last synced: ${now}`;
+    syncElement.querySelector("span:last-child").textContent = `Last synced: ${now}`;
   }
 }
 
@@ -775,7 +775,7 @@ function startAutoRefresh() {
   }
 
   refreshInterval = setInterval(() => {
-    console.log('[Admin Dashboard] Auto-refreshing...');
+    console.log("[Admin Dashboard] Auto-refreshing...");
     renderDashboard();
   }, REFRESH_RATE);
 }
@@ -785,13 +785,13 @@ function startAutoRefresh() {
  */
 function setupEventListeners() {
   // Refresh button
-  const refreshBtn = document.getElementById('refresh-btn');
+  const refreshBtn = document.getElementById("refresh-btn");
   if (refreshBtn) {
-    refreshBtn.addEventListener('click', () => {
-      const icon = refreshBtn.querySelector('i');
-      icon.style.animation = 'spin 0.5s linear';
+    refreshBtn.addEventListener("click", () => {
+      const icon = refreshBtn.querySelector("i");
+      icon.style.animation = "spin 0.5s linear";
       setTimeout(() => {
-        icon.style.animation = '';
+        icon.style.animation = "";
       }, 500);
 
       renderDashboard();
@@ -799,9 +799,9 @@ function setupEventListeners() {
   }
 
   // Logout button
-  const logoutBtn = document.getElementById('logout-btn');
+  const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
+    logoutBtn.addEventListener("click", () => {
       logout();
       if (refreshInterval) {
         clearInterval(refreshInterval);
@@ -810,29 +810,29 @@ function setupEventListeners() {
   }
 
   // Export data button
-  const exportBtn = document.getElementById('export-data-btn');
+  const exportBtn = document.getElementById("export-data-btn");
   if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
-      posthogData.logAdminAction('export_data');
+    exportBtn.addEventListener("click", () => {
+      posthogData.logAdminAction("export_data");
       exportDashboardData();
     });
   }
 
   // PostHog link button
-  const posthogBtn = document.getElementById('posthog-link-btn');
+  const posthogBtn = document.getElementById("posthog-link-btn");
   if (posthogBtn) {
-    posthogBtn.addEventListener('click', () => {
-      posthogData.logAdminAction('open_posthog_dashboard');
-      window.open('https://app.posthog.com', '_blank');
+    posthogBtn.addEventListener("click", () => {
+      posthogData.logAdminAction("open_posthog_dashboard");
+      window.open("https://app.posthog.com", "_blank");
     });
   }
 
   // Clear cache button
-  const clearBtn = document.getElementById('clear-cache-btn');
+  const clearBtn = document.getElementById("clear-cache-btn");
   if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
-        posthogData.logAdminAction('clear_data');
+    clearBtn.addEventListener("click", () => {
+      if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
+        posthogData.logAdminAction("clear_data");
         clearDashboardData();
       }
     });
@@ -845,12 +845,12 @@ function setupEventListeners() {
 function exportDashboardData() {
   const allMetrics = metrics.getAllMetrics();
   const dataStr = JSON.stringify(allMetrics, null, 2);
-  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const dataBlob = new Blob([dataStr], {type: "application/json"});
 
   const url = URL.createObjectURL(dataBlob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
-  link.download = `cycle-analytics-${new Date().toISOString().split('T')[0]}.json`;
+  link.download = `cycle-analytics-${new Date().toISOString().split("T")[0]}.json`;
   link.click();
 
   URL.revokeObjectURL(url);
@@ -860,13 +860,13 @@ function exportDashboardData() {
  * Clear all dashboard data
  */
 function clearDashboardData() {
-  localStorage.removeItem('song_history');
-  localStorage.removeItem('favorites');
+  localStorage.removeItem("song_history");
+  localStorage.removeItem("favorites");
 
   // Refresh dashboard
   renderDashboard();
 
-  alert('All data has been cleared.');
+  alert("All data has been cleared.");
 }
 
 /**

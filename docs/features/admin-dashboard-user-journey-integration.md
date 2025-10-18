@@ -7,7 +7,9 @@
 
 ## Overview
 
-Successfully integrated comprehensive user journey tracking and event analytics into the admin dashboard. Users can now view all users from PostHog, drill down into individual user activity timelines, and see detailed event breakdowns with statistics.
+Successfully integrated comprehensive user journey tracking and event analytics into the admin dashboard. Users can now
+view all users from PostHog, drill down into individual user activity timelines, and see detailed event breakdowns with
+statistics.
 
 ---
 
@@ -16,6 +18,7 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 ### 1. User Section (`dashboard-users.js`)
 
 **Features:**
+
 - User list table with key metrics
 - User engagement breakdown (Power/Active/Casual)
 - New vs Returning user cohorts
@@ -23,6 +26,7 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 - User detail modal with complete journey timeline
 
 **User Table Columns:**
+
 - User ID (truncated for privacy)
 - Total Events
 - Workouts Completed
@@ -33,6 +37,7 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 - Days Active
 
 **User Detail Modal:**
+
 - User summary statistics
 - Complete activity timeline grouped by date
 - Event icons and formatted names
@@ -42,6 +47,7 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 ### 2. Event Section (`dashboard-events.js`)
 
 **Features:**
+
 - Event overview statistics cards
 - Complete event breakdown grid
 - Percentage distribution of each event
@@ -49,12 +55,14 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 - Recent event tracking
 
 **Event Statistics:**
+
 - Total Events (last 30 days)
 - Unique Event Types
 - Most Common Event
 - Average Events per Day
 
 **Event Cards Display:**
+
 - Rank badge (1st, 2nd, 3rd, etc.)
 - Event icon and formatted name
 - Total occurrence count
@@ -66,9 +74,11 @@ Successfully integrated comprehensive user journey tracking and event analytics 
 **Modified Files:**
 
 **`admin-dashboard.js`** (lines 9-10, 48-65):
+
 - Imported `renderUsersSection` and `renderEventsSection`
 - Changed `renderDashboard()` to async function
 - Added calls to render user and event sections
+
 ```javascript
 // Render PostHog user and event sections
 await renderUsersSection();
@@ -76,8 +86,10 @@ await renderEventsSection();
 ```
 
 **`admin.html`** (lines 177-185):
+
 - Added user section container
 - Added event section container
+
 ```html
 <!-- Users Section -->
 <div id="users-section" class="fade-in">
@@ -91,6 +103,7 @@ await renderEventsSection();
 ```
 
 **`admin.css`** (lines 761-1024):
+
 - User detail modal styles
 - Timeline component styles
 - Event card styles
@@ -102,6 +115,7 @@ await renderEventsSection();
 ## New CSS Classes
 
 ### Modal Components
+
 ```css
 .user-detail-modal          /* Full-screen overlay */
 .user-detail-backdrop       /* Blurred background */
@@ -112,6 +126,7 @@ await renderEventsSection();
 ```
 
 ### Timeline Components
+
 ```css
 .timeline-day               /* Day grouping container */
 .timeline-date              /* Date header with accent bar */
@@ -125,6 +140,7 @@ await renderEventsSection();
 ```
 
 ### Stat Components
+
 ```css
 .stat-icon                  /* Icon container with gradient */
 .stat-subtitle              /* Small descriptive text */
@@ -132,6 +148,7 @@ await renderEventsSection();
 ```
 
 ### Utility Classes
+
 ```css
 .event-card                 /* Event card with hover effect */
 .loading                    /* Loading state with spinner */
@@ -142,25 +159,31 @@ await renderEventsSection();
 ## User Journey Features
 
 ### User Summary Stats
+
 When clicking a user, the modal shows:
+
 - **Total Events:** All actions the user has taken
 - **Workouts:** Number of workout sessions started
 - **Songs Played:** Number of music tracks played
 - **Sessions:** Number of app sessions
 
 ### Timeline Visualization
+
 **Grouped by Date:**
+
 - Events organized by day
 - Most recent at the top
 - Cyan accent date headers
 
 **Event Display:**
+
 - Circular icon with gradient background
 - Event name (formatted for readability)
 - Event details (video title, properties, etc.)
 - Precise timestamp (HH:MM:SS)
 
 **Interactive Features:**
+
 - Hover effect on timeline events
 - Smooth transitions
 - Scrollable timeline (up to 100 events)
@@ -171,12 +194,14 @@ When clicking a user, the modal shows:
 ## Event Breakdown Features
 
 ### Overview Cards
+
 1. **Total Events** - Sum of all events in last 30 days
 2. **Event Types** - Count of unique event types
 3. **Most Common** - The most frequently triggered event
 4. **Avg per Day** - Average events per day
 
 ### Event Grid
+
 - **Auto-responsive grid** - Adapts to screen size
 - **Ranked cards** - Numbered 1, 2, 3, etc.
 - **Color-coded** - Cyan/purple gradient theme
@@ -184,6 +209,7 @@ When clicking a user, the modal shows:
 - **Large count display** - Prominent event count
 
 ### Live Activity Feed
+
 - **Last 100 events** - Recent user actions
 - **Time ago format** - "2h ago", "5m ago", etc.
 - **Event icons** - Visual indicators
@@ -195,6 +221,7 @@ When clicking a user, the modal shows:
 ## Data Flow
 
 ### User Data
+
 ```javascript
 // Fetched from PostHog via posthog-client.js
 const users = await posthog.getUsers(30, 100);
@@ -213,6 +240,7 @@ const users = await posthog.getUsers(30, 100);
 ```
 
 ### User Activity
+
 ```javascript
 // Fetched when clicking a user
 const activity = await posthog.getUserActivity(userId, 100);
@@ -226,6 +254,7 @@ const activity = await posthog.getUserActivity(userId, 100);
 ```
 
 ### Events Data
+
 ```javascript
 // Fetched for event breakdown
 const events = await posthog.getTopEvents(30, 20);
@@ -254,12 +283,14 @@ refreshInterval = setInterval(() => {
 ## Mobile Responsiveness
 
 **Tablet (768px and below):**
+
 - Event grid becomes single column
 - Timeline events stack vertically
 - Modal becomes full-screen
 - Reduced padding for better space usage
 
 **Mobile (smaller screens):**
+
 - User table scrolls horizontally
 - Event cards full width
 - Timeline simplified layout
@@ -280,6 +311,7 @@ refreshInterval = setInterval(() => {
 ## Error Handling
 
 ### User Section Errors
+
 ```javascript
 try {
   await renderUsersSection();
@@ -291,6 +323,7 @@ try {
 ```
 
 ### Event Section Errors
+
 ```javascript
 try {
   await renderEventsSection();
@@ -302,6 +335,7 @@ try {
 ```
 
 ### Empty States
+
 - **No users**: "No users found" message with icon
 - **No events**: "No events yet" message with icon
 - **No activity**: "No recent activity" empty state
@@ -311,14 +345,17 @@ try {
 ## Files Modified
 
 ### JavaScript
+
 - ✅ `src/js/admin/admin-dashboard.js` - Added imports and render calls
 - ✅ `src/js/admin/dashboard-users.js` - Created user section
 - ✅ `src/js/admin/dashboard-events.js` - Created event section
 
 ### HTML
+
 - ✅ `admin.html` - Added section containers
 
 ### CSS
+
 - ✅ `src/css/admin.css` - Added modal, timeline, and component styles
 
 ---
@@ -326,6 +363,7 @@ try {
 ## Testing
 
 ### Manual Testing
+
 1. ✅ User list displays correctly
 2. ✅ Click user opens modal
 3. ✅ Timeline shows events grouped by date
@@ -337,6 +375,7 @@ try {
 9. ✅ Scrolling works in modal and activity feed
 
 ### Data Verification
+
 - ✅ User counts match PostHog
 - ✅ Event counts accurate
 - ✅ Timestamps formatted correctly
@@ -348,6 +387,7 @@ try {
 ## Future Enhancements
 
 ### Potential Additions
+
 - [ ] User search/filter functionality
 - [ ] Export user data to CSV
 - [ ] Event filtering by type
@@ -360,6 +400,7 @@ try {
 - [ ] User segmentation
 
 ### Performance
+
 - [ ] Pagination for large user lists
 - [ ] Infinite scroll for timeline
 - [ ] Debounced search
@@ -371,12 +412,14 @@ try {
 ## Usage
 
 ### Viewing Users
+
 1. Open admin dashboard at `/admin.html`
 2. Scroll to "Users Section"
 3. View engagement breakdown cards
 4. See user list table
 
 ### User Drill-Down
+
 1. Click any user row in the table
 2. Modal opens with user details
 3. View summary statistics
@@ -384,6 +427,7 @@ try {
 5. Click close button or backdrop to exit
 
 ### Viewing Events
+
 1. Scroll to "Events Section"
 2. View event statistics cards
 3. Browse event breakdown grid
@@ -402,4 +446,5 @@ try {
 ✅ **Error handling** - Graceful failures with helpful messages
 ✅ **Modern UI** - Glassmorphic cards, gradients, smooth animations
 
-The admin dashboard now provides complete visibility into user behavior, engagement patterns, and event analytics - all powered by PostHog data!
+The admin dashboard now provides complete visibility into user behavior, engagement patterns, and event analytics - all
+powered by PostHog data!

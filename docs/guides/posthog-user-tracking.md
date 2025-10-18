@@ -10,6 +10,7 @@
 Based on your current PostHog data, you have:
 
 **User:** `0199f461-30c2-777d-b444-2cfcaf7c0f64`
+
 - **Total Events:** 107 actions
 - **First Seen:** Oct 17, 2025 at 22:53 UTC
 - **Last Seen:** Oct 18, 2025 at 09:38 UTC
@@ -22,18 +23,23 @@ Based on your current PostHog data, you have:
 I've added 5 user-tracking functions to `src/js/admin/posthog-client.js`:
 
 ### 1. `getUsers(days, limit)`
+
 Get list of all users with their stats
 
 ### 2. `getUserActivity(userId, limit)`
+
 Get activity timeline for a specific user
 
 ### 3. `getUserCohorts(days)`
+
 Analyze new vs returning users
 
 ### 4. `getUserEngagement(days)`
+
 Categorize users by engagement level
 
 ### 5. `getUserRetention(days)`
+
 Track daily user retention
 
 ---
@@ -86,6 +92,7 @@ async function showUserList() {
 ```
 
 **Result for your current user:**
+
 ```
 User ID: 0199f461...
 Events: 107
@@ -124,6 +131,7 @@ async function showUserEngagement() {
 ```
 
 **Your current data:**
+
 ```
 Power Users (50+ events): 1 user
 Active Users (10-49 events): 0 users
@@ -150,6 +158,7 @@ async function showUserCohorts() {
 ```
 
 **Your current data:**
+
 ```
 New Users: 1 (100%)
 Returning Users: 0 (0%)
@@ -362,6 +371,7 @@ async function viewUserDetails(userId) {
 ## 📊 What Each Function Returns
 
 ### `getUsers(30, 100)`
+
 ```javascript
 [
   {
@@ -379,6 +389,7 @@ async function viewUserDetails(userId) {
 ```
 
 ### `getUserEngagement(30)`
+
 ```javascript
 {
   powerUsers: 1,      // 50+ events
@@ -391,6 +402,7 @@ async function viewUserDetails(userId) {
 ```
 
 ### `getUserCohorts(30)`
+
 ```javascript
 {
   newUsers: 1,
@@ -401,6 +413,7 @@ async function viewUserDetails(userId) {
 ```
 
 ### `getUserRetention(7)`
+
 ```javascript
 [
   { date: "2025-10-17", users: 1 },
@@ -409,6 +422,7 @@ async function viewUserDetails(userId) {
 ```
 
 ### `getUserActivity(userId, 50)`
+
 ```javascript
 [
   {
@@ -452,22 +466,26 @@ console.log('Cohorts:', cohorts);
 ## 📈 User Metrics You Can Display
 
 **Overview Cards:**
+
 - Total Users
 - Active Users Today
 - New Users This Week
 - Return Rate
 
 **User Breakdown:**
+
 - Power Users (50+ events)
 - Active Users (10-49 events)
 - Casual Users (<10 events)
 
 **Cohort Analysis:**
+
 - New vs Returning
 - User Retention Rate
 - Average Sessions per User
 
 **User List:**
+
 - User ID (anonymized)
 - Total Events
 - Workouts Completed
@@ -477,6 +495,7 @@ console.log('Cohorts:', cohorts);
 - Days Active
 
 **Individual User View:**
+
 - Complete activity timeline
 - Event breakdown
 - Usage patterns
@@ -487,18 +506,21 @@ console.log('Cohorts:', cohorts);
 ## 🔒 Privacy Notes
 
 **What PostHog Tracks:**
+
 - ✅ Anonymous user IDs (e.g., `0199f461-30c2...`)
 - ✅ Actions they take (events)
 - ✅ When they visit
 - ✅ Device/browser info (optional)
 
 **What PostHog Does NOT Track:**
+
 - ❌ Names
 - ❌ Email addresses
 - ❌ IP addresses (anonymized)
 - ❌ Personal information
 
 **You control:**
+
 - How long to store data (default: 1 year)
 - What properties to track
 - User opt-out (already implemented)
@@ -508,24 +530,24 @@ console.log('Cohorts:', cohorts);
 ## 🚀 Next Steps
 
 1. **Add user section to admin dashboard**
-   - User list table
-   - Engagement chart
-   - Cohort stats
+    - User list table
+    - Engagement chart
+    - Cohort stats
 
 2. **Create user detail view**
-   - Click a user to see their timeline
-   - Show their most-used features
-   - Display usage patterns
+    - Click a user to see their timeline
+    - Show their most-used features
+    - Display usage patterns
 
 3. **Add user filters**
-   - Filter by engagement level
-   - Sort by most active
-   - Search by user ID
+    - Filter by engagement level
+    - Sort by most active
+    - Search by user ID
 
 4. **Build user insights**
-   - Most common user journey
-   - Average session length by user
-   - Power user characteristics
+    - Most common user journey
+    - Average session length by user
+    - Power user characteristics
 
 ---
 
@@ -551,4 +573,6 @@ const retention = await posthog.getUserRetention(days);
 ---
 
 **Summary:**
-You can now display all your users from PostHog in the admin dashboard! Your current data shows 1 power user (you!) with 107 events across 2 days. As more people use your app, you'll see user growth, engagement patterns, and retention metrics. 🎉
+You can now display all your users from PostHog in the admin dashboard! Your current data shows 1 power user (you!) with
+107 events across 2 days. As more people use your app, you'll see user growth, engagement patterns, and retention
+metrics. 🎉

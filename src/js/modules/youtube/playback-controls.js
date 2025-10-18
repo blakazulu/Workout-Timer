@@ -35,7 +35,7 @@ export class PlaybackControls {
         }
 
         // Emit analytics event
-        eventBus.emit('music:played', {
+        eventBus.emit("music:played", {
           videoId: this.player.videoId,
           title: this.player.videoTitle,
         });
@@ -60,7 +60,7 @@ export class PlaybackControls {
         this.player.player.pauseVideo();
 
         // Emit analytics event
-        eventBus.emit('music:paused', {
+        eventBus.emit("music:paused", {
           videoId: this.player.videoId,
         });
 
@@ -83,7 +83,7 @@ export class PlaybackControls {
         this.player.player.stopVideo();
 
         // Emit analytics event
-        eventBus.emit('music:stopped', {
+        eventBus.emit("music:stopped", {
           videoId: this.player.videoId,
         });
       } catch (error) {

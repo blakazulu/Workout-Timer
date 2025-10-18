@@ -7,7 +7,8 @@
 
 ## 📊 What is PostHog?
 
-PostHog is a **complete product analytics platform** that tracks how users interact with your app. Unlike Google Analytics, PostHog gives you:
+PostHog is a **complete product analytics platform** that tracks how users interact with your app. Unlike Google
+Analytics, PostHog gives you:
 
 - **Event tracking** - Every action users take
 - **User profiles** - Anonymous but trackable users
@@ -21,6 +22,7 @@ PostHog is a **complete product analytics platform** that tracks how users inter
 ### Your Current Setup
 
 You're tracking **14 event types**:
+
 1. `workout_started` - Timer begins
 2. `workout_reset` - Timer reset
 3. `rep_completed` - Each rep finished
@@ -41,13 +43,16 @@ You're tracking **14 event types**:
 ## 🗄️ How PostHog Stores Data
 
 ### 1. Events (The Core)
+
 Every action is an **event** with:
+
 - **Event name** (e.g., `workout_started`)
 - **Timestamp** (when it happened)
 - **Properties** (metadata about the event)
 - **Person ID** (who did it - anonymous by default)
 
 **Example Event:**
+
 ```json
 {
   "event": "workout_started",
@@ -66,13 +71,17 @@ Every action is an **event** with:
 ```
 
 ### 2. Persons (Users)
+
 Each user gets a **distinct_id** (anonymous):
+
 - Tracked across sessions
 - Can store properties (device, preferences)
 - No PII unless you explicitly set it
 
 ### 3. Sessions
+
 Group of events from one visit:
+
 - Session ID tracks the visit
 - Duration calculated automatically
 - Can replay if session recording enabled
@@ -86,14 +95,17 @@ Group of events from one visit:
 Based on your last 7 days:
 
 **Workouts:**
+
 - Oct 17: 2 workouts started, 2 reps completed
 - Oct 18: 1 workout started
 
 **Music:**
+
 - Oct 17: 3 songs played
 - Oct 18: 1 song played
 
 **Users:**
+
 - Oct 17: 1 unique user (Daily Active User)
 - Oct 18: 1 unique user
 
@@ -102,6 +114,7 @@ Based on your last 7 days:
 ## 📈 Types of Queries You Can Run
 
 ### 1. Trend Queries
+
 **Track events over time**
 
 ```javascript
@@ -122,6 +135,7 @@ Based on your last 7 days:
 ```
 
 **Math Options:**
+
 - `total` - Count all events
 - `dau` - Daily Active Users
 - `weekly_active` - Weekly Active Users
@@ -132,6 +146,7 @@ Based on your last 7 days:
 - `min` / `max` / `median` - Statistical values
 
 ### 2. Funnel Queries
+
 **Track conversion flows**
 
 ```javascript
@@ -153,6 +168,7 @@ Based on your last 7 days:
 Shows: How many users who started a session actually completed a workout?
 
 ### 3. Breakdown Queries
+
 **Segment by properties**
 
 ```javascript
@@ -171,6 +187,7 @@ Shows: How many users who started a session actually completed a workout?
 Shows: Music plays by genre (EDM, Rock, Hip Hop, etc.)
 
 ### 4. HogQL Queries
+
 **SQL-like queries for complex analysis**
 
 ```javascript
@@ -185,6 +202,7 @@ Shows: Music plays by genre (EDM, Rock, Hip Hop, etc.)
 ## 🎯 Useful Metrics You Can Build
 
 ### Workout Metrics
+
 1. **Total Workouts** - Count `workout_started`
 2. **Completion Rate** - `workout_completed` / `workout_started` × 100
 3. **Average Workout Duration** - Average of `duration` property
@@ -193,6 +211,7 @@ Shows: Music plays by genre (EDM, Rock, Hip Hop, etc.)
 6. **Average Reps per Workout** - `rep_completed` / `workout_started`
 
 ### Music Metrics
+
 1. **Music Usage Rate** - % of workouts with `hasMusic = true`
 2. **Most Popular Genres** - Breakdown `music_played` by `genre`
 3. **Most Popular Moods** - Breakdown `music_played` by `mood`
@@ -200,12 +219,14 @@ Shows: Music plays by genre (EDM, Rock, Hip Hop, etc.)
 5. **Favorite Activity** - Count `favorite_added` vs `favorite_removed`
 
 ### User Engagement
+
 1. **Daily Active Users** - `session_started` with `math: "dau"`
 2. **Session Duration** - Average time between `session_started` and `session_ended`
 3. **Return Rate** - Users with multiple `session_started` events
 4. **PWA Install Rate** - `pwa_installed` / `$pageview` × 100
 
 ### Performance Metrics
+
 1. **App Visibility** - Time in `app_visible` vs `app_hidden`
 2. **Load Time** - From `$web_vitals` properties
 3. **Error Rate** - If you track errors
@@ -216,33 +237,41 @@ Shows: Music plays by genre (EDM, Rock, Hip Hop, etc.)
 ## 🛠️ How to Query PostHog from Your Admin Dashboard
 
 ### Option 1: Using MCP Tools (Server-Side)
+
 **Current approach - requires Node.js server**
 
-You're using Claude's PostHog MCP tools, which work great but require a backend. This is what I used above to fetch your data.
+You're using Claude's PostHog MCP tools, which work great but require a backend. This is what I used above to fetch your
+data.
 
 **Pros:**
+
 - ✅ Secure (API key stays on server)
 - ✅ No CORS issues
 - ✅ Full PostHog API access
 
 **Cons:**
+
 - ❌ Requires a server
 - ❌ Can't run purely client-side
 
 ### Option 2: PostHog Client-Side SDK (What You Want!)
+
 **Direct browser queries**
 
 PostHog's JavaScript SDK can query data directly from the browser using **public query endpoints**.
 
 **Important:** For sensitive queries (events, user data), you need to either:
+
 1. Use PostHog's public sharing feature (limited)
 2. Set up a simple proxy endpoint (recommended)
 3. Accept that anyone can see your analytics (if public app)
 
 ### Option 3: Build a Simple Proxy
+
 **Best of both worlds**
 
 Create a tiny serverless function (Netlify/Vercel) that:
+
 1. Accepts queries from your admin dashboard
 2. Adds your PostHog API key
 3. Forwards request to PostHog
@@ -478,6 +507,7 @@ export async function handler(event) {
 ```
 
 Then in your client:
+
 ```javascript
 async function queryPostHog(query) {
   const response = await fetch('/.netlify/functions/posthog-query', {
@@ -491,6 +521,7 @@ async function queryPostHog(query) {
 **Option B: Admin Password Protection**
 
 Since your admin dashboard already requires a password, you could:
+
 1. Keep the dashboard private (no public access)
 2. Accept that anyone with admin access sees the data
 3. Use obfuscated API key (weak security, but works for personal projects)
@@ -498,6 +529,7 @@ Since your admin dashboard already requires a password, you could:
 **Option C: PostHog Shared Insights**
 
 PostHog lets you create shareable insight links that work without auth:
+
 1. Create insight in PostHog dashboard
 2. Click "Share" → Get public link
 3. Embed in your dashboard
@@ -509,6 +541,7 @@ PostHog lets you create shareable insight links that work without auth:
 ### Example 1: Workout Trend (Last 7 Days)
 
 **Query:**
+
 ```javascript
 {
   "kind": "InsightVizNode",
@@ -528,6 +561,7 @@ PostHog lets you create shareable insight links that work without auth:
 ```
 
 **Result:**
+
 ```javascript
 {
   data: [0, 0, 0, 0, 0, 0, 2, 1],
@@ -539,6 +573,7 @@ PostHog lets you create shareable insight links that work without auth:
 ### Example 2: Daily Active Users
 
 **Query:**
+
 ```javascript
 {
   "kind": "TrendsQuery",
@@ -552,6 +587,7 @@ PostHog lets you create shareable insight links that work without auth:
 ```
 
 **Result:**
+
 ```javascript
 {
   data: [0, 0, 0, 0, 0, 0, 1, 1],  // 1 user on Oct 17, 1 user on Oct 18
@@ -564,6 +600,7 @@ PostHog lets you create shareable insight links that work without auth:
 ## 🎨 Dashboard Visualizations You Can Build
 
 ### 1. **Key Metrics Cards**
+
 ```
 ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
 │  Total Workouts  │  │   Active Users   │  │  Songs Played    │
@@ -573,12 +610,15 @@ PostHog lets you create shareable insight links that work without auth:
 ```
 
 ### 2. **Activity Trend Chart**
+
 Line chart showing workouts, reps, music plays over time
 
 ### 3. **Genre Distribution**
+
 Pie chart showing % of plays by genre
 
 ### 4. **Workout Funnel**
+
 ```
 Session Started:  100%  ████████████████████
 Workout Started:   75%  ███████████████
@@ -587,6 +627,7 @@ Workout Complete:  50%  ██████████
 ```
 
 ### 5. **Top Songs Table**
+
 ```
 Rank | Song          | Plays | Genre
 -----|---------------|-------|-------
@@ -600,7 +641,9 @@ Rank | Song          | Plays | Genre
 ## 🔧 Advanced Features
 
 ### Feature Flags
+
 Control features remotely:
+
 ```javascript
 if (posthog.isFeatureEnabled('new-timer-ui')) {
   // Show new UI
@@ -608,7 +651,9 @@ if (posthog.isFeatureEnabled('new-timer-ui')) {
 ```
 
 ### Session Replay
+
 Watch user sessions:
+
 ```javascript
 posthog.startSessionRecording();
 ```
@@ -616,13 +661,17 @@ posthog.startSessionRecording();
 View recordings in PostHog dashboard → Session Replay
 
 ### Cohorts
+
 Group users by behavior:
+
 - "Power users" - >10 workouts/month
 - "Music lovers" - Always use music
 - "Quick workers" - <20 sec workouts
 
 ### A/B Testing
+
 Test variations:
+
 ```javascript
 const variant = posthog.getFeatureFlag('timer-layout');
 if (variant === 'vertical') {
@@ -639,6 +688,7 @@ if (variant === 'vertical') {
 Based on your implementation in `analytics-tracker.js`:
 
 ### workout_started
+
 ```javascript
 {
   duration: 30,        // Seconds
@@ -649,6 +699,7 @@ Based on your implementation in `analytics-tracker.js`:
 ```
 
 ### music_played
+
 ```javascript
 {
   videoId: "dQw4w9WgXcQ",
@@ -659,6 +710,7 @@ Based on your implementation in `analytics-tracker.js`:
 ```
 
 ### favorite_added
+
 ```javascript
 {
   videoId: "dQw4w9WgXcQ",
@@ -668,6 +720,7 @@ Based on your implementation in `analytics-tracker.js`:
 ```
 
 ### session_started
+
 ```javascript
 {
   timestamp: "2025-10-18T09:30:00Z",
@@ -690,6 +743,7 @@ mkdir -p netlify/functions
 ```
 
 Create `netlify/functions/posthog-proxy.js`:
+
 ```javascript
 export async function handler(event) {
   if (event.httpMethod !== 'POST') {
@@ -730,6 +784,7 @@ export async function handler(event) {
 ### 2. Add API Key to Netlify
 
 Get your API key from PostHog:
+
 1. Go to PostHog → Settings → Personal API Keys
 2. Create new key with "read" permissions
 3. Add to Netlify: `POSTHOG_PERSONAL_API_KEY=phx_...`
@@ -822,6 +877,7 @@ You can display **all** PostHog data in your admin dashboard by:
 4. **Building custom metrics** - Combine events for insights
 
 Your current tracking gives you access to:
+
 - ✅ Workout statistics and trends
 - ✅ Music usage and genre preferences
 - ✅ User engagement and session data

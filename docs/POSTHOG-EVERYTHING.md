@@ -1,6 +1,7 @@
 # PostHog - Everything You Need to Know
 
-**Your Question:** "I want to use PostHog data - not local storage - about PostHog - I want to know it all - I don't want to use PostHog dashboard - I want all data to be displayed on the client side"
+**Your Question:** "I want to use PostHog data - not local storage - about PostHog - I want to know it all - I don't
+want to use PostHog dashboard - I want all data to be displayed on the client side"
 
 **Answer:** Everything is ready for you! Here's the complete picture.
 
@@ -20,9 +21,11 @@
 ## 📦 What I Created For You
 
 ### 1. PostHog Client Module (`src/js/admin/posthog-client.js`)
+
 **550+ lines of ready-to-use functions**
 
 Query any data from PostHog:
+
 - `getWorkoutTrend(days)` - Workout activity over time
 - `getMusicTrend(days)` - Music plays over time
 - `getDailyActiveUsers(days)` - User counts
@@ -36,15 +39,19 @@ Query any data from PostHog:
 - `exportAllData()` - Complete data export
 
 ### 2. Netlify Function Proxy (`netlify/functions/posthog-proxy.js`)
+
 **Secure API proxy**
 
-Keeps your PostHog API key secret while allowing client-side queries. Your dashboard makes requests to this function, which forwards them to PostHog.
+Keeps your PostHog API key secret while allowing client-side queries. Your dashboard makes requests to this function,
+which forwards them to PostHog.
 
 ### 3. Complete Documentation
 
-- **`posthog-complete-guide.md`** (1000+ lines) - Everything about PostHog: what it is, how it works, all query types, examples, best practices
+- **`posthog-complete-guide.md`** (1000+ lines) - Everything about PostHog: what it is, how it works, all query types,
+  examples, best practices
 
-- **`posthog-setup-instructions.md`** (500+ lines) - Step-by-step setup: get API key, configure Netlify, test proxy, update dashboard
+- **`posthog-setup-instructions.md`** (500+ lines) - Step-by-step setup: get API key, configure Netlify, test proxy,
+  update dashboard
 
 ---
 
@@ -84,11 +91,13 @@ Keeps your PostHog API key secret while allowing client-side queries. Your dashb
 ### Events You're Tracking (14 types)
 
 **Workout Events:**
+
 1. `workout_started` - When timer begins
 2. `workout_reset` - When timer resets
 3. `rep_completed` - Each rep finished
 
 **Music Events:**
+
 4. `music_played` - Song starts
 5. `music_paused` - Song paused
 6. `music_stopped` - Song stopped
@@ -96,9 +105,11 @@ Keeps your PostHog API key secret while allowing client-side queries. Your dashb
 8. `mood_selected` - Mood chosen
 
 **Favorite Events:**
+
 9. `favorite_removed` - Song unfavorited
 
 **App Events:**
+
 10. `session_started` - App opened
 11. `session_ended` - App closed
 12. `app_visible` - App in foreground
@@ -106,6 +117,7 @@ Keeps your PostHog API key secret while allowing client-side queries. Your dashb
 14. `search_opened` - Search activated
 
 **Auto-tracked:**
+
 15. `$pageview` - Page views
 16. `$web_vitals` - Performance metrics
 
@@ -114,12 +126,14 @@ Keeps your PostHog API key secret while allowing client-side queries. Your dashb
 Based on the queries I ran:
 
 **Oct 17, 2025:**
+
 - 2 workouts started
 - 2 reps completed
 - 3 songs played
 - 1 unique user
 
 **Oct 18, 2025:**
+
 - 1 workout started
 - 0 reps completed
 - 1 song played
@@ -128,6 +142,7 @@ Based on the queries I ran:
 ### Event Properties Tracked
 
 **workout_started:**
+
 ```json
 {
   "duration": 30,
@@ -138,6 +153,7 @@ Based on the queries I ran:
 ```
 
 **music_played:**
+
 ```json
 {
   "videoId": "abc123",
@@ -148,6 +164,7 @@ Based on the queries I ran:
 ```
 
 **session_started:**
+
 ```json
 {
   "timestamp": "2025-10-18T09:30:00Z",
@@ -162,6 +179,7 @@ Based on the queries I ran:
 ## 🎨 What You Can Display in Your Dashboard
 
 ### 1. Key Metrics Cards
+
 ```javascript
 const metrics = await posthog.getKeyMetrics(30);
 
@@ -175,6 +193,7 @@ Avg Reps/Workout: ${metrics.avgRepsPerWorkout}
 ```
 
 ### 2. Activity Charts
+
 ```javascript
 const workouts = await posthog.getWorkoutTrend(7);
 
@@ -187,6 +206,7 @@ const workouts = await posthog.getWorkoutTrend(7);
 ```
 
 ### 3. Genre Distribution
+
 ```javascript
 const genres = await posthog.getMusicGenreBreakdown(30);
 
@@ -197,6 +217,7 @@ const genres = await posthog.getMusicGenreBreakdown(30);
 ```
 
 ### 4. Conversion Funnel
+
 ```javascript
 const funnel = await posthog.getWorkoutFunnel();
 
@@ -210,6 +231,7 @@ const funnel = await posthog.getWorkoutFunnel();
 ```
 
 ### 5. Recent Activity Feed
+
 ```javascript
 const activity = await posthog.getRecentActivity(50);
 
@@ -223,6 +245,7 @@ const activity = await posthog.getRecentActivity(50);
 ```
 
 ### 6. User Stats
+
 ```javascript
 const users = await posthog.getDailyActiveUsers(30);
 
@@ -232,6 +255,7 @@ const users = await posthog.getDailyActiveUsers(30);
 ```
 
 ### 7. Session Analytics
+
 ```javascript
 const sessions = await posthog.getSessionDurations(30);
 
@@ -244,6 +268,7 @@ const sessions = await posthog.getSessionDurations(30);
 ```
 
 ### 8. PWA Performance
+
 ```javascript
 const pwa = await posthog.getPWAStats(90);
 
@@ -260,6 +285,7 @@ const pwa = await posthog.getPWAStats(90);
 ## 📊 Real Query Examples
 
 ### Example 1: Get All Dashboard Data at Once
+
 ```javascript
 import * as posthog from './posthog-client.js';
 
@@ -280,6 +306,7 @@ async function loadDashboard() {
 ```
 
 ### Example 2: Build Custom Chart
+
 ```javascript
 async function showWorkoutChart() {
   const data = await posthog.getWorkoutTrend(7);
@@ -308,6 +335,7 @@ async function showWorkoutChart() {
 ```
 
 ### Example 3: Show Recent Activity
+
 ```javascript
 async function showActivity() {
   const activities = await posthog.getRecentActivity(20);
@@ -329,11 +357,13 @@ async function showActivity() {
 ## 🔧 Setup (3 Steps)
 
 ### Step 1: Get PostHog API Key
+
 1. Go to PostHog → Settings → Personal API Keys
 2. Create new key with "read" permissions
 3. Copy the key (starts with `phx_...`)
 
 ### Step 2: Add to Netlify
+
 ```bash
 # In Netlify dashboard
 Site Settings → Environment Variables → Add:
@@ -341,6 +371,7 @@ POSTHOG_PERSONAL_API_KEY = phx_your_key_here
 ```
 
 ### Step 3: Use in Your Dashboard
+
 ```javascript
 import * as posthog from './posthog-client.js';
 
@@ -365,6 +396,7 @@ async function init() {
 ## 🎯 Comparison: LocalStorage vs PostHog
 
 ### Before (localStorage):
+
 ```javascript
 // Limited to browser
 const history = JSON.parse(localStorage.getItem('cycleHistory') || '[]');
@@ -379,6 +411,7 @@ const totalSongs = history.length;
 ```
 
 ### After (PostHog):
+
 ```javascript
 // Cloud-based analytics
 const metrics = await posthog.getKeyMetrics(30);
@@ -398,12 +431,14 @@ const totalSongs = metrics.totalSongs;
 ## 🚨 Important Security Notes
 
 ### ✅ DO:
+
 - Store API key in Netlify environment variables
 - Use the Netlify function proxy
 - Keep API key out of git
 - Use password protection on admin dashboard
 
 ### ❌ DON'T:
+
 - Put API key in JavaScript files
 - Call PostHog API directly from browser
 - Commit API key to git
@@ -416,6 +451,7 @@ const totalSongs = metrics.totalSongs;
 ## 📚 Complete Function Reference
 
 ### Data Retrieval
+
 - `getWorkoutTrend(days)` - Workout stats over time
 - `getMusicTrend(days)` - Music stats over time
 - `getDailyActiveUsers(days)` - User counts
@@ -431,6 +467,7 @@ const totalSongs = metrics.totalSongs;
 - `exportAllData()` - Complete export
 
 ### Utilities
+
 - `formatEventName(event)` - Pretty event names
 - `getEventIcon(event)` - Phosphor icon classes
 - `checkProxyHealth()` - Test proxy availability
@@ -474,7 +511,9 @@ console.log('Average workout duration by day:', result);
 ## 💡 Pro Tips
 
 ### 1. Cache Results
+
 PostHog queries can be slow. Cache results:
+
 ```javascript
 let cachedData = null;
 let cacheTime = null;
@@ -491,7 +530,9 @@ async function getData() {
 ```
 
 ### 2. Auto-Refresh
+
 Keep dashboard live:
+
 ```javascript
 // Refresh every 30 seconds
 setInterval(() => {
@@ -500,7 +541,9 @@ setInterval(() => {
 ```
 
 ### 3. Loading States
+
 Show spinners while loading:
+
 ```javascript
 async function loadDashboard() {
   showLoader();
@@ -515,7 +558,9 @@ async function loadDashboard() {
 ```
 
 ### 4. Error Handling
+
 Handle offline/errors gracefully:
+
 ```javascript
 async function loadDashboard() {
   try {
@@ -534,6 +579,7 @@ async function loadDashboard() {
 ## 🎉 What This Gives You
 
 ### Analytics You Can See:
+
 1. **How many people use your app** (Daily Active Users)
 2. **What features they use most** (Event counts)
 3. **How long they stay** (Session duration)
@@ -544,6 +590,7 @@ async function loadDashboard() {
 8. **Real-time activity** (Live event stream)
 
 ### All Displayed In:
+
 - ✅ Your custom admin dashboard
 - ✅ Client-side (JavaScript)
 - ✅ Beautiful charts (Chart.js)
@@ -555,19 +602,19 @@ async function loadDashboard() {
 ## 📖 Documentation
 
 1. **Complete Guide:** `/docs/guides/posthog-complete-guide.md`
-   - Everything about PostHog (1000+ lines)
-   - All query types explained
-   - Real examples
+    - Everything about PostHog (1000+ lines)
+    - All query types explained
+    - Real examples
 
 2. **Setup Instructions:** `/docs/guides/posthog-setup-instructions.md`
-   - Step-by-step setup
-   - Troubleshooting
-   - Quick reference
+    - Step-by-step setup
+    - Troubleshooting
+    - Quick reference
 
 3. **Code Files:**
-   - `src/js/admin/posthog-client.js` - Client functions
-   - `netlify/functions/posthog-proxy.js` - Secure proxy
-   - `src/js/admin/posthog-data.js` - SDK helpers
+    - `src/js/admin/posthog-client.js` - Client functions
+    - `netlify/functions/posthog-proxy.js` - Secure proxy
+    - `src/js/admin/posthog-data.js` - SDK helpers
 
 ---
 
@@ -597,12 +644,14 @@ async function loadDashboard() {
 ## 🎯 Summary
 
 **You asked for:**
+
 - PostHog data (not localStorage) ✅
 - Everything about PostHog ✅
 - Client-side display ✅
 - Skip PostHog dashboard ✅
 
 **You got:**
+
 - Complete PostHog client module (550+ lines)
 - Secure Netlify proxy function
 - 1500+ lines of documentation
@@ -613,4 +662,5 @@ async function loadDashboard() {
 
 **Next step:** Get your API key and start querying!
 
-Everything is ready - you just need to add your PostHog API key to Netlify and start using the functions. Your admin dashboard can now display ALL your analytics data client-side without ever opening the PostHog web dashboard! 🚀
+Everything is ready - you just need to add your PostHog API key to Netlify and start using the functions. Your admin
+dashboard can now display ALL your analytics data client-side without ever opening the PostHog web dashboard! 🚀
