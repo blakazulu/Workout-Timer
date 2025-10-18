@@ -53,6 +53,7 @@ function isStandalone() {
  * @param {Event} e - Install prompt event
  */
 function handleBeforeInstallPrompt(e) {
+  // Prevent automatic browser banner - we'll show our custom one instead
   e.preventDefault();
   deferredPrompt = e;
 

@@ -6,6 +6,8 @@
 import { isAuthenticated, logout, getSessionDuration } from './auth.js';
 import * as metrics from './metrics-calculator.js';
 import * as posthogData from './posthog-data.js';
+import { renderUsersSection } from './dashboard-users.js';
+import { renderEventsSection } from './dashboard-events.js';
 
 // Chart instances
 let charts = {
@@ -43,7 +45,7 @@ export function initDashboard() {
 /**
  * Render the complete dashboard
  */
-export function renderDashboard() {
+export async function renderDashboard() {
   try {
     const allMetrics = metrics.getAllMetrics();
 
@@ -56,6 +58,10 @@ export function renderDashboard() {
     renderRecentActivity(allMetrics.recentActivity);
     renderSystemInfo(allMetrics.system);
     renderPostHogPanel();
+
+    // Render PostHog user and event sections
+    await renderUsersSection();
+    await renderEventsSection();
 
     // Update last sync time
     updateSyncTime();

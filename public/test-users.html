@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostHog Users Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #fff;
+    }
+    h1 { color: #00ffc8; }
+    h2 { color: #ff0096; margin-top: 40px; }
+
+    button {
+      background: #00ffc8;
+      color: #0a0a0a;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 10px 5px;
+    }
+    button:hover { background: #00e6b3; }
+
+    .user-card {
+      background: #1a1a1a;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      border-left: 4px solid #00ffc8;
+    }
+    .user-id {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+    .user-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin: 15px 0;
+    }
+    .stat {
+      text-align: center;
+      padding: 10px;
+      background: #111;
+      border-radius: 6px;
+    }
+    .stat-label {
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .stat-value.cyan { color: #00ffc8; }
+    .stat-value.pink { color: #ff0096; }
+    .stat-value.purple { color: #6464ff; }
+
+    .user-dates {
+      font-size: 11px;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .engagement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .engagement-card {
+      padding: 25px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .engagement-card.power {
+      background: linear-gradient(135deg, #00ffc8, #00e6b3);
+      color: #000;
+    }
+    .engagement-card.active {
+      background: linear-gradient(135deg, #ff0096, #e6008a);
+      color: #fff;
+    }
+    .engagement-card.casual {
+      background: linear-gradient(135deg, #6464ff, #5a5aeb);
+      color: #fff;
+    }
+    .engagement-number {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .engagement-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .engagement-desc {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .status {
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+      border: 2px solid #333;
+    }
+    .status.loading { border-color: #ffa500; background: rgba(255, 165, 0, 0.1); }
+    .status.success { border-color: #00ffc8; background: rgba(0, 255, 200, 0.1); }
+    .status.error { border-color: #ff0096; background: rgba(255, 0, 150, 0.1); }
+
+    pre {
+      background: #111;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>👥 PostHog User Tracking Test</h1>
+  <p>Test user tracking and analytics from PostHog</p>
+
+  <button onclick="testAllUsers()">🔄 Load All Tests</button>
+
+  <h2>All Users (Last 30 Days)</h2>
+  <button onclick="testGetUsers()">Get Users</button>
+  <div id="users-container"></div>
+
+  <h2>User Engagement Breakdown</h2>
+  <button onclick="testEngagement()">Get Engagement</button>
+  <div id="engagement-container"></div>
+
+  <h2>New vs Returning Users</h2>
+  <button onclick="testCohorts()">Get Cohorts</button>
+  <div id="cohorts-container"></div>
+
+  <script>
+    // Test all at once
+    async function testAllUsers() {
+      await testGetUsers();
+      await testEngagement();
+      await testCohorts();
+    }
+
+    // Get all users
+    async function testGetUsers() {
+      const container = document.getElementById('users-container');
+      container.innerHTML = '<div class="status loading">⏳ Loading users...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'DataVisualizationNode',
+              source: {
+                kind: 'HogQLQuery',
+                query: `
+                  SELECT
+                    distinct_id,
+                    count() as total_events,
+                    min(timestamp) as first_seen,
+                    max(timestamp) as last_seen,
+                    countIf(event = 'workout_started') as workouts,
+                    countIf(event = 'music_played') as songs_played,
+                    countIf(event = 'session_started') as sessions
+                  FROM events
+                  WHERE timestamp >= now() - interval 30 day
+                  GROUP BY distinct_id
+                  ORDER BY last_seen DESC
+                  LIMIT 100
+                `
+              }
+            }
+          })
+        });
+
+        if (!response.ok) throw new Error('Query failed');
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+          const users = data.results.map(row => ({
+            userId: row[0],
+            totalEvents: row[1],
+            firstSeen: new Date(row[2]),
+            lastSeen: new Date(row[3]),
+            workouts: row[4],
+            songsPlayed: row[5],
+            sessions: row[6]
+          }));
+
+          container.innerHTML = `
+            <div class="status success">
+              <strong>✅ Found ${users.length} user${users.length !== 1 ? 's' : ''}!</strong>
+            </div>
+            ${users.map(user => `
+              <div class="user-card">
+                <div class="user-id">
+                  <strong>User ID:</strong> ${user.userId.substring(0, 32)}...
+                </div>
+                <div class="user-stats">
+                  <div class="stat">
+                    <div class="stat-label">Total Events</div>
+                    <div class="stat-value cyan">${user.totalEvents}</div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-label">Workouts</div>
+                    <div class="stat-value pink">${user.workouts}</div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-label">Songs Played</div>
+                    <div class="stat-value purple">${user.songsPlayed}</div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-label">Sessions</div>
+                    <div class="stat-value cyan">${user.sessions}</div>
+                  </div>
+                </div>
+                <div class="user-dates">
+                  <strong>First seen:</strong> ${user.firstSeen.toLocaleString()} <br>
+                  <strong>Last seen:</strong> ${user.lastSeen.toLocaleString()} <br>
+                  <strong>Days active:</strong> ${Math.ceil((user.lastSeen - user.firstSeen) / (1000 * 60 * 60 * 24))} day(s)
+                </div>
+              </div>
+            `).join('')}
+          `;
+        } else {
+          container.innerHTML = '<div class="status success">No users found in the last 30 days</div>';
+        }
+      } catch (error) {
+        container.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+        console.error(error);
+      }
+    }
+
+    // Get engagement breakdown
+    async function testEngagement() {
+      const container = document.getElementById('engagement-container');
+      container.innerHTML = '<div class="status loading">⏳ Analyzing engagement...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'DataVisualizationNode',
+              source: {
+                kind: 'HogQLQuery',
+                query: `
+                  SELECT
+                    countIf(total_events >= 50) as power_users,
+                    countIf(total_events >= 10 AND total_events < 50) as active_users,
+                    countIf(total_events < 10) as casual_users
+                  FROM (
+                    SELECT distinct_id, count() as total_events
+                    FROM events
+                    WHERE timestamp >= now() - interval 30 day
+                    GROUP BY distinct_id
+                  )
+                `
+              }
+            }
+          })
+        });
+
+        if (!response.ok) throw new Error('Query failed');
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+          const [power, active, casual] = data.results[0];
+          const total = power + active + casual;
+
+          container.innerHTML = `
+            <div class="status success">
+              <strong>✅ Total Users: ${total}</strong>
+            </div>
+            <div class="engagement-grid">
+              <div class="engagement-card power">
+                <div class="engagement-label">Power Users</div>
+                <div class="engagement-number">${power}</div>
+                <div class="engagement-desc">50+ events</div>
+              </div>
+              <div class="engagement-card active">
+                <div class="engagement-label">Active Users</div>
+                <div class="engagement-number">${active}</div>
+                <div class="engagement-desc">10-49 events</div>
+              </div>
+              <div class="engagement-card casual">
+                <div class="engagement-label">Casual Users</div>
+                <div class="engagement-number">${casual}</div>
+                <div class="engagement-desc">&lt;10 events</div>
+              </div>
+            </div>
+          `;
+        } else {
+          container.innerHTML = '<div class="status success">No engagement data</div>';
+        }
+      } catch (error) {
+        container.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+        console.error(error);
+      }
+    }
+
+    // Get cohorts (new vs returning)
+    async function testCohorts() {
+      const container = document.getElementById('cohorts-container');
+      container.innerHTML = '<div class="status loading">⏳ Analyzing cohorts...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'DataVisualizationNode',
+              source: {
+                kind: 'HogQLQuery',
+                query: `
+                  SELECT
+                    countIf(sessions = 1) as new_users,
+                    countIf(sessions > 1) as returning_users,
+                    count() as total_users
+                  FROM (
+                    SELECT
+                      distinct_id,
+                      countIf(event = 'session_started') as sessions
+                    FROM events
+                    WHERE timestamp >= now() - interval 30 day
+                    GROUP BY distinct_id
+                  )
+                `
+              }
+            }
+          })
+        });
+
+        if (!response.ok) throw new Error('Query failed');
+
+        const data = await response.json();
+
+        if (data.results && data.results.length > 0) {
+          const [newUsers, returning, total] = data.results[0];
+          const returnRate = total > 0 ? ((returning / total) * 100).toFixed(1) : 0;
+
+          container.innerHTML = `
+            <div class="status success">
+              <div class="user-stats">
+                <div class="stat">
+                  <div class="stat-label">New Users</div>
+                  <div class="stat-value cyan">${newUsers}</div>
+                  <div style="font-size: 11px; color: #888; margin-top: 5px;">
+                    ${total > 0 ? ((newUsers / total) * 100).toFixed(1) : 0}%
+                  </div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Returning Users</div>
+                  <div class="stat-value pink">${returning}</div>
+                  <div style="font-size: 11px; color: #888; margin-top: 5px;">
+                    ${returnRate}%
+                  </div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Total Users</div>
+                  <div class="stat-value purple">${total}</div>
+                  <div style="font-size: 11px; color: #888; margin-top: 5px;">
+                    Last 30 days
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          container.innerHTML = '<div class="status success">No cohort data</div>';
+        }
+      } catch (error) {
+        container.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

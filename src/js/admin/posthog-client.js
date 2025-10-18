@@ -661,6 +661,220 @@ export function getEventIcon(eventName) {
 }
 
 /**
+ * Get list of users with their activity stats
+ * @param {number} days - Number of days to look back (default: 30)
+ * @param {number} limit - Maximum number of users to return (default: 100)
+ * @returns {Promise<Array>} List of users
+ */
+export async function getUsers(days = 30, limit = 100) {
+  const query = {
+    kind: 'DataVisualizationNode',
+    source: {
+      kind: 'HogQLQuery',
+      query: `
+        SELECT
+          distinct_id,
+          count() as total_events,
+          min(timestamp) as first_seen,
+          max(timestamp) as last_seen,
+          countIf(event = 'workout_started') as workouts,
+          countIf(event = 'music_played') as songs_played,
+          countIf(event = 'session_started') as sessions
+        FROM events
+        WHERE timestamp >= now() - interval ${days} day
+        GROUP BY distinct_id
+        ORDER BY last_seen DESC
+        LIMIT ${limit}
+      `
+    }
+  };
+
+  const results = await queryPostHog(query);
+
+  if (results.results) {
+    return results.results.map(row => ({
+      userId: row[0],
+      totalEvents: row[1],
+      firstSeen: new Date(row[2]),
+      lastSeen: new Date(row[3]),
+      workouts: row[4],
+      songsPlayed: row[5],
+      sessions: row[6],
+      // Calculate days active
+      daysActive: Math.ceil((new Date(row[3]) - new Date(row[2])) / (1000 * 60 * 60 * 24))
+    }));
+  }
+
+  return [];
+}
+
+/**
+ * Get user activity timeline for a specific user
+ * @param {string} userId - User's distinct_id
+ * @param {number} limit - Number of recent events (default: 50)
+ * @returns {Promise<Array>} User's event timeline
+ */
+export async function getUserActivity(userId, limit = 50) {
+  const query = {
+    kind: 'DataVisualizationNode',
+    source: {
+      kind: 'HogQLQuery',
+      query: `
+        SELECT
+          event,
+          timestamp,
+          properties
+        FROM events
+        WHERE distinct_id = '${userId}'
+        ORDER BY timestamp DESC
+        LIMIT ${limit}
+      `
+    }
+  };
+
+  const results = await queryPostHog(query);
+
+  if (results.results) {
+    return results.results.map(row => ({
+      event: row[0],
+      timestamp: new Date(row[1]),
+      properties: row[2]
+    }));
+  }
+
+  return [];
+}
+
+/**
+ * Get user cohort analysis (new vs returning)
+ * @param {number} days - Number of days to analyze (default: 30)
+ * @returns {Promise<Object>} Cohort stats
+ */
+export async function getUserCohorts(days = 30) {
+  const query = {
+    kind: 'DataVisualizationNode',
+    source: {
+      kind: 'HogQLQuery',
+      query: `
+        SELECT
+          countIf(sessions = 1) as new_users,
+          countIf(sessions > 1) as returning_users,
+          count() as total_users
+        FROM (
+          SELECT
+            distinct_id,
+            countIf(event = 'session_started') as sessions
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
+          GROUP BY distinct_id
+        )
+      `
+    }
+  };
+
+  const results = await queryPostHog(query);
+
+  if (results.results && results.results.length > 0) {
+    const [newUsers, returningUsers, totalUsers] = results.results[0];
+    return {
+      newUsers: newUsers || 0,
+      returningUsers: returningUsers || 0,
+      totalUsers: totalUsers || 0,
+      returnRate: totalUsers > 0 ? ((returningUsers / totalUsers) * 100).toFixed(1) : 0
+    };
+  }
+
+  return { newUsers: 0, returningUsers: 0, totalUsers: 0, returnRate: 0 };
+}
+
+/**
+ * Get user engagement levels (power users, active, casual)
+ * @param {number} days - Number of days to analyze (default: 30)
+ * @returns {Promise<Object>} Engagement breakdown
+ */
+export async function getUserEngagement(days = 30) {
+  const query = {
+    kind: 'DataVisualizationNode',
+    source: {
+      kind: 'HogQLQuery',
+      query: `
+        SELECT
+          countIf(total_events >= 50) as power_users,
+          countIf(total_events >= 10 AND total_events < 50) as active_users,
+          countIf(total_events < 10) as casual_users
+        FROM (
+          SELECT
+            distinct_id,
+            count() as total_events
+          FROM events
+          WHERE timestamp >= now() - interval ${days} day
+          GROUP BY distinct_id
+        )
+      `
+    }
+  };
+
+  const results = await queryPostHog(query);
+
+  if (results.results && results.results.length > 0) {
+    const [powerUsers, activeUsers, casualUsers] = results.results[0];
+    const total = powerUsers + activeUsers + casualUsers;
+
+    return {
+      powerUsers: powerUsers || 0,
+      activeUsers: activeUsers || 0,
+      casualUsers: casualUsers || 0,
+      total,
+      labels: ['Power Users (50+ events)', 'Active Users (10-49 events)', 'Casual Users (<10 events)'],
+      data: [powerUsers || 0, activeUsers || 0, casualUsers || 0]
+    };
+  }
+
+  return {
+    powerUsers: 0,
+    activeUsers: 0,
+    casualUsers: 0,
+    total: 0,
+    labels: [],
+    data: []
+  };
+}
+
+/**
+ * Get user retention by day
+ * @param {number} days - Number of days to analyze (default: 7)
+ * @returns {Promise<Array>} Daily user retention
+ */
+export async function getUserRetention(days = 7) {
+  const query = {
+    kind: 'DataVisualizationNode',
+    source: {
+      kind: 'HogQLQuery',
+      query: `
+        SELECT
+          toDate(timestamp) as date,
+          uniq(distinct_id) as unique_users
+        FROM events
+        WHERE timestamp >= now() - interval ${days} day
+        GROUP BY date
+        ORDER BY date ASC
+      `
+    }
+  };
+
+  const results = await queryPostHog(query);
+
+  if (results.results) {
+    return results.results.map(row => ({
+      date: row[0],
+      users: row[1]
+    }));
+  }
+
+  return [];
+}
+
+/**
  * Check if PostHog proxy is available
  * @returns {Promise<boolean>} True if proxy is working
  */
