@@ -1643,6 +1643,7 @@ section {
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
+  width: 100%;
 }
 
 .user-avatar-large {

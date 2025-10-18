@@ -715,6 +715,9 @@ export async function getUsers(days = 30, limit = 100) {
  * @returns {Promise<Array>} User's event timeline
  */
 export async function getUserActivity(userId, limit = 50) {
+  console.log('[getUserActivity] Fetching activity for userId:', userId);
+  console.log('[getUserActivity] Limit:', limit);
+
   const query = {
     kind: "DataVisualizationNode",
     source: {
@@ -732,16 +735,24 @@ export async function getUserActivity(userId, limit = 50) {
     }
   };
 
+  console.log('[getUserActivity] Query:', query);
+
   const results = await queryPostHog(query);
+  console.log('[getUserActivity] Raw results:', results);
+  console.log('[getUserActivity] Results.results:', results.results);
 
   if (results.results) {
-    return results.results.map(row => ({
+    const mapped = results.results.map(row => ({
       event: row[0],
       timestamp: new Date(row[1]),
       properties: row[2]
     }));
+    console.log('[getUserActivity] Mapped results:', mapped);
+    console.log('[getUserActivity] Returning', mapped.length, 'events');
+    return mapped;
   }
 
+  console.log('[getUserActivity] No results, returning empty array');
   return [];
 }
 

@@ -215,12 +215,20 @@ window.openUserModal = async function(userData) {
     // Fetch user activity from PostHog
     console.log('[User Modal] Fetching activity for user:', userData.id);
     const activity = await posthog.getUserActivity(userData.id, 100);
-    console.log('[User Modal] Retrieved activity:', activity.length, 'events');
+    console.log('[User Modal] Retrieved activity:', activity);
+    console.log('[User Modal] Activity length:', activity ? activity.length : 'null/undefined');
+    console.log('[User Modal] First event:', activity && activity[0] ? activity[0] : 'no events');
 
     // Render timeline
-    timelineContainer.innerHTML = renderTimeline(activity);
+    const html = renderTimeline(activity);
+    console.log('[User Modal] Rendered HTML length:', html.length);
+    console.log('[User Modal] Rendered HTML preview:', html.substring(0, 200));
+
+    timelineContainer.innerHTML = html;
+    console.log('[User Modal] Timeline container updated');
   } catch (error) {
     console.error('[User Modal] Error loading timeline:', error);
+    console.error('[User Modal] Error stack:', error.stack);
     timelineContainer.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--error-500);">
         <i class="ph ph-warning-circle" style="font-size: 3rem;"></i>
@@ -257,7 +265,12 @@ function calculateUserSummary(activity, userId) {
  * Render timeline for user activity
  */
 function renderTimeline(activity) {
+  console.log('[renderTimeline] Called with activity:', activity);
+  console.log('[renderTimeline] Activity type:', typeof activity);
+  console.log('[renderTimeline] Is array?', Array.isArray(activity));
+
   if (!activity || activity.length === 0) {
+    console.log('[renderTimeline] No activity, showing empty state');
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <i class="ph ph-clock-counter-clockwise" style="font-size: 3rem; opacity: 0.3;"></i>
@@ -266,10 +279,17 @@ function renderTimeline(activity) {
     `;
   }
 
+  console.log('[renderTimeline] Rendering', activity.length, 'events');
+
   // Render events (most recent first)
-  return activity.map((event) => {
+  const html = activity.map((event, index) => {
+    console.log(`[renderTimeline] Event ${index}:`, event);
+
     const iconClass = posthog.getEventIcon(event.event);
     const eventName = posthog.formatEventName(event.event);
+
+    console.log(`[renderTimeline] Event ${index} - iconClass:`, iconClass);
+    console.log(`[renderTimeline] Event ${index} - eventName:`, eventName);
 
     // Format timestamp
     const date = new Date(event.timestamp);
@@ -286,6 +306,8 @@ function renderTimeline(activity) {
                        event.properties?.videoId ||
                        '';
 
+    console.log(`[renderTimeline] Event ${index} - detail:`, eventDetail);
+
     return `
       <div class="timeline-event">
         <div class="timeline-icon">
@@ -301,6 +323,9 @@ function renderTimeline(activity) {
       </div>
     `;
   }).join('');
+
+  console.log('[renderTimeline] Final HTML length:', html.length);
+  return html;
 }
 
 /**
