@@ -1788,6 +1788,8 @@ section {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .timeline-event,
@@ -1807,7 +1809,6 @@ section {
 .session-item:hover,
 .preference-item:hover {
   border-color: var(--border-accent);
-  transform: translateX(4px);
 }
 
 .timeline-icon,
