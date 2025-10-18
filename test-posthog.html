@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostHog Proxy Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #fff;
+    }
+    h1 {
+      color: #00ffc8;
+    }
+    .status {
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 2px solid #333;
+    }
+    .status.loading {
+      border-color: #ffa500;
+      background: rgba(255, 165, 0, 0.1);
+    }
+    .status.success {
+      border-color: #00ffc8;
+      background: rgba(0, 255, 200, 0.1);
+    }
+    .status.error {
+      border-color: #ff0096;
+      background: rgba(255, 0, 150, 0.1);
+    }
+    button {
+      background: #00ffc8;
+      color: #0a0a0a;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #00e6b3;
+    }
+    pre {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 14px;
+      border: 1px solid #333;
+    }
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #111;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 PostHog Proxy Test</h1>
+  <p>This page tests if your PostHog Personal API Key is working on Netlify.</p>
+
+  <div class="test-section">
+    <h2>Test 1: Proxy Health Check</h2>
+    <button onclick="testProxyHealth()">Run Health Check</button>
+    <div id="health-status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Query Workout Data</h2>
+    <button onclick="testWorkoutQuery()">Get Workout Stats (Last 7 Days)</button>
+    <div id="workout-status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Get Key Metrics</h2>
+    <button onclick="testKeyMetrics()">Get All Metrics (Last 30 Days)</button>
+    <div id="metrics-status"></div>
+  </div>
+
+  <script>
+    // Test 1: Health Check
+    async function testProxyHealth() {
+      const statusDiv = document.getElementById('health-status');
+      statusDiv.innerHTML = '<div class="status loading">⏳ Testing proxy...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'TrendsQuery',
+              series: [{ event: '$pageview', math: 'total' }],
+              interval: 'day',
+              dateRange: { date_from: '-1d' }
+            }
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(JSON.stringify(error, null, 2));
+        }
+
+        const data = await response.json();
+
+        statusDiv.innerHTML = `
+          <div class="status success">
+            <h3>✅ Proxy is working!</h3>
+            <p>Successfully connected to PostHog API</p>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        `;
+
+      } catch (error) {
+        statusDiv.innerHTML = `
+          <div class="status error">
+            <h3>❌ Proxy failed</h3>
+            <p><strong>Error:</strong> ${error.message}</p>
+            <h4>Common issues:</h4>
+            <ul>
+              <li>POSTHOG_PERSONAL_API_KEY not set in Netlify</li>
+              <li>API key is invalid or expired</li>
+              <li>Need to redeploy after setting environment variable</li>
+            </ul>
+          </div>
+        `;
+        console.error('Health check error:', error);
+      }
+    }
+
+    // Test 2: Workout Query
+    async function testWorkoutQuery() {
+      const statusDiv = document.getElementById('workout-status');
+      statusDiv.innerHTML = '<div class="status loading">⏳ Fetching workout data...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'InsightVizNode',
+              source: {
+                kind: 'TrendsQuery',
+                series: [
+                  {
+                    kind: 'EventsNode',
+                    event: 'workout_started',
+                    custom_name: 'Workouts Started',
+                    math: 'total'
+                  },
+                  {
+                    kind: 'EventsNode',
+                    event: 'rep_completed',
+                    custom_name: 'Reps Completed',
+                    math: 'total'
+                  }
+                ],
+                interval: 'day',
+                dateRange: {
+                  date_from: '-7d',
+                  date_to: null
+                },
+                trendsFilter: {
+                  display: 'ActionsLineGraph'
+                }
+              }
+            }
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(JSON.stringify(error, null, 2));
+        }
+
+        const data = await response.json();
+
+        // Parse the results
+        const workoutData = data.results[0];
+        const repData = data.results[1];
+
+        const totalWorkouts = workoutData.count;
+        const totalReps = repData.count;
+
+        statusDiv.innerHTML = `
+          <div class="status success">
+            <h3>✅ Workout data retrieved!</h3>
+            <h4>Last 7 Days:</h4>
+            <ul>
+              <li><strong>Total Workouts:</strong> ${totalWorkouts}</li>
+              <li><strong>Total Reps:</strong> ${totalReps}</li>
+            </ul>
+            <h4>Daily Breakdown:</h4>
+            <pre>${JSON.stringify({
+              labels: workoutData.labels,
+              workouts: workoutData.data,
+              reps: repData.data
+            }, null, 2)}</pre>
+            <h4>Full Response:</h4>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        `;
+
+      } catch (error) {
+        statusDiv.innerHTML = `
+          <div class="status error">
+            <h3>❌ Query failed</h3>
+            <p><strong>Error:</strong> ${error.message}</p>
+          </div>
+        `;
+        console.error('Workout query error:', error);
+      }
+    }
+
+    // Test 3: Key Metrics (using HogQL)
+    async function testKeyMetrics() {
+      const statusDiv = document.getElementById('metrics-status');
+      statusDiv.innerHTML = '<div class="status loading">⏳ Calculating metrics...</div>';
+
+      try {
+        const response = await fetch('/.netlify/functions/posthog-proxy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: {
+              kind: 'DataVisualizationNode',
+              source: {
+                kind: 'HogQLQuery',
+                query: `
+                  SELECT
+                    countIf(event = 'workout_started') as total_workouts,
+                    countIf(event = 'rep_completed') as total_reps,
+                    countIf(event = 'music_played') as total_songs,
+                    countIf(event = 'favorite_removed') as total_favorites,
+                    uniq(distinct_id) as unique_users
+                  FROM events
+                  WHERE timestamp >= now() - interval 30 day
+                `
+              }
+            }
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(JSON.stringify(error, null, 2));
+        }
+
+        const data = await response.json();
+
+        // Parse HogQL results
+        if (data.results && data.results.length > 0) {
+          const [workouts, reps, songs, favorites, users] = data.results[0];
+
+          statusDiv.innerHTML = `
+            <div class="status success">
+              <h3>✅ Key metrics (Last 30 Days):</h3>
+              <ul>
+                <li><strong>Total Workouts:</strong> ${workouts}</li>
+                <li><strong>Total Reps:</strong> ${reps}</li>
+                <li><strong>Songs Played:</strong> ${songs}</li>
+                <li><strong>Favorites:</strong> ${favorites}</li>
+                <li><strong>Unique Users:</strong> ${users}</li>
+                <li><strong>Avg Reps/Workout:</strong> ${workouts > 0 ? Math.round(reps / workouts) : 0}</li>
+              </ul>
+              <h4>Full Response:</h4>
+              <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+          `;
+        } else {
+          statusDiv.innerHTML = `
+            <div class="status success">
+              <h3>✅ Query successful, but no data yet</h3>
+              <p>The query worked, but there's no data in the last 30 days.</p>
+              <p>Try using the main app to generate some events!</p>
+              <pre>${JSON.stringify(data, null, 2)}</pre>
+            </div>
+          `;
+        }
+
+      } catch (error) {
+        statusDiv.innerHTML = `
+          <div class="status error">
+            <h3>❌ Query failed</h3>
+            <p><strong>Error:</strong> ${error.message}</p>
+          </div>
+        `;
+        console.error('Metrics query error:', error);
+      }
+    }
+
+    // Auto-run health check on load
+    window.addEventListener('load', () => {
+      console.log('🧪 PostHog Proxy Test Page Loaded');
+      console.log('Click buttons above to test different queries');
+    });
+  </script>
+</body>
+</html>

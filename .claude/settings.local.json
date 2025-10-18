@@ -45,7 +45,8 @@
       "mcp__posthog__projects-get",
       "mcp__posthog__event-definitions-list",
       "mcp__posthog__properties-list",
-      "mcp__posthog__query-run"
+      "mcp__posthog__query-run",
+      "WebFetch(domain:app.posthog.com)"
     ],
     "deny": [],
     "ask": []
