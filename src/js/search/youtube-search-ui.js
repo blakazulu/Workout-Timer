@@ -7,6 +7,7 @@ import {$} from "../utils/dom.js";
 import {getTimer} from "../modules/timer.js";
 import {debounce, isYouTubeUrl, searchYouTubeVideosDetailed} from "../utils/youtube-search.js";
 import {createSearchDropdown} from "../components/search-dropdown.js";
+import {eventBus} from "../core/event-bus.js";
 
 /**
  * Set up YouTube search with autocomplete
@@ -70,6 +71,12 @@ export function setupYouTubeSearch(loadYouTubeModule, showNotification) {
 
       if (results && results.length > 0) {
         searchDropdown.show(results);
+
+        // Emit analytics event for search performed
+        eventBus.emit('ui:search_performed', {
+          query,
+          resultsCount: results.length,
+        });
       } else {
         searchDropdown.hide();
       }
@@ -100,6 +107,9 @@ export function setupYouTubeSearch(loadYouTubeModule, showNotification) {
 
   // Show dropdown again when input gets focus (if there's content)
   youtubeUrl.addEventListener("focus", () => {
+    // Emit analytics event for search opened
+    eventBus.emit('ui:search_opened');
+
     const query = youtubeUrl.value;
     if (query && query.trim().length >= 2 && !isYouTubeUrl(query)) {
       performSearch(query);

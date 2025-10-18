@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CYCLE Analytics | Admin Dashboard</title>
+
+  <!-- Google Fonts - Inter for clean, modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="/src/css/admin.css">
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="admin-background"></div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="login-modal">
+    <div class="login-backdrop"></div>
+    <div class="login-content">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="admin-logo-icon" style="margin: 0 auto 1rem;">
+          <i class="ph-fill ph-shield-check" style="font-size: 1.5rem; color: white;"></i>
+        </div>
+        <h2 class="admin-heading-2" style="margin-bottom: 0.5rem;">Admin Access</h2>
+        <p class="admin-text-sm">Enter password to continue</p>
+      </div>
+
+      <form id="login-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div>
+          <label for="password-input" class="admin-text-sm" style="display: block; margin-bottom: 0.5rem;">Password</label>
+          <input
+            type="password"
+            id="password-input"
+            class="login-input"
+            placeholder="Enter admin password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <div id="login-error" class="hidden" style="padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--admin-radius-md); color: var(--admin-accent-red); font-size: 0.875rem;"></div>
+
+        <button type="submit" class="admin-btn admin-btn-primary">
+          <i class="ph-fill ph-sign-in" style="font-size: 1.125rem;"></i>
+          Access Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Dashboard -->
+  <div id="dashboard-container" class="hidden">
+
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="container flex items-center justify-between">
+        <div class="flex items-center gap-md">
+          <a href="/" class="admin-logo">
+            <div class="admin-logo-icon">
+              <i class="ph-fill ph-barbell" style="font-size: 1.25rem; color: white;"></i>
+            </div>
+            <span>CYCLE</span>
+          </a>
+          <div class="admin-badge">Analytics</div>
+        </div>
+
+        <div class="flex items-center gap-sm">
+          <span id="last-refresh" class="admin-text-xs" style="display: none;"></span>
+          <button id="refresh-btn" class="admin-btn-icon admin-btn-secondary" title="Refresh data">
+            <i class="ph ph-arrow-clockwise" style="font-size: 1.25rem;"></i>
+          </button>
+          <button id="logout-btn" class="admin-btn admin-btn-danger">
+            <i class="ph ph-sign-out"></i>
+            <span style="display: none;">Logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- Hero Section -->
+      <div class="container" style="padding-top: 3rem; padding-bottom: 2rem;">
+        <div style="text-align: center; margin-bottom: 3rem;" class="fade-in">
+          <h1 class="admin-heading-1" style="margin-bottom: 0.75rem;">Analytics Hub</h1>
+          <p class="admin-text-sm" style="margin-bottom: 1rem;">Real-time insights into your workout ecosystem</p>
+          <div id="last-sync" class="admin-badge" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+            <span class="status-dot online"></span>
+            <span>Last synced: Just now</span>
+          </div>
+        </div>
+
+        <!-- Key Metrics Grid -->
+        <div id="metrics-grid" class="admin-grid admin-grid-4 fade-in" style="margin-bottom: 2rem;">
+          <!-- Stat cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Charts Section -->
+        <div class="admin-grid admin-grid-1" style="gap: 2rem;">
+
+          <!-- Activity Over Time Chart -->
+          <div class="admin-card chart-container fade-in">
+            <div class="chart-header">
+              <div class="chart-title">
+                <div class="chart-icon" style="--icon-color-1: #3b82f6; --icon-color-2: #8b5cf6;">
+                  <i class="ph-fill ph-chart-line" style="font-size: 1.125rem; color: white;"></i>
+                </div>
+                <span>Activity Trend</span>
+              </div>
+              <div class="admin-text-xs">Last 7 days</div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="activity-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Two Column Charts -->
+          <div class="admin-grid admin-grid-2">
+
+            <!-- Genre Distribution -->
+            <div class="admin-card chart-container fade-in">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <div class="chart-icon" style="--icon-color-1: #ec4899; --icon-color-2: #f59e0b;">
+                    <i class="ph-fill ph-music-notes" style="font-size: 1.125rem; color: white;"></i>
+                  </div>
+                  <span>Genre Mix</span>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="genre-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Top Songs -->
+            <div class="admin-card chart-container fade-in">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <div class="chart-icon" style="--icon-color-1: #10b981; --icon-color-2: #06b6d4;">
+                    <i class="ph-fill ph-star" style="font-size: 1.125rem; color: white;"></i>
+                  </div>
+                  <span>Top Songs</span>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="top-songs-chart"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Session Duration Chart -->
+          <div class="admin-card chart-container fade-in">
+            <div class="chart-header">
+              <div class="chart-title">
+                <div class="chart-icon" style="--icon-color-1: #06b6d4; --icon-color-2: #3b82f6;">
+                  <i class="ph-fill ph-timer" style="font-size: 1.125rem; color: white;"></i>
+                </div>
+                <span>Session Duration Distribution</span>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="duration-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Recent Activity Timeline -->
+          <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--admin-space-lg);">
+              <div class="chart-title">
+                <div class="chart-icon" style="--icon-color-1: #8b5cf6; --icon-color-2: #ec4899;">
+                  <i class="ph-fill ph-clock-counter-clockwise" style="font-size: 1.125rem; color: white;"></i>
+                </div>
+                <span>Recent Activity</span>
+              </div>
+              <span id="activity-count" class="admin-text-xs"></span>
+            </div>
+            <div id="recent-activity" class="admin-scrollbar" style="max-height: 400px; overflow-y: auto;">
+              <!-- Activity items will be inserted here -->
+            </div>
+          </div>
+
+          <!-- System & Actions Grid -->
+          <div class="admin-grid admin-grid-3">
+
+            <!-- System Info -->
+            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
+              <div style="margin-bottom: var(--admin-space-lg);">
+                <div class="chart-title" style="margin-bottom: var(--admin-space-md);">
+                  <div class="chart-icon" style="--icon-color-1: #8b5cf6; --icon-color-2: #ec4899;">
+                    <i class="ph-fill ph-info" style="font-size: 1.125rem; color: white;"></i>
+                  </div>
+                  <span>System Info</span>
+                </div>
+              </div>
+              <div id="system-info" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- System info items will be inserted here -->
+              </div>
+            </div>
+
+            <!-- PostHog Integration -->
+            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
+              <div style="margin-bottom: var(--admin-space-lg);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div class="chart-title">
+                    <div class="chart-icon" style="--icon-color-1: #10b981; --icon-color-2: #06b6d4;">
+                      <i class="ph-fill ph-chart-line-up" style="font-size: 1.125rem; color: white;"></i>
+                    </div>
+                    <span>PostHog</span>
+                  </div>
+                  <span id="posthog-status" class="status-dot online" title="Connected"></span>
+                </div>
+              </div>
+              <div id="posthog-panel" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- PostHog data will be inserted here -->
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="admin-card fade-in" style="padding: var(--admin-space-xl);">
+              <div style="margin-bottom: var(--admin-space-lg);">
+                <div class="chart-title">
+                  <div class="chart-icon" style="--icon-color-1: #f59e0b; --icon-color-2: #ef4444;">
+                    <i class="ph-fill ph-lightning" style="font-size: 1.125rem; color: white;"></i>
+                  </div>
+                  <span>Quick Actions</span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button id="export-data-btn" class="admin-btn admin-btn-secondary" style="width: 100%; justify-content: center;">
+                  <i class="ph-fill ph-download-simple"></i>
+                  Export Data
+                </button>
+                <button id="posthog-link-btn" class="admin-btn admin-btn-secondary" style="width: 100%; justify-content: center;">
+                  <i class="ph-fill ph-chart-line-up"></i>
+                  Open PostHog
+                </button>
+                <button id="clear-cache-btn" class="admin-btn admin-btn-danger" style="width: 100%; justify-content: center;">
+                  <i class="ph-fill ph-trash"></i>
+                  Clear Data
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="border-top: 1px solid var(--admin-border); background: var(--admin-glass); backdrop-filter: blur(20px); margin-top: 3rem;">
+      <div class="container" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+        <div class="flex items-center justify-between admin-text-xs" style="flex-wrap: wrap; gap: 1rem;">
+          <div class="flex items-center gap-sm">
+            <i class="ph ph-shield-warning"></i>
+            <span>Development Dashboard</span>
+          </div>
+          <div class="flex items-center gap-sm">
+            <span class="status-dot online"></span>
+            <span>Auto-refresh: 30s</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Main Admin Script -->
+  <script type="module" src="/src/js/admin/main.js"></script>
+
+</body>
+</html>

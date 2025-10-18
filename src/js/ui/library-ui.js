@@ -15,6 +15,7 @@ import {
 } from "../modules/favorites-ui.js";
 import {removeFromFavorites} from "../modules/favorites.js";
 import {createFavoriteButtonHTML, setupFavoriteButtons} from "../utils/favorite-button.js";
+import {eventBus} from "../core/event-bus.js";
 
 /**
  * Set up music library popover
@@ -35,6 +36,15 @@ export function setupMusicLibrary(loadYouTubeModule, showNotification) {
   musicLibraryPopover.addEventListener("toggle", (e) => {
     if (e.newState === "open") {
       renderLibrary(currentTab);
+
+      // Emit analytics event
+      const history = getSongHistory();
+      eventBus.emit('ui:library_opened', {
+        hasHistory: history.length > 0,
+      });
+    } else if (e.newState === "closed") {
+      // Emit analytics event for close
+      eventBus.emit('ui:library_closed');
     }
   });
 

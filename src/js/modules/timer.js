@@ -6,6 +6,7 @@ import {$, addClass, removeClass} from "../utils/dom.js";
 import {formatTime} from "../utils/time.js";
 import {getAudio} from "./audio.js";
 import {eventBus} from "../core/event-bus.js";
+import {getWakeLock} from "../utils/wake-lock.js";
 
 export class Timer {
   constructor(options = {}) {
@@ -22,6 +23,11 @@ export class Timer {
     this.isAlertActive = false;
     this.normalVolume = 100;
 
+    // Timestamp-based tracking for accurate timing even when screen is locked
+    this.startTimestamp = null;
+    this.targetEndTime = null;
+    this.lastAlertSecond = null; // Track which second we last played alert for
+
     // DOM elements
     this.timerDisplay = $("#timerDisplay");
     this.timerValue = $("#timerValue");
@@ -34,6 +40,13 @@ export class Timer {
 
     // Audio manager
     this.audio = getAudio();
+
+    // Wake lock manager to prevent screen from sleeping
+    this.wakeLock = getWakeLock();
+
+    // Bind visibility change handler to sync timer when page becomes visible
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
   }
 
   /**
@@ -42,6 +55,36 @@ export class Timer {
    */
   setYouTubePlayer(youtubePlayer) {
     this.youtube = youtubePlayer;
+  }
+
+  /**
+   * Handle visibility change - sync timer when page becomes visible
+   * This ensures timer stays accurate even when screen is locked
+   */
+  handleVisibilityChange() {
+    if (document.visibilityState === 'visible' && this.isRunning) {
+      // Recalculate current time based on actual elapsed time
+      this.syncTimeFromTimestamp();
+    }
+  }
+
+  /**
+   * Sync currentTime based on timestamp (handles background/locked screen)
+   */
+  syncTimeFromTimestamp() {
+    if (!this.targetEndTime) return;
+
+    const now = Date.now();
+    const remainingMs = this.targetEndTime - now;
+    const newCurrentTime = Math.max(0, Math.ceil(remainingMs / 1000));
+
+    this.currentTime = newCurrentTime;
+    this.updateDisplay();
+
+    // If time expired while screen was locked, handle transitions
+    if (this.currentTime === 0) {
+      this.handleTimerComplete();
+    }
   }
 
   /**
@@ -65,6 +108,12 @@ export class Timer {
         this.isResting = false;
       }
 
+      // Set timestamp for accurate timing
+      const now = Date.now();
+      this.startTimestamp = now;
+      this.targetEndTime = now + (this.currentTime * 1000);
+      this.lastAlertSecond = null;
+
       this.isRunning = true;
       this.updateDisplay(); // Update display immediately to show full duration
       this.interval = setInterval(() => this.tick(), 1000);
@@ -75,6 +124,9 @@ export class Timer {
 
       // Prevent body scrolling on mobile when timer is active
       document.body.classList.add("timer-active");
+
+      // Prevent screen from locking during workout
+      this.wakeLock.request();
 
       // Show NEW TIMER and CLEAR ALL buttons when timer is active
       if (this.resetBtn) removeClass(this.resetBtn, "hidden");
@@ -112,8 +164,15 @@ export class Timer {
     this.isRunning = false;
     this.startBtn.textContent = "RESUME";
 
+    // Clear timestamps
+    this.startTimestamp = null;
+    this.targetEndTime = null;
+
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
+
+    // Release wake lock when paused
+    this.wakeLock.release();
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -144,8 +203,15 @@ export class Timer {
     removeClass(this.youtubeSection, "hidden");
     addClass(this.timerDisplay, "hidden");
 
+    // Clear timestamps
+    this.startTimestamp = null;
+    this.targetEndTime = null;
+
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
+
+    // Release wake lock when stopped
+    this.wakeLock.release();
 
     // Hide NEW TIMER and CLEAR ALL buttons when returning to home
     if (this.resetBtn) addClass(this.resetBtn, "hidden");
@@ -170,8 +236,15 @@ export class Timer {
     this.currentRep = 1;
     this.isResting = false;
 
+    // Clear timestamps
+    this.startTimestamp = null;
+    this.targetEndTime = null;
+
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
+
+    // Ensure wake lock is released
+    this.wakeLock.release();
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -203,8 +276,15 @@ export class Timer {
     this.currentRep = 1;
     this.isResting = false;
 
+    // Clear timestamps
+    this.startTimestamp = null;
+    this.targetEndTime = null;
+
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
+
+    // Ensure wake lock is released
+    this.wakeLock.release();
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -239,61 +319,88 @@ export class Timer {
 
   /**
    * Timer tick - called every second
+   * Uses timestamp-based calculation for accuracy even when screen is locked
    */
   tick() {
-    if (this.currentTime > 0) {
-      this.currentTime--;
+    // Sync current time from timestamp for accuracy
+    this.syncTimeFromTimestamp();
 
-      // Play alert beep during countdown (both work and rest)
-      if (this.currentTime <= this.alertTime && this.currentTime > 0) {
+    // Play alert beep during countdown (both work and rest)
+    // Only play once per second to avoid duplicates
+    if (this.currentTime <= this.alertTime && this.currentTime > 0) {
+      if (this.lastAlertSecond !== this.currentTime) {
         this.audio.playAlert();
+        this.lastAlertSecond = this.currentTime;
       }
+    }
+  }
+
+  /**
+   * Handle timer completion - called when currentTime reaches 0
+   */
+  handleTimerComplete() {
+    if (this.isResting) {
+      // Rest period ended, start next rep
+      this.isResting = false;
+      this.currentRep++;
+      this.currentTime = this.duration;
+
+      // Update timestamp for next rep
+      const now = Date.now();
+      this.startTimestamp = now;
+      this.targetEndTime = now + (this.currentTime * 1000);
+      this.lastAlertSecond = null;
 
       this.updateDisplay();
-    } else {
-      // Timer reached zero
-      if (this.isResting) {
-        // Rest period ended, start next rep
-        this.isResting = false;
+    } else if (this.currentRep < this.repetitions) {
+      // Work period ended, more reps to go - start rest
+      this.audio.playComplete();
+
+      // Emit rep completed event
+      eventBus.emit('timer:rep_completed', {
+        repNumber: this.currentRep,
+        totalReps: this.repetitions,
+      });
+
+      if (this.restTime > 0) {
+        this.isResting = true;
+        this.currentTime = this.restTime;
+
+        // Update timestamp for rest period
+        const now = Date.now();
+        this.startTimestamp = now;
+        this.targetEndTime = now + (this.currentTime * 1000);
+        this.lastAlertSecond = null;
+
+        this.updateDisplay();
+        // Music continues playing during rest
+      } else {
+        // No rest time, go directly to next rep
         this.currentRep++;
         this.currentTime = this.duration;
+
+        // Update timestamp for next rep
+        const now = Date.now();
+        this.startTimestamp = now;
+        this.targetEndTime = now + (this.currentTime * 1000);
+        this.lastAlertSecond = null;
+
         this.updateDisplay();
-      } else if (this.currentRep < this.repetitions) {
-        // Work period ended, more reps to go - start rest
-        this.audio.playComplete();
-
-        // Emit rep completed event
-        eventBus.emit('timer:rep_completed', {
-          repNumber: this.currentRep,
-          totalReps: this.repetitions,
-        });
-
-        if (this.restTime > 0) {
-          this.isResting = true;
-          this.currentTime = this.restTime;
-          this.updateDisplay();
-          // Music continues playing during rest
-        } else {
-          // No rest time, go directly to next rep
-          this.currentRep++;
-          this.currentTime = this.duration;
-          this.updateDisplay();
-        }
-      } else {
-        // All reps completed
-        const completionTime = Date.now();
-
-        this.stop();
-        this.audio.playFinalComplete();
-        this.repCounter.textContent = "✓ Complete!";
-
-        // Emit workout completed event
-        eventBus.emit('timer:completed', {
-          duration: this.duration,
-          repetitions: this.repetitions,
-          completionTime,
-        });
       }
+    } else {
+      // All reps completed
+      const completionTime = Date.now();
+
+      this.stop();
+      this.audio.playFinalComplete();
+      this.repCounter.textContent = "✓ Complete!";
+
+      // Emit workout completed event
+      eventBus.emit('timer:completed', {
+        duration: this.duration,
+        repetitions: this.repetitions,
+        completionTime,
+      });
     }
   }
 

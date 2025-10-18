@@ -39,7 +39,13 @@
       "Bash(do sed -i '1i@reference \"\"../global.css\"\";\\n' \"$file\")",
       "Bash(do sed -i '/@reference/d' \"$file\" sed -i '/^$/d' \"$file\")",
       "Bash(head -1 echo \"Removed @reference from $file\" done)",
-      "WebFetch(domain:posthog.com)"
+      "WebFetch(domain:posthog.com)",
+      "Bash(npx @posthog/wizard@latest mcp add)",
+      "mcp__posthog__organization-details-get",
+      "mcp__posthog__projects-get",
+      "mcp__posthog__event-definitions-list",
+      "mcp__posthog__properties-list",
+      "mcp__posthog__query-run"
     ],
     "deny": [],
     "ask": []

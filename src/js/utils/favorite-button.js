@@ -26,7 +26,7 @@ export function createFavoriteButtonHTML(videoId, options = {}) {
             data-action="toggle-favorite"
             title="${favorited ? "Remove from favorites" : "Add to favorites"}"
             aria-label="${favorited ? "Remove from favorites" : "Add to favorites"}">
-      <i class="ph-bold ph-heart"></i>
+      <i class="ph-bold ph-heart ph-fill"></i>
     </button>
   `;
 }
