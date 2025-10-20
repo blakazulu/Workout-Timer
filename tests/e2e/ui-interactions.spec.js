@@ -4,29 +4,24 @@
  * UPDATED to use actual HTML selectors from the codebase
  */
 
-import { test, expect } from '@playwright/test';
-import {
-  waitForAppReady,
-  clearStorage,
-  disablePostHog,
-  wait
-} from '../helpers/test-helpers.js';
-import { SELECTORS, getTabSelector } from '../helpers/selectors.js';
+import {expect, test} from "@playwright/test";
+import {clearStorage, disablePostHog, wait, waitForAppReady} from "../helpers/test-helpers.js";
+import {getTabSelector, SELECTORS} from "../helpers/selectors.js";
 
-test.describe('UI Interactions', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("UI Interactions", () => {
+  test.beforeEach(async ({page}) => {
     await disablePostHog(page);
-    await page.goto('/');
+    await page.goto("/");
     await clearStorage(page);
     await waitForAppReady(page);
   });
 
-  test('should display settings panel', async ({ page }) => {
+  test("should display settings panel", async ({page}) => {
     const settings = page.locator(SELECTORS.settings);
     await expect(settings).toBeVisible();
   });
 
-  test('should have timer settings inputs', async ({ page }) => {
+  test("should have timer settings inputs", async ({page}) => {
     const durationInput = page.locator(SELECTORS.durationInput);
     const alertTimeInput = page.locator(SELECTORS.alertTimeInput);
     const repetitionsInput = page.locator(SELECTORS.repetitionsInput);
@@ -38,52 +33,52 @@ test.describe('UI Interactions', () => {
     await expect(restTimeInput).toBeVisible();
   });
 
-  test('should update timer duration in settings', async ({ page }) => {
+  test("should update timer duration in settings", async ({page}) => {
     const durationInput = page.locator(SELECTORS.durationInput);
 
     // Change work time to 45 seconds
-    await durationInput.fill('45');
+    await durationInput.fill("45");
     await wait(300);
 
     // Value should update
     const value = await durationInput.inputValue();
-    expect(value).toBe('45');
+    expect(value).toBe("45");
   });
 
-  test('should update repetitions in settings', async ({ page }) => {
+  test("should update repetitions in settings", async ({page}) => {
     const repetitionsInput = page.locator(SELECTORS.repetitionsInput);
 
     // Change to 5 reps
-    await repetitionsInput.fill('5');
+    await repetitionsInput.fill("5");
     await wait(300);
 
     const value = await repetitionsInput.inputValue();
-    expect(value).toBe('5');
+    expect(value).toBe("5");
   });
 
-  test('should update rest time in settings', async ({ page }) => {
+  test("should update rest time in settings", async ({page}) => {
     const restTimeInput = page.locator(SELECTORS.restTimeInput);
 
     // Change rest time to 15 seconds
-    await restTimeInput.fill('15');
+    await restTimeInput.fill("15");
     await wait(300);
 
     const value = await restTimeInput.inputValue();
-    expect(value).toBe('15');
+    expect(value).toBe("15");
   });
 
-  test('should update alert time in settings', async ({ page }) => {
+  test("should update alert time in settings", async ({page}) => {
     const alertTimeInput = page.locator(SELECTORS.alertTimeInput);
 
     // Change alert time to 5 seconds
-    await alertTimeInput.fill('5');
+    await alertTimeInput.fill("5");
     await wait(300);
 
     const value = await alertTimeInput.inputValue();
-    expect(value).toBe('5');
+    expect(value).toBe("5");
   });
 
-  test('should open library when library button is clicked', async ({ page }) => {
+  test("should open library when library button is clicked", async ({page}) => {
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await expect(libraryButton).toBeVisible();
     await libraryButton.click();
@@ -94,7 +89,7 @@ test.describe('UI Interactions', () => {
     await expect(libraryPanel).toBeVisible();
   });
 
-  test('should close library when close button is clicked', async ({ page }) => {
+  test("should close library when close button is clicked", async ({page}) => {
     // Open library
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await libraryButton.click();
@@ -109,13 +104,13 @@ test.describe('UI Interactions', () => {
 
     // Panel should close (might still exist in DOM but hidden)
     const isOpen = await libraryPanel.evaluate(el => {
-      return el.matches(':popover-open');
+      return el.matches(":popover-open");
     }).catch(() => false);
 
-    expect(typeof isOpen).toBe('boolean');
+    expect(typeof isOpen).toBe("boolean");
   });
 
-  test('should open genre selector popup', async ({ page }) => {
+  test("should open genre selector popup", async ({page}) => {
     const genreButton = page.locator(SELECTORS.genreModeBtn);
     await expect(genreButton).toBeVisible();
     await genreButton.click();
@@ -126,7 +121,7 @@ test.describe('UI Interactions', () => {
     await expect(genrePopup).toBeVisible();
   });
 
-  test('should close genre selector when close button is clicked', async ({ page }) => {
+  test("should close genre selector when close button is clicked", async ({page}) => {
     // Open genre popup
     const genreButton = page.locator(SELECTORS.genreModeBtn);
     await genreButton.click();
@@ -144,7 +139,7 @@ test.describe('UI Interactions', () => {
     await expect(settings).toBeVisible();
   });
 
-  test('should show genre options in popup', async ({ page }) => {
+  test("should show genre options in popup", async ({page}) => {
     const genreButton = page.locator(SELECTORS.genreModeBtn);
     await genreButton.click();
     await wait(500);
@@ -156,7 +151,7 @@ test.describe('UI Interactions', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should open mood selector popup', async ({ page }) => {
+  test("should open mood selector popup", async ({page}) => {
     const moodButton = page.locator(SELECTORS.moodModeBtn);
     await expect(moodButton).toBeVisible();
     await moodButton.click();
@@ -167,7 +162,7 @@ test.describe('UI Interactions', () => {
     await expect(moodPopup).toBeVisible();
   });
 
-  test('should close mood selector when close button is clicked', async ({ page }) => {
+  test("should close mood selector when close button is clicked", async ({page}) => {
     // Open mood popup
     const moodButton = page.locator(SELECTORS.moodModeBtn);
     await moodButton.click();
@@ -185,7 +180,7 @@ test.describe('UI Interactions', () => {
     await expect(settings).toBeVisible();
   });
 
-  test('should show mood options in popup', async ({ page }) => {
+  test("should show mood options in popup", async ({page}) => {
     const moodButton = page.locator(SELECTORS.moodModeBtn);
     await moodButton.click();
     await wait(500);
@@ -197,16 +192,16 @@ test.describe('UI Interactions', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should navigate between library tabs', async ({ page }) => {
+  test("should navigate between library tabs", async ({page}) => {
     // Open library
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await libraryButton.click();
     await wait(500);
 
     // Click on different tabs
-    const recentTab = page.locator(getTabSelector('recent'));
-    const topTab = page.locator(getTabSelector('top'));
-    const favoritesTab = page.locator(getTabSelector('favorites'));
+    const recentTab = page.locator(getTabSelector("recent"));
+    const topTab = page.locator(getTabSelector("top"));
+    const favoritesTab = page.locator(getTabSelector("favorites"));
 
     await expect(recentTab).toBeVisible();
     await expect(topTab).toBeVisible();
@@ -218,13 +213,13 @@ test.describe('UI Interactions', () => {
 
     // Should have active class
     const hasActiveClass = await favoritesTab.evaluate(el =>
-      el.classList.contains('active')
+      el.classList.contains("active")
     );
 
     expect(hasActiveClass).toBe(true);
   });
 
-  test('should handle mode toggle buttons', async ({ page }) => {
+  test("should handle mode toggle buttons", async ({page}) => {
     const linkModeBtn = page.locator(SELECTORS.linkModeBtn);
     const moodModeBtn = page.locator(SELECTORS.moodModeBtn);
     const genreModeBtn = page.locator(SELECTORS.genreModeBtn);
@@ -235,18 +230,18 @@ test.describe('UI Interactions', () => {
 
     // Link mode should be active by default
     const hasActiveClass = await linkModeBtn.evaluate(el =>
-      el.classList.contains('active')
+      el.classList.contains("active")
     );
 
     expect(hasActiveClass).toBe(true);
   });
 
-  test('should handle rapid button clicks without breaking', async ({ page }) => {
+  test("should handle rapid button clicks without breaking", async ({page}) => {
     const startButton = page.locator(SELECTORS.startButton);
 
     // Rapidly click start button
     for (let i = 0; i < 5; i++) {
-      await startButton.click({ force: true });
+      await startButton.click({force: true});
       await wait(100);
     }
 
@@ -257,7 +252,7 @@ test.describe('UI Interactions', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should maintain responsive layout', async ({ page }) => {
+  test("should maintain responsive layout", async ({page}) => {
     // Check that main elements exist and are properly laid out
     // Timer display exists but starts hidden
     const timerDisplay = page.locator(SELECTORS.timerDisplay);
@@ -272,33 +267,33 @@ test.describe('UI Interactions', () => {
     await expect(settings).toBeVisible();
   });
 
-  test('should handle YouTube URL input', async ({ page }) => {
+  test("should handle YouTube URL input", async ({page}) => {
     const urlInput = page.locator(SELECTORS.youtubeUrl);
     await expect(urlInput).toBeVisible();
 
     // Type a URL
-    await urlInput.fill('https://www.youtube.com/watch?v=test123');
+    await urlInput.fill("https://www.youtube.com/watch?v=test123");
 
     // Value should update
     const value = await urlInput.inputValue();
-    expect(value).toContain('youtube.com');
+    expect(value).toContain("youtube.com");
   });
 
-  test('should clear YouTube URL input', async ({ page }) => {
+  test("should clear YouTube URL input", async ({page}) => {
     const urlInput = page.locator(SELECTORS.youtubeUrl);
 
     // Fill input
-    await urlInput.fill('https://www.youtube.com/watch?v=test123');
+    await urlInput.fill("https://www.youtube.com/watch?v=test123");
 
     // Clear it
-    await urlInput.fill('');
+    await urlInput.fill("");
 
     // Should be empty
     const value = await urlInput.inputValue();
-    expect(value).toBe('');
+    expect(value).toBe("");
   });
 
-  test('should show update overlay when available', async ({ page }) => {
+  test("should show update overlay when available", async ({page}) => {
     // Check update overlay exists
     const updateOverlay = page.locator(SELECTORS.updateOverlay);
     const exists = await updateOverlay.count();
@@ -306,7 +301,7 @@ test.describe('UI Interactions', () => {
     expect(exists).toBeGreaterThan(0);
   });
 
-  test('should handle popovers correctly', async ({ page }) => {
+  test("should handle popovers correctly", async ({page}) => {
     // Test genre popover
     const genreBtn = page.locator(SELECTORS.genreModeBtn);
     await genreBtn.click();
@@ -316,7 +311,7 @@ test.describe('UI Interactions', () => {
     await expect(genrePopover).toBeVisible();
 
     // Close it
-    await page.keyboard.press('Escape');
+    await page.keyboard.press("Escape");
     await wait(500);
 
     // App should still work (timer display exists, settings visible)
@@ -328,19 +323,19 @@ test.describe('UI Interactions', () => {
     await expect(settings).toBeVisible();
   });
 
-  test('should validate timer settings min/max values', async ({ page }) => {
+  test("should validate timer settings min/max values", async ({page}) => {
     const durationInput = page.locator(SELECTORS.durationInput);
 
     // Try to set value outside range
-    await durationInput.fill('5000');
+    await durationInput.fill("5000");
     await wait(300);
 
     // HTML5 validation should apply
-    const max = await durationInput.getAttribute('max');
+    const max = await durationInput.getAttribute("max");
     expect(max).toBeDefined();
   });
 
-  test('should handle all timer control buttons', async ({ page }) => {
+  test("should handle all timer control buttons", async ({page}) => {
     const startButton = page.locator(SELECTORS.startButton);
     const resetButton = page.locator(SELECTORS.resetButton);
     const clearAllButton = page.locator(SELECTORS.clearAllButton);

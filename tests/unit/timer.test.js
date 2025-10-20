@@ -3,11 +3,11 @@
  * Tests timer logic, calculations, and state management
  */
 
-import { test, expect } from '@playwright/test';
+import {expect, test} from "@playwright/test";
 
-test.describe('Timer Module - Unit Tests', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+test.describe("Timer Module - Unit Tests", () => {
+  test.beforeEach(async ({page}) => {
+    await page.goto("/");
 
     // Setup timer module for testing
     await page.evaluate(() => {
@@ -16,7 +16,7 @@ test.describe('Timer Module - Unit Tests', () => {
     });
   });
 
-  test('should calculate total workout duration correctly', async ({ page }) => {
+  test("should calculate total workout duration correctly", async ({page}) => {
     const duration = await page.evaluate(() => {
       // 8 sets of 40s work + 20s rest = 8 * 60s = 480s
       const workTime = 40;
@@ -29,13 +29,13 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(duration).toBe(480);
   });
 
-  test('should format time correctly (MM:SS)', async ({ page }) => {
+  test("should format time correctly (MM:SS)", async ({page}) => {
     const formatted = await page.evaluate(() => {
       // Test time formatting function
       const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
+        return `${mins}:${secs.toString().padStart(2, "0")}`;
       };
 
       return {
@@ -47,18 +47,18 @@ test.describe('Timer Module - Unit Tests', () => {
       };
     });
 
-    expect(formatted.case1).toBe('0:00');
-    expect(formatted.case2).toBe('0:45');
-    expect(formatted.case3).toBe('1:00');
-    expect(formatted.case4).toBe('2:05');
-    expect(formatted.case5).toBe('59:59');
+    expect(formatted.case1).toBe("0:00");
+    expect(formatted.case2).toBe("0:45");
+    expect(formatted.case3).toBe("1:00");
+    expect(formatted.case4).toBe("2:05");
+    expect(formatted.case5).toBe("59:59");
   });
 
-  test('should determine current phase correctly', async ({ page }) => {
+  test("should determine current phase correctly", async ({page}) => {
     const phases = await page.evaluate(() => {
       const determinePhase = (currentSet, totalSets, isWorkPhase) => {
-        if (currentSet > totalSets) return 'complete';
-        return isWorkPhase ? 'work' : 'rest';
+        if (currentSet > totalSets) return "complete";
+        return isWorkPhase ? "work" : "rest";
       };
 
       return {
@@ -68,12 +68,12 @@ test.describe('Timer Module - Unit Tests', () => {
       };
     });
 
-    expect(phases.work).toBe('work');
-    expect(phases.rest).toBe('rest');
-    expect(phases.complete).toBe('complete');
+    expect(phases.work).toBe("work");
+    expect(phases.rest).toBe("rest");
+    expect(phases.complete).toBe("complete");
   });
 
-  test('should calculate progress percentage', async ({ page }) => {
+  test("should calculate progress percentage", async ({page}) => {
     const progress = await page.evaluate(() => {
       const calculateProgress = (currentSet, totalSets, currentTime, phaseTime) => {
         const setsProgress = ((currentSet - 1) / totalSets) * 100;
@@ -95,7 +95,7 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(progress.end).toBeCloseTo(100, 1);
   });
 
-  test('should handle timer countdown', async ({ page }) => {
+  test("should handle timer countdown", async ({page}) => {
     const result = await page.evaluate(async () => {
       let time = 10;
       const results = [];
@@ -112,36 +112,36 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(result).toEqual([9, 8, 7, 6, 5]);
   });
 
-  test('should transition from work to rest phase', async ({ page }) => {
+  test("should transition from work to rest phase", async ({page}) => {
     const transitions = await page.evaluate(() => {
       const results = [];
-      let phase = 'work';
+      let phase = "work";
       let currentTime = 3;
 
       // Simulate countdown to transition
       for (let i = 0; i < 5; i++) {
         currentTime--;
 
-        if (currentTime <= 0 && phase === 'work') {
-          phase = 'rest';
+        if (currentTime <= 0 && phase === "work") {
+          phase = "rest";
           currentTime = 20; // rest time
         }
 
-        results.push({ time: currentTime, phase });
+        results.push({time: currentTime, phase});
       }
 
       return results;
     });
 
-    expect(transitions[0].phase).toBe('work');
-    expect(transitions[3].phase).toBe('rest');
+    expect(transitions[0].phase).toBe("work");
+    expect(transitions[3].phase).toBe("rest");
     expect(transitions[4].time).toBe(18);
   });
 
-  test('should increment set counter after complete cycle', async ({ page }) => {
+  test("should increment set counter after complete cycle", async ({page}) => {
     const setProgression = await page.evaluate(() => {
       let currentSet = 1;
-      let phase = 'work';
+      let phase = "work";
       let workTime = 2;
       let restTime = 2;
       let currentTime = workTime;
@@ -152,16 +152,16 @@ test.describe('Timer Module - Unit Tests', () => {
       for (let i = 0; i < 5; i++) {
         currentTime--;
 
-        if (currentTime <= 0 && phase === 'work') {
-          phase = 'rest';
+        if (currentTime <= 0 && phase === "work") {
+          phase = "rest";
           currentTime = restTime;
-        } else if (currentTime <= 0 && phase === 'rest') {
+        } else if (currentTime <= 0 && phase === "rest") {
           currentSet++;
-          phase = 'work';
+          phase = "work";
           currentTime = workTime;
         }
 
-        results.push({ set: currentSet, phase, time: currentTime });
+        results.push({set: currentSet, phase, time: currentTime});
       }
 
       return results;
@@ -171,16 +171,16 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(setProgression[setProgression.length - 1].set).toBe(2);
   });
 
-  test('should detect workout completion', async ({ page }) => {
+  test("should detect workout completion", async ({page}) => {
     const isComplete = await page.evaluate(() => {
       const checkComplete = (currentSet, totalSets, currentTime, phase) => {
-        return currentSet === totalSets && currentTime === 0 && phase === 'rest';
+        return currentSet === totalSets && currentTime === 0 && phase === "rest";
       };
 
       return {
-        notComplete1: checkComplete(5, 8, 10, 'work'),
-        notComplete2: checkComplete(8, 8, 10, 'rest'),
-        complete: checkComplete(8, 8, 0, 'rest')
+        notComplete1: checkComplete(5, 8, 10, "work"),
+        notComplete2: checkComplete(8, 8, 10, "rest"),
+        complete: checkComplete(8, 8, 0, "rest")
       };
     });
 
@@ -189,18 +189,18 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(isComplete.complete).toBe(true);
   });
 
-  test('should calculate remaining time correctly', async ({ page }) => {
+  test("should calculate remaining time correctly", async ({page}) => {
     const remaining = await page.evaluate(() => {
       const calculateRemaining = (currentSet, totalSets, currentTime, workTime, restTime, phase) => {
         const remainingSets = totalSets - currentSet;
         const currentPhaseTime = currentTime;
-        const nextPhaseTime = phase === 'work' ? restTime : 0;
+        const nextPhaseTime = phase === "work" ? restTime : 0;
         const fullSetsTime = remainingSets * (workTime + restTime);
 
         return currentPhaseTime + nextPhaseTime + fullSetsTime;
       };
 
-      return calculateRemaining(3, 8, 25, 40, 20, 'work');
+      return calculateRemaining(3, 8, 25, 40, 20, "work");
     });
 
     // Set 3, work phase, 25s remaining
@@ -210,7 +210,7 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(remaining).toBe(345);
   });
 
-  test('should validate timer configuration', async ({ page }) => {
+  test("should validate timer configuration", async ({page}) => {
     const validation = await page.evaluate(() => {
       const validateConfig = (workTime, restTime, sets) => {
         if (workTime <= 0 || restTime <= 0 || sets <= 0) return false;
@@ -237,7 +237,7 @@ test.describe('Timer Module - Unit Tests', () => {
     expect(validation.tooManySets).toBe(false);
   });
 
-  test('should handle pause and resume state', async ({ page }) => {
+  test("should handle pause and resume state", async ({page}) => {
     const pauseResume = await page.evaluate(() => {
       let isRunning = true;
       let isPaused = false;
@@ -250,7 +250,7 @@ test.describe('Timer Module - Unit Tests', () => {
         timeWhenPaused = 35;
       }
 
-      const afterPause = { isRunning, isPaused, time: timeWhenPaused };
+      const afterPause = {isRunning, isPaused, time: timeWhenPaused};
 
       // Resume
       if (isPaused) {
@@ -258,9 +258,9 @@ test.describe('Timer Module - Unit Tests', () => {
         isPaused = false;
       }
 
-      const afterResume = { isRunning, isPaused, time: timeWhenPaused };
+      const afterResume = {isRunning, isPaused, time: timeWhenPaused};
 
-      return { afterPause, afterResume };
+      return {afterPause, afterResume};
     });
 
     expect(pauseResume.afterPause.isRunning).toBe(false);

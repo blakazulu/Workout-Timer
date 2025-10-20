@@ -35,6 +35,7 @@ npx playwright test tests/e2e/timer.spec.js
 ```
 
 Tests include:
+
 - Display timer with default values
 - Start timer when START button clicked
 - Show PAUSE button when running
@@ -50,7 +51,8 @@ Tests include:
 
 ## Tests That Need Minor Updates
 
-The following tests use placeholder `data-testid` selectors and need to be updated to use actual selectors from `SELECTORS`:
+The following tests use placeholder `data-testid` selectors and need to be updated to use actual selectors from
+`SELECTORS`:
 
 ### Favorites Tests (`favorites.spec.js`)
 
@@ -158,6 +160,7 @@ page.locator(SELECTORS.musicLibraryPopover) // #musicLibraryPopover
 ```
 
 Helper functions:
+
 ```javascript
 import { getTabSelector, getGenreSelector } from '../helpers/selectors.js';
 
@@ -179,6 +182,7 @@ getGenreSelector('edm')        // .genre-tag[data-query*="edm"]
 ### Tests That May Need Adjustment
 
 Some tests make assumptions about:
+
 - Session completion overlays (might not exist yet)
 - Specific sound effect timing
 - Wake lock API (might not work in all test environments)
@@ -196,6 +200,7 @@ Some tests make assumptions about:
 ### Priority 2: Adjust Tests for Reality
 
 Some tests may need to be modified based on actual app behavior:
+
 - Phase transitions (work → rest)
 - Sound effect timing
 - Completion overlays
@@ -203,6 +208,7 @@ Some tests may need to be modified based on actual app behavior:
 ### Priority 3: Add Missing Features (Optional)
 
 If tests fail because features don't exist:
+
 - Add data attributes where helpful
 - Implement missing UI elements
 - Or skip tests for unimplemented features
@@ -245,15 +251,18 @@ const favoriteButton = page.locator(SELECTORS.favoriteButton);
 ## Summary
 
 ✅ **Ready NOW:**
+
 - Timer tests fully updated and ready to run
 - Selector mappings documented
 - Test infrastructure complete
 
 ⚠️ **Needs work:**
+
 - Favorites, music, and UI tests need selector updates (15-30 min)
 - Some tests may need adjustment based on actual app behavior
 
 🎯 **Recommended:**
+
 1. Run timer tests first to verify everything works
 2. Use timer tests as template to update other files
 3. Adjust tests based on actual app behavior

@@ -4,27 +4,21 @@
  * UPDATED to use actual HTML selectors from the codebase
  */
 
-import { test, expect } from '@playwright/test';
-import {
-  waitForAppReady,
-  clearStorage,
-  mockAudioAPI,
-  disablePostHog,
-  wait
-} from '../helpers/test-helpers.js';
-import { SELECTORS } from '../helpers/selectors.js';
+import {expect, test} from "@playwright/test";
+import {clearStorage, disablePostHog, mockAudioAPI, wait, waitForAppReady} from "../helpers/test-helpers.js";
+import {SELECTORS} from "../helpers/selectors.js";
 
-test.describe('Timer Functionality', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("Timer Functionality", () => {
+  test.beforeEach(async ({page}) => {
     // Setup: Clear storage, disable analytics, mock audio
     await disablePostHog(page);
     await mockAudioAPI(page);
-    await page.goto('/');
+    await page.goto("/");
     await clearStorage(page);
     await waitForAppReady(page);
   });
 
-  test('should have timer display element with default values', async ({ page }) => {
+  test("should have timer display element with default values", async ({page}) => {
     // Check timer display exists (starts hidden, settings shown)
     const timerDisplay = page.locator(SELECTORS.timerDisplay);
     const exists = await timerDisplay.count();
@@ -41,7 +35,7 @@ test.describe('Timer Functionality', () => {
     expect(repExists).toBeGreaterThan(0);
   });
 
-  test('should start timer when START button is clicked', async ({ page }) => {
+  test("should start timer when START button is clicked", async ({page}) => {
     // Click start button
     const startButton = page.locator(SELECTORS.startButton);
     await expect(startButton).toBeVisible();
@@ -58,7 +52,7 @@ test.describe('Timer Functionality', () => {
     expect(timeText).toMatch(/\d+:\d+/);
   });
 
-  test('should show PAUSE button when timer is running', async ({ page }) => {
+  test("should show PAUSE button when timer is running", async ({page}) => {
     // Start the timer
     const startButton = page.locator(SELECTORS.startButton);
     await startButton.click();
@@ -70,7 +64,7 @@ test.describe('Timer Functionality', () => {
     expect(buttonText).toBeDefined();
   });
 
-  test('should reset timer when RESET button is clicked', async ({ page }) => {
+  test("should reset timer when RESET button is clicked", async ({page}) => {
     // Start timer
     const startButton = page.locator(SELECTORS.startButton);
     await startButton.click();
@@ -93,7 +87,7 @@ test.describe('Timer Functionality', () => {
     }
   });
 
-  test('should update rep counter during workout', async ({ page }) => {
+  test("should update rep counter during workout", async ({page}) => {
     // Rep counter is hidden initially (part of timer display)
     const repCounter = page.locator(SELECTORS.repCounter);
     const repCounterExists = await repCounter.count();
@@ -111,7 +105,7 @@ test.describe('Timer Functionality', () => {
     expect(repText).toMatch(/Rep|Ready/i); // Should show "Ready" or "Rep X / Y"
   });
 
-  test('should handle page reload gracefully', async ({ page }) => {
+  test("should handle page reload gracefully", async ({page}) => {
     // Start timer
     const startButton = page.locator(SELECTORS.startButton);
     await startButton.click();
@@ -126,10 +120,10 @@ test.describe('Timer Functionality', () => {
     const settingsVisible = await settings.isVisible().catch(() => false);
 
     // Either settings or timer display should be visible
-    expect(typeof settingsVisible).toBe('boolean');
+    expect(typeof settingsVisible).toBe("boolean");
   });
 
-  test('should handle timer settings changes', async ({ page }) => {
+  test("should handle timer settings changes", async ({page}) => {
     // Check settings panel exists
     const settings = page.locator(SELECTORS.settings);
     await expect(settings).toBeVisible();
@@ -138,16 +132,16 @@ test.describe('Timer Functionality', () => {
     const durationInput = page.locator(SELECTORS.durationInput);
     if (await durationInput.isVisible()) {
       // Change duration
-      await durationInput.fill('45');
+      await durationInput.fill("45");
       await wait(500);
 
       // Value should update
       const value = await durationInput.inputValue();
-      expect(value).toBe('45');
+      expect(value).toBe("45");
     }
   });
 
-  test('should show settings panel on initialization', async ({ page }) => {
+  test("should show settings panel on initialization", async ({page}) => {
     // Settings should be visible on load (timer display hidden)
     const settings = page.locator(SELECTORS.settings);
     await expect(settings).toBeVisible();
@@ -162,12 +156,12 @@ test.describe('Timer Functionality', () => {
     expect(await repCounter.count()).toBeGreaterThan(0);
   });
 
-  test('should handle rapid button clicks gracefully', async ({ page }) => {
+  test("should handle rapid button clicks gracefully", async ({page}) => {
     const startButton = page.locator(SELECTORS.startButton);
 
     // Rapidly click start button
     for (let i = 0; i < 5; i++) {
-      await startButton.click({ force: true });
+      await startButton.click({force: true});
       await wait(100);
     }
 
@@ -176,10 +170,10 @@ test.describe('Timer Functionality', () => {
 
     // Either start button or pause button should be visible (timer might be running)
     const buttonVisible = await startButton.isVisible().catch(() => false);
-    expect(typeof buttonVisible).toBe('boolean');
+    expect(typeof buttonVisible).toBe("boolean");
   });
 
-  test('should maintain timer display format', async ({ page }) => {
+  test("should maintain timer display format", async ({page}) => {
     const timerValue = page.locator(SELECTORS.timerValue);
     const timeText = await timerValue.textContent();
 

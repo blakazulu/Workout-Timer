@@ -3,20 +3,20 @@
  * Tests favorites storage, add/remove logic, and data management
  */
 
-import { test, expect } from '@playwright/test';
+import {expect, test} from "@playwright/test";
 
-test.describe('Favorites Module - Unit Tests', () => {
+test.describe("Favorites Module - Unit Tests", () => {
   let favoritesModule;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({page}) => {
     // Navigate to page and import favorites module
-    await page.goto('/');
+    await page.goto("/");
 
     // Setup: Import the favorites module
     favoritesModule = await page.evaluate(async () => {
       // Import and expose favorites functions for testing
-      const { addFavorite, removeFavorite, getFavorites, isFavorite, clearFavorites } =
-        await import('/src/js/modules/favorites/index.js');
+      const {addFavorite, removeFavorite, getFavorites, isFavorite, clearFavorites} =
+        await import("/src/js/modules/favorites/index.js");
 
       window.__testFavorites = {
         addFavorite,
@@ -37,7 +37,7 @@ test.describe('Favorites Module - Unit Tests', () => {
     });
   });
 
-  test('should initialize with empty favorites list', async ({ page }) => {
+  test("should initialize with empty favorites list", async ({page}) => {
     const favorites = await page.evaluate(() => {
       return window.__testFavorites.getFavorites();
     });
@@ -45,8 +45,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(favorites.songs).toEqual([]);
   });
 
-  test('should add a song to favorites', async ({ page }) => {
-    const videoId = 'test-video-123';
+  test("should add a song to favorites", async ({page}) => {
+    const videoId = "test-video-123";
 
     await page.evaluate((id) => {
       window.__testFavorites.addFavorite(id);
@@ -60,8 +60,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(favorites.songs).toHaveLength(1);
   });
 
-  test('should remove a song from favorites', async ({ page }) => {
-    const videoId = 'test-video-123';
+  test("should remove a song from favorites", async ({page}) => {
+    const videoId = "test-video-123";
 
     // Add then remove
     await page.evaluate((id) => {
@@ -77,8 +77,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(favorites.songs).toHaveLength(0);
   });
 
-  test('should check if song is favorited', async ({ page }) => {
-    const videoId = 'test-video-123';
+  test("should check if song is favorited", async ({page}) => {
+    const videoId = "test-video-123";
 
     // Should not be favorited initially
     let isInFavorites = await page.evaluate((id) => {
@@ -100,8 +100,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(isInFavorites).toBe(true);
   });
 
-  test('should not add duplicate favorites', async ({ page }) => {
-    const videoId = 'test-video-123';
+  test("should not add duplicate favorites", async ({page}) => {
+    const videoId = "test-video-123";
 
     // Add same song twice
     await page.evaluate((id) => {
@@ -116,8 +116,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(favorites.songs).toHaveLength(1);
   });
 
-  test('should handle multiple favorites', async ({ page }) => {
-    const videoIds = ['video-1', 'video-2', 'video-3'];
+  test("should handle multiple favorites", async ({page}) => {
+    const videoIds = ["video-1", "video-2", "video-3"];
 
     // Add multiple favorites
     await page.evaluate((ids) => {
@@ -134,8 +134,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     });
   });
 
-  test('should persist favorites to localStorage', async ({ page }) => {
-    const videoId = 'test-video-123';
+  test("should persist favorites to localStorage", async ({page}) => {
+    const videoId = "test-video-123";
 
     await page.evaluate((id) => {
       window.__testFavorites.addFavorite(id);
@@ -143,7 +143,7 @@ test.describe('Favorites Module - Unit Tests', () => {
 
     // Check localStorage directly
     const storedFavorites = await page.evaluate(() => {
-      const stored = localStorage.getItem('favorites');
+      const stored = localStorage.getItem("favorites");
       return stored ? JSON.parse(stored) : null;
     });
 
@@ -151,11 +151,11 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(storedFavorites.songs).toContain(videoId);
   });
 
-  test('should restore favorites from localStorage on init', async ({ page }) => {
+  test("should restore favorites from localStorage on init", async ({page}) => {
     // Manually set localStorage
     await page.evaluate(() => {
-      localStorage.setItem('favorites', JSON.stringify({
-        songs: ['video-1', 'video-2'],
+      localStorage.setItem("favorites", JSON.stringify({
+        songs: ["video-1", "video-2"],
         version: 1
       }));
     });
@@ -165,8 +165,8 @@ test.describe('Favorites Module - Unit Tests', () => {
 
     // Re-import module
     await page.evaluate(async () => {
-      const { getFavorites } = await import('/src/js/modules/favorites/index.js');
-      window.__testFavorites = { getFavorites };
+      const {getFavorites} = await import("/src/js/modules/favorites/index.js");
+      window.__testFavorites = {getFavorites};
     });
 
     const favorites = await page.evaluate(() => {
@@ -174,16 +174,16 @@ test.describe('Favorites Module - Unit Tests', () => {
     });
 
     expect(favorites.songs).toHaveLength(2);
-    expect(favorites.songs).toContain('video-1');
-    expect(favorites.songs).toContain('video-2');
+    expect(favorites.songs).toContain("video-1");
+    expect(favorites.songs).toContain("video-2");
   });
 
-  test('should clear all favorites', async ({ page }) => {
+  test("should clear all favorites", async ({page}) => {
     // Add multiple favorites
     await page.evaluate(() => {
-      window.__testFavorites.addFavorite('video-1');
-      window.__testFavorites.addFavorite('video-2');
-      window.__testFavorites.addFavorite('video-3');
+      window.__testFavorites.addFavorite("video-1");
+      window.__testFavorites.addFavorite("video-2");
+      window.__testFavorites.addFavorite("video-3");
     });
 
     // Clear all
@@ -198,12 +198,12 @@ test.describe('Favorites Module - Unit Tests', () => {
     expect(favorites.songs).toHaveLength(0);
   });
 
-  test('should handle invalid video IDs gracefully', async ({ page }) => {
+  test("should handle invalid video IDs gracefully", async ({page}) => {
     // Try adding null/undefined/empty
     await page.evaluate(() => {
       window.__testFavorites.addFavorite(null);
       window.__testFavorites.addFavorite(undefined);
-      window.__testFavorites.addFavorite('');
+      window.__testFavorites.addFavorite("");
     });
 
     const favorites = await page.evaluate(() => {
@@ -211,11 +211,11 @@ test.describe('Favorites Module - Unit Tests', () => {
     });
 
     // Should not add invalid IDs
-    expect(favorites.songs.filter(s => !s || s === '')).toHaveLength(0);
+    expect(favorites.songs.filter(s => !s || s === "")).toHaveLength(0);
   });
 
-  test('should maintain favorites order', async ({ page }) => {
-    const videoIds = ['video-1', 'video-2', 'video-3'];
+  test("should maintain favorites order", async ({page}) => {
+    const videoIds = ["video-1", "video-2", "video-3"];
 
     await page.evaluate((ids) => {
       ids.forEach(id => window.__testFavorites.addFavorite(id));
@@ -226,8 +226,8 @@ test.describe('Favorites Module - Unit Tests', () => {
     });
 
     // Order should match insertion order
-    expect(favorites.songs[0]).toBe('video-1');
-    expect(favorites.songs[1]).toBe('video-2');
-    expect(favorites.songs[2]).toBe('video-3');
+    expect(favorites.songs[0]).toBe("video-1");
+    expect(favorites.songs[1]).toBe("video-2");
+    expect(favorites.songs[2]).toBe("video-3");
   });
 });

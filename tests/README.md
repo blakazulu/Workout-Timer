@@ -32,20 +32,21 @@ tests/
 
 ## Running Tests
 
-| Command | Description |
-|---------|-------------|
-| `npm test` | Run all tests |
-| `npm run test:ui` | Interactive test UI |
-| `npm run test:debug` | Debug mode |
-| `npm run test:headed` | See browser during tests |
-| `npm run test:chrome` | Run on Chrome only |
-| `npm run test:firefox` | Run on Firefox only |
-| `npm run test:webkit` | Run on Safari only |
-| `npm run test:mobile` | Run mobile viewport tests |
+| Command                | Description               |
+|------------------------|---------------------------|
+| `npm test`             | Run all tests             |
+| `npm run test:ui`      | Interactive test UI       |
+| `npm run test:debug`   | Debug mode                |
+| `npm run test:headed`  | See browser during tests  |
+| `npm run test:chrome`  | Run on Chrome only        |
+| `npm run test:firefox` | Run on Firefox only       |
+| `npm run test:webkit`  | Run on Safari only        |
+| `npm run test:mobile`  | Run mobile viewport tests |
 
 ## Test Files
 
 ### E2E Tests
+
 - `timer.spec.js` - Timer start/stop/pause/countdown
 - `favorites.spec.js` - Add/remove/shuffle favorites
 - `music.spec.js` - YouTube player & sound effects
@@ -53,6 +54,7 @@ tests/
 - `pwa.spec.js` - Service worker, offline, install
 
 ### Unit Tests
+
 - `favorites.test.js` - Favorites module logic
 - `timer.test.js` - Timer calculations
 - `storage.test.js` - localStorage operations
@@ -61,6 +63,7 @@ tests/
 ## CI/CD
 
 Tests run automatically on:
+
 - Every push to `main`
 - Every pull request
 - Manual workflow dispatch

@@ -7,12 +7,16 @@
 ## Problems Addressed
 
 ### 1. Memory Leak from Audio Clones
-After several workout repetitions, the timer would freeze progressively worse due to accumulating cloned audio elements in memory.
+
+After several workout repetitions, the timer would freeze progressively worse due to accumulating cloned audio elements
+in memory.
 
 ### 2. Overlapping Alert Beeps
+
 The countdown beep at 1 second would overlap with transition sounds (whistle, bell), creating confusing audio feedback.
 
 ### 3. Difficult to Debug
+
 No visibility into what was happening with audio playback or timer performance.
 
 ## Solutions Implemented
@@ -39,13 +43,15 @@ clone.addEventListener("ended", () => {
 ```
 
 **Result**:
+
 - Clones automatically removed when sound finishes
 - Memory stays stable even in long workouts
 - activeClones array tracks current count
 
 ### 2. Skip Last Countdown Beep (`timer.js`)
 
-**Problem**: At the end of each period, you'd hear both the countdown beep (at 1 second) and the transition sound (at 0 seconds), creating audio confusion.
+**Problem**: At the end of each period, you'd hear both the countdown beep (at 1 second) and the transition sound (at 0
+seconds), creating audio confusion.
 
 **Fix**: Skip countdown beep on the last second:
 
@@ -61,6 +67,7 @@ if (this.currentTime <= this.alertTime && this.currentTime > 1) {
 ```
 
 **Result**:
+
 - Countdown: 3, 2 (beeps only)
 - At 0: Transition sound (whistle/bell)
 - Cleaner audio experience
@@ -69,18 +76,21 @@ if (this.currentTime <= this.alertTime && this.currentTime > 1) {
 ### 3. Comprehensive Debug Logging
 
 **Added to `audio.js`**:
+
 - Track audio playback timing
 - Monitor active clone count
 - Log cleanup operations
 - Performance metrics
 
 **Added to `timer.js`**:
+
 - Track tick duration
 - Log state transitions
 - Monitor handleTimerComplete timing
 - Display current state
 
 **Features**:
+
 - Debug mode persists in localStorage
 - Minimal performance impact (<0.5ms)
 - Easy to enable/disable via console
@@ -101,6 +111,7 @@ window.getTimerStats()
 ```
 
 **getTimerStats() Output**:
+
 ```javascript
 Timer Stats:
 ┌─────────────┬──────────┐
@@ -122,6 +133,7 @@ Audio Stats: {
 ### Memory Management
 
 **Before**:
+
 ```javascript
 const clone = sound.cloneNode();
 clone.play();
@@ -129,6 +141,7 @@ clone.play();
 ```
 
 **After**:
+
 ```javascript
 const clone = sound.cloneNode();
 
@@ -147,11 +160,13 @@ clone.play();
 ### Debug Mode Toggle
 
 **Persistent via localStorage**:
+
 ```javascript
 this.debugMode = localStorage.getItem("audio_debug") === "true";
 ```
 
 **Runtime Control**:
+
 ```javascript
 setDebugMode(enabled) {
   this.debugMode = enabled;
@@ -162,6 +177,7 @@ setDebugMode(enabled) {
 ### Performance Tracking
 
 **Measure operation duration**:
+
 ```javascript
 playSound(soundKey) {
   const startTime = performance.now();
@@ -178,29 +194,29 @@ playSound(soundKey) {
 ## Files Modified
 
 1. **src/js/modules/audio.js**
-   - Added `activeClones` array tracking (line 36)
-   - Added `debugMode` property (line 37)
-   - Enhanced `playSound()` with cleanup listeners (lines 130-141)
-   - Added performance timing (line 103, 154-157)
-   - Added `setDebugMode()` method (lines 175-179)
-   - Added `getStats()` method (lines 184-197)
-   - Added debug logs throughout
+    - Added `activeClones` array tracking (line 36)
+    - Added `debugMode` property (line 37)
+    - Enhanced `playSound()` with cleanup listeners (lines 130-141)
+    - Added performance timing (line 103, 154-157)
+    - Added `setDebugMode()` method (lines 175-179)
+    - Added `getStats()` method (lines 184-197)
+    - Added debug logs throughout
 
 2. **src/js/modules/timer.js**
-   - Added `debugMode` property (line 32)
-   - Modified tick condition to skip last beep (line 336)
-   - Added tick timing (lines 328, 347-350)
-   - Added transition logs (lines 373, 388, 439)
-   - Added `enableTimerDebug()` function (lines 554-564)
-   - Added `disableTimerDebug()` function (lines 569-578)
-   - Added `getTimerStats()` function (lines 583-607)
-   - Exposed to window object (lines 610-614)
+    - Added `debugMode` property (line 32)
+    - Modified tick condition to skip last beep (line 336)
+    - Added tick timing (lines 328, 347-350)
+    - Added transition logs (lines 373, 388, 439)
+    - Added `enableTimerDebug()` function (lines 554-564)
+    - Added `disableTimerDebug()` function (lines 569-578)
+    - Added `getTimerStats()` function (lines 583-607)
+    - Exposed to window object (lines 610-614)
 
 3. **docs/debugging-timer-performance.md** (NEW)
-   - Comprehensive debugging guide
-   - Usage instructions
-   - Common issues and solutions
-   - Performance benchmarks
+    - Comprehensive debugging guide
+    - Usage instructions
+    - Common issues and solutions
+    - Performance benchmarks
 
 ## Usage Guide
 
@@ -232,6 +248,7 @@ Watch console for real-time information:
 ### Check Stats
 
 Anytime during workout:
+
 ```javascript
 window.getTimerStats()
 ```
@@ -247,11 +264,13 @@ Then reload.
 ## Performance Impact
 
 ### Without Debug Mode
+
 - No logging overhead
 - No performance tracking
 - Production-ready
 
 ### With Debug Mode
+
 - ~0.3-0.5ms per tick (negligible)
 - Detailed console output
 - Memory tracking
@@ -260,6 +279,7 @@ Then reload.
 ## Testing Recommendations
 
 ### Test 1: Memory Leak Check
+
 1. Enable debug mode
 2. Run 10-rep workout with 5s rounds
 3. Watch "Active clones" count
@@ -267,6 +287,7 @@ Then reload.
 5. Should see "Cleaned up clone" messages
 
 ### Test 2: Audio Quality
+
 1. Run 3-rep workout with 3s alert time
 2. Listen for countdown beeps
 3. Should hear: 3, 2 (beeps only)
@@ -274,6 +295,7 @@ Then reload.
 5. No overlap or confusion
 
 ### Test 3: Long Workout Stability
+
 1. Run 20-rep workout
 2. Monitor tick times in console
 3. Should stay <5ms throughout
@@ -281,6 +303,7 @@ Then reload.
 5. Memory should stay stable
 
 ### Test 4: Rapid Transitions
+
 1. Set 1s rounds, 1s rest, 5 reps
 2. Lots of quick transitions
 3. Multiple sounds may overlap (expected)
@@ -305,6 +328,7 @@ Then reload.
 ### Normal Workout (3 reps, 30s, 10s rest)
 
 **Console Output**:
+
 ```
 [Timer] Tick completed in 1.2ms. Time: 30s, Rep: 1/3, Resting: false
 ...
@@ -337,6 +361,7 @@ If you see this, there's still an issue:
 ## Related Fixes
 
 This builds on previous fixes:
+
 1. Non-blocking audio playback (removed async/await)
 2. Deferred event emissions (setTimeout for analytics)
 3. Smart audio playback (clone vs reset logic)
@@ -344,6 +369,7 @@ This builds on previous fixes:
 ## Future Improvements
 
 If memory issues persist, consider:
+
 1. Audio sprite (single file, multiple sounds)
 2. Web Audio API for MP3s (more control)
 3. Object pooling for clones (reuse instead of create/destroy)

@@ -1,9 +1,11 @@
 # Test Failure Analysis - October 20, 2025
 
 ## Overview
+
 Analysis of test failures when running `npm run test:ui` as documented in `docs/error.txt`.
 
 ## Test Execution Context
+
 - **Test Runner**: Playwright
 - **Base URL**: http://localhost:4200 (Vite dev server)
 - **Browser Projects**: Chromium, Firefox, WebKit, Mobile, Tablet
@@ -14,9 +16,11 @@ Analysis of test failures when running `npm run test:ui` as documented in `docs/
 ### 1. PWA Tests (`pwa.spec.js`)
 
 #### 1.1 Manifest JSON Parsing Errors (Lines 47, 132)
+
 **Error**: `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
 
 **Location**:
+
 - Line 47: `should have valid web app manifest` test
 - Line 132: `should show appropriate icon sizes for different devices` test
 
@@ -29,6 +33,7 @@ const manifest = await response.json();  // ❌ Fails - gets HTML
 ```
 
 **Analysis**:
+
 - Vite PWA plugin generates manifest at runtime
 - During development, the manifest route might not be properly configured
 - The server is returning the default HTML page (index.html) instead of the manifest
@@ -38,11 +43,13 @@ const manifest = await response.json();  // ❌ Fails - gets HTML
 ---
 
 #### 1.2 Service Worker Registration Failure (Line 37)
+
 **Error**: `Error: expect(received).toBeTruthy() - Received: false`
 
 **Location**: Line 37: `should register service worker` test
 
 **Code**:
+
 ```javascript
 const swRegistered = await page.evaluate(async () => {
   if ('serviceWorker' in navigator) {
@@ -56,6 +63,7 @@ expect(swRegistered).toBeTruthy();  // ❌ Fails - returns false
 ```
 
 **Root Cause**:
+
 - Service workers require HTTPS (localhost is exempt, but might have other issues)
 - During development with Vite, service worker registration might be delayed or disabled
 - The 2-second wait might not be sufficient for SW registration in test environment
@@ -65,11 +73,13 @@ expect(swRegistered).toBeTruthy();  // ❌ Fails - returns false
 ---
 
 #### 1.3 Offline Reload Network Error (Line 68)
+
 **Error**: `Error: page.reload: net::ERR_INTERNET_DISCONNECTED`
 
 **Location**: Line 68: `should work offline after initial load` test
 
 **Code**:
+
 ```javascript
 // Go offline
 await context.setOffline(true);
@@ -79,11 +89,12 @@ await page.reload();  // ❌ Fails with network error
 ```
 
 **Root Cause**:
+
 - Service worker is not properly caching resources in test environment
 - When offline mode is enabled, the reload fails because:
-  1. SW might not be registered yet
-  2. Resources might not be cached
-  3. Development mode might behave differently than production
+    1. SW might not be registered yet
+    2. Resources might not be cached
+    3. Development mode might behave differently than production
 
 **Impact**: 1 test failing
 
@@ -92,7 +103,9 @@ await page.reload();  // ❌ Fails with network error
 ### 2. Timer Tests (`timer.spec.js`)
 
 #### 2.1 Timer Elements Hidden (Line 89)
+
 **Error**:
+
 ```
 Error: expect(locator).toBeVisible() failed
 Locator: locator('#timerValue')
@@ -119,16 +132,19 @@ The timer display has `class="hidden"` by default in the HTML:
 > Timer display elements should exist ... Settings should be visible on load (timer display hidden)
 
 The timer only becomes visible when started. The test flow is:
+
 1. Start timer → Timer display becomes visible
 2. Wait 2 seconds
 3. Click reset
 4. **Test expects timer display to still be visible** ❌
 
 However, the app behavior is:
+
 - **Reset should return to initial state** → Timer display becomes hidden again
 
 **Test Logic Flaw**:
-The test is checking if `#timerValue` is visible after reset, but reset hides the timer display and shows settings panel.
+The test is checking if `#timerValue` is visible after reset, but reset hides the timer display and shows settings
+panel.
 
 **Impact**: 1 test failing
 
@@ -137,7 +153,9 @@ The test is checking if `#timerValue` is visible after reset, but reset hides th
 ### 3. UI Interactions Tests (`ui-interactions.spec.js`)
 
 #### 3.1 Timer Display Hidden (Lines 256, 262, 319)
+
 **Error**:
+
 ```
 Error: expect(locator).toBeVisible() failed
 Locator: locator('#timerDisplay')
@@ -146,6 +164,7 @@ Received: hidden
 ```
 
 **Locations**:
+
 - Line 256: `should handle rapid button clicks without breaking` test
 - Line 262: `should maintain responsive layout` test
 - Line 319: `should handle popovers correctly` test
@@ -154,6 +173,7 @@ Received: hidden
 Same as timer test issue - `#timerDisplay` starts hidden by default.
 
 **Test Code Pattern**:
+
 ```javascript
 // After various interactions
 const timerDisplay = page.locator(SELECTORS.timerDisplay);
@@ -162,6 +182,7 @@ await expect(timerDisplay).toBeVisible();  // ❌ Fails
 
 **Issue**:
 Tests expect timer display to be visible, but:
+
 - App loads with timer display hidden
 - Settings panel visible instead
 - Timer display only shows when timer is started
@@ -173,11 +194,14 @@ Tests expect timer display to be visible, but:
 ## Root Cause Categories
 
 ### Category A: Initial State Misunderstanding
+
 **Tests Affected**: Timer tests, UI interaction tests (4 failures)
 
-**Issue**: Tests expect timer display (`#timerDisplay`, `#timerValue`, `#repCounter`) to be visible, but the app intentionally starts with these elements hidden and settings panel shown.
+**Issue**: Tests expect timer display (`#timerDisplay`, `#timerValue`, `#repCounter`) to be visible, but the app
+intentionally starts with these elements hidden and settings panel shown.
 
 **App Design**:
+
 ```
 Initial State → Settings visible, Timer hidden
 User clicks START → Settings hidden, Timer visible
@@ -185,6 +209,7 @@ User clicks RESET → Settings visible, Timer hidden (back to initial state)
 ```
 
 **Test Expectations** (incorrect):
+
 ```
 After any interaction → Timer should be visible ❌
 ```
@@ -192,14 +217,17 @@ After any interaction → Timer should be visible ❌
 ---
 
 ### Category B: PWA Development Environment Issues
+
 **Tests Affected**: PWA tests (4 failures)
 
 **Issues**:
+
 1. **Manifest not served correctly** in dev mode
 2. **Service worker registration** behaves differently in development vs production
 3. **Offline caching** not working in test environment
 
 **Environment Factors**:
+
 - Vite dev server vs production build
 - Service worker registration timing
 - Manifest generation during development
@@ -212,11 +240,14 @@ After any interaction → Timer should be visible ❌
 ### High Priority Fixes
 
 #### 1. Fix Timer Display Visibility Tests
+
 **Files to Update**:
+
 - `tests/e2e/timer.spec.js` (Line 88-90)
 - `tests/e2e/ui-interactions.spec.js` (Lines 256, 262, 319)
 
 **Solution A - Test Initial Hidden State**:
+
 ```javascript
 // BEFORE (incorrect)
 const timerDisplay = page.locator(SELECTORS.timerDisplay);
@@ -232,6 +263,7 @@ await expect(settings).toBeVisible();
 ```
 
 **Solution B - Start Timer First**:
+
 ```javascript
 // For tests that need timer display visible
 const startButton = page.locator(SELECTORS.startButton);
@@ -245,6 +277,7 @@ await expect(timerDisplay).not.toHaveClass(/hidden/);
 ```
 
 **Solution C - Test Reset Behavior Correctly**:
+
 ```javascript
 // In timer reset test
 await resetButton.click();
@@ -261,9 +294,11 @@ await expect(settings).toBeVisible();
 ---
 
 #### 2. Fix PWA Manifest Tests
+
 **Files to Update**: `tests/e2e/pwa.spec.js` (Lines 40-56, 130-145)
 
 **Solution A - Use Correct Manifest Path**:
+
 ```javascript
 // Check if we're in dev or production
 const manifestUrl = page.url().includes('localhost')
@@ -274,6 +309,7 @@ const response = await page.request.get(manifestUrl);
 ```
 
 **Solution B - Skip in Development**:
+
 ```javascript
 test('should have valid web app manifest', async ({ page }) => {
   // Skip if running against dev server
@@ -286,6 +322,7 @@ test('should have valid web app manifest', async ({ page }) => {
 ```
 
 **Solution C - Test from Meta Tag**:
+
 ```javascript
 test('should have valid web app manifest reference', async ({ page }) => {
   await page.goto('/');
@@ -304,9 +341,11 @@ test('should have valid web app manifest reference', async ({ page }) => {
 ---
 
 #### 3. Fix Service Worker Registration Test
+
 **File to Update**: `tests/e2e/pwa.spec.js` (Lines 21-38)
 
 **Solution A - Increase Wait Time**:
+
 ```javascript
 test('should register service worker', async ({ page }) => {
   await page.goto('/');
@@ -329,6 +368,7 @@ test('should register service worker', async ({ page }) => {
 ```
 
 **Solution B - Poll for Registration**:
+
 ```javascript
 test('should register service worker', async ({ page }) => {
   await page.goto('/');
@@ -351,6 +391,7 @@ test('should register service worker', async ({ page }) => {
 ```
 
 **Solution C - Skip in Development**:
+
 ```javascript
 test('should register service worker', async ({ page }) => {
   // Service workers may not register properly in dev mode
@@ -364,9 +405,11 @@ test('should register service worker', async ({ page }) => {
 ---
 
 #### 4. Fix Offline Test
+
 **File to Update**: `tests/e2e/pwa.spec.js` (Lines 58-74)
 
 **Solution - Add Proper SW Wait**:
+
 ```javascript
 test('should work offline after initial load', async ({ page, context }) => {
   // Load app first time (to cache resources)
@@ -404,6 +447,7 @@ test('should work offline after initial load', async ({ page, context }) => {
 ### Medium Priority Improvements
 
 #### 5. Add Test Environment Configuration
+
 Create `tests/helpers/environment.js`:
 
 ```javascript
@@ -427,6 +471,7 @@ export function getManifestPath() {
 ```
 
 Use in tests:
+
 ```javascript
 import { isPWAEnabled } from '../helpers/environment.js';
 
@@ -439,6 +484,7 @@ test('should register service worker', async ({ page }) => {
 ---
 
 #### 6. Create Production Build Tests
+
 Add to `package.json`:
 
 ```json
@@ -452,6 +498,7 @@ Add to `package.json`:
 ```
 
 This allows:
+
 - `test:e2e:dev` - Run tests against dev server (skip PWA tests)
 - `test:e2e:prod` - Build and test production version (all tests)
 
@@ -460,6 +507,7 @@ This allows:
 ### Low Priority Enhancements
 
 #### 7. Add Test Tags
+
 Organize tests by category:
 
 ```javascript
@@ -475,6 +523,7 @@ test('should display settings panel @ui @dev', async ({ page }) => {
 ```
 
 Run specific test categories:
+
 ```bash
 npx playwright test --grep @dev       # Only dev tests
 npx playwright test --grep @production # Only production tests
@@ -484,12 +533,12 @@ npx playwright test --grep @production # Only production tests
 
 ## Test File Breakdown
 
-| File | Total Tests | Passing | Failing | Issue Category |
-|------|-------------|---------|---------|----------------|
-| `pwa.spec.js` | 18 | 14 | 4 | PWA Environment |
-| `timer.spec.js` | 11 | 10 | 1 | Initial State |
-| `ui-interactions.spec.js` | 27 | 24 | 3 | Initial State |
-| **TOTAL** | **56** | **48** | **8** | |
+| File                      | Total Tests | Passing | Failing | Issue Category  |
+|---------------------------|-------------|---------|---------|-----------------|
+| `pwa.spec.js`             | 18          | 14      | 4       | PWA Environment |
+| `timer.spec.js`           | 11          | 10      | 1       | Initial State   |
+| `ui-interactions.spec.js` | 27          | 24      | 3       | Initial State   |
+| **TOTAL**                 | **56**      | **48**  | **8**   |                 |
 
 **Success Rate**: 85.7% (48/56 passing)
 
@@ -498,6 +547,7 @@ npx playwright test --grep @production # Only production tests
 ## Implementation Plan
 
 ### Phase 1: Quick Wins (Fix Visibility Issues)
+
 **Time Estimate**: 1-2 hours
 
 1. Update timer display visibility assertions
@@ -510,6 +560,7 @@ npx playwright test --grep @production # Only production tests
 ---
 
 ### Phase 2: PWA Test Improvements
+
 **Time Estimate**: 2-3 hours
 
 1. Add environment detection
@@ -522,6 +573,7 @@ npx playwright test --grep @production # Only production tests
 ---
 
 ### Phase 3: Test Infrastructure
+
 **Time Estimate**: 1-2 hours
 
 1. Create environment helper utilities
@@ -537,11 +589,13 @@ npx playwright test --grep @production # Only production tests
 
 The test failures are primarily caused by two issues:
 
-1. **Initial State Misunderstanding** (4 tests) - Tests expect timer display to be visible, but app design intentionally starts with it hidden
+1. **Initial State Misunderstanding** (4 tests) - Tests expect timer display to be visible, but app design intentionally
+   starts with it hidden
 
 2. **PWA Development Environment** (4 tests) - PWA features behave differently in development vs production
 
-All issues are fixable with test code updates - **no application code changes needed**. The app is working correctly; the tests need to match the actual application behavior.
+All issues are fixable with test code updates - **no application code changes needed**. The app is working correctly;
+the tests need to match the actual application behavior.
 
 ## Next Steps
 

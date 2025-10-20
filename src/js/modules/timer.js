@@ -371,7 +371,7 @@ export class Timer {
     // Prevent duplicate calls (e.g., from visibility change during transition)
     if (this.transitionInProgress) {
       if (this.debugMode) {
-        console.log('[Timer] Transition already in progress, ignoring duplicate call');
+        console.log("[Timer] Transition already in progress, ignoring duplicate call");
       }
       return;
     }
@@ -393,7 +393,7 @@ export class Timer {
         // Check if timer was paused/stopped during sound playback
         if (!this.isRunning) {
           if (this.debugMode) {
-            console.log('[Timer] Skipping restart - timer was paused/stopped during transition');
+            console.log("[Timer] Skipping restart - timer was paused/stopped during transition");
           }
           this.transitionInProgress = false;
           return;
@@ -442,7 +442,7 @@ export class Timer {
         // Check if timer was paused/stopped during sound playback
         if (!this.isRunning) {
           if (this.debugMode) {
-            console.log('[Timer] Skipping restart - timer was paused/stopped during transition');
+            console.log("[Timer] Skipping restart - timer was paused/stopped during transition");
           }
           this.transitionInProgress = false;
           return;

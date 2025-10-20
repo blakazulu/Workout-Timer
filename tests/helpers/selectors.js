@@ -5,67 +5,67 @@
 
 export const SELECTORS = {
   // Timer
-  timerDisplay: '#timerDisplay',
-  timerValue: '#timerValue',
-  repCounter: '#repCounter',
-  startButton: '#startBtn',
-  resetButton: '#resetBtn',
-  clearAllButton: '#clearAllBtn',
+  timerDisplay: "#timerDisplay",
+  timerValue: "#timerValue",
+  repCounter: "#repCounter",
+  startButton: "#startBtn",
+  resetButton: "#resetBtn",
+  clearAllButton: "#clearAllBtn",
 
   // Music Controls
-  musicControls: '#musicControls',
-  musicTitle: '#musicTitle',
-  musicPlayPauseBtn: '#musicPlayPauseBtn',
-  musicFavoriteBtn: '#musicFavoriteBtn',
-  player: '#youtube-player-iframe',
+  musicControls: "#musicControls",
+  musicTitle: "#musicTitle",
+  musicPlayPauseBtn: "#musicPlayPauseBtn",
+  musicFavoriteBtn: "#musicFavoriteBtn",
+  player: "#youtube-player-iframe",
 
   // Favorites
-  favoriteButton: '.song-favorite-btn[data-action="toggle-favorite"]',
-  favoriteItem: '.favorite-item',
-  songCard: '.song-card',
-  songCardRemove: '.song-card-remove',
-  shuffleFavoritesBtn: '#shuffleFavoritesBtn',
+  favoriteButton: ".song-favorite-btn[data-action=\"toggle-favorite\"]",
+  favoriteItem: ".favorite-item",
+  songCard: ".song-card",
+  songCardRemove: ".song-card-remove",
+  shuffleFavoritesBtn: "#shuffleFavoritesBtn",
 
   // Library/History
-  musicLibraryPopover: '#musicLibraryPopover',
-  historyBtn: '#historyBtn',
-  historyContent: '#historyContent',
-  historyEmpty: '.history-empty',
-  historyTab: '.history-tab',
+  musicLibraryPopover: "#musicLibraryPopover",
+  historyBtn: "#historyBtn",
+  historyContent: "#historyContent",
+  historyEmpty: ".history-empty",
+  historyTab: ".history-tab",
 
   // Settings
-  settings: '#settings',
-  durationInput: '#duration',
-  alertTimeInput: '#alertTime',
-  repetitionsInput: '#repetitions',
-  restTimeInput: '#restTime',
+  settings: "#settings",
+  durationInput: "#duration",
+  alertTimeInput: "#alertTime",
+  repetitionsInput: "#repetitions",
+  restTimeInput: "#restTime",
 
   // Genre/Mood Selectors
-  genrePopover: '#genrePopover',
-  moodPopover: '#moodPopover',
-  genreTag: '.genre-tag',
-  moodTag: '.mood-tag',
-  genrePopoverClose: '.genre-popover-close',
-  moodPopoverClose: '.mood-popover-close',
+  genrePopover: "#genrePopover",
+  moodPopover: "#moodPopover",
+  genreTag: ".genre-tag",
+  moodTag: ".mood-tag",
+  genrePopoverClose: ".genre-popover-close",
+  moodPopoverClose: ".mood-popover-close",
 
   // YouTube Section
-  youtubeUrl: '#youtubeUrl',
-  loadYoutubeBtn: '#loadYoutubeBtn',
-  youtubeSection: '.youtube-section',
+  youtubeUrl: "#youtubeUrl",
+  loadYoutubeBtn: "#loadYoutubeBtn",
+  youtubeSection: ".youtube-section",
 
   // Overlays
-  updateOverlay: '#updateOverlay',
-  loadingOverlay: '#loadingOverlay',
+  updateOverlay: "#updateOverlay",
+  loadingOverlay: "#loadingOverlay",
 
   // Song Cards
-  songCardTitle: '.song-card-title',
-  songCardThumbnail: '.song-card-thumbnail',
-  songCardChannel: '.song-card-channel',
+  songCardTitle: ".song-card-title",
+  songCardThumbnail: ".song-card-thumbnail",
+  songCardChannel: ".song-card-channel",
 
   // Mode Toggle
-  linkModeBtn: '#linkModeBtn',
-  moodModeBtn: 'button.mode-toggle-btn[popovertarget="moodPopover"]',
-  genreModeBtn: 'button.mode-toggle-btn[popovertarget="genrePopover"]'
+  linkModeBtn: "#linkModeBtn",
+  moodModeBtn: "button.mode-toggle-btn[popovertarget=\"moodPopover\"]",
+  genreModeBtn: "button.mode-toggle-btn[popovertarget=\"genrePopover\"]"
 };
 
 /**

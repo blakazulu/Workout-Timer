@@ -7,23 +7,27 @@
 ## Problems Fixed
 
 ### 1. Alert Beeps Skipping Last Second
+
 **Before**: Beeps played at 3s, 2s only (skipped 1s)
 **After**: Beeps play at 3s, 2s, 1s, then transition sound at 0s
 
 **User Feedback**: "If I put 3 seconds alert it starts at 3, 2, 1 - it should tick on all of them"
 
 **Fix**: Changed condition from `currentTime > 1` to `currentTime > 0`
+
 - Location: `timer.js:336`
 - Now plays alert on all countdown seconds (3, 2, 1)
 - Transition sound plays separately at 0
 
 ### 2. Timer Not Waiting for Transition Sounds
+
 **Before**: Timer immediately continued to next period while sound was still playing
 **After**: Timer pauses until transition sound finishes, then continues
 
 **User Feedback**: "When it's done - play the sound - when the sound is done - start the next timer"
 
 **Implementation**:
+
 1. Clear interval when timer reaches 0
 2. Play transition sound with callback
 3. Resume interval when sound finishes
@@ -33,6 +37,7 @@
 ### Audio Module (`audio.js`)
 
 **Added callback support to playSound()**:
+
 ```javascript
 playSound(soundKey, onEnded = null) {
   // ... existing logic ...
@@ -54,6 +59,7 @@ playSound(soundKey, onEnded = null) {
 ```
 
 **Updated wrapper methods**:
+
 ```javascript
 playRestEnd(onEnded)
 playComplete(onEnded)
@@ -67,6 +73,7 @@ All now accept optional callback that executes when sound finishes.
 **Modified handleTimerComplete()**:
 
 **Rest End Flow**:
+
 ```javascript
 // Clear interval
 clearInterval(this.interval);
@@ -91,6 +98,7 @@ this.audio.playRestEnd(() => {
 ```
 
 **Round End Flow**:
+
 ```javascript
 clearInterval(this.interval);
 
@@ -118,6 +126,7 @@ this.audio.playComplete(() => {
 ```
 
 **Workout Complete Flow**:
+
 ```javascript
 clearInterval(this.interval);
 
@@ -130,6 +139,7 @@ this.audio.playFinalComplete(() => {
 ## User Experience Improvements
 
 ### Before
+
 ```
 Countdown: 3 (beep), 2 (beep), 1 (silence)
 At 0: Bell sound starts
@@ -138,6 +148,7 @@ User confusion: "Did the round end? Why is timer already running?"
 ```
 
 ### After
+
 ```
 Countdown: 3 (beep), 2 (beep), 1 (beep)
 At 0: Bell sound plays
@@ -151,26 +162,26 @@ Clear feedback: Sound fully indicates transition
 **3-round workout with rest**:
 
 1. **Round 1 Work**:
-   - 3s: Beep
-   - 2s: Beep
-   - 1s: Beep
-   - 0s: Boxing bell plays → Timer pauses at 0:00
+    - 3s: Beep
+    - 2s: Beep
+    - 1s: Beep
+    - 0s: Boxing bell plays → Timer pauses at 0:00
 
 2. **Bell finishes** → Display updates to "REST"
 
 3. **Rest Period**:
-   - 3s: Beep
-   - 2s: Beep
-   - 1s: Beep
-   - 0s: Whistle plays → Timer pauses at 0:00
+    - 3s: Beep
+    - 2s: Beep
+    - 1s: Beep
+    - 0s: Whistle plays → Timer pauses at 0:00
 
 4. **Whistle finishes** → Display updates to "Rep 2/3"
 
 5. *...continues for all rounds...*
 
 6. **Final Round Complete**:
-   - 0s: Three bells play → Timer pauses
-   - **Three bells finish** → Timer stops, shows "✓ Complete!"
+    - 0s: Three bells play → Timer pauses
+    - **Three bells finish** → Timer stops, shows "✓ Complete!"
 
 ## Debug Output
 
@@ -187,6 +198,7 @@ With debug mode enabled (`window.enableTimerDebug()`):
 ```
 
 Notice:
+
 - All 3 beeps logged (3, 2, 1)
 - Sound starts
 - Sound finishes (callback fired)
@@ -195,14 +207,17 @@ Notice:
 ## Error Handling
 
 **Sound fails to play**:
+
 - Callback still fires to prevent timer from hanging
 - Timer continues normally even if sound errors
 
 **Sound takes too long**:
+
 - Timer waits indefinitely (by design)
 - Sound duration is typically 1-2 seconds, acceptable delay
 
 **User interaction required** (browser autoplay policy):
+
 - First sound may fail without user interaction
 - Subsequent sounds work after user starts workout
 - Error logged but timer continues
@@ -210,30 +225,33 @@ Notice:
 ## Files Modified
 
 1. **src/js/modules/audio.js**
-   - Added `onEnded` parameter to `playSound()` (line 103)
-   - Added event listener cleanup logic (lines 124-131)
-   - Updated wrapper methods (lines 227, 236, 245)
-   - Clone cleanup also calls callback (lines 158-163)
+    - Added `onEnded` parameter to `playSound()` (line 103)
+    - Added event listener cleanup logic (lines 124-131)
+    - Updated wrapper methods (lines 227, 236, 245)
+    - Clone cleanup also calls callback (lines 158-163)
 
 2. **src/js/modules/timer.js**
-   - Changed alert condition to `> 0` (line 336)
-   - Modified `handleTimerComplete()` to pause/resume interval (lines 356-501)
-   - Added callback-based flow for all transitions
-   - Improved debug logging
+    - Changed alert condition to `> 0` (line 336)
+    - Modified `handleTimerComplete()` to pause/resume interval (lines 356-501)
+    - Added callback-based flow for all transitions
+    - Improved debug logging
 
 ## Performance Impact
 
 **Additional Operations**:
+
 - `clearInterval()` on each transition: <1ms
 - `addEventListener('ended')` per sound: <1ms
 - Callback execution: <1ms
 
 **Total Delay per Transition**: 1-2 seconds (sound duration)
+
 - This is intentional and improves UX
 - User clearly hears and understands transition
 - No confusion about timer state
 
 **No Performance Degradation**:
+
 - Interval cleared during sound = less CPU usage
 - No duplicate timers running
 - Clean state transitions
@@ -254,11 +272,13 @@ Notice:
 ## Known Behavior
 
 **Timer Display at 0**:
+
 - Display shows "0:00" during transition sound
 - This is correct - user knows period ended
 - When sound finishes, display updates to next period
 
 **Sound Duration**:
+
 - Whistle: ~1.0s
 - Bell: ~1.2s
 - Three bells: ~2.0s
@@ -268,6 +288,7 @@ These delays are acceptable and improve UX by providing clear audio feedback.
 ## Related Improvements
 
 This fix complements:
+
 1. Memory leak fix (audio clone cleanup)
 2. Non-blocking audio playback
 3. Debug logging system

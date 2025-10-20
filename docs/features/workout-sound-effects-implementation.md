@@ -5,7 +5,8 @@
 
 ## Overview
 
-Enhanced the workout timer with professional sound effects to improve user experience during workouts. Added three distinct sounds that play at key moments during the workout session.
+Enhanced the workout timer with professional sound effects to improve user experience during workouts. Added three
+distinct sounds that play at key moments during the workout session.
 
 ## Sound Files Added
 
@@ -20,6 +21,7 @@ Located in `/public/sounds/`:
 ### 1. Audio Manager Enhancement (`src/js/modules/audio.js`)
 
 **Added HTML5 Audio Support:**
+
 ```javascript
 this.sounds = {
   restEnd: new Audio("/sounds/end_of_rest.mp3"),
@@ -29,12 +31,14 @@ this.sounds = {
 ```
 
 **New Methods:**
+
 - `playSound(soundKey)` - Helper method to play sound effects with error handling
 - `playRestEnd()` - Plays whistle when rest period ends
 - `playComplete()` - Updated to play boxing bell (was programmatic beep)
 - `playFinalComplete()` - Updated to play three bells (was programmatic beep)
 
 **Features:**
+
 - Preloads all sounds on app initialization for instant playback
 - Volume set to 80% (0.8) for balanced audio
 - Includes vibration patterns for mobile devices
@@ -45,19 +49,19 @@ this.sounds = {
 **Sound Triggers:**
 
 1. **Rest Period Ends** (line 344):
-   - Plays whistle sound via `this.audio.playRestEnd()`
-   - Signals user to start next workout round
-   - Includes vibration pattern
+    - Plays whistle sound via `this.audio.playRestEnd()`
+    - Signals user to start next workout round
+    - Includes vibration pattern
 
 2. **Round Completes** (line 364):
-   - Plays boxing bell via `this.audio.playComplete()`
-   - Indicates work period finished
-   - Already existed, now uses MP3 instead of beep
+    - Plays boxing bell via `this.audio.playComplete()`
+    - Indicates work period finished
+    - Already existed, now uses MP3 instead of beep
 
 3. **Workout Complete** (line 408):
-   - Plays three bells via `this.audio.playFinalComplete()`
-   - Celebrates full workout completion
-   - Already existed, now uses MP3 instead of beep
+    - Plays three bells via `this.audio.playFinalComplete()`
+    - Celebrates full workout completion
+    - Already existed, now uses MP3 instead of beep
 
 ### 3. Analytics Integration (`src/js/core/analytics-tracker.js`)
 
@@ -76,11 +80,13 @@ Added PostHog tracking for all sound events:
 ```
 
 **Tracked Events:**
+
 - `sound_rest_end_played` - Whistle after rest
 - `sound_round_end_played` - Bell after each round
 - `sound_workout_over_played` - Three bells at completion
 
 **Properties Tracked:**
+
 - Current rep number
 - Total reps configured
 - Workout duration
@@ -89,6 +95,7 @@ Added PostHog tracking for all sound events:
 ## User Experience
 
 ### Sound Sequence Example
+
 For a 3-round workout with rest periods:
 
 1. Start workout → (beep countdown sounds)
@@ -112,17 +119,20 @@ For a 3-round workout with rest periods:
 ## Technical Considerations
 
 ### Browser Compatibility
+
 - Uses HTML5 Audio API (universally supported)
 - Preloading ensures instant playback without delays
 - Graceful degradation if audio fails to load
 
 ### Performance
+
 - Total sound file size: ~87 KB (minimal impact)
 - Files preloaded on app initialization
 - Sounds cached by browser for offline use
 - Works seamlessly in PWA standalone mode
 
 ### Mobile Optimization
+
 - Sounds complement existing vibration patterns
 - Volume balanced for mobile speakers
 - Respects device audio settings
@@ -131,40 +141,40 @@ For a 3-round workout with rest periods:
 ## Testing Recommendations
 
 1. **Full Workflow Test**:
-   - Start 3-round workout with 10s rest
-   - Verify whistle plays after each rest
-   - Verify bell plays after each round
-   - Verify three bells at completion
+    - Start 3-round workout with 10s rest
+    - Verify whistle plays after each rest
+    - Verify bell plays after each round
+    - Verify three bells at completion
 
 2. **Sound Quality Check**:
-   - Verify sounds are clear and not distorted
-   - Check volume is appropriate (not too loud/quiet)
-   - Test with device muted (should not play)
-   - Test with different device volume levels
+    - Verify sounds are clear and not distorted
+    - Check volume is appropriate (not too loud/quiet)
+    - Test with device muted (should not play)
+    - Test with different device volume levels
 
 3. **Analytics Verification**:
-   - Check PostHog for sound event tracking
-   - Verify correct properties are captured
-   - Confirm event timing matches actual sounds
+    - Check PostHog for sound event tracking
+    - Verify correct properties are captured
+    - Confirm event timing matches actual sounds
 
 ## Future Enhancements
 
 Potential improvements:
 
 1. **User Preferences**:
-   - Toggle to enable/disable workout sounds
-   - Volume control for sound effects
-   - Custom sound selection
+    - Toggle to enable/disable workout sounds
+    - Volume control for sound effects
+    - Custom sound selection
 
 2. **Additional Sounds**:
-   - Halfway point celebration sound
-   - Personal record achievement sound
-   - Encouragement sounds at specific intervals
+    - Halfway point celebration sound
+    - Personal record achievement sound
+    - Encouragement sounds at specific intervals
 
 3. **Sound Settings**:
-   - Separate volume control from music
-   - Option to use only vibration
-   - Sound pack selection (boxing, gym, nature, etc.)
+    - Separate volume control from music
+    - Option to use only vibration
+    - Sound pack selection (boxing, gym, nature, etc.)
 
 ## Files Modified
 
@@ -183,6 +193,7 @@ Potential improvements:
 ## Success Metrics
 
 Track via PostHog:
+
 - Frequency of sound events per session
 - Workout completion rates (may increase with audio feedback)
 - User engagement metrics

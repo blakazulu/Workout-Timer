@@ -37,16 +37,19 @@ npx playwright install
 ### Running Tests
 
 Run all tests:
+
 ```bash
 npm test
 ```
 
 Run tests with UI:
+
 ```bash
 npm run test:ui
 ```
 
 Run specific browser:
+
 ```bash
 npm run test:chrome
 npm run test:firefox
@@ -54,11 +57,13 @@ npm run test:webkit
 ```
 
 Run mobile tests:
+
 ```bash
 npm run test:mobile
 ```
 
 Debug tests:
+
 ```bash
 npm run test:debug
 ```
@@ -92,31 +97,37 @@ tests/
 ### Local Development
 
 **Run all tests:**
+
 ```bash
 npm test
 ```
 
 **Run specific test file:**
+
 ```bash
 npx playwright test tests/e2e/timer.spec.js
 ```
 
 **Run specific test:**
+
 ```bash
 npx playwright test -g "should start timer"
 ```
 
 **Run with headed browser (see the browser):**
+
 ```bash
 npm run test:headed
 ```
 
 **Run with UI mode (interactive debugging):**
+
 ```bash
 npm run test:ui
 ```
 
 **Run and debug:**
+
 ```bash
 npm run test:debug
 ```
@@ -146,6 +157,7 @@ npm run test:mobile
 ### E2E Tests (End-to-End)
 
 #### Timer Tests (`timer.spec.js`)
+
 - ✅ Display default timer values
 - ✅ Start/pause/stop timer
 - ✅ Timer countdown accuracy
@@ -156,6 +168,7 @@ npm run test:mobile
 - ✅ State persistence
 
 #### Favorites Tests (`favorites.spec.js`)
+
 - ✅ Add song to favorites
 - ✅ Remove song from favorites
 - ✅ Display favorites list
@@ -166,6 +179,7 @@ npm run test:mobile
 - ✅ Rapid toggle handling
 
 #### Music Tests (`music.spec.js`)
+
 - ✅ YouTube player loading
 - ✅ Play/pause controls
 - ✅ Volume control
@@ -178,6 +192,7 @@ npm run test:mobile
 - ✅ Volume persistence
 
 #### UI Interaction Tests (`ui-interactions.spec.js`)
+
 - ✅ Settings panel open/close
 - ✅ Library panel navigation
 - ✅ Genre selector popup
@@ -192,6 +207,7 @@ npm run test:mobile
 - ✅ Rapid click handling
 
 #### PWA Tests (`pwa.spec.js`)
+
 - ✅ Service worker registration
 - ✅ Web app manifest validity
 - ✅ Offline functionality
@@ -208,6 +224,7 @@ npm run test:mobile
 ### Unit Tests
 
 #### Favorites Module (`favorites.test.js`)
+
 - ✅ Initialize empty list
 - ✅ Add favorite
 - ✅ Remove favorite
@@ -221,6 +238,7 @@ npm run test:mobile
 - ✅ Order maintenance
 
 #### Timer Module (`timer.test.js`)
+
 - ✅ Total duration calculation
 - ✅ Time formatting (MM:SS)
 - ✅ Phase determination
@@ -234,6 +252,7 @@ npm run test:mobile
 - ✅ Pause/resume state
 
 #### Storage Module (`storage.test.js`)
+
 - ✅ Save data
 - ✅ Retrieve data
 - ✅ Remove data
@@ -249,6 +268,7 @@ npm run test:mobile
 - ✅ Storage usage calculation
 
 #### Audio Module (`audio.test.js`)
+
 - ✅ Create audio instance
 - ✅ Play audio
 - ✅ Pause audio
@@ -350,6 +370,7 @@ import {
 ### GitHub Actions Workflow
 
 Tests run automatically on:
+
 - Every push to `main` branch
 - Every pull request
 - Manual workflow dispatch
@@ -368,10 +389,10 @@ After tests run in CI:
 2. Click on the workflow run
 3. View test results in the summary
 4. Download artifacts:
-   - `playwright-report` - HTML test report
-   - `test-results` - Raw test results
-   - `test-videos` - Video recordings (failures only)
-   - `test-screenshots` - Screenshots (failures only)
+    - `playwright-report` - HTML test report
+    - `test-results` - Raw test results
+    - `test-videos` - Video recordings (failures only)
+    - `test-screenshots` - Screenshots (failures only)
 
 ### Preventing Broken Deployments
 
@@ -389,17 +410,20 @@ Tests must pass before merging PRs. Configure branch protection rules:
 ### Tests Failing Locally
 
 **Clear browser cache and storage:**
+
 ```bash
 npx playwright test --clean
 ```
 
 **Update Playwright:**
+
 ```bash
 npm install @playwright/test@latest
 npx playwright install
 ```
 
 **Run with debug mode:**
+
 ```bash
 npm run test:debug
 ```
@@ -407,11 +431,13 @@ npm run test:debug
 ### Slow Tests
 
 **Run tests in parallel:**
+
 ```bash
 npx playwright test --workers=4
 ```
 
 **Run only affected tests:**
+
 ```bash
 npx playwright test tests/e2e/timer.spec.js
 ```
@@ -419,6 +445,7 @@ npx playwright test tests/e2e/timer.spec.js
 ### Flaky Tests
 
 **Increase timeout:**
+
 ```javascript
 test('my test', async ({ page }) => {
   test.setTimeout(60000); // 60 seconds
@@ -427,6 +454,7 @@ test('my test', async ({ page }) => {
 ```
 
 **Add explicit waits:**
+
 ```javascript
 await page.waitForSelector('.element', { state: 'visible' });
 ```
@@ -434,14 +462,17 @@ await page.waitForSelector('.element', { state: 'visible' });
 ### CI Failures
 
 **Check browser compatibility:**
+
 - Ensure tests work on all browsers (Chrome, Firefox, Safari)
 - Some features might not work in all browsers
 
 **Check test artifacts:**
+
 - Download screenshots and videos from failed runs
 - Review the HTML report for detailed error messages
 
 **Local CI simulation:**
+
 ```bash
 # Set CI environment variable
 CI=true npm test

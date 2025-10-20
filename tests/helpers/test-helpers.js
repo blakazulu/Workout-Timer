@@ -3,7 +3,7 @@
  * Common utilities and setup functions for E2E and unit tests
  */
 
-import { expect } from '@playwright/test';
+import {expect} from "@playwright/test";
 
 /**
  * Wait for a specific time (in milliseconds)
@@ -32,10 +32,10 @@ export async function clearStorage(page) {
  */
 export async function setLocalStorage(page, key, value) {
   await page.evaluate(
-    ({ key, value }) => {
+    ({key, value}) => {
       localStorage.setItem(key, JSON.stringify(value));
     },
-    { key, value }
+    {key, value}
   );
 }
 
@@ -61,13 +61,13 @@ export async function getLocalStorage(page, key) {
  */
 export async function waitForAppReady(page) {
   // Wait for the main app container to be visible
-  await page.waitForSelector('.container', { state: 'visible' });
+  await page.waitForSelector(".container", {state: "visible"});
 
   // Wait for settings panel to be visible (always shown on load)
-  await page.waitForSelector('#settings', { state: 'visible' });
+  await page.waitForSelector("#settings", {state: "visible"});
 
   // Wait for app loader to disappear
-  await page.waitForSelector('#app-loader', { state: 'hidden' }).catch(() => {
+  await page.waitForSelector("#app-loader", {state: "hidden"}).catch(() => {
     // Loader might already be hidden, that's fine
   });
 
@@ -88,32 +88,41 @@ export async function mockYouTubeAPI(page) {
           this.elementId = elementId;
           this.config = config;
           this.state = -1; // UNSTARTED
-          setTimeout(() => config.events?.onReady?.({ target: this }), 100);
+          setTimeout(() => config.events?.onReady?.({target: this}), 100);
         }
+
         playVideo() {
           this.state = 1; // PLAYING
         }
+
         pauseVideo() {
           this.state = 2; // PAUSED
         }
+
         stopVideo() {
           this.state = 0; // ENDED
         }
+
         setVolume(volume) {
           this.volume = volume;
         }
+
         getVolume() {
           return this.volume || 50;
         }
+
         getPlayerState() {
           return this.state;
         }
+
         loadVideoById(videoId) {
           this.currentVideoId = videoId;
         }
+
         getCurrentTime() {
           return 0;
         }
+
         getDuration() {
           return 180;
         }
@@ -128,7 +137,8 @@ export async function mockYouTubeAPI(page) {
       }
     };
 
-    window.onYouTubeIframeAPIReady = () => {};
+    window.onYouTubeIframeAPIReady = () => {
+    };
   });
 }
 
@@ -152,18 +162,18 @@ export async function mockAudioAPI(page) {
 
       play() {
         this._playing = true;
-        this.dispatchEvent(new Event('play'));
+        this.dispatchEvent(new Event("play"));
         // Simulate successful playback
         return Promise.resolve();
       }
 
       pause() {
         this._playing = false;
-        this.dispatchEvent(new Event('pause'));
+        this.dispatchEvent(new Event("pause"));
       }
 
       load() {
-        this.dispatchEvent(new Event('canplaythrough'));
+        this.dispatchEvent(new Event("canplaythrough"));
       }
     };
   });
@@ -188,7 +198,7 @@ export async function getPlayedAudio(page) {
  * @param {string} selector - CSS selector
  */
 export async function waitAndClick(page, selector) {
-  await page.waitForSelector(selector, { state: 'visible' });
+  await page.waitForSelector(selector, {state: "visible"});
   await page.click(selector);
 }
 
@@ -223,7 +233,7 @@ export async function getText(page, selector) {
 export async function waitForPostHog(page) {
   await page.waitForFunction(() => {
     return window.posthog && window.posthog.__loaded;
-  }, { timeout: 5000 }).catch(() => {
+  }, {timeout: 5000}).catch(() => {
     // PostHog might not load in tests, that's okay
   });
 }
@@ -236,11 +246,16 @@ export async function disablePostHog(page) {
   await page.addInitScript(() => {
     window.posthog = {
       __loaded: true,
-      init: () => {},
-      capture: () => {},
-      identify: () => {},
-      reset: () => {},
-      opt_out_capturing: () => {},
+      init: () => {
+      },
+      capture: () => {
+      },
+      identify: () => {
+      },
+      reset: () => {
+      },
+      opt_out_capturing: () => {
+      },
       has_opted_out_capturing: () => true,
     };
   });

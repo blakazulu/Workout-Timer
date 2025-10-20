@@ -4,35 +4,35 @@
  * UPDATED to use actual HTML selectors from the codebase
  */
 
-import { test, expect } from '@playwright/test';
+import {expect, test} from "@playwright/test";
 import {
-  waitForAppReady,
   clearStorage,
-  setLocalStorage,
-  getLocalStorage,
   disablePostHog,
-  wait
-} from '../helpers/test-helpers.js';
-import { SELECTORS } from '../helpers/selectors.js';
-import { MOCK_FAVORITES } from '../helpers/fixtures.js';
+  getLocalStorage,
+  setLocalStorage,
+  wait,
+  waitForAppReady
+} from "../helpers/test-helpers.js";
+import {SELECTORS} from "../helpers/selectors.js";
+import {MOCK_FAVORITES} from "../helpers/fixtures.js";
 
-test.describe('Favorites Functionality', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("Favorites Functionality", () => {
+  test.beforeEach(async ({page}) => {
     await disablePostHog(page);
-    await page.goto('/');
+    await page.goto("/");
     await clearStorage(page);
     await waitForAppReady(page);
   });
 
-  test('should add song to favorites when favorite button is clicked', async ({ page }) => {
+  test("should add song to favorites when favorite button is clicked", async ({page}) => {
     // Pre-populate song history so we have songs to favorite
-    await setLocalStorage(page, 'cycleHistory', [
+    await setLocalStorage(page, "cycleHistory", [
       {
-        url: 'https://www.youtube.com/watch?v=test-123',
-        title: 'Test Song',
-        author: 'Test Artist',
+        url: "https://www.youtube.com/watch?v=test-123",
+        title: "Test Song",
+        author: "Test Artist",
         duration: 180,
-        thumbnail: 'https://i.ytimg.com/vi/test-123/default.jpg',
+        thumbnail: "https://i.ytimg.com/vi/test-123/default.jpg",
         playCount: 1,
         lastPlayed: Date.now()
       }
@@ -65,7 +65,7 @@ test.describe('Favorites Functionality', () => {
         await wait(500);
 
         // Check localStorage to confirm it was saved
-        const favorites = await getLocalStorage(page, 'favorites');
+        const favorites = await getLocalStorage(page, "favorites");
         if (favorites) {
           expect(favorites.songs).toBeDefined();
           expect(favorites.songs.length).toBeGreaterThan(0);
@@ -74,9 +74,9 @@ test.describe('Favorites Functionality', () => {
     }
   });
 
-  test('should remove song from favorites when clicking favorited button', async ({ page }) => {
+  test("should remove song from favorites when clicking favorited button", async ({page}) => {
     // Pre-populate favorites
-    await setLocalStorage(page, 'favorites', MOCK_FAVORITES);
+    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
@@ -99,7 +99,7 @@ test.describe('Favorites Functionality', () => {
           await wait(500);
 
           // Check localStorage
-          const favoritesAfter = await getLocalStorage(page, 'favorites');
+          const favoritesAfter = await getLocalStorage(page, "favorites");
           if (favoritesAfter) {
             expect(favoritesAfter.songs.length).toBeLessThan(MOCK_FAVORITES.songs.length);
           }
@@ -108,9 +108,9 @@ test.describe('Favorites Functionality', () => {
     }
   });
 
-  test('should show favorites list in library panel', async ({ page }) => {
+  test("should show favorites list in library panel", async ({page}) => {
     // Pre-populate favorites
-    await setLocalStorage(page, 'favorites', MOCK_FAVORITES);
+    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
@@ -129,9 +129,9 @@ test.describe('Favorites Functionality', () => {
     await expect(favoritesTab).toBeVisible();
   });
 
-  test('should shuffle favorites when shuffle button is clicked', async ({ page }) => {
+  test("should shuffle favorites when shuffle button is clicked", async ({page}) => {
     // Pre-populate favorites with multiple songs
-    await setLocalStorage(page, 'favorites', MOCK_FAVORITES);
+    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
@@ -163,15 +163,15 @@ test.describe('Favorites Functionality', () => {
     }
   });
 
-  test('should persist favorites across page reloads', async ({ page }) => {
+  test("should persist favorites across page reloads", async ({page}) => {
     // Pre-populate song history so we have songs to favorite
-    await setLocalStorage(page, 'cycleHistory', [
+    await setLocalStorage(page, "cycleHistory", [
       {
-        url: 'https://www.youtube.com/watch?v=persist-test',
-        title: 'Persist Test Song',
-        author: 'Test Artist',
+        url: "https://www.youtube.com/watch?v=persist-test",
+        title: "Persist Test Song",
+        author: "Test Artist",
         duration: 200,
-        thumbnail: 'https://i.ytimg.com/vi/persist-test/default.jpg',
+        thumbnail: "https://i.ytimg.com/vi/persist-test/default.jpg",
         playCount: 1,
         lastPlayed: Date.now()
       }
@@ -201,7 +201,7 @@ test.describe('Favorites Functionality', () => {
         await waitForAppReady(page);
 
         // Check localStorage still has favorites
-        const favorites = await getLocalStorage(page, 'favorites');
+        const favorites = await getLocalStorage(page, "favorites");
         if (favorites && favorites.songs) {
           expect(favorites.songs.length).toBeGreaterThan(0);
         }
@@ -209,7 +209,7 @@ test.describe('Favorites Functionality', () => {
     }
   });
 
-  test('should show empty state when no favorites', async ({ page }) => {
+  test("should show empty state when no favorites", async ({page}) => {
     // Open library
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await libraryButton.click();
@@ -226,13 +226,13 @@ test.describe('Favorites Functionality', () => {
       const contentText = await historyContent.textContent();
 
       // Empty state should mention no favorites
-      expect(contentText.toLowerCase()).toContain('no');
+      expect(contentText.toLowerCase()).toContain("no");
     }
   });
 
-  test('should display favorite items with correct structure', async ({ page }) => {
+  test("should display favorite items with correct structure", async ({page}) => {
     // Pre-populate favorites
-    await setLocalStorage(page, 'favorites', MOCK_FAVORITES);
+    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
@@ -259,7 +259,7 @@ test.describe('Favorites Functionality', () => {
     }
   });
 
-  test('should handle favorite button on music controls', async ({ page }) => {
+  test("should handle favorite button on music controls", async ({page}) => {
     // The music favorite button should exist when music is playing
     const musicFavoriteBtn = page.locator(SELECTORS.musicFavoriteBtn);
 
@@ -268,7 +268,7 @@ test.describe('Favorites Functionality', () => {
     expect(exists).toBeGreaterThanOrEqual(0);
   });
 
-  test('should navigate to favorites tab successfully', async ({ page }) => {
+  test("should navigate to favorites tab successfully", async ({page}) => {
     // Open library
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await expect(libraryButton).toBeVisible();
@@ -282,11 +282,11 @@ test.describe('Favorites Functionality', () => {
     await wait(500);
 
     // Tab should be active
-    const hasActiveClass = await favoritesTab.evaluate(el => el.classList.contains('active'));
+    const hasActiveClass = await favoritesTab.evaluate(el => el.classList.contains("active"));
     expect(hasActiveClass).toBe(true);
   });
 
-  test('should show library panel with history tabs', async ({ page }) => {
+  test("should show library panel with history tabs", async ({page}) => {
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await libraryButton.click();
     await wait(500);

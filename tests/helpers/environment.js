@@ -8,7 +8,7 @@
  * @returns {boolean}
  */
 export function isDevEnvironment() {
-  return process.env.NODE_ENV !== 'production';
+  return process.env.NODE_ENV !== "production";
 }
 
 /**
@@ -26,8 +26,8 @@ export function isPWAEnabled() {
  */
 export function getManifestPath() {
   return isDevEnvironment()
-    ? '/.vite/manifest.json'
-    : '/manifest.webmanifest';
+    ? "/.vite/manifest.json"
+    : "/manifest.webmanifest";
 }
 
 /**
@@ -37,7 +37,7 @@ export function getManifestPath() {
  */
 export async function isRunningOnLocalhost(page) {
   const url = page.url();
-  return url.includes('localhost') || url.includes('127.0.0.1');
+  return url.includes("localhost") || url.includes("127.0.0.1");
 }
 
 /**

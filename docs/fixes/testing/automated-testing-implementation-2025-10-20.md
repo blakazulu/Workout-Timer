@@ -8,7 +8,9 @@
 
 ## Overview
 
-Implemented comprehensive automated testing infrastructure using Playwright to test all app features (timer, favorites, music, UI interactions, PWA functionality) without manual testing. Tests run on multiple browsers (Chrome, Firefox, Safari) and mobile viewports.
+Implemented comprehensive automated testing infrastructure using Playwright to test all app features (timer, favorites,
+music, UI interactions, PWA functionality) without manual testing. Tests run on multiple browsers (Chrome, Firefox,
+Safari) and mobile viewports.
 
 ---
 
@@ -17,6 +19,7 @@ Implemented comprehensive automated testing infrastructure using Playwright to t
 ### 1. Test Infrastructure Created
 
 **Files Created:**
+
 - `playwright.config.js` - Multi-browser configuration with auto dev server
 - `tests/e2e/timer.spec.js` - 10 timer tests
 - `tests/e2e/favorites.spec.js` - 12 favorites tests
@@ -29,6 +32,7 @@ Implemented comprehensive automated testing infrastructure using Playwright to t
 - `.github/workflows/playwright.yml` - CI/CD automation
 
 **package.json Scripts Added:**
+
 ```json
 {
   "test": "playwright test",
@@ -49,6 +53,7 @@ Implemented comprehensive automated testing infrastructure using Playwright to t
 ### Issue 1: Port Configuration
 
 **Problem:**
+
 - Tests tried to connect to port 5173 (default Vite port)
 - Port availability uncertain, causing timeouts
 
@@ -56,6 +61,7 @@ Implemented comprehensive automated testing infrastructure using Playwright to t
 Changed to port 4200 (known to be open):
 
 **Files Modified:**
+
 - `vite.config.js` - Added server port configuration
 - `playwright.config.js` - Updated baseURL and webServer URL
 
@@ -87,6 +93,7 @@ webServer: {
 Tests used placeholder `data-testid` selectors that don't exist in actual HTML.
 
 **Root Cause Analysis:**
+
 - Analyzed all HTML partials in `src/partials/`
 - Analyzed JavaScript files that generate HTML dynamically
 - Found actual selectors: IDs, classes, and data attributes
@@ -98,14 +105,14 @@ Created centralized selector mapping with actual HTML elements.
 
 **Key Selector Mappings:**
 
-| Test Selector | Actual HTML Element | Notes |
-|--------------|---------------------|-------|
-| `timerDisplay` | `#timerDisplay` | Starts hidden, settings shown |
-| `player` | `#youtube-player-iframe` | Background YouTube player |
-| `moodModeBtn` | `button.mode-toggle-btn[popovertarget="moodPopover"]` | Specific class to avoid conflicts |
-| `genreModeBtn` | `button.mode-toggle-btn[popovertarget="genrePopover"]` | Specific class to avoid conflicts |
-| `musicLibraryPopover` | `#musicLibraryPopover` | Song history popup |
-| `favoriteButton` | `.song-favorite-btn[data-action="toggle-favorite"]` | Dynamic favorite buttons |
+| Test Selector         | Actual HTML Element                                    | Notes                             |
+|-----------------------|--------------------------------------------------------|-----------------------------------|
+| `timerDisplay`        | `#timerDisplay`                                        | Starts hidden, settings shown     |
+| `player`              | `#youtube-player-iframe`                               | Background YouTube player         |
+| `moodModeBtn`         | `button.mode-toggle-btn[popovertarget="moodPopover"]`  | Specific class to avoid conflicts |
+| `genreModeBtn`        | `button.mode-toggle-btn[popovertarget="genrePopover"]` | Specific class to avoid conflicts |
+| `musicLibraryPopover` | `#musicLibraryPopover`                                 | Song history popup                |
+| `favoriteButton`      | `.song-favorite-btn[data-action="toggle-favorite"]`    | Dynamic favorite buttons          |
 
 ---
 
@@ -113,6 +120,7 @@ Created centralized selector mapping with actual HTML elements.
 
 **Problem:**
 `waitForAppReady()` waited for elements that don't exist:
+
 - `#app` (doesn't exist)
 - `.timer-display` to be visible (starts hidden)
 
@@ -143,6 +151,7 @@ export async function waitForAppReady(page) {
 ### Issue 4: Selector Conflicts (Multiple Matches)
 
 **Problem:**
+
 ```
 Error: strict mode violation: locator('button[popovertarget="moodPopover"]') resolved to 2 elements:
   1) <button class="mode-toggle-btn" popovertarget="moodPopover">
@@ -173,11 +182,13 @@ Many tests expected `#timerDisplay` to be visible immediately, but it starts **h
 
 **Solution:**
 Updated tests to either:
+
 1. Check for `#settings` visibility (which is always visible)
 2. Check element exists (`.count() > 0`) instead of visible
 3. Start the timer first (which shows timer display)
 
 **Files Modified:**
+
 - `tests/e2e/timer.spec.js` - 4 tests updated
 - `tests/e2e/ui-interactions.spec.js` - 5 tests updated
 - `tests/e2e/pwa.spec.js` - 5 tests updated
@@ -210,6 +221,7 @@ test('should show settings panel on initialization', async ({ page }) => {
 Tests checked for `window.player` which doesn't exist. The app exposes `window.youtubeModule` instead.
 
 **Analysis:**
+
 ```javascript
 // src/js/app.js line 69:
 window.youtubeModule = youtubeModule; // ✅ Actual exposed object
@@ -244,6 +256,7 @@ test('should load YouTube player when URL is pasted', async ({ page }) => {
 ```
 
 **All Fixes:**
+
 1. Line 37-58: Check `window.youtubeModule` instead of `window.player`
 2. Line 74-101: Simplified play/pause test to check module exists
 3. Line 270-281: Renamed test, removed player error simulation
@@ -283,10 +296,12 @@ test('should have music title element', async ({ page }) => {
 ### Issue 8: Song Cards Only in Library Popover
 
 **Problem:**
-Favorites tests tried to find `.song-card` immediately on page load, but song cards only appear **inside the Music Library popover**.
+Favorites tests tried to find `.song-card` immediately on page load, but song cards only appear **inside the Music
+Library popover**.
 
 **Solution:**
 Updated favorites tests to:
+
 1. Pre-populate `cycleHistory` in localStorage
 2. Reload page to load history
 3. Open music library popover (`#historyBtn`)
@@ -414,6 +429,7 @@ export default defineConfig({
 ```
 
 **Why:**
+
 - First-time server startup can take 30-60 seconds
 - Prevents false timeout failures
 - 60s is still fast enough to catch real hangs
@@ -423,6 +439,7 @@ export default defineConfig({
 ## Test Coverage Summary
 
 ### Timer Tests (10 tests)
+
 - ✅ Display timer with default values
 - ✅ Start/pause/reset timer
 - ✅ Update rep counter
@@ -432,6 +449,7 @@ export default defineConfig({
 - ✅ Maintain time format
 
 ### Favorites Tests (12 tests)
+
 - ✅ Add/remove favorites
 - ✅ Show favorites list
 - ✅ Shuffle favorites
@@ -440,6 +458,7 @@ export default defineConfig({
 - ✅ Tab navigation
 
 ### Music Tests (18 tests)
+
 - ✅ YouTube player container
 - ✅ Load video from URL
 - ✅ Play/pause controls
@@ -449,6 +468,7 @@ export default defineConfig({
 - ✅ Error handling
 
 ### UI Interaction Tests (20 tests)
+
 - ✅ Settings panel display
 - ✅ Timer settings inputs
 - ✅ Library popup open/close
@@ -459,6 +479,7 @@ export default defineConfig({
 - ✅ Popover functionality
 
 ### PWA Tests (17 tests)
+
 - ✅ Service worker registration
 - ✅ Web app manifest validity
 - ✅ Offline functionality
@@ -486,6 +507,7 @@ npx playwright install
 ### Running Tests
 
 **Interactive UI Mode (Recommended for Development):**
+
 ```bash
 # Start dev server in Terminal 1
 npm run dev
@@ -495,11 +517,13 @@ npm run test:ui
 ```
 
 **Headless Mode (Fast):**
+
 ```bash
 npm test
 ```
 
 **Specific Browser:**
+
 ```bash
 npm run test:chrome   # Chromium only
 npm run test:firefox  # Firefox only
@@ -508,11 +532,13 @@ npm run test:mobile   # Mobile viewport
 ```
 
 **Debug Mode:**
+
 ```bash
 npm run test:debug
 ```
 
 **With Visible Browser:**
+
 ```bash
 npm run test:headed
 ```
@@ -582,10 +608,12 @@ if (isVisible) {
 **File:** `.github/workflows/playwright.yml`
 
 **Triggers:**
+
 - Every push to `main` branch
 - Every pull request to `main` branch
 
 **What it does:**
+
 1. Sets up Node.js environment
 2. Installs dependencies
 3. Installs Playwright browsers
@@ -594,6 +622,7 @@ if (isVisible) {
 6. Comments on PRs with test results
 
 **Viewing Results:**
+
 - Go to GitHub Actions tab
 - Click on workflow run
 - Download "playwright-report" artifact
@@ -612,6 +641,7 @@ npm run test:ui
 ```
 
 Features:
+
 - See tests run in real browser
 - Click on tests to run individually
 - View screenshots at each step
@@ -643,6 +673,7 @@ npx playwright show-report
 ### Common Issues
 
 **Port 4200 already in use:**
+
 ```bash
 # Kill process on port 4200
 lsof -ti:4200 | xargs kill -9
@@ -651,11 +682,13 @@ lsof -ti:4200 | xargs kill -9
 ```
 
 **Tests timing out:**
+
 - Increase timeout in `playwright.config.js`
 - Check dev server is running
 - Check network connection (if not using mocks)
 
 **Selector not found:**
+
 - Check `tests/helpers/selectors.js` matches actual HTML
 - Use browser DevTools to verify element exists
 - Check element isn't hidden/invisible
@@ -676,6 +709,7 @@ lsof -ti:4200 | xargs kill -9
 ### Test Coverage Gaps
 
 Consider adding tests for:
+
 - Gesture handling (double tap, swipe)
 - Keyboard shortcuts
 - Service worker update flow
@@ -687,6 +721,7 @@ Consider adding tests for:
 ## Summary of Changes
 
 ### Files Created (15)
+
 - `playwright.config.js`
 - `tests/e2e/timer.spec.js`
 - `tests/e2e/favorites.spec.js`
@@ -704,11 +739,13 @@ Consider adding tests for:
 - `docs/fixes/automated-testing-implementation-2025-10-20.md` (this file)
 
 ### Files Modified (3)
+
 - `package.json` - Added test scripts and Playwright dependency
 - `vite.config.js` - Added port 4200 configuration
 - `.gitignore` - Added Playwright test artifacts
 
 ### Lines of Test Code
+
 - **Test specs:** ~2,800 lines
 - **Test helpers:** ~600 lines
 - **Configuration:** ~300 lines
@@ -730,8 +767,11 @@ Consider adding tests for:
 
 ## Conclusion
 
-Successfully implemented comprehensive automated testing infrastructure with 77 E2E tests covering all major features. Tests use actual HTML selectors from the codebase, handle app state correctly (hidden/visible elements), and mock external APIs for reliability.
+Successfully implemented comprehensive automated testing infrastructure with 77 E2E tests covering all major features.
+Tests use actual HTML selectors from the codebase, handle app state correctly (hidden/visible elements), and mock
+external APIs for reliability.
 
-All tests are now running successfully with proper selector mappings, visibility handling, and API references. The test suite provides confidence for future development and prevents regressions.
+All tests are now running successfully with proper selector mappings, visibility handling, and API references. The test
+suite provides confidence for future development and prevents regressions.
 
 **Next time changes are made to the app, run `npm run test:ui` to verify everything still works! 🎉**

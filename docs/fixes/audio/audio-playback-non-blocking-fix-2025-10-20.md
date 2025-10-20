@@ -6,7 +6,9 @@
 
 ## Problem Description
 
-After integrating workout sound effects (whistle, boxing bell, three bells), users reported that the timer display would occasionally skip or freeze during playback. This was most noticeable when sounds were triggered (end of rest, end of round, workout complete).
+After integrating workout sound effects (whistle, boxing bell, three bells), users reported that the timer display would
+occasionally skip or freeze during playback. This was most noticeable when sounds were triggered (end of rest, end of
+round, workout complete).
 
 ## Root Cause
 
@@ -27,9 +29,12 @@ async playSound(soundKey) {
 
 ### Why This Caused Issues
 
-1. **Event Loop Blocking**: Even though the calling methods didn't await `playSound()`, the internal `await sound.play()` could cause micro-delays
-2. **Promise Suspension**: The `async` function suspends execution at the `await` point, potentially delaying subsequent code
-3. **Timer Interference**: Since sounds play during critical timer transitions (rep changes, rest periods), any delay affects display updates
+1. **Event Loop Blocking**: Even though the calling methods didn't await `playSound()`, the internal
+   `await sound.play()` could cause micro-delays
+2. **Promise Suspension**: The `async` function suspends execution at the `await` point, potentially delaying subsequent
+   code
+3. **Timer Interference**: Since sounds play during critical timer transitions (rep changes, rest periods), any delay
+   affects display updates
 4. **Main Thread Contention**: Audio playback competing with timer interval callbacks on the same thread
 
 ### Symptoms
@@ -83,6 +88,7 @@ playSound(soundKey) {
 ### HTML5 Audio API
 
 The `play()` method returns a Promise that:
+
 - Resolves when playback starts successfully
 - Rejects if playback fails (e.g., user hasn't interacted with page yet)
 
@@ -91,6 +97,7 @@ By not awaiting this promise, we allow it to resolve in the background while the
 ### Preloading Strategy
 
 Sounds are still preloaded in constructor:
+
 ```javascript
 this.sounds = {
   restEnd: new Audio("/sounds/end_of_rest.mp3"),
@@ -133,11 +140,13 @@ This ensures sounds are ready to play instantly when triggered, but the actual p
 ## Testing
 
 ### Before Fix
+
 - Timer would occasionally freeze for 50-100ms when sounds played
 - Visible skip in countdown display
 - More pronounced on mobile devices
 
 ### After Fix
+
 - Timer runs smoothly even when sounds play
 - No visible skips or freezes
 - Display updates remain consistent
@@ -157,6 +166,7 @@ This ensures sounds are ready to play instantly when triggered, but the actual p
 ## Related Issues
 
 This fix also improves:
+
 - Wake lock reliability (no thread blocking)
 - YouTube volume ducking timing
 - Overall app responsiveness during workouts
@@ -173,6 +183,7 @@ This fix also improves:
 ## Prevention
 
 For future audio features:
+
 1. ✅ Never use `await` on audio operations in timer-critical code
 2. ✅ Always use promise-based fire-and-forget pattern
 3. ✅ Preload sounds for instant playback
@@ -181,6 +192,7 @@ For future audio features:
 ## Verification
 
 To verify fix is working:
+
 1. Open browser DevTools → Performance tab
 2. Start recording
 3. Run workout with multiple rounds

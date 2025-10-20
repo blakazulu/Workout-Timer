@@ -121,7 +121,7 @@ async function handleEmbeddingError(errorMessage) {
 function init() {
   // Prevent duplicate initialization
   if (isInitialized) {
-    console.warn('[App] Already initialized, skipping duplicate init()');
+    console.warn("[App] Already initialized, skipping duplicate init()");
     return;
   }
   isInitialized = true;
