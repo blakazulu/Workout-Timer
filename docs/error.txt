@@ -1,0 +1,118 @@
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+(index):1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received
+analytics.js:51 [Analytics] No API key provided - analytics disabled
+overrideMethod @ hook.js:608
+init @ analytics.js:51
+init @ app.js:123
+(anonymous) @ app.js:200
+analytics-tracker.js:292 [Analytics Tracker] Analytics disabled, skipping tracking setup
+version-check.js:215 ✓ Version checking started (interval: 300s)
+app.js:166 🚀 CYCLE v1.0.35
+app.js:167    Build: 2025-10-20T07:06:32.332Z
+app.js:168    Initialized successfully
+version-check.js:157 📋 Version Check: {client: '1.0.35', clientBuild: '2025-10-20T07:06:32.332Z', server: '1.0.35', serverBuild: '2025-10-20T07:06:31.704Z'}
+version-check.js:190 ✓ Version up to date: 1.0.35
+version-check.js:157 📋 Version Check: {client: '1.0.35', clientBuild: '2025-10-20T07:06:32.332Z', server: '1.0.35', serverBuild: '2025-10-20T07:06:31.704Z'}
+version-check.js:190 ✓ Version up to date: 1.0.35
+version-check.js:157 📋 Version Check: {client: '1.0.35', clientBuild: '2025-10-20T07:06:32.332Z', server: '1.0.35', serverBuild: '2025-10-20T07:06:31.704Z'}
+version-check.js:190 ✓ Version up to date: 1.0.35
+version-check.js:157 📋 Version Check: {client: '1.0.35', clientBuild: '2025-10-20T07:06:32.332Z', server: '1.0.35', serverBuild: '2025-10-20T07:06:31.704Z'}
+version-check.js:190 ✓ Version up to date: 1.0.35
+window.enableTimerDebug()
+audio.js:202 [Audio] Debug mode enabled
+timer.js:599 ✅ Timer debug mode enabled. Reload page to apply.
+timer.js:600 To disable: window.disableTimerDebug()
+undefined
+version-check.js:157 📋 Version Check: {client: '1.0.35', clientBuild: '2025-10-20T07:06:32.332Z', server: '1.0.35', serverBuild: '2025-10-20T07:06:31.704Z'}
+version-check.js:190 ✓ Version up to date: 1.0.35
+wake-lock.js:55 Wake lock acquired - screen will stay on
+timer.js:349 [Timer] Tick completed in 0.10ms. Time: 5s, Rep: 1/3, Resting: false
+timer.js:349 [Timer] Tick completed in 0.10ms. Time: 4s, Rep: 1/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 3s
+timer.js:349 [Timer] Tick completed in 1.40ms. Time: 3s, Rep: 1/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 2s
+timer.js:349 [Timer] Tick completed in 0.50ms. Time: 2s, Rep: 1/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 1s
+timer.js:349 [Timer] Tick completed in 0.40ms. Time: 1s, Rep: 1/3, Resting: false
+timer.js:401 [Timer] Round 1 complete, playing bell...
+audio.js:119 [Audio] Playing roundEnd (original)
+audio.js:180 [Audio] playSound(roundEnd) took 0.40ms
+timer.js:499 [Timer] handleTimerComplete took 1.00ms
+timer.js:349 [Timer] Tick completed in 1.40ms. Time: 0s, Rep: 1/3, Resting: false
+audio.js:127 [Audio] roundEnd finished playing
+timer.js:434 [Timer] Starting rest period (5s)
+timer.js:349 [Timer] Tick completed in 0.20ms. Time: 4s, Rep: 1/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 3s
+timer.js:349 [Timer] Tick completed in 0.40ms. Time: 3s, Rep: 1/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 2s
+timer.js:349 [Timer] Tick completed in 0.30ms. Time: 2s, Rep: 1/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 1s
+timer.js:349 [Timer] Tick completed in 0.40ms. Time: 1s, Rep: 1/3, Resting: true
+timer.js:365 [Timer] Rest complete, playing whistle...
+audio.js:119 [Audio] Playing restEnd (original)
+audio.js:180 [Audio] playSound(restEnd) took 0.40ms
+timer.js:499 [Timer] handleTimerComplete took 0.80ms
+timer.js:349 [Timer] Tick completed in 0.90ms. Time: 0s, Rep: 1/3, Resting: true
+audio.js:127 [Audio] restEnd finished playing
+timer.js:383 [Timer] Starting rep 2
+timer.js:349 [Timer] Tick completed in 0.20ms. Time: 5s, Rep: 2/3, Resting: false
+timer.js:349 [Timer] Tick completed in 0.00ms. Time: 4s, Rep: 2/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 3s
+timer.js:349 [Timer] Tick completed in 0.60ms. Time: 3s, Rep: 2/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 2s
+timer.js:349 [Timer] Tick completed in 0.50ms. Time: 2s, Rep: 2/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 1s
+timer.js:349 [Timer] Tick completed in 0.40ms. Time: 1s, Rep: 2/3, Resting: false
+timer.js:401 [Timer] Round 2 complete, playing bell...
+audio.js:119 [Audio] Playing roundEnd (original)
+audio.js:180 [Audio] playSound(roundEnd) took 0.30ms
+timer.js:499 [Timer] handleTimerComplete took 0.40ms
+timer.js:349 [Timer] Tick completed in 0.60ms. Time: 0s, Rep: 2/3, Resting: false
+audio.js:127 [Audio] roundEnd finished playing
+timer.js:434 [Timer] Starting rest period (5s)
+timer.js:349 [Timer] Tick completed in 0.10ms. Time: 4s, Rep: 2/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 3s
+timer.js:349 [Timer] Tick completed in 0.60ms. Time: 3s, Rep: 2/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 2s
+timer.js:349 [Timer] Tick completed in 0.50ms. Time: 2s, Rep: 2/3, Resting: true
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 1s
+timer.js:349 [Timer] Tick completed in 0.50ms. Time: 1s, Rep: 2/3, Resting: true
+timer.js:365 [Timer] Rest complete, playing whistle...
+audio.js:119 [Audio] Playing restEnd (original)
+audio.js:180 [Audio] playSound(restEnd) took 0.20ms
+timer.js:499 [Timer] handleTimerComplete took 0.60ms
+timer.js:349 [Timer] Tick completed in 0.70ms. Time: 0s, Rep: 2/3, Resting: true
+audio.js:127 [Audio] restEnd finished playing
+timer.js:383 [Timer] Starting rep 3
+timer.js:349 [Timer] Tick completed in 0.10ms. Time: 5s, Rep: 3/3, Resting: false
+timer.js:349 [Timer] Tick completed in 0.10ms. Time: 4s, Rep: 3/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 3s
+timer.js:349 [Timer] Tick completed in 0.60ms. Time: 3s, Rep: 3/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 2s
+timer.js:349 [Timer] Tick completed in 0.80ms. Time: 2s, Rep: 3/3, Resting: false
+audio.js:189 [Audio] Playing alert beep
+timer.js:342 [Timer] Alert beep at 1s
+timer.js:349 [Timer] Tick completed in 0.60ms. Time: 1s, Rep: 3/3, Resting: false
+timer.js:466 [Timer] Workout complete! Playing three bells...
+audio.js:119 [Audio] Playing workoutOver (original)
+audio.js:180 [Audio] playSound(workoutOver) took 0.40ms
+timer.js:499 [Timer] handleTimerComplete took 3.50ms
+timer.js:349 [Timer] Tick completed in 4.20ms. Time: 0s, Rep: 3/3, Resting: false
+audio.js:127 [Audio] workoutOver finished playing
+wake-lock.js:52 Wake lock was released
+timer.js:479 [Timer] Workout sound finished, timer stopped
+wake-lock.js:73 Wake lock released - screen can sleep normally

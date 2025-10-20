@@ -66,6 +66,29 @@ const EVENT_MAPPINGS = {
     }),
   },
 
+  // Sound events
+  "sound:rest_end": {
+    analyticsEvent: "sound_rest_end_played",
+    getProperties: (data) => ({
+      rep_number: data?.repNumber,
+      total_reps: data?.totalReps,
+    }),
+  },
+  "sound:round_end": {
+    analyticsEvent: "sound_round_end_played",
+    getProperties: (data) => ({
+      rep_number: data?.repNumber,
+      total_reps: data?.totalReps,
+    }),
+  },
+  "sound:workout_over": {
+    analyticsEvent: "sound_workout_over_played",
+    getProperties: (data) => ({
+      duration: data?.duration,
+      repetitions: data?.repetitions,
+    }),
+  },
+
   // Music events
   "music:played": {
     analyticsEvent: "music_played",

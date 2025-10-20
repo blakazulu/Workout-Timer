@@ -28,6 +28,9 @@ export class Timer {
     this.targetEndTime = null;
     this.lastAlertSecond = null; // Track which second we last played alert for
 
+    // Debug mode
+    this.debugMode = localStorage.getItem("timer_debug") === "true";
+
     // DOM elements
     this.timerDisplay = $("#timerDisplay");
     this.timerValue = $("#timerValue");
@@ -322,16 +325,28 @@ export class Timer {
    * Uses timestamp-based calculation for accuracy even when screen is locked
    */
   tick() {
+    const tickStart = performance.now();
+
     // Sync current time from timestamp for accuracy
     this.syncTimeFromTimestamp();
 
     // Play alert beep during countdown (both work and rest)
+    // Play on 3, 2, 1 - then transition sound plays at 0
     // Only play once per second to avoid duplicates
     if (this.currentTime <= this.alertTime && this.currentTime > 0) {
       if (this.lastAlertSecond !== this.currentTime) {
         this.audio.playAlert();
         this.lastAlertSecond = this.currentTime;
+
+        if (this.debugMode) {
+          console.log(`[Timer] Alert beep at ${this.currentTime}s`);
+        }
       }
+    }
+
+    if (this.debugMode) {
+      const tickDuration = performance.now() - tickStart;
+      console.log(`[Timer] Tick completed in ${tickDuration.toFixed(2)}ms. Time: ${this.currentTime}s, Rep: ${this.currentRep}/${this.repetitions}, Resting: ${this.isResting}`);
     }
   }
 
@@ -339,43 +354,20 @@ export class Timer {
    * Handle timer completion - called when currentTime reaches 0
    */
   handleTimerComplete() {
+    const completeStart = performance.now();
+
+    // Pause the interval while sound plays
+    clearInterval(this.interval);
+
     if (this.isResting) {
       // Rest period ended, start next rep
-      this.isResting = false;
-      this.currentRep++;
-      this.currentTime = this.duration;
+      if (this.debugMode) {
+        console.log(`[Timer] Rest complete, playing whistle...`);
+      }
 
-      // Update timestamp for next rep
-      const now = Date.now();
-      this.startTimestamp = now;
-      this.targetEndTime = now + (this.currentTime * 1000);
-      this.lastAlertSecond = null;
-
-      this.updateDisplay();
-    } else if (this.currentRep < this.repetitions) {
-      // Work period ended, more reps to go - start rest
-      this.audio.playComplete();
-
-      // Emit rep completed event
-      eventBus.emit("timer:rep_completed", {
-        repNumber: this.currentRep,
-        totalReps: this.repetitions,
-      });
-
-      if (this.restTime > 0) {
-        this.isResting = true;
-        this.currentTime = this.restTime;
-
-        // Update timestamp for rest period
-        const now = Date.now();
-        this.startTimestamp = now;
-        this.targetEndTime = now + (this.currentTime * 1000);
-        this.lastAlertSecond = null;
-
-        this.updateDisplay();
-        // Music continues playing during rest
-      } else {
-        // No rest time, go directly to next rep
+      // Play whistle, then start next rep when it finishes
+      this.audio.playRestEnd(() => {
+        this.isResting = false;
         this.currentRep++;
         this.currentTime = this.duration;
 
@@ -386,21 +378,125 @@ export class Timer {
         this.lastAlertSecond = null;
 
         this.updateDisplay();
+
+        if (this.debugMode) {
+          console.log(`[Timer] Starting rep ${this.currentRep}`);
+        }
+
+        // Emit events (non-blocking)
+        setTimeout(() => {
+          eventBus.emit("sound:rest_end", {
+            repNumber: this.currentRep,
+            totalReps: this.repetitions,
+          });
+        }, 0);
+
+        // Restart interval
+        this.interval = setInterval(() => this.tick(), 1000);
+      });
+    } else if (this.currentRep < this.repetitions) {
+      // Work period ended, more reps to go - start rest
+
+      if (this.debugMode) {
+        console.log(`[Timer] Round ${this.currentRep} complete, playing bell...`);
       }
+
+      const currentRep = this.currentRep;
+      const totalReps = this.repetitions;
+
+      // Play bell, then start rest when it finishes
+      this.audio.playComplete(() => {
+        // Emit events (non-blocking)
+        setTimeout(() => {
+          eventBus.emit("timer:rep_completed", {
+            repNumber: currentRep,
+            totalReps: totalReps,
+          });
+          eventBus.emit("sound:round_end", {
+            repNumber: currentRep,
+            totalReps: totalReps,
+          });
+        }, 0);
+
+        if (this.restTime > 0) {
+          this.isResting = true;
+          this.currentTime = this.restTime;
+
+          // Update timestamp for rest period
+          const now = Date.now();
+          this.startTimestamp = now;
+          this.targetEndTime = now + (this.currentTime * 1000);
+          this.lastAlertSecond = null;
+
+          this.updateDisplay();
+
+          if (this.debugMode) {
+            console.log(`[Timer] Starting rest period (${this.restTime}s)`);
+          }
+
+          // Restart interval
+          this.interval = setInterval(() => this.tick(), 1000);
+          // Music continues playing during rest
+        } else {
+          // No rest time, go directly to next rep
+          this.currentRep++;
+          this.currentTime = this.duration;
+
+          // Update timestamp for next rep
+          const now = Date.now();
+          this.startTimestamp = now;
+          this.targetEndTime = now + (this.currentTime * 1000);
+          this.lastAlertSecond = null;
+
+          this.updateDisplay();
+
+          if (this.debugMode) {
+            console.log(`[Timer] No rest, starting rep ${this.currentRep}`);
+          }
+
+          // Restart interval
+          this.interval = setInterval(() => this.tick(), 1000);
+        }
+      });
     } else {
       // All reps completed
       const completionTime = Date.now();
 
-      this.stop();
-      this.audio.playFinalComplete();
+      if (this.debugMode) {
+        console.log(`[Timer] Workout complete! Playing three bells...`);
+      }
+
       this.repCounter.textContent = "✓ Complete!";
 
-      // Emit workout completed event
-      eventBus.emit("timer:completed", {
-        duration: this.duration,
-        repetitions: this.repetitions,
-        completionTime,
+      // Play three bells, then stop when finished
+      const duration = this.duration;
+      const repetitions = this.repetitions;
+
+      this.audio.playFinalComplete(() => {
+        this.stop();
+
+        if (this.debugMode) {
+          console.log(`[Timer] Workout sound finished, timer stopped`);
+        }
+
+        // Emit events (non-blocking)
+        setTimeout(() => {
+          eventBus.emit("timer:completed", {
+            duration,
+            repetitions,
+            completionTime,
+          });
+          eventBus.emit("sound:workout_over", {
+            duration,
+            repetitions,
+          });
+        }, 0);
       });
+    }
+
+    if (this.debugMode) {
+      const completeDuration = performance.now() - completeStart;
+      console.log(`[Timer] handleTimerComplete took ${completeDuration.toFixed(2)}ms`);
     }
   }
 
@@ -486,4 +582,70 @@ export function initTimer(settings = {}) {
  */
 export function getTimer() {
   return timer;
+}
+
+/**
+ * Enable debug mode for timer and audio
+ * Usage in browser console: window.enableTimerDebug()
+ */
+export function enableTimerDebug() {
+  if (timer) {
+    timer.debugMode = true;
+    localStorage.setItem("timer_debug", "true");
+  }
+  if (timer?.audio) {
+    timer.audio.setDebugMode(true);
+  }
+  console.log("✅ Timer debug mode enabled. Reload page to apply.");
+  console.log("To disable: window.disableTimerDebug()");
+}
+
+/**
+ * Disable debug mode
+ */
+export function disableTimerDebug() {
+  if (timer) {
+    timer.debugMode = false;
+    localStorage.setItem("timer_debug", "false");
+  }
+  if (timer?.audio) {
+    timer.audio.setDebugMode(false);
+  }
+  console.log("✅ Timer debug mode disabled. Reload page to apply.");
+}
+
+/**
+ * Get debug stats
+ */
+export function getTimerStats() {
+  if (!timer) {
+    console.log("Timer not initialized");
+    return;
+  }
+
+  const stats = {
+    timer: {
+      currentTime: timer.currentTime,
+      currentRep: timer.currentRep,
+      isRunning: timer.isRunning,
+      isResting: timer.isResting,
+      duration: timer.duration,
+      repetitions: timer.repetitions,
+      restTime: timer.restTime,
+      alertTime: timer.alertTime,
+      debugMode: timer.debugMode,
+    },
+    audio: timer.audio?.getStats(),
+  };
+
+  console.table(stats.timer);
+  console.log("Audio Stats:", stats.audio);
+  return stats;
+}
+
+// Expose to window for easy debugging
+if (typeof window !== "undefined") {
+  window.enableTimerDebug = enableTimerDebug;
+  window.disableTimerDebug = disableTimerDebug;
+  window.getTimerStats = getTimerStats;
 }
