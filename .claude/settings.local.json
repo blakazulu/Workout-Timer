@@ -46,7 +46,13 @@
       "mcp__posthog__event-definitions-list",
       "mcp__posthog__properties-list",
       "mcp__posthog__query-run",
-      "WebFetch(domain:app.posthog.com)"
+      "WebFetch(domain:app.posthog.com)",
+      "Bash(lsof -i :5173)",
+      "Bash(netstat -ano)",
+      "Read(//tmp/**)",
+      "Bash(mv:*)",
+      "Bash(do echo \"=== $dir%/ ===\")",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

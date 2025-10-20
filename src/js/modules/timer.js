@@ -22,6 +22,7 @@ export class Timer {
     this.youtube = null;
     this.isAlertActive = false;
     this.normalVolume = 100;
+    this.transitionInProgress = false; // Prevent duplicate transition calls
 
     // Timestamp-based tracking for accurate timing even when screen is locked
     this.startTimestamp = null;
@@ -50,6 +51,13 @@ export class Timer {
     // Bind visibility change handler to sync timer when page becomes visible
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     document.addEventListener("visibilitychange", this.handleVisibilityChange);
+
+    // Cleanup wake lock on page unload
+    window.addEventListener("beforeunload", () => {
+      if (this.wakeLock) {
+        this.wakeLock.release();
+      }
+    });
   }
 
   /**
@@ -100,6 +108,12 @@ export class Timer {
       this.alertTime = parseInt($("#alertTime").value);
       this.repetitions = parseInt($("#repetitions").value);
       this.restTime = parseInt($("#restTime").value);
+
+      // Validate alert time doesn't exceed duration
+      if (this.alertTime > this.duration) {
+        this.alertTime = this.duration;
+        $("#alertTime").value = this.alertTime;
+      }
 
       // Track if this is a fresh start or resume
       const isFreshStart = !this.currentTime;
@@ -354,6 +368,15 @@ export class Timer {
    * Handle timer completion - called when currentTime reaches 0
    */
   handleTimerComplete() {
+    // Prevent duplicate calls (e.g., from visibility change during transition)
+    if (this.transitionInProgress) {
+      if (this.debugMode) {
+        console.log('[Timer] Transition already in progress, ignoring duplicate call');
+      }
+      return;
+    }
+
+    this.transitionInProgress = true;
     const completeStart = performance.now();
 
     // Pause the interval while sound plays
@@ -367,6 +390,15 @@ export class Timer {
 
       // Play whistle, then start next rep when it finishes
       this.audio.playRestEnd(() => {
+        // Check if timer was paused/stopped during sound playback
+        if (!this.isRunning) {
+          if (this.debugMode) {
+            console.log('[Timer] Skipping restart - timer was paused/stopped during transition');
+          }
+          this.transitionInProgress = false;
+          return;
+        }
+
         this.isResting = false;
         this.currentRep++;
         this.currentTime = this.duration;
@@ -393,6 +425,7 @@ export class Timer {
 
         // Restart interval
         this.interval = setInterval(() => this.tick(), 1000);
+        this.transitionInProgress = false;
       });
     } else if (this.currentRep < this.repetitions) {
       // Work period ended, more reps to go - start rest
@@ -406,6 +439,15 @@ export class Timer {
 
       // Play bell, then start rest when it finishes
       this.audio.playComplete(() => {
+        // Check if timer was paused/stopped during sound playback
+        if (!this.isRunning) {
+          if (this.debugMode) {
+            console.log('[Timer] Skipping restart - timer was paused/stopped during transition');
+          }
+          this.transitionInProgress = false;
+          return;
+        }
+
         // Emit events (non-blocking)
         setTimeout(() => {
           eventBus.emit("timer:rep_completed", {
@@ -436,6 +478,7 @@ export class Timer {
 
           // Restart interval
           this.interval = setInterval(() => this.tick(), 1000);
+          this.transitionInProgress = false;
           // Music continues playing during rest
         } else {
           // No rest time, go directly to next rep
@@ -456,6 +499,7 @@ export class Timer {
 
           // Restart interval
           this.interval = setInterval(() => this.tick(), 1000);
+          this.transitionInProgress = false;
         }
       });
     } else {
@@ -473,7 +517,10 @@ export class Timer {
       const repetitions = this.repetitions;
 
       this.audio.playFinalComplete(() => {
+        // Always stop timer after final sound, regardless of pause state
+        // (User might have paused, but workout is complete)
         this.stop();
+        this.transitionInProgress = false;
 
         if (this.debugMode) {
           console.log(`[Timer] Workout sound finished, timer stopped`);
@@ -524,6 +571,7 @@ export class Timer {
     // Handle YouTube volume ducking
     if (shouldAlert && !this.isAlertActive) {
       // Entering alert state - duck the music volume
+      // Only save normalVolume when entering alert state (not when leaving)
       if (this.youtube) {
         this.normalVolume = this.youtube.getVolume();
         this.youtube.setVolume(25); // Reduce to 25%

@@ -33,6 +33,9 @@ let youtubeModule = null;
 // Search dropdown instance
 let searchDropdown = null;
 
+// Initialization guard to prevent duplicate setup
+let isInitialized = false;
+
 // Register service worker with update notifications
 const updateSW = registerSW({
   onNeedRefresh() {
@@ -116,6 +119,13 @@ async function handleEmbeddingError(errorMessage) {
  * Initialize the application
  */
 function init() {
+  // Prevent duplicate initialization
+  if (isInitialized) {
+    console.warn('[App] Already initialized, skipping duplicate init()');
+    return;
+  }
+  isInitialized = true;
+
   // Initialize PWA install handlers
   initPWAInstall();
 

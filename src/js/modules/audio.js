@@ -10,8 +10,20 @@ export class AudioManager {
       this.audioEnabled = true;
 
       // Resume audio context on first user interaction (required by some browsers)
+      // Support multiple interaction types for better mobile compatibility
       if (this.audioContext.state === "suspended") {
-        document.addEventListener("click", () => this.resumeContext(), {once: true});
+        const resumeEvents = ["click", "touchstart", "keydown"];
+        const resumeHandler = () => {
+          this.resumeContext();
+          // Remove all listeners after first interaction
+          resumeEvents.forEach(event => {
+            document.removeEventListener(event, resumeHandler);
+          });
+        };
+
+        resumeEvents.forEach(event => {
+          document.addEventListener(event, resumeHandler, {once: true});
+        });
       }
     } catch (error) {
       console.error("AudioContext initialization failed:", error);
@@ -34,7 +46,11 @@ export class AudioManager {
 
     // Track cloned audio elements for cleanup
     this.activeClones = [];
+    this.maxClones = 10; // Maximum concurrent clones to prevent memory issues
     this.debugMode = localStorage.getItem("audio_debug") === "true";
+
+    // Periodic cleanup of stale clones (every 10 seconds)
+    setInterval(() => this.cleanupStaleClones(), 10000);
   }
 
   /**
@@ -48,6 +64,31 @@ export class AudioManager {
       } catch (error) {
         console.error("Failed to resume AudioContext:", error);
       }
+    }
+  }
+
+  /**
+   * Cleanup stale audio clones to prevent memory leaks
+   */
+  cleanupStaleClones() {
+    const beforeCount = this.activeClones.length;
+
+    this.activeClones = this.activeClones.filter(clone => {
+      // Remove if ended or paused (stale)
+      if (clone.ended || clone.paused) {
+        try {
+          clone.remove();
+        } catch (error) {
+          // Clone might already be removed
+        }
+        return false;
+      }
+      return true;
+    });
+
+    const cleaned = beforeCount - this.activeClones.length;
+    if (this.debugMode && cleaned > 0) {
+      console.log(`[Audio] Cleanup: Removed ${cleaned} stale clones, ${this.activeClones.length} still active`);
     }
   }
 
@@ -110,6 +151,17 @@ export class AudioManager {
       return;
     }
 
+    // Protection against double callback execution
+    let callbackFired = false;
+    let timeoutId = null;
+
+    const safeCallback = () => {
+      if (callbackFired) return;
+      callbackFired = true;
+      if (timeoutId) clearTimeout(timeoutId);
+      if (onEnded) onEnded();
+    };
+
     // Only reset if sound has finished or hasn't started
     // This prevents audio glitches from interrupting playback
     if (sound.paused || sound.ended) {
@@ -126,19 +178,36 @@ export class AudioManager {
           if (this.debugMode) {
             console.log(`[Audio] ${soundKey} finished playing`);
           }
-          onEnded();
+          safeCallback();
         };
         sound.addEventListener("ended", endHandler);
+
+        // Timeout fallback (sound duration + buffer)
+        // Longest sound is workoutOver (~2s), use 5s to be safe
+        timeoutId = setTimeout(() => {
+          if (this.debugMode) {
+            console.warn(`[Audio] ${soundKey} timeout - forcing callback`);
+          }
+          safeCallback();
+        }, 5000);
       }
 
       // Play the sound asynchronously without blocking
       sound.play().catch((error) => {
         console.warn(`[Audio] Failed to play sound ${soundKey}:`, error);
-        if (onEnded) onEnded();
+        safeCallback();
       });
     } else {
       // Sound is already playing, let it finish
       // Clone and play new instance for overlapping sounds
+
+      // Enforce max clone limit
+      if (this.activeClones.length >= this.maxClones) {
+        console.warn(`[Audio] Max clones (${this.maxClones}) reached, skipping ${soundKey}`);
+        if (onEnded) setTimeout(onEnded, 0);
+        return;
+      }
+
       const clone = sound.cloneNode();
       clone.volume = sound.volume;
 
@@ -148,19 +217,21 @@ export class AudioManager {
         if (index > -1) {
           this.activeClones.splice(index, 1);
         }
-        clone.remove();
+        try {
+          clone.remove();
+        } catch (error) {
+          // Clone might already be removed
+        }
 
         if (this.debugMode) {
           console.log(`[Audio] Cleaned up clone for ${soundKey}. Active clones: ${this.activeClones.length}`);
         }
 
         // Call onEnded callback if provided
-        if (onEnded) {
-          if (this.debugMode) {
-            console.log(`[Audio] ${soundKey} (clone) finished playing`);
-          }
-          onEnded();
+        if (this.debugMode && onEnded) {
+          console.log(`[Audio] ${soundKey} (clone) finished playing`);
         }
+        safeCallback();
       });
 
       this.activeClones.push(clone);
@@ -169,9 +240,19 @@ export class AudioManager {
         console.log(`[Audio] Playing ${soundKey} (clone #${this.activeClones.length})`);
       }
 
+      // Timeout fallback for clones too
+      if (onEnded) {
+        timeoutId = setTimeout(() => {
+          if (this.debugMode) {
+            console.warn(`[Audio] ${soundKey} clone timeout - forcing callback`);
+          }
+          safeCallback();
+        }, 5000);
+      }
+
       clone.play().catch((error) => {
         console.warn(`[Audio] Failed to play sound clone ${soundKey}:`, error);
-        if (onEnded) onEnded();
+        safeCallback();
       });
     }
 
