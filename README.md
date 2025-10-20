@@ -10,7 +10,12 @@ all 30+ minutes long for uninterrupted workouts.
 
 - ⏱️ **Customizable Work/Rest Cycles** - Set workout duration (5s-1hr) and rest periods (0-300s)
 - 🔁 **Multiple Repetitions** - Track up to 99 consecutive workout sets with automatic progression
-- 🔊 **Audio Alerts** - Web Audio API beeps with custom frequencies (no audio files needed)
+- 🔊 **Professional Workout Sounds** - Boxing gym atmosphere with whistle, bell, and completion sounds
+  - 🥊 **Boxing Bell** - Rings at the end of each round (just like a real boxing gym)
+  - 🎵 **Whistle Sound** - Signals when rest period ends and it's time to work
+  - 🔔 **Three Bells** - Celebrates workout completion with triumphant bell sequence
+  - ⏸️ **Smart Timing** - Timer pauses while transition sounds play for clear audio feedback
+- 🔊 **Countdown Alerts** - Web Audio API beeps (3, 2, 1) before each transition
 - 📳 **Haptic Feedback** - Vibration patterns for mobile devices during alerts and completions
 - 🎯 **Smart Volume Ducking** - Music automatically reduces to 25% during final countdown alerts
 - 💾 **Auto-Save Settings** - All preferences automatically persist on change
@@ -199,26 +204,37 @@ The app is configured for Netlify deployment:
 
 - Timer glows pink (#ff0096) with pulsing animation
 - Music volume ducks to 25%
-- Rapid beep sounds (800Hz)
+- Countdown beeps at 3s, 2s, 1s (800Hz)
 - Vibration on mobile devices
+
+**Round Complete:**
+
+- Timer pauses at 0:00
+- 🔔 **Boxing bell rings** (professional gym sound)
+- Vibration pattern
+- Bell finishes, then rest period begins
+- Music continues at normal volume
 
 **Rest Period:**
 
 - Timer displays "REST - Next: Rep X / Y"
 - Background tints cyan
 - Music continues at normal volume
-- Alert beeps in final 3 seconds
+- Alert beeps at 3s, 2s, 1s
 
-**Between Reps:**
+**Rest Complete:**
 
-- Double beep melody (523Hz + 659Hz)
-- Double vibration pattern
-- Automatic progression to next rep after rest
+- Timer pauses at 0:00
+- 🎵 **Whistle blows** (sharp, motivating sound)
+- Vibration pattern
+- Whistle finishes, then next round starts
 
-**Completion:**
+**Workout Completion:**
 
-- Triple beep melody (523Hz + 659Hz + 784Hz)
+- Timer pauses at 0:00
+- 🔔🔔🔔 **Three bells ring** (triumphant sequence)
 - Triple vibration pattern
+- Bells finish, timer stops
 - "✓ Complete!" message
 - Music stops, settings panel returns
 
@@ -285,6 +301,7 @@ The app is configured for Netlify deployment:
 ### Browser APIs
 
 - **Web Audio API** - Programmatic beep generation with frequency/duration control
+- **HTML5 Audio API** - Professional workout sound effects (MP3 playback with callbacks)
 - **YouTube IFrame Player API** - Full playback control, metadata access, error handling
 - **YouTube Data API v3** - Music library curation, auto-updating, and live search (backend)
 - **Vibration API** - Haptic feedback patterns for mobile devices
@@ -468,6 +485,10 @@ src/
 ├── scripts/
 │   └── generate-version.js # Build-time version generation
 ├── public/
+│   ├── sounds/             # Professional workout sound effects
+│   │   ├── end_of_rest.mp3     # Whistle sound (rest complete)
+│   │   ├── end_of_round.mp3    # Boxing bell (round complete)
+│   │   └── workout_over.mp3    # Three bells (workout complete)
 │   └── version.json        # Generated version metadata
 ├── netlify/
 │   └── functions/
@@ -479,7 +500,11 @@ src/
 
 - **Timer State:** currentTime, currentRep, isRunning, isResting
 - **YouTube State:** player instance, isReady, currentVideoId, lazy-loaded
-- **Audio State:** audioContext, vibrationEnabled, volumeDucking
+- **Audio State:**
+  - Web Audio API beeps: audioContext, vibrationEnabled, volumeDucking
+  - Sound Effects: preloaded MP3s (whistle, bell, three bells), active clones tracking
+  - Callback-based timing: timer waits for transition sounds to finish
+  - Memory management: automatic cleanup of cloned audio elements
 - **Settings State:** Persisted in localStorage, auto-saved on change
 - **Library State:** Song play history, play counts, timestamps (localStorage)
 - **Favorites State:** Favorited songs with metadata (localStorage)
@@ -596,9 +621,14 @@ This project deliberately avoids frameworks for several advantages:
 
 ## 🎯 Project Status
 
-### ✅ Completed Features (v1.0.31)
+### ✅ Completed Features (v1.0.35)
 
 - [x] Core timer with work/rest cycles
+- [x] **Professional Workout Sounds** - Boxing bell, whistle, and completion bells
+- [x] **Smart Audio Timing** - Timer pauses during transition sounds for clear feedback
+- [x] **Countdown Beeps** - Alert sounds at 3, 2, 1 before transitions
+- [x] **Memory-Optimized Audio** - Efficient sound playback with automatic cleanup
+- [x] **Debug Mode** - Performance monitoring and audio diagnostics (developer tools)
 - [x] YouTube background video integration
 - [x] Music controls widget with seeking
 - [x] **Curated Music Library** - 180+ tracks across 18 categories
@@ -718,6 +748,7 @@ MIT License - See LICENSE file for details
 - 🎵 **180+ Curated Tracks** across 8 moods & 10 genres
 - 💖 **Favorite Songs** - Save and play random favorites from your collection
 - ⏱️ **Precision Timer** with work/rest cycles
+- 🥊 **Professional Sounds** - Boxing bell, whistle, and completion sounds for authentic gym experience
 - 📚 **Music Library** - Beautiful visual library tracking your workout music with favorites
 - 🎨 **Cyberpunk Theme** with neon gradient animations
 - 📱 **PWA** - Install and use offline
