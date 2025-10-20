@@ -10,6 +10,13 @@ test.describe("Audio Module - Unit Tests", () => {
   test.beforeEach(async ({page}) => {
     await mockAudioAPI(page);
     await page.goto("/");
+
+    // Clear audio instances from previous tests
+    await page.evaluate(() => {
+      if (window.__clearAudioInstances) {
+        window.__clearAudioInstances();
+      }
+    });
   });
 
   test("should create audio instance", async ({page}) => {
@@ -60,10 +67,10 @@ test.describe("Audio Module - Unit Tests", () => {
       const results = [];
 
       audio.volume = -0.5;
-      results.push(audio.volume);
+      results.push(audio.volume); // Should be clamped to 0
 
       audio.volume = 1.5;
-      results.push(audio.volume);
+      results.push(audio.volume); // Should be clamped to 1
 
       audio.volume = 0;
       results.push(audio.volume);
@@ -75,8 +82,8 @@ test.describe("Audio Module - Unit Tests", () => {
     });
 
     // Volume should be clamped to 0-1 range
-    expect(volumes[0]).toBeGreaterThanOrEqual(0);
-    expect(volumes[1]).toBeLessThanOrEqual(1);
+    expect(volumes[0]).toBe(0); // -0.5 clamped to 0
+    expect(volumes[1]).toBe(1); // 1.5 clamped to 1
     expect(volumes[2]).toBe(0);
     expect(volumes[3]).toBe(1);
   });

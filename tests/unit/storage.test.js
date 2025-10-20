@@ -1,240 +1,369 @@
 /**
  * Unit Tests for Storage Module
- * Tests localStorage operations, data persistence, and migrations
+ * Tests timer settings and song history storage operations
  */
 
 import {expect, test} from "@playwright/test";
 
-test.describe("Storage Module - Unit Tests", () => {
+test.describe("Storage Module - Timer Settings", () => {
   test.beforeEach(async ({page}) => {
     await page.goto("/");
 
-    // Clear localStorage before each test
-    await page.evaluate(() => {
+    // Import storage module and clear storage
+    await page.evaluate(async () => {
+      const {loadSettings, saveSettings, clearSettings} =
+        await import("/src/js/modules/storage.js");
+
+      window.__testStorage = {
+        loadSettings,
+        saveSettings,
+        clearSettings
+      };
+
+      // Clear storage before each test
       localStorage.clear();
     });
   });
 
-  test("should save data to localStorage", async ({page}) => {
-    await page.evaluate(() => {
-      localStorage.setItem("test-key", JSON.stringify({value: "test"}));
+  test("should load default settings when none exist", async ({page}) => {
+    const settings = await page.evaluate(() => {
+      return window.__testStorage.loadSettings();
     });
+
+    expect(settings).toEqual({
+      duration: 30,
+      alertTime: 3,
+      repetitions: 3,
+      restTime: 10
+    });
+  });
+
+  test("should save settings to localStorage", async ({page}) => {
+    const customSettings = {
+      duration: 45,
+      alertTime: 5,
+      repetitions: 5,
+      restTime: 15
+    };
+
+    await page.evaluate((settings) => {
+      window.__testStorage.saveSettings(settings);
+    }, customSettings);
 
     const stored = await page.evaluate(() => {
-      const data = localStorage.getItem("test-key");
+      const data = localStorage.getItem("workout-timer-settings");
       return data ? JSON.parse(data) : null;
     });
 
-    expect(stored).toEqual({value: "test"});
+    expect(stored).toEqual(customSettings);
   });
 
-  test("should retrieve data from localStorage", async ({page}) => {
-    await page.evaluate(() => {
-      localStorage.setItem("test-key", JSON.stringify({value: "test"}));
+  test("should load saved settings", async ({page}) => {
+    const customSettings = {
+      duration: 60,
+      alertTime: 10,
+      repetitions: 8,
+      restTime: 20
+    };
+
+    await page.evaluate((settings) => {
+      window.__testStorage.saveSettings(settings);
+    }, customSettings);
+
+    const loaded = await page.evaluate(() => {
+      return window.__testStorage.loadSettings();
     });
 
-    const retrieved = await page.evaluate(() => {
-      const data = localStorage.getItem("test-key");
-      return data ? JSON.parse(data) : null;
-    });
-
-    expect(retrieved.value).toBe("test");
+    expect(loaded).toEqual(customSettings);
   });
 
-  test("should remove data from localStorage", async ({page}) => {
+  test("should merge saved settings with defaults", async ({page}) => {
+    // Save partial settings
     await page.evaluate(() => {
-      localStorage.setItem("test-key", "test-value");
-      localStorage.removeItem("test-key");
+      localStorage.setItem("workout-timer-settings", JSON.stringify({
+        duration: 45
+        // Missing alertTime, repetitions, restTime
+      }));
     });
+
+    const loaded = await page.evaluate(() => {
+      return window.__testStorage.loadSettings();
+    });
+
+    // Should have custom duration but default values for others
+    expect(loaded.duration).toBe(45);
+    expect(loaded.alertTime).toBe(3);
+    expect(loaded.repetitions).toBe(3);
+    expect(loaded.restTime).toBe(10);
+  });
+
+  test("should clear settings", async ({page}) => {
+    const customSettings = {
+      duration: 45,
+      alertTime: 5,
+      repetitions: 5,
+      restTime: 15
+    };
+
+    await page.evaluate((settings) => {
+      window.__testStorage.saveSettings(settings);
+      window.__testStorage.clearSettings();
+    }, customSettings);
 
     const exists = await page.evaluate(() => {
-      return localStorage.getItem("test-key");
+      return localStorage.getItem("workout-timer-settings");
     });
 
     expect(exists).toBeNull();
   });
 
-  test("should clear all localStorage data", async ({page}) => {
+  test("should handle corrupted JSON gracefully", async ({page}) => {
     await page.evaluate(() => {
-      localStorage.setItem("key1", "value1");
-      localStorage.setItem("key2", "value2");
+      localStorage.setItem("workout-timer-settings", "{invalid json}");
+    });
+
+    const settings = await page.evaluate(() => {
+      return window.__testStorage.loadSettings();
+    });
+
+    // Should return defaults when JSON parsing fails
+    expect(settings).toEqual({
+      duration: 30,
+      alertTime: 3,
+      repetitions: 3,
+      restTime: 10
+    });
+  });
+});
+
+test.describe("Storage Module - Song History", () => {
+  const createMockSong = (id = "test-video") => ({
+    videoId: id,
+    title: `Test Song ${id}`,
+    channel: "Test Channel",
+    duration: 180,
+    url: `https://youtube.com/watch?v=${id}`
+  });
+
+  test.beforeEach(async ({page}) => {
+    await page.goto("/");
+
+    // Import storage module and clear storage
+    await page.evaluate(async () => {
+      const {
+        saveSongToHistory,
+        getSongHistory,
+        clearSongHistory,
+        removeSongFromHistory,
+        getMostPlayedSongs
+      } = await import("/src/js/modules/storage.js");
+
+      window.__testStorage = {
+        saveSongToHistory,
+        getSongHistory,
+        clearSongHistory,
+        removeSongFromHistory,
+        getMostPlayedSongs
+      };
+
+      // Clear storage before each test
       localStorage.clear();
     });
-
-    const count = await page.evaluate(() => {
-      return localStorage.length;
-    });
-
-    expect(count).toBe(0);
   });
 
-  test("should handle JSON serialization/deserialization", async ({page}) => {
-    const testData = {
-      string: "test",
-      number: 42,
-      boolean: true,
-      array: [1, 2, 3],
-      object: {nested: "value"}
-    };
-
-    await page.evaluate((data) => {
-      localStorage.setItem("complex-data", JSON.stringify(data));
-    }, testData);
-
-    const retrieved = await page.evaluate(() => {
-      const data = localStorage.getItem("complex-data");
-      return data ? JSON.parse(data) : null;
+  test("should initialize with empty song history", async ({page}) => {
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
     });
 
-    expect(retrieved).toEqual(testData);
+    expect(history).toEqual([]);
   });
 
-  test("should handle localStorage quota exceeded", async ({page}) => {
-    const result = await page.evaluate(() => {
-      try {
-        // Try to fill localStorage
-        const largeString = "x".repeat(5 * 1024 * 1024); // 5MB
-        localStorage.setItem("large-key", largeString);
-        return {success: true, error: null};
-      } catch (error) {
-        return {success: false, error: error.name};
+  test("should save song to history", async ({page}) => {
+    const song = createMockSong("video-1");
+
+    await page.evaluate((songData) => {
+      window.__testStorage.saveSongToHistory(songData);
+    }, song);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    expect(history).toHaveLength(1);
+    expect(history[0].videoId).toBe("video-1");
+    expect(history[0].title).toBe(song.title);
+    expect(history[0].playCount).toBe(1);
+  });
+
+  test("should increment play count for repeated songs", async ({page}) => {
+    const song = createMockSong("video-1");
+
+    await page.evaluate((songData) => {
+      window.__testStorage.saveSongToHistory(songData);
+      window.__testStorage.saveSongToHistory(songData);
+      window.__testStorage.saveSongToHistory(songData);
+    }, song);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    expect(history).toHaveLength(1);
+    expect(history[0].playCount).toBe(3);
+  });
+
+  test("should move repeated song to front of history", async ({page}) => {
+    const song1 = createMockSong("video-1");
+    const song2 = createMockSong("video-2");
+    const song3 = createMockSong("video-3");
+
+    await page.evaluate((songs) => {
+      window.__testStorage.saveSongToHistory(songs[0]);
+      window.__testStorage.saveSongToHistory(songs[1]);
+      window.__testStorage.saveSongToHistory(songs[2]);
+      // Play song1 again - should move to front
+      window.__testStorage.saveSongToHistory(songs[0]);
+    }, [song1, song2, song3]);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    expect(history).toHaveLength(3);
+    expect(history[0].videoId).toBe("video-1"); // Most recent
+    expect(history[0].playCount).toBe(2);
+  });
+
+  test("should include metadata in song entries", async ({page}) => {
+    const song = createMockSong("video-1");
+
+    await page.evaluate((songData) => {
+      window.__testStorage.saveSongToHistory(songData);
+    }, song);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    const entry = history[0];
+    expect(entry.videoId).toBe(song.videoId);
+    expect(entry.title).toBe(song.title);
+    expect(entry.channel).toBe(song.channel);
+    expect(entry.duration).toBe(song.duration);
+    expect(entry.url).toBe(song.url);
+    expect(entry.thumbnail).toBeDefined();
+    expect(entry.thumbnail).toContain(song.videoId);
+    expect(entry.playedAt).toBeDefined();
+    expect(entry.playCount).toBe(1);
+  });
+
+  test("should remove song from history", async ({page}) => {
+    const song1 = createMockSong("video-1");
+    const song2 = createMockSong("video-2");
+
+    await page.evaluate((songs) => {
+      window.__testStorage.saveSongToHistory(songs[0]);
+      window.__testStorage.saveSongToHistory(songs[1]);
+      window.__testStorage.removeSongFromHistory("video-1");
+    }, [song1, song2]);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    expect(history).toHaveLength(1);
+    expect(history[0].videoId).toBe("video-2");
+  });
+
+  test("should clear all song history", async ({page}) => {
+    const song1 = createMockSong("video-1");
+    const song2 = createMockSong("video-2");
+
+    await page.evaluate((songs) => {
+      window.__testStorage.saveSongToHistory(songs[0]);
+      window.__testStorage.saveSongToHistory(songs[1]);
+      window.__testStorage.clearSongHistory();
+    }, [song1, song2]);
+
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
+    });
+
+    expect(history).toEqual([]);
+  });
+
+  test("should get most played songs", async ({page}) => {
+    const song1 = createMockSong("video-1");
+    const song2 = createMockSong("video-2");
+    const song3 = createMockSong("video-3");
+
+    await page.evaluate((songs) => {
+      // Song 1: 5 plays
+      for (let i = 0; i < 5; i++) {
+        window.__testStorage.saveSongToHistory(songs[0]);
       }
+      // Song 2: 3 plays
+      for (let i = 0; i < 3; i++) {
+        window.__testStorage.saveSongToHistory(songs[1]);
+      }
+      // Song 3: 1 play
+      window.__testStorage.saveSongToHistory(songs[2]);
+    }, [song1, song2, song3]);
+
+    const mostPlayed = await page.evaluate(() => {
+      return window.__testStorage.getMostPlayedSongs(10);
     });
 
-    // Should either succeed or throw QuotaExceededError
-    if (!result.success) {
-      expect(result.error).toBe("QuotaExceededError");
-    }
+    expect(mostPlayed).toHaveLength(3);
+    expect(mostPlayed[0].videoId).toBe("video-1"); // Most played
+    expect(mostPlayed[0].playCount).toBe(5);
+    expect(mostPlayed[1].videoId).toBe("video-2");
+    expect(mostPlayed[1].playCount).toBe(3);
+    expect(mostPlayed[2].videoId).toBe("video-3");
+    expect(mostPlayed[2].playCount).toBe(1);
   });
 
-  test("should version stored data for migrations", async ({page}) => {
-    await page.evaluate(() => {
-      const favorites = {
-        version: 1,
-        songs: ["video-1", "video-2"]
-      };
-      localStorage.setItem("favorites", JSON.stringify(favorites));
+  test("should limit most played songs list", async ({page}) => {
+    // Create 15 songs
+    const songs = Array.from({length: 15}, (_, i) =>
+      createMockSong(`video-${i + 1}`)
+    );
+
+    await page.evaluate((songList) => {
+      songList.forEach(song => {
+        window.__testStorage.saveSongToHistory(song);
+      });
+    }, songs);
+
+    const mostPlayed = await page.evaluate(() => {
+      return window.__testStorage.getMostPlayedSongs(5);
     });
 
-    const data = await page.evaluate(() => {
-      const stored = localStorage.getItem("favorites");
-      return stored ? JSON.parse(stored) : null;
-    });
-
-    expect(data.version).toBe(1);
-    expect(data.songs).toBeDefined();
+    expect(mostPlayed).toHaveLength(5);
   });
 
-  test("should handle missing keys gracefully", async ({page}) => {
-    const result = await page.evaluate(() => {
-      return localStorage.getItem("non-existent-key");
-    });
+  test("should persist history across page reloads", async ({page}) => {
+    const song = createMockSong("video-1");
 
-    expect(result).toBeNull();
-  });
-
-  test("should preserve data across page reloads", async ({page}) => {
-    // Set data
-    await page.evaluate(() => {
-      localStorage.setItem("persist-test", JSON.stringify({value: "persistent"}));
-    });
+    await page.evaluate((songData) => {
+      window.__testStorage.saveSongToHistory(songData);
+    }, song);
 
     // Reload page
     await page.reload();
 
-    // Data should still exist
-    const data = await page.evaluate(() => {
-      const stored = localStorage.getItem("persist-test");
-      return stored ? JSON.parse(stored) : null;
+    // Re-import module
+    await page.evaluate(async () => {
+      const {getSongHistory} = await import("/src/js/modules/storage.js");
+      window.__testStorage = {getSongHistory};
     });
 
-    expect(data.value).toBe("persistent");
-  });
-
-  test("should handle invalid JSON gracefully", async ({page}) => {
-    const result = await page.evaluate(() => {
-      localStorage.setItem("invalid-json", "{invalid json}");
-
-      try {
-        const data = localStorage.getItem("invalid-json");
-        return JSON.parse(data);
-      } catch (error) {
-        return {error: error.name};
-      }
+    const history = await page.evaluate(() => {
+      return window.__testStorage.getSongHistory();
     });
 
-    expect(result.error).toBe("SyntaxError");
-  });
-
-  test("should update existing keys", async ({page}) => {
-    await page.evaluate(() => {
-      localStorage.setItem("update-test", JSON.stringify({value: "old"}));
-      localStorage.setItem("update-test", JSON.stringify({value: "new"}));
-    });
-
-    const data = await page.evaluate(() => {
-      const stored = localStorage.getItem("update-test");
-      return stored ? JSON.parse(stored) : null;
-    });
-
-    expect(data.value).toBe("new");
-  });
-
-  test("should enumerate all storage keys", async ({page}) => {
-    await page.evaluate(() => {
-      localStorage.setItem("key1", "value1");
-      localStorage.setItem("key2", "value2");
-      localStorage.setItem("key3", "value3");
-    });
-
-    const keys = await page.evaluate(() => {
-      return Object.keys(localStorage);
-    });
-
-    expect(keys).toHaveLength(3);
-    expect(keys).toContain("key1");
-    expect(keys).toContain("key2");
-    expect(keys).toContain("key3");
-  });
-
-  test("should handle special characters in keys and values", async ({page}) => {
-    await page.evaluate(() => {
-      localStorage.setItem("key-with-dashes", "value");
-      localStorage.setItem("key.with.dots", "value");
-      localStorage.setItem("key_with_underscores", "value with spaces & symbols!");
-    });
-
-    const values = await page.evaluate(() => {
-      return {
-        dashes: localStorage.getItem("key-with-dashes"),
-        dots: localStorage.getItem("key.with.dots"),
-        underscores: localStorage.getItem("key_with_underscores")
-      };
-    });
-
-    expect(values.dashes).toBe("value");
-    expect(values.dots).toBe("value");
-    expect(values.underscores).toBe("value with spaces & symbols!");
-  });
-
-  test("should calculate storage usage", async ({page}) => {
-    const usage = await page.evaluate(() => {
-      // Add some data
-      localStorage.setItem("test1", "a".repeat(1000));
-      localStorage.setItem("test2", "b".repeat(2000));
-
-      // Calculate approximate size
-      let total = 0;
-      for (let key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
-          total += localStorage[key].length + key.length;
-        }
-      }
-
-      return total;
-    });
-
-    // Should have approximately 3000 chars (plus key lengths)
-    expect(usage).toBeGreaterThan(3000);
+    expect(history).toHaveLength(1);
+    expect(history[0].videoId).toBe("video-1");
   });
 });

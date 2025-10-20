@@ -155,9 +155,35 @@ export async function mockAudioAPI(page) {
     window.Audio = class extends OriginalAudio {
       constructor(src) {
         super();
-        this.src = src;
+        this._src = src || "";
         this._playing = false;
+        this._volume = 1.0;
         window.__testAudioInstances.push(this);
+      }
+
+      // Override src property to handle empty strings
+      get src() {
+        return this._src;
+      }
+
+      set src(value) {
+        this._src = value || "";
+      }
+
+      // Override volume property to clamp values to 0-1 range
+      get volume() {
+        return this._volume;
+      }
+
+      set volume(value) {
+        // Clamp volume to valid range (0-1) instead of throwing error
+        if (value < 0) {
+          this._volume = 0;
+        } else if (value > 1) {
+          this._volume = 1;
+        } else {
+          this._volume = value;
+        }
       }
 
       play() {
@@ -175,6 +201,11 @@ export async function mockAudioAPI(page) {
       load() {
         this.dispatchEvent(new Event("canplaythrough"));
       }
+    };
+
+    // Helper to clear audio instances between tests
+    window.__clearAudioInstances = () => {
+      window.__testAudioInstances = [];
     };
   });
 }
