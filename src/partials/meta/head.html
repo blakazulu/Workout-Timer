@@ -62,13 +62,17 @@
       rel="stylesheet">
 </noscript>
 
-<!-- Phosphor Icons -->
-<link as="style" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" rel="preload">
-<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" media="print"
-      onload="this.media='all'"
-      rel="stylesheet">
-<noscript>
-  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" rel="stylesheet">
-</noscript>
+<!-- Phosphor Icons - Multi-Layer Loading Strategy -->
+<!-- Preconnect to CDN for faster loading -->
+<link href="https://cdn.jsdelivr.net" rel="preconnect" crossorigin>
+
+<!-- LAYER 2: CDN Icons (removed deferred loading for iOS compatibility) -->
+<!-- Load ALL weights we use: bold, fill, and regular -->
+<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+
+<!-- NOTE: Self-hosted fonts (Layer 1) will be added in future update -->
+<!-- This requires font subsetting to reduce file size from 500KB to ~50KB -->
 
 <title>CYCLE</title>

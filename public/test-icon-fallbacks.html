@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Fallback System Test</title>
+
+  <!-- Phosphor Icons CDN (will be used if loaded) -->
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: #00ffc8;
+    }
+
+    .subtitle {
+      color: #888;
+      margin-bottom: 30px;
+    }
+
+    .controls {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid #333;
+    }
+
+    .controls h2 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #ff5722;
+    }
+
+    button {
+      background: #00ffc8;
+      color: #0a0a0a;
+      border: none;
+      padding: 12px 24px;
+      margin: 5px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #00e6b5;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .status {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .status.success {
+      background: rgba(0, 255, 200, 0.1);
+      border: 1px solid #00ffc8;
+      color: #00ffc8;
+    }
+
+    .status.warning {
+      background: rgba(255, 152, 0, 0.1);
+      border: 1px solid #ff9800;
+      color: #ff9800;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .icon-card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #333;
+      transition: all 0.2s;
+    }
+
+    .icon-card:hover {
+      border-color: #00ffc8;
+      transform: translateY(-2px);
+    }
+
+    .icon-card i {
+      font-size: 48px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .icon-name {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 5px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .icon-fallback {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .category {
+      margin-bottom: 40px;
+    }
+
+    .category h2 {
+      color: #ff5722;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #333;
+    }
+
+    .debug-info {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      border: 1px solid #333;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    .debug-info h3 {
+      color: #ff5722;
+      margin-bottom: 10px;
+    }
+
+    .debug-info pre {
+      background: #0a0a0a;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      color: #00ffc8;
+    }
+
+    /* Include icon fallback CSS inline for testing */
+    .icon-fonts-failed [class*="ph-"]::before,
+    .icon-fallback [class*="ph-"]::before {
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif !important;
+      font-style: normal;
+      font-weight: normal;
+    }
+
+    /* Sample fallbacks (add more as needed for testing) */
+    .icon-fonts-failed .ph-play::before,
+    .icon-fallback.ph-play::before { content: "▶"; }
+
+    .icon-fonts-failed .ph-pause::before,
+    .icon-fallback.ph-pause::before { content: "⏸"; }
+
+    .icon-fonts-failed .ph-heart::before,
+    .icon-fallback.ph-heart::before { content: "♥"; }
+
+    .icon-fonts-failed .ph-x::before,
+    .icon-fallback.ph-x::before { content: "×"; font-size: 1.5em; }
+
+    .icon-fonts-failed .ph-fire::before,
+    .icon-fallback.ph-fire::before { content: "🔥"; }
+
+    .icon-fonts-failed .ph-lightning::before,
+    .icon-fallback.ph-lightning::before { content: "⚡"; }
+
+    .icon-fonts-failed .ph-barbell::before,
+    .icon-fallback.ph-barbell::before { content: "🏋"; }
+
+    .icon-fonts-failed .ph-magnifying-glass::before,
+    .icon-fallback.ph-magnifying-glass::before { content: "🔍"; }
+
+    .icon-fonts-failed .ph-music-notes::before,
+    .icon-fallback.ph-music-notes::before { content: "♫"; }
+
+    .icon-fonts-failed .ph-info::before,
+    .icon-fallback.ph-info::before { content: "ℹ"; }
+  </style>
+</head>
+<body>
+  <h1>🛡️ Icon Fallback System Test</h1>
+  <p class="subtitle">Test the 5-layer bulletproof icon loading system</p>
+
+  <div class="controls">
+    <h2>Controls</h2>
+    <button onclick="activateFallback()">❌ Simulate Font Failure (Activate Fallbacks)</button>
+    <button onclick="deactivateFallback()">✅ Load Fonts Normally</button>
+    <button onclick="checkFontStatus()">🔍 Check Font Status</button>
+    <button onclick="toggleAllFallbacks()">🔄 Toggle Individual Fallbacks</button>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div class="category">
+    <h2>Main App Icons</h2>
+    <div class="icon-grid">
+      <div class="icon-card">
+        <i class="ph-bold ph-play"></i>
+        <div class="icon-name">ph-bold ph-play</div>
+        <div class="icon-fallback">Fallback: ▶</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-pause"></i>
+        <div class="icon-name">ph-bold ph-pause</div>
+        <div class="icon-fallback">Fallback: ⏸</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-heart"></i>
+        <div class="icon-name">ph-bold ph-heart</div>
+        <div class="icon-fallback">Fallback: ♥</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-x"></i>
+        <div class="icon-name">ph-bold ph-x</div>
+        <div class="icon-fallback">Fallback: ×</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-info"></i>
+        <div class="icon-name">ph-bold ph-info</div>
+        <div class="icon-fallback">Fallback: ℹ</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-magnifying-glass"></i>
+        <div class="icon-name">ph-bold ph-magnifying-glass</div>
+        <div class="icon-fallback">Fallback: 🔍</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-music-notes"></i>
+        <div class="icon-name">ph-bold ph-music-notes</div>
+        <div class="icon-fallback">Fallback: ♫</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-download-simple"></i>
+        <div class="icon-name">ph-bold ph-download-simple</div>
+        <div class="icon-fallback">Fallback: ⬇</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h2>Mood Icons</h2>
+    <div class="icon-grid">
+      <div class="icon-card">
+        <i class="ph-bold ph-barbell"></i>
+        <div class="icon-name">ph-bold ph-barbell</div>
+        <div class="icon-fallback">Fallback: 🏋 (Beast Mode)</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-fire"></i>
+        <div class="icon-name">ph-bold ph-fire</div>
+        <div class="icon-fallback">Fallback: 🔥 (Intense)</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-lightning"></i>
+        <div class="icon-name">ph-bold ph-lightning</div>
+        <div class="icon-fallback">Fallback: ⚡ (Energetic)</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-bold ph-rocket-launch"></i>
+        <div class="icon-name">ph-bold ph-rocket-launch</div>
+        <div class="icon-fallback">Fallback: 🚀 (Motivated)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="category">
+    <h2>Admin Icons (ph-fill weight)</h2>
+    <div class="icon-grid">
+      <div class="icon-card">
+        <i class="ph-fill ph-lock"></i>
+        <div class="icon-name">ph-fill ph-lock</div>
+        <div class="icon-fallback">Fallback: 🔒</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-fill ph-warning"></i>
+        <div class="icon-name">ph-fill ph-warning</div>
+        <div class="icon-fallback">Fallback: ⚠</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-fill ph-users"></i>
+        <div class="icon-name">ph-fill ph-users</div>
+        <div class="icon-fallback">Fallback: 👥</div>
+      </div>
+      <div class="icon-card">
+        <i class="ph-fill ph-calendar"></i>
+        <div class="icon-name">ph-fill ph-calendar</div>
+        <div class="icon-fallback">Fallback: 📅</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="debug-info">
+    <h3>Debug Information</h3>
+    <pre id="debug-output">Loading...</pre>
+  </div>
+
+  <script>
+    // Fallback activation
+    function activateFallback() {
+      document.documentElement.classList.add('icon-fonts-failed');
+      updateStatus('warning', '⚠️ Fallback mode activated - showing Unicode/emoji icons');
+      updateDebugInfo();
+    }
+
+    function deactivateFallback() {
+      document.documentElement.classList.remove('icon-fonts-failed');
+      const icons = document.querySelectorAll('[class*="ph-"]');
+      icons.forEach(icon => icon.classList.remove('icon-fallback'));
+      updateStatus('success', '✅ Normal mode - loading icons from CDN');
+      updateDebugInfo();
+    }
+
+    function toggleAllFallbacks() {
+      const icons = document.querySelectorAll('[class*="ph-"]');
+      icons.forEach(icon => {
+        icon.classList.toggle('icon-fallback');
+      });
+      updateStatus('success', '🔄 Toggled individual fallback classes');
+      updateDebugInfo();
+    }
+
+    function checkFontStatus() {
+      const testElement = document.createElement('i');
+      testElement.className = 'ph-bold ph-heart';
+      testElement.style.position = 'absolute';
+      testElement.style.opacity = '0';
+      document.body.appendChild(testElement);
+
+      const computedStyle = window.getComputedStyle(testElement);
+      const fontFamily = computedStyle.fontFamily.toLowerCase();
+      const hasPhosphor = fontFamily.includes('phosphor');
+
+      document.body.removeChild(testElement);
+
+      if (hasPhosphor) {
+        updateStatus('success', `✅ Icon fonts loaded successfully!<br>Font family: ${fontFamily}`);
+      } else {
+        updateStatus('warning', `⚠️ Icon fonts not detected<br>Font family: ${fontFamily}<br>Fallbacks should be active`);
+      }
+
+      updateDebugInfo();
+    }
+
+    function updateStatus(type, message) {
+      const statusEl = document.getElementById('status');
+      statusEl.className = `status ${type}`;
+      statusEl.innerHTML = message;
+    }
+
+    function updateDebugInfo() {
+      const debugOutput = document.getElementById('debug-output');
+
+      const info = {
+        'Fallback Mode Active': document.documentElement.classList.contains('icon-fonts-failed'),
+        'User Agent': navigator.userAgent,
+        'Platform': navigator.platform,
+        'Connection': navigator.connection ? {
+          effectiveType: navigator.connection.effectiveType,
+          downlink: navigator.connection.downlink,
+          rtt: navigator.connection.rtt
+        } : 'Not available',
+        'Document Fonts Ready': document.fonts ? 'API available' : 'Not supported',
+        'Current Classes on <html>': Array.from(document.documentElement.classList).join(', ') || 'None',
+        'Test Font Check': (() => {
+          const test = document.createElement('i');
+          test.className = 'ph-bold ph-heart';
+          test.style.position = 'absolute';
+          test.style.opacity = '0';
+          document.body.appendChild(test);
+          const font = window.getComputedStyle(test).fontFamily;
+          document.body.removeChild(test);
+          return font;
+        })()
+      };
+
+      debugOutput.textContent = JSON.stringify(info, null, 2);
+    }
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+      checkFontStatus();
+      updateDebugInfo();
+    });
+
+    // Update debug info every 2 seconds
+    setInterval(updateDebugInfo, 2000);
+  </script>
+</body>
+</html>

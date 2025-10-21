@@ -98,7 +98,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg,woff,woff2}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/www\.youtube\.com\/.*/i,
@@ -108,6 +108,36 @@ export default defineConfig({
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            // Cache Phosphor Icons CDN fonts (Layer 2 fallback)
+            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/npm\/@phosphor-icons\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'phosphor-icons-cdn',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year (fonts don't change)
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            // Cache other CDN resources (Google Fonts, etc.)
+            urlPattern: /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
               },
               cacheableResponse: {
                 statuses: [0, 200]
