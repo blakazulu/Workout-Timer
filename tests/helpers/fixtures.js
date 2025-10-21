@@ -50,16 +50,38 @@ export const MOCK_SONGS = [
 ];
 
 /**
- * Mock favorites list
+ * Mock favorites list (updated to match current API)
+ * New API stores array of full song objects, not just video IDs
  */
-export const MOCK_FAVORITES = {
-  songs: [
-    "test-video-1",
-    "test-video-3",
-    "test-video-5"
-  ],
-  version: 1
-};
+export const MOCK_FAVORITES = [
+  {
+    videoId: "test-video-1",
+    title: "Epic Workout Mix 1",
+    channel: "Test Channel",
+    duration: 180,
+    url: "https://youtube.com/watch?v=test-video-1",
+    thumbnail: "https://img.youtube.com/vi/test-video-1/mqdefault.jpg",
+    favoritedAt: new Date("2025-01-15T10:00:00Z").toISOString()
+  },
+  {
+    videoId: "test-video-3",
+    title: "Hip Hop Energy",
+    channel: "Hip Hop Channel",
+    duration: 200,
+    url: "https://youtube.com/watch?v=test-video-3",
+    thumbnail: "https://img.youtube.com/vi/test-video-3/mqdefault.jpg",
+    favoritedAt: new Date("2025-01-15T11:00:00Z").toISOString()
+  },
+  {
+    videoId: "test-video-5",
+    title: "Motivational Metal",
+    channel: "Metal Channel",
+    duration: 220,
+    url: "https://youtube.com/watch?v=test-video-5",
+    thumbnail: "https://img.youtube.com/vi/test-video-5/mqdefault.jpg",
+    favoritedAt: new Date("2025-01-15T12:00:00Z").toISOString()
+  }
+];
 
 /**
  * Mock timer configuration
@@ -97,9 +119,6 @@ export const MOCK_APP_STATE = {
     wakeLockEnabled: true,
     genre: "all",
     mood: "all"
-  },
-  favorites: {
-    songs: []
   }
 };
 
@@ -125,10 +144,10 @@ export const MOCK_MUSIC_LIBRARY = {
 };
 
 /**
- * Mock localStorage data
+ * Mock localStorage data (updated with correct keys)
  */
 export const MOCK_LOCAL_STORAGE = {
-  favorites: JSON.stringify(MOCK_FAVORITES),
+  "workout-timer-favorites": JSON.stringify(MOCK_FAVORITES),
   "timer-config": JSON.stringify(MOCK_TIMER_CONFIG),
   "app-state": JSON.stringify(MOCK_APP_STATE),
   "music-library": JSON.stringify(MOCK_MUSIC_LIBRARY)

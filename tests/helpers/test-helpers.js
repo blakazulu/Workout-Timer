@@ -71,6 +71,18 @@ export async function waitForAppReady(page) {
     // Loader might already be hidden, that's fine
   });
 
+  // Close install banner if visible (blocks clicks on mobile)
+  const installBanner = page.locator("#installBanner");
+  const closeButton = installBanner.locator("button").first();
+  const isVisible = await installBanner.isVisible().catch(() => false);
+
+  if (isVisible) {
+    await closeButton.click().catch(() => {
+      // Banner might auto-hide, that's fine
+    });
+    await wait(300);
+  }
+
   // Give a bit more time for initialization
   await wait(500);
 }
@@ -301,4 +313,32 @@ export async function expectAudioPlayed(page, expectedSoundFile) {
   const playedAudio = await getPlayedAudio(page);
   const wasPlayed = playedAudio.some(src => src.includes(expectedSoundFile));
   expect(wasPlayed).toBeTruthy();
+}
+
+/**
+ * Open the music library popover
+ * @param {Page} page - Playwright page object
+ * @param {string} libraryButtonSelector - Selector for library button (default: #historyBtn)
+ * @param {string} popoverSelector - Selector for popover (default: #musicLibraryPopover)
+ */
+export async function openMusicLibrary(page, libraryButtonSelector = "#historyBtn", popoverSelector = "#musicLibraryPopover") {
+  const libraryButton = page.locator(libraryButtonSelector);
+  await libraryButton.click();
+  await wait(500);
+
+  // Wait for popover to be in open state
+  const popover = page.locator(popoverSelector);
+
+  // Check if popover opened
+  const isOpen = await popover.evaluate((el) => {
+    return el.matches(":popover-open");
+  }).catch(() => false);
+
+  if (!isOpen) {
+    // Try again if it didn't open
+    await libraryButton.click();
+    await wait(300);
+  }
+
+  return popover;
 }

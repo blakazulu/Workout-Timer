@@ -1,7 +1,7 @@
 /**
  * E2E Tests for Favorites Functionality
  * Tests add/remove favorites, persistence, shuffle, and UI
- * UPDATED to use actual HTML selectors from the codebase
+ * UPDATED to use current favorites API (workout-timer-favorites)
  */
 
 import {expect, test} from "@playwright/test";
@@ -11,10 +11,14 @@ import {
   getLocalStorage,
   setLocalStorage,
   wait,
-  waitForAppReady
+  waitForAppReady,
+  openMusicLibrary
 } from "../helpers/test-helpers.js";
 import {SELECTORS} from "../helpers/selectors.js";
 import {MOCK_FAVORITES} from "../helpers/fixtures.js";
+
+// localStorage key for favorites (current API)
+const FAVORITES_KEY = "workout-timer-favorites";
 
 test.describe("Favorites Functionality", () => {
   test.beforeEach(async ({page}) => {
@@ -40,13 +44,8 @@ test.describe("Favorites Functionality", () => {
     await page.reload();
     await waitForAppReady(page);
 
-    // Open music library
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
-
-    // Wait for library to open
-    const libraryPanel = page.locator(SELECTORS.musicLibraryPopover);
+    // Open music library using helper
+    const libraryPanel = await openMusicLibrary(page);
     await expect(libraryPanel).toBeVisible();
 
     // Find the first song card in the library
@@ -64,28 +63,27 @@ test.describe("Favorites Functionality", () => {
         await favoriteButton.click();
         await wait(500);
 
-        // Check localStorage to confirm it was saved
-        const favorites = await getLocalStorage(page, "favorites");
+        // Check localStorage to confirm it was saved (new API format)
+        const favorites = await getLocalStorage(page, FAVORITES_KEY);
         if (favorites) {
-          expect(favorites.songs).toBeDefined();
-          expect(favorites.songs.length).toBeGreaterThan(0);
+          expect(Array.isArray(favorites)).toBe(true);
+          expect(favorites.length).toBeGreaterThan(0);
         }
       }
     }
   });
 
   test("should remove song from favorites when clicking favorited button", async ({page}) => {
-    // Pre-populate favorites
-    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
+    // Pre-populate favorites (new API format)
+    await setLocalStorage(page, FAVORITES_KEY, MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
-    // Open library to see favorites
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    if (await libraryButton.isVisible()) {
-      await libraryButton.click();
-      await wait(500);
+    // Open library using helper
+    const libraryPanel = await openMusicLibrary(page);
+    const isVisible = await libraryPanel.isVisible();
 
+    if (isVisible) {
       // Click favorites tab
       const favoritesTab = page.locator(`${SELECTORS.historyTab}[data-tab="favorites"]`);
       if (await favoritesTab.isVisible()) {
@@ -98,10 +96,10 @@ test.describe("Favorites Functionality", () => {
           await removeButton.click();
           await wait(500);
 
-          // Check localStorage
-          const favoritesAfter = await getLocalStorage(page, "favorites");
+          // Check localStorage (new API format - array)
+          const favoritesAfter = await getLocalStorage(page, FAVORITES_KEY);
           if (favoritesAfter) {
-            expect(favoritesAfter.songs.length).toBeLessThan(MOCK_FAVORITES.songs.length);
+            expect(favoritesAfter.length).toBeLessThan(MOCK_FAVORITES.length);
           }
         }
       }
@@ -109,19 +107,13 @@ test.describe("Favorites Functionality", () => {
   });
 
   test("should show favorites list in library panel", async ({page}) => {
-    // Pre-populate favorites
-    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
+    // Pre-populate favorites (new API format)
+    await setLocalStorage(page, FAVORITES_KEY, MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
-    // Open library panel
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await expect(libraryButton).toBeVisible();
-    await libraryButton.click();
-    await wait(500);
-
-    // Wait for library panel to open
-    const libraryPanel = page.locator(SELECTORS.musicLibraryPopover);
+    // Open library panel using helper
+    const libraryPanel = await openMusicLibrary(page);
     await expect(libraryPanel).toBeVisible();
 
     // Check for favorites tab
@@ -130,15 +122,13 @@ test.describe("Favorites Functionality", () => {
   });
 
   test("should shuffle favorites when shuffle button is clicked", async ({page}) => {
-    // Pre-populate favorites with multiple songs
-    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
+    // Pre-populate favorites with multiple songs (new API format)
+    await setLocalStorage(page, FAVORITES_KEY, MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
-    // Open library and go to favorites
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     // Click favorites tab
     const favoritesTab = page.locator(`${SELECTORS.historyTab}[data-tab="favorites"]`);
@@ -179,10 +169,8 @@ test.describe("Favorites Functionality", () => {
     await page.reload();
     await waitForAppReady(page);
 
-    // Open library
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     // Find song card and favorite button
     const songCard = page.locator(SELECTORS.songCard).first();
@@ -200,20 +188,19 @@ test.describe("Favorites Functionality", () => {
         await page.reload();
         await waitForAppReady(page);
 
-        // Check localStorage still has favorites
-        const favorites = await getLocalStorage(page, "favorites");
-        if (favorites && favorites.songs) {
-          expect(favorites.songs.length).toBeGreaterThan(0);
+        // Check localStorage still has favorites (new API format - array)
+        const favorites = await getLocalStorage(page, FAVORITES_KEY);
+        if (favorites) {
+          expect(Array.isArray(favorites)).toBe(true);
+          expect(favorites.length).toBeGreaterThan(0);
         }
       }
     }
   });
 
   test("should show empty state when no favorites", async ({page}) => {
-    // Open library
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     // Go to favorites section
     const favoritesTab = page.locator(`${SELECTORS.historyTab}[data-tab="favorites"]`);
@@ -231,15 +218,13 @@ test.describe("Favorites Functionality", () => {
   });
 
   test("should display favorite items with correct structure", async ({page}) => {
-    // Pre-populate favorites
-    await setLocalStorage(page, "favorites", MOCK_FAVORITES);
+    // Pre-populate favorites (new API format)
+    await setLocalStorage(page, FAVORITES_KEY, MOCK_FAVORITES);
     await page.reload();
     await waitForAppReady(page);
 
-    // Open library and navigate to favorites
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     const favoritesTab = page.locator(`${SELECTORS.historyTab}[data-tab="favorites"]`);
     if (await favoritesTab.isVisible()) {
@@ -269,11 +254,9 @@ test.describe("Favorites Functionality", () => {
   });
 
   test("should navigate to favorites tab successfully", async ({page}) => {
-    // Open library
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await expect(libraryButton).toBeVisible();
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    const libraryPanel = await openMusicLibrary(page);
+    await expect(libraryPanel).toBeVisible();
 
     // Find and click favorites tab
     const favoritesTab = page.locator(`${SELECTORS.historyTab}[data-tab="favorites"]`);
@@ -287,9 +270,8 @@ test.describe("Favorites Functionality", () => {
   });
 
   test("should show library panel with history tabs", async ({page}) => {
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     // Check all tabs exist
     const recentTab = page.locator(`${SELECTORS.historyTab}[data-tab="recent"]`);

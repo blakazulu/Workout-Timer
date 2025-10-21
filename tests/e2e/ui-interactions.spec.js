@@ -5,7 +5,7 @@
  */
 
 import {expect, test} from "@playwright/test";
-import {clearStorage, disablePostHog, wait, waitForAppReady} from "../helpers/test-helpers.js";
+import {clearStorage, disablePostHog, wait, waitForAppReady, openMusicLibrary} from "../helpers/test-helpers.js";
 import {getTabSelector, SELECTORS} from "../helpers/selectors.js";
 
 test.describe("UI Interactions", () => {
@@ -79,35 +79,27 @@ test.describe("UI Interactions", () => {
   });
 
   test("should open library when library button is clicked", async ({page}) => {
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await expect(libraryButton).toBeVisible();
-    await libraryButton.click();
-    await wait(500);
-
-    // Library panel should open
-    const libraryPanel = page.locator(SELECTORS.musicLibraryPopover);
+    // Open library using helper
+    const libraryPanel = await openMusicLibrary(page);
     await expect(libraryPanel).toBeVisible();
   });
 
   test("should close library when close button is clicked", async ({page}) => {
-    // Open library
+    // Open library using helper
+    const libraryPanel = await openMusicLibrary(page);
+    await expect(libraryPanel).toBeVisible();
+
+    // Close via clicking button again
     const libraryButton = page.locator(SELECTORS.historyBtn);
     await libraryButton.click();
     await wait(500);
 
-    const libraryPanel = page.locator(SELECTORS.musicLibraryPopover);
-    await expect(libraryPanel).toBeVisible();
-
-    // Close via popover (clicking the button again or close button)
-    await libraryButton.click();
-    await wait(500);
-
-    // Panel should close (might still exist in DOM but hidden)
+    // Panel should close (check popover-open state)
     const isOpen = await libraryPanel.evaluate(el => {
       return el.matches(":popover-open");
     }).catch(() => false);
 
-    expect(typeof isOpen).toBe("boolean");
+    expect(isOpen).toBe(false);
   });
 
   test("should open genre selector popup", async ({page}) => {
@@ -193,10 +185,8 @@ test.describe("UI Interactions", () => {
   });
 
   test("should navigate between library tabs", async ({page}) => {
-    // Open library
-    const libraryButton = page.locator(SELECTORS.historyBtn);
-    await libraryButton.click();
-    await wait(500);
+    // Open library using helper
+    await openMusicLibrary(page);
 
     // Click on different tabs
     const recentTab = page.locator(getTabSelector("recent"));

@@ -67,23 +67,33 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
 
-    // Test against mobile viewports
+    // Test against mobile viewports (using Chromium for WSL compatibility)
     {
       name: 'mobile',
-      use: { ...devices['iPhone 13 Pro'] },
+      use: {
+        ...devices['iPhone 13 Pro'],
+        // Use Chromium engine for WSL compatibility (WebKit requires system deps)
+        browserName: 'chromium',
+      },
     },
 
     {
       name: 'mobile-landscape',
       use: {
         ...devices['iPhone 13 Pro'],
-        viewport: { width: 844, height: 390 }
+        viewport: { width: 844, height: 390 },
+        // Use Chromium engine for WSL compatibility
+        browserName: 'chromium',
       },
     },
 
     {
       name: 'tablet',
-      use: { ...devices['iPad Pro'] },
+      use: {
+        ...devices['iPad Pro'],
+        // Use Chromium engine for WSL compatibility
+        browserName: 'chromium',
+      },
     },
   ],
 

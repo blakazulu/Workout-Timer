@@ -52,7 +52,12 @@
       "Read(//tmp/**)",
       "Bash(mv:*)",
       "Bash(do echo \"=== $dir%/ ===\")",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(cd:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(npx playwright:*)",
+      "Bash(sudo apt-get update:*)",
+      "Bash(sudo apt-get install:*)"
     ],
     "deny": [],
     "ask": []
