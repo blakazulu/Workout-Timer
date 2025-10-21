@@ -7,6 +7,7 @@
 ## Problem Description
 
 After the initial non-blocking audio fix, users still experienced:
+
 1. Timer display occasionally freezing or skipping seconds
 2. Alert beep sounds (countdown ticks) sometimes missing
 3. Overall sluggish performance during workouts
@@ -17,6 +18,7 @@ After the initial non-blocking audio fix, users still experienced:
 ### 1. Audio Interruption Issue
 
 **Problem**: Resetting `currentTime = 0` unconditionally
+
 ```javascript
 // PROBLEMATIC CODE
 playSound(soundKey) {
@@ -27,6 +29,7 @@ playSound(soundKey) {
 ```
 
 **Issue**: If a sound was already playing (e.g., a long bell sound), resetting `currentTime` would:
+
 - Interrupt the playback abruptly
 - Cause audio glitches and stuttering
 - Block the audio thread momentarily
@@ -35,6 +38,7 @@ playSound(soundKey) {
 ### 2. Synchronous Event Emissions
 
 **Problem**: Event emissions in critical timer path
+
 ```javascript
 // PROBLEMATIC CODE
 handleTimerComplete() {
@@ -46,6 +50,7 @@ handleTimerComplete() {
 ```
 
 **Issue**: All operations ran synchronously:
+
 - Event listeners executed immediately
 - Analytics tracking blocked timer
 - PostHog API calls delayed display updates
@@ -54,6 +59,7 @@ handleTimerComplete() {
 ### 3. Main Thread Congestion
 
 **Timeline of blocking operations**:
+
 ```
 Timer tick → Audio play → Analytics emit → PostHog track → Display update
     ↓           ↓              ↓                ↓               ↓
@@ -141,6 +147,7 @@ handleTimerComplete() {
 ### 3. Optimized Timer Flow
 
 **New execution timeline**:
+
 ```
 Timer tick → Display update → setTimeout(audio + analytics)
     ↓            ↓                      ↓
@@ -171,6 +178,7 @@ setTimeout(() => playSound(), 0); // Runs after display
 ```
 
 **Event Loop Behavior**:
+
 1. Execute current task (timer tick)
 2. Render display updates
 3. Process setTimeout callbacks
@@ -187,6 +195,7 @@ const clone = sound.cloneNode();
 ```
 
 **How it works**:
+
 - Creates independent Audio element
 - Shares same source file (no re-download)
 - Plays in parallel with original
@@ -197,6 +206,7 @@ const clone = sound.cloneNode();
 ### Event Bus Optimization
 
 By deferring event emissions:
+
 - PostHog tracking runs off critical path
 - Analytics don't impact UX
 - Can add more tracking without performance cost
@@ -205,6 +215,7 @@ By deferring event emissions:
 ## Performance Improvements
 
 ### Before Fixes
+
 - **Timer tick blocking time**: 20-40ms
 - **Visible lag**: Yes, especially on transitions
 - **Missing beeps**: ~10-15% of countdown sounds
@@ -212,6 +223,7 @@ By deferring event emissions:
 - **Frame drops**: 2-3 per workout
 
 ### After Fixes
+
 - **Timer tick blocking time**: 2-3ms
 - **Visible lag**: None
 - **Missing beeps**: <1%
@@ -219,6 +231,7 @@ By deferring event emissions:
 - **Frame drops**: 0
 
 ### Metrics
+
 ```
 Improvement: ~10x reduction in blocking time
 UX Impact: Smooth, professional feel
@@ -229,13 +242,13 @@ Analytics: Still 100% accurate, just async
 ## Files Modified
 
 1. **src/js/modules/audio.js** (line 98-124)
-   - Smart audio playback with cloning
-   - Conditional currentTime reset
+    - Smart audio playback with cloning
+    - Conditional currentTime reset
 
 2. **src/js/modules/timer.js** (lines 342-428)
-   - Deferred sound playback (3 locations)
-   - Deferred event emissions
-   - Prioritized display updates
+    - Deferred sound playback (3 locations)
+    - Deferred event emissions
+    - Prioritized display updates
 
 ## Testing Checklist
 
@@ -253,23 +266,24 @@ Analytics: Still 100% accurate, just async
 ## Edge Cases Handled
 
 1. **Rapid Transitions**: Multiple sounds in <1 second
-   - ✅ Cloning allows overlap
+    - ✅ Cloning allows overlap
 
 2. **Long Sounds**: Bell longer than rep duration
-   - ✅ Doesn't interrupt, clones instead
+    - ✅ Doesn't interrupt, clones instead
 
 3. **Network Lag**: PostHog API slow
-   - ✅ Doesn't block timer (async)
+    - ✅ Doesn't block timer (async)
 
 4. **Low-End Devices**: Limited audio resources
-   - ✅ Graceful degradation, no crashes
+    - ✅ Graceful degradation, no crashes
 
 5. **Background Tab**: Browser throttles setTimeout
-   - ✅ Timer uses timestamp-based tracking anyway
+    - ✅ Timer uses timestamp-based tracking anyway
 
 ## Browser Compatibility
 
 Tested on:
+
 - ✅ Chrome/Edge (Chromium)
 - ✅ Firefox
 - ✅ Safari (iOS and macOS)
@@ -277,6 +291,7 @@ Tested on:
 - ✅ Mobile browsers
 
 All browsers support:
+
 - `cloneNode()` on Audio elements
 - `setTimeout(..., 0)` event loop deferral
 - Parallel audio playback
@@ -304,32 +319,33 @@ If performance issues arise again, consider:
 To verify the fix works:
 
 1. **DevTools Performance Tab**:
-   - Record during workout
-   - Check "Timer Tick" tasks
-   - Should be <5ms each
-   - No long tasks (>50ms)
+    - Record during workout
+    - Check "Timer Tick" tasks
+    - Should be <5ms each
+    - No long tasks (>50ms)
 
 2. **Visual Test**:
-   - Set 1-second rounds
-   - Watch countdown
-   - Should be perfectly smooth
-   - No skipped seconds
+    - Set 1-second rounds
+    - Watch countdown
+    - Should be perfectly smooth
+    - No skipped seconds
 
 3. **Audio Test**:
-   - Set 3-second countdown
-   - All 3 beeps should play
-   - Transition sounds clear
-   - No glitches
+    - Set 3-second countdown
+    - All 3 beeps should play
+    - Transition sounds clear
+    - No glitches
 
 4. **Analytics Test**:
-   - Check PostHog events
-   - All sound events logged
-   - Correct timestamps
-   - Proper properties
+    - Check PostHog events
+    - All sound events logged
+    - Correct timestamps
+    - Proper properties
 
 ## Related Improvements
 
 This fix also improves:
+
 - ✅ Wake lock reliability (no blocking)
 - ✅ YouTube volume ducking timing
 - ✅ Vibration pattern consistency

@@ -12,3 +12,4 @@
   .element {
     @apply text-[var(--font-size-md)] p-[var(--spacing-lg)];  /* Won't work! */
   }
+- making changes to code by either changing/adding/removing code - must always be followed with updating/creating/deleting a test file.

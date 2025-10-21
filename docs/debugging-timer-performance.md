@@ -8,6 +8,7 @@
 ### Enable Debug Mode
 
 Open browser console (F12) and run:
+
 ```javascript
 window.enableTimerDebug()
 ```
@@ -25,6 +26,7 @@ Then reload the page.
 ### Get Current Stats
 
 Check timer and audio status at any time:
+
 ```javascript
 window.getTimerStats()
 ```
@@ -36,29 +38,35 @@ When debug mode is enabled, you'll see logs for:
 ### Timer Events
 
 **Every Second (Tick)**:
+
 ```
 [Timer] Tick completed in 1.23ms. Time: 5s, Rep: 2/3, Resting: false
 ```
+
 - Shows how long the tick took (should be <5ms)
 - Current countdown time
 - Current rep number
 - Whether in rest period
 
 **Alert Beeps**:
+
 ```
 [Timer] Alert beep at 3s
 [Timer] Alert beep at 2s
 ```
+
 - Shows when countdown beeps play
 - Note: Last tick (1s) is skipped since transition sound plays at 0s
 
 **Transitions**:
+
 ```
 [Timer] Round 1 complete
 [Timer] Rest complete, starting rep 2
 [Timer] Workout complete! 3 reps finished
 [Timer] handleTimerComplete took 1.45ms
 ```
+
 - Round completions
 - Rest endings
 - Workout completion
@@ -67,26 +75,32 @@ When debug mode is enabled, you'll see logs for:
 ### Audio Events
 
 **Sound Playback**:
+
 ```
 [Audio] Playing restEnd (original)
 [Audio] playSound(restEnd) took 0.45ms
 ```
+
 - Which sound is playing
 - Whether it's the original or a clone
 - How long it took to start (should be <1ms)
 
 **Audio Cloning** (when sounds overlap):
+
 ```
 [Audio] Playing roundEnd (clone #2)
 [Audio] Cleaned up clone for roundEnd. Active clones: 1
 ```
+
 - Shows when sounds are cloned for overlap
 - Tracks active clone count (memory leak indicator)
 
 **Alert Beeps**:
+
 ```
 [Audio] Playing alert beep
 ```
+
 - When countdown ticks play
 
 ## Interpreting the Logs
@@ -102,6 +116,7 @@ When debug mode is enabled, you'll see logs for:
 ```
 
 **Good signs**:
+
 - Tick times consistently <5ms
 - Regular, predictable timing
 - All alert beeps playing
@@ -116,6 +131,7 @@ When debug mode is enabled, you'll see logs for:
 ```
 
 **Warning signs**:
+
 - Tick times >10ms (sluggish)
 - Tick times >50ms (visible freeze)
 - Missing alert beeps
@@ -131,6 +147,7 @@ When debug mode is enabled, you'll see logs for:
 ```
 
 **Critical signs**:
+
 - Active clone count >10 (memory leak)
 - Clone count continuously growing
 - Tick times increasing over time
@@ -145,6 +162,7 @@ window.getTimerStats()
 ```
 
 **Output**:
+
 ```
 Timer Stats:
 ┌─────────────┬──────────┐
@@ -174,17 +192,19 @@ Audio Stats: {
 ### What to Look For
 
 **Timer Section**:
+
 - `currentTime`: Should count down smoothly
 - `currentRep`: Should increment properly
 - `isResting`: Should toggle between rounds
 - All values should match what you see on screen
 
 **Audio Section**:
+
 - `activeClones`: Should be 0-2 normally
-  - 0 = No overlapping sounds
-  - 1-2 = Normal overlap (e.g., bell still playing when next starts)
-  - >5 = Potential memory leak
-  - >10 = Definite memory leak
+    - 0 = No overlapping sounds
+    - 1-2 = Normal overlap (e.g., bell still playing when next starts)
+    - > 5 = Potential memory leak
+    - > 10 = Definite memory leak
 - `sounds[].paused`: false means currently playing
 - `sounds[].currentTime`: Progress through the sound
 
@@ -193,6 +213,7 @@ Audio Stats: {
 ### Issue: Timer Freezes After Multiple Reps
 
 **Symptoms**:
+
 ```
 [Timer] Tick completed in 2.5ms...
 [Timer] Tick completed in 15.3ms...
@@ -203,6 +224,7 @@ Audio Stats: {
 **Diagnosis**: Memory leak from audio clones not cleaning up
 
 **Solution**: Audio clones should auto-cleanup when they finish. If this persists, check:
+
 1. Are clones getting cleaned up? Look for "Cleaned up clone" messages
 2. Is activeClones count growing without shrinking?
 3. Open DevTools → Memory → Take heap snapshot → Search for "Audio" elements
@@ -212,6 +234,7 @@ Audio Stats: {
 ### Issue: Missing Alert Beeps
 
 **Symptoms**:
+
 ```
 [Timer] Alert beep at 3s
 [Audio] Playing alert beep
@@ -223,6 +246,7 @@ Audio Stats: {
 **Diagnosis**: Beep generation failing or being skipped
 
 **Check**:
+
 1. Is Web Audio context suspended? Check console for "AudioContext suspended"
 2. Are there errors in beep() method?
 3. Is lastAlertSecond being set correctly?
@@ -232,6 +256,7 @@ Audio Stats: {
 ### Issue: Sounds Overlap Unpleasantly
 
 **Symptoms**:
+
 ```
 [Audio] Playing roundEnd (clone #1)
 [Audio] Playing roundEnd (clone #2)
@@ -240,13 +265,15 @@ Audio Stats: {
 
 **Diagnosis**: Too many rapid transitions (e.g., very short rounds)
 
-**This is Expected**: Cloning allows overlapping sounds. If you don't want overlap, increase round duration or disable sound effects.
+**This is Expected**: Cloning allows overlapping sounds. If you don't want overlap, increase round duration or disable
+sound effects.
 
 ### Issue: Timer Display Skips Seconds
 
 **Symptoms**: Visual skips from 5 → 3 (missing 4)
 
 **Check Logs**:
+
 ```
 [Timer] Tick completed in 1.5ms. Time: 5s...
 [Timer] Tick completed in 1200ms. Time: 3s... ⚠️ LONG DELAY!
@@ -255,6 +282,7 @@ Audio Stats: {
 **Diagnosis**: Something is blocking the main thread for >1 second
 
 **Common Causes**:
+
 1. PostHog analytics taking too long (should be async)
 2. YouTube API calls blocking
 3. Heavy DOM operations
@@ -266,12 +294,12 @@ Audio Stats: {
 
 ### Target Performance
 
-| Operation | Target Time | Acceptable | Warning |
-|-----------|-------------|------------|---------|
-| Timer tick | <2ms | <5ms | >10ms |
-| handleTimerComplete | <3ms | <10ms | >20ms |
-| playSound | <1ms | <2ms | >5ms |
-| Audio cleanup | <1ms | <5ms | >10ms |
+| Operation           | Target Time | Acceptable | Warning |
+|---------------------|-------------|------------|---------|
+| Timer tick          | <2ms        | <5ms       | >10ms   |
+| handleTimerComplete | <3ms        | <10ms      | >20ms   |
+| playSound           | <1ms        | <2ms       | >5ms    |
+| Audio cleanup       | <1ms        | <5ms       | >10ms   |
 
 ### Measuring with DevTools
 
@@ -281,9 +309,9 @@ Audio Stats: {
 4. Let it complete
 5. Stop recording
 6. Look for:
-   - Long tasks (yellow bars >50ms)
-   - Timer tick functions (should be tiny)
-   - Audio playback (should be off main thread)
+    - Long tasks (yellow bars >50ms)
+    - Timer tick functions (should be tiny)
+    - Audio playback (should be off main thread)
 
 **Healthy profile**: Consistent small tasks, no long tasks, smooth frame rate
 
@@ -294,6 +322,7 @@ Audio Stats: {
 ### Monitor Active Clones in Real-Time
 
 Run this in console while workout is running:
+
 ```javascript
 setInterval(() => {
   const stats = window.getTimerStats();
@@ -302,6 +331,7 @@ setInterval(() => {
 ```
 
 Watch for:
+
 - Count should stay 0-3
 - Count should go down when sounds finish
 - Count should never continuously increase
@@ -330,9 +360,9 @@ setInterval(() => {
 4. Take heap snapshot after workout
 5. Compare snapshots
 6. Look for:
-   - HTMLAudioElement count should not grow indefinitely
-   - Detached DOM trees
-   - Event listeners not cleaned up
+    - HTMLAudioElement count should not grow indefinitely
+    - Detached DOM trees
+    - Event listeners not cleaned up
 
 ### CPU Profiling
 
@@ -342,29 +372,33 @@ setInterval(() => {
 4. Run workout
 5. Stop recording
 6. Look for:
-   - `tick()` function calls (should be quick)
-   - `playSound()` calls (should be instant)
-   - Event emissions (should be async)
-   - Long-running JavaScript tasks
+    - `tick()` function calls (should be quick)
+    - `playSound()` calls (should be instant)
+    - Event emissions (should be async)
+    - Long-running JavaScript tasks
 
 ## Testing Scenarios
 
 ### Scenario 1: Normal Workout
+
 - **Config**: 3 reps, 30s each, 10s rest, 3s alert
 - **Expected**: Smooth, no issues
 - **Check**: Tick times <5ms, clones 0-2
 
 ### Scenario 2: Rapid Workout
+
 - **Config**: 10 reps, 3s each, 1s rest, 2s alert
 - **Expected**: Many overlapping sounds
 - **Check**: Clones should clean up, count shouldn't exceed 5
 
 ### Scenario 3: Long Workout
+
 - **Config**: 20 reps, 60s each, 30s rest, 5s alert
 - **Expected**: Memory should stay stable
 - **Check**: Active clones should reset to 0 between sounds
 
 ### Scenario 4: No Rest
+
 - **Config**: 5 reps, 10s each, 0s rest, 3s alert
 - **Expected**: Back-to-back transitions
 - **Check**: Round end sounds play cleanly
@@ -372,21 +406,25 @@ setInterval(() => {
 ## Fixes Applied (2025-10-20)
 
 ### 1. Memory Leak Fix
+
 - **Issue**: Cloned audio elements accumulating
 - **Fix**: Added `ended` event listener to cleanup clones (audio.js:131-141)
 - **Verification**: activeClones count should decrease when sounds finish
 
 ### 2. Last Tick Skip
+
 - **Issue**: Tick sound + transition sound overlapping
 - **Fix**: Skip beep when `currentTime === 1` (timer.js:336)
 - **Verification**: Should only hear 3, 2 (beeps), then transition sound
 
 ### 3. Non-Blocking Operations
+
 - **Issue**: Audio/analytics blocking timer
 - **Fix**: Deferred with `setTimeout(..., 0)` (timer.js:378, 395, 446)
 - **Verification**: Tick times should be <3ms
 
 ### 4. Debug Logging
+
 - **Addition**: Comprehensive logging system
 - **Usage**: `window.enableTimerDebug()`
 - **Purpose**: Track performance issues in real-time

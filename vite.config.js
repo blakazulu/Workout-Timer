@@ -13,6 +13,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
 
 export default defineConfig({
+  server: {
+    port: 4200,
+    strictPort: true,
+  },
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
