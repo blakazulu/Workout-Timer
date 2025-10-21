@@ -1,7 +1,7 @@
 {
   "name": "cycle",
   "private": true,
-  "version": "1.0.42",
+  "version": "1.0.43",
   "type": "module",
   "scripts": {
     "dev": "node scripts/generate-version.js && vite",
@@ -23,6 +23,7 @@
     "vite-plugin-pwa": "^1.0.3"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.25",
     "@tailwindcss/vite": "^4.1.14",
     "chart.js": "^4.5.1",
     "posthog-js": "^1.276.0",
