@@ -9,6 +9,9 @@ export class AudioManager {
       this.vibrationEnabled = "vibrate" in navigator;
       this.audioEnabled = true;
 
+      // Detect iOS for platform-specific optimizations
+      this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
       // Resume audio context on first user interaction (required by some browsers)
       // Support multiple interaction types for better mobile compatibility
       if (this.audioContext.state === "suspended") {
@@ -29,6 +32,7 @@ export class AudioManager {
       console.error("AudioContext initialization failed:", error);
       this.audioEnabled = false;
       this.vibrationEnabled = "vibrate" in navigator;
+      this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     }
 
     // Preload sound effects for instant playback
@@ -41,16 +45,30 @@ export class AudioManager {
     // Set volume for sound effects (0-1 range)
     Object.values(this.sounds).forEach((sound) => {
       sound.volume = 0.8;
-      sound.preload = "auto";
+      // iOS ignores preload="auto" to save bandwidth, so only set it for non-iOS
+      if (!this.isIOS) {
+        sound.preload = "auto";
+      } else {
+        sound.preload = "metadata";  // iOS: Load metadata only
+      }
     });
 
     // Track cloned audio elements for cleanup
     this.activeClones = [];
-    this.maxClones = 10; // Maximum concurrent clones to prevent memory issues
+    // iOS: Reduce max clones due to stricter audio limits
+    this.maxClones = this.isIOS ? 3 : 10;
     this.debugMode = localStorage.getItem("audio_debug") === "true";
+
+    // iOS: Use audio queue for sequential playback instead of concurrent clones
+    this.audioQueue = [];
+    this.isPlayingQueued = false;
 
     // Periodic cleanup of stale clones (every 10 seconds)
     setInterval(() => this.cleanupStaleClones(), 10000);
+
+    if (this.debugMode && this.isIOS) {
+      console.log('[Audio] iOS detected - using sequential audio playback mode');
+    }
   }
 
   /**
@@ -90,6 +108,31 @@ export class AudioManager {
     if (this.debugMode && cleaned > 0) {
       console.log(`[Audio] Cleanup: Removed ${cleaned} stale clones, ${this.activeClones.length} still active`);
     }
+  }
+
+  /**
+   * Process audio queue for iOS sequential playback
+   * iOS has strict limits on concurrent audio playback
+   */
+  async processAudioQueue() {
+    if (this.isPlayingQueued || this.audioQueue.length === 0) {
+      return;
+    }
+
+    this.isPlayingQueued = true;
+
+    while (this.audioQueue.length > 0) {
+      const { soundKey, onEnded } = this.audioQueue.shift();
+
+      await new Promise((resolve) => {
+        this.playSound(soundKey, () => {
+          if (onEnded) onEnded();
+          resolve();
+        });
+      });
+    }
+
+    this.isPlayingQueued = false;
   }
 
   /**
@@ -151,6 +194,16 @@ export class AudioManager {
       return;
     }
 
+    // iOS: Use sequential playback queue instead of concurrent clones
+    if (this.isIOS && (!sound.paused && !sound.ended)) {
+      if (this.debugMode) {
+        console.log(`[Audio] iOS: Queueing ${soundKey} for sequential playback`);
+      }
+      this.audioQueue.push({ soundKey, onEnded });
+      this.processAudioQueue();
+      return;
+    }
+
     // Protection against double callback execution
     let callbackFired = false;
     let timeoutId = null;
@@ -168,7 +221,7 @@ export class AudioManager {
       sound.currentTime = 0;
 
       if (this.debugMode) {
-        console.log(`[Audio] Playing ${soundKey} (original)`);
+        console.log(`[Audio] Playing ${soundKey} (original)${this.isIOS ? ' [iOS]' : ''}`);
       }
 
       // Add ended callback if provided
@@ -192,14 +245,19 @@ export class AudioManager {
         }, 5000);
       }
 
+      // iOS: Load the sound first before playing (since preload is disabled)
+      const playPromise = this.isIOS
+        ? sound.load().then(() => sound.play()).catch(() => sound.play())
+        : sound.play();
+
       // Play the sound asynchronously without blocking
-      sound.play().catch((error) => {
+      playPromise.catch((error) => {
         console.warn(`[Audio] Failed to play sound ${soundKey}:`, error);
         safeCallback();
       });
     } else {
       // Sound is already playing, let it finish
-      // Clone and play new instance for overlapping sounds
+      // Clone and play new instance for overlapping sounds (non-iOS only)
 
       // Enforce max clone limit
       if (this.activeClones.length >= this.maxClones) {
@@ -288,15 +346,21 @@ export class AudioManager {
    */
   getStats() {
     return {
+      platform: this.isIOS ? 'iOS' : 'other',
       activeClones: this.activeClones.length,
+      maxClones: this.maxClones,
       audioEnabled: this.audioEnabled,
       vibrationEnabled: this.vibrationEnabled,
+      audioQueueLength: this.audioQueue.length,
+      isPlayingQueued: this.isPlayingQueued,
+      audioContextState: this.audioContext?.state || 'unavailable',
       sounds: Object.keys(this.sounds).map(key => ({
         key,
         paused: this.sounds[key].paused,
         ended: this.sounds[key].ended,
         currentTime: this.sounds[key].currentTime,
         duration: this.sounds[key].duration,
+        preload: this.sounds[key].preload,
       })),
     };
   }

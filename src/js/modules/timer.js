@@ -29,8 +29,17 @@ export class Timer {
     this.targetEndTime = null;
     this.lastAlertSecond = null; // Track which second we last played alert for
 
+    // iOS-specific optimizations
+    this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    this.backgroundStartTime = null; // Track when page went to background
+    this.missedAlerts = []; // Track alerts that happened during background
+
     // Debug mode
     this.debugMode = localStorage.getItem("timer_debug") === "true";
+
+    if (this.debugMode && this.isIOS) {
+      console.log('[Timer] iOS detected - using enhanced background handling');
+    }
 
     // DOM elements
     this.timerDisplay = $("#timerDisplay");
@@ -74,8 +83,48 @@ export class Timer {
    */
   handleVisibilityChange() {
     if (document.visibilityState === "visible" && this.isRunning) {
+      if (this.debugMode) {
+        const backgroundDuration = this.backgroundStartTime
+          ? (Date.now() - this.backgroundStartTime) / 1000
+          : 0;
+        console.log(`[Timer] Page visible - was in background for ${backgroundDuration.toFixed(1)}s`);
+      }
+
       // Recalculate current time based on actual elapsed time
       this.syncTimeFromTimestamp();
+
+      // iOS: Play any missed alerts/sounds that occurred during background
+      if (this.isIOS && this.missedAlerts.length > 0) {
+        if (this.debugMode) {
+          console.log(`[Timer] iOS: Playing ${this.missedAlerts.length} missed alerts`);
+        }
+
+        // Play missed sounds (limited to most recent to avoid spam)
+        const recentMissed = this.missedAlerts.slice(-3); // Last 3 only
+        recentMissed.forEach(alert => {
+          if (alert.type === 'alert') {
+            this.audio.playAlert();
+          } else if (alert.type === 'complete') {
+            this.audio.playComplete();
+          }
+        });
+
+        this.missedAlerts = [];
+      }
+
+      // iOS: Re-acquire wake lock if needed (iOS may have released it)
+      if (this.isIOS && this.wakeLock) {
+        this.wakeLock.request();
+      }
+
+      this.backgroundStartTime = null;
+    } else if (document.visibilityState === "hidden" && this.isRunning) {
+      // Track when page went to background
+      this.backgroundStartTime = Date.now();
+
+      if (this.debugMode) {
+        console.log('[Timer] Page hidden - tracking background time');
+      }
     }
   }
 
@@ -349,12 +398,25 @@ export class Timer {
     // Only play once per second to avoid duplicates
     if (this.currentTime <= this.alertTime && this.currentTime > 0) {
       if (this.lastAlertSecond !== this.currentTime) {
-        this.audio.playAlert();
-        this.lastAlertSecond = this.currentTime;
-
-        if (this.debugMode) {
-          console.log(`[Timer] Alert beep at ${this.currentTime}s`);
+        // iOS: Track missed alerts when in background
+        const isInBackground = document.visibilityState === 'hidden';
+        if (this.isIOS && isInBackground) {
+          this.missedAlerts.push({
+            type: 'alert',
+            time: this.currentTime,
+            timestamp: Date.now()
+          });
+          if (this.debugMode) {
+            console.log(`[Timer] iOS: Alert at ${this.currentTime}s while in background (queued)`);
+          }
+        } else {
+          this.audio.playAlert();
+          if (this.debugMode) {
+            console.log(`[Timer] Alert beep at ${this.currentTime}s`);
+          }
         }
+
+        this.lastAlertSecond = this.currentTime;
       }
     }
 

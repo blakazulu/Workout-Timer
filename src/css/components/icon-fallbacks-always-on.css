@@ -1,0 +1,118 @@
+/**
+ * ALWAYS-ON Icon Fallbacks
+ *
+ * This provides fallbacks that work IMMEDIATELY without waiting for JavaScript detection.
+ * Uses font-family fallback chain - if Phosphor fonts load, they're used. If not, Unicode shows.
+ *
+ * CRITICAL: This fixes the Apple issue where NEITHER Phosphor icons NOR fallbacks were showing.
+ */
+
+/* =================================================================
+   UNIVERSAL FALLBACK STRATEGY
+   ================================================================= */
+
+/**
+ * Add Unicode content to ALL icons by default
+ * When Phosphor fonts load, they override these with proper glyphs
+ * When fonts DON'T load, these Unicode characters display
+ */
+
+/* Main App Icons */
+.ph-play::before { content: "▶" !important; }
+.ph-pause::before { content: "⏸" !important; }
+.ph-heart::before { content: "♥" !important; }
+.ph-x::before { content: "×" !important; font-size: 1.5em; line-height: 0.8; }
+.ph-info::before { content: "ℹ" !important; }
+.ph-magnifying-glass::before { content: "🔍" !important; }
+.ph-music-notes::before { content: "♫" !important; }
+.ph-music-notes-simple::before { content: "♪" !important; }
+.ph-download-simple::before { content: "⬇" !important; }
+.ph-caret-double-up::before { content: "⏫" !important; }
+.ph-clock-counter-clockwise::before { content: "↺" !important; }
+.ph-youtube-logo::before { content: "▶" !important; color: #ff0000; }
+.ph-smiley::before { content: "☺" !important; }
+.ph-shuffle::before { content: "🔀" !important; }
+
+/* Mood Icons */
+.ph-barbell::before { content: "🏋" !important; }
+.ph-fire::before { content: "🔥" !important; }
+.ph-lightning::before { content: "⚡" !important; }
+.ph-lightning-slash::before { content: "⚠" !important; }
+.ph-fire-simple::before { content: "🔥" !important; }
+.ph-heartbeat::before { content: "💗" !important; }
+.ph-crosshair::before { content: "⊕" !important; }
+.ph-rocket-launch::before { content: "🚀" !important; }
+.ph-gauge::before { content: "⊙" !important; }
+
+/* Genre Icons */
+.ph-guitar::before { content: "🎸" !important; }
+.ph-microphone-stage::before { content: "🎤" !important; }
+.ph-skull::before { content: "☠" !important; }
+.ph-speaker-high::before { content: "🔊" !important; }
+.ph-robot::before { content: "🤖" !important; }
+.ph-car::before { content: "🚗" !important; }
+.ph-timer::before { content: "⏱" !important; }
+
+/* Admin Icons */
+.ph-lock::before { content: "🔒" !important; }
+.ph-warning::before { content: "⚠" !important; }
+.ph-warning-circle::before { content: "⚠" !important; }
+.ph-list::before { content: "☰" !important; }
+.ph-house::before { content: "🏠" !important; }
+.ph-chart-pie::before { content: "◷" !important; }
+.ph-chart-line::before { content: "📈" !important; }
+.ph-chart-line-up::before { content: "📈" !important; }
+.ph-gear::before { content: "⚙" !important; }
+.ph-users::before { content: "👥" !important; }
+.ph-calendar::before { content: "📅" !important; }
+.ph-calendar-blank::before { content: "📅" !important; }
+.ph-calendar-check::before { content: "✓" !important; }
+.ph-user::before { content: "👤" !important; }
+.ph-user-circle::before { content: "👤" !important; }
+.ph-user-plus::before { content: "👤+" !important; }
+.ph-sign-out::before { content: "⎋" !important; }
+.ph-caret-right::before { content: "▶" !important; font-size: 0.7em; }
+.ph-arrow-clockwise::before { content: "↻" !important; }
+.ph-arrows-clockwise::before { content: "⟲" !important; }
+.ph-funnel::before { content: "⊽" !important; }
+.ph-trash::before { content: "🗑" !important; }
+.ph-trend-up::before { content: "↗" !important; }
+.ph-trend-down::before { content: "↘" !important; }
+.ph-spinner::before { content: "⟳" !important; animation: spin-fallback 1s linear infinite; }
+.ph-clipboard::before { content: "📋" !important; }
+.ph-star::before { content: "★" !important; }
+.ph-activity::before { content: "〰" !important; }
+.ph-circle::before { content: "●" !important; }
+.ph-check-circle::before { content: "✓" !important; }
+.ph-play-circle::before { content: "▶" !important; }
+.ph-pause-circle::before { content: "⏸" !important; }
+.ph-stop-circle::before { content: "⏹" !important; }
+.ph-music-note::before { content: "♪" !important; }
+.ph-arrow-counter-clockwise::before { content: "↺" !important; }
+.ph-sign-in::before { content: "→" !important; }
+.ph-eye::before { content: "👁" !important; }
+.ph-eye-slash::before { content: "⊘" !important; }
+.ph-tag::before { content: "🏷" !important; }
+.ph-browsers::before { content: "⊞" !important; }
+.ph-minus::before { content: "−" !important; }
+
+@keyframes spin-fallback {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* =================================================================
+   ENSURE DISPLAY
+   ================================================================= */
+
+/**
+ * Make absolutely sure ::before pseudo-elements are visible
+ */
+[class*="ph-"]::before {
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}

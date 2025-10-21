@@ -58,7 +58,8 @@
       "Bash(npx playwright:*)",
       "Bash(sudo apt-get update:*)",
       "Bash(sudo apt-get install:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

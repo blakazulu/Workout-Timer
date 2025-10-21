@@ -36,6 +36,14 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
+      // CRITICAL FOR iOS: Ensure service worker clears old caches on update
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg,woff,woff2}']
+      },
+      devOptions: {
+        enabled: true,
+        type: 'module'
+      },
       includeAssets: ['robots.txt', 'bg.webp', 'icons/*.png', 'icons/*.svg'],
       manifest: {
         name: 'CYCLE',
@@ -98,6 +106,16 @@ export default defineConfig({
         ]
       },
       workbox: {
+        // Use versioned cache names to force cache updates on iOS
+        cacheId: `cycle-v${packageJson.version}`,
+
+        // Clean up old caches on activation (CRITICAL FOR iOS)
+        cleanupOutdatedCaches: true,
+
+        // Skip waiting to activate new service worker immediately
+        clientsClaim: true,
+        skipWaiting: true,
+
         globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg,woff,woff2}'],
         runtimeCaching: [
           {
