@@ -9,10 +9,10 @@ import {
   clearStorage,
   disablePostHog,
   getLocalStorage,
+  openMusicLibrary,
   setLocalStorage,
   wait,
-  waitForAppReady,
-  openMusicLibrary
+  waitForAppReady
 } from "../helpers/test-helpers.js";
 import {SELECTORS} from "../helpers/selectors.js";
 import {MOCK_FAVORITES} from "../helpers/fixtures.js";

@@ -5,7 +5,7 @@
  */
 
 import {expect, test} from "@playwright/test";
-import {clearStorage, disablePostHog, wait, waitForAppReady, openMusicLibrary} from "../helpers/test-helpers.js";
+import {clearStorage, disablePostHog, openMusicLibrary, wait, waitForAppReady} from "../helpers/test-helpers.js";
 import {getTabSelector, SELECTORS} from "../helpers/selectors.js";
 
 test.describe("UI Interactions", () => {

@@ -1,16 +1,20 @@
 # Unit Test Fixes - October 20, 2025
 
 ## Overview
-After fixing all E2E tests, unit test failures were discovered in audio and favorites modules. This document covers the diagnosis and fixes for these failures.
+
+After fixing all E2E tests, unit test failures were discovered in audio and favorites modules. This document covers the
+diagnosis and fixes for these failures.
 
 ## Test Failures Summary
 
 ### Audio Unit Tests (`tests/unit/audio.test.js`)
+
 - **Failure 1**: Volume validation - IndexSizeError when setting volume to -0.5
 - **Failure 2**: Instance count - Expected 3, got 6
 - **Failure 3**: Source clearing - Expected true, got false
 
 ### Favorites Unit Tests (`tests/unit/favorites.test.js`)
+
 - **Failure**: clearFavorites is not a function (4+ occurrences)
 
 ---
@@ -20,20 +24,26 @@ After fixing all E2E tests, unit test failures were discovered in audio and favo
 ### Audio Test Issues
 
 #### Issue 1: Volume Property Validation
-**Error**: `IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (-0.5) is outside the range [0, 1]`
+
+**Error**:
+`IndexSizeError: Failed to set the 'volume' property on 'HTMLMediaElement': The volume provided (-0.5) is outside the range [0, 1]`
 
 **Root Cause**:
-The mock Audio class extended the real `HTMLMediaElement`, which validates volume values. When tests tried to set `volume = -0.5`, the real property setter threw an error instead of allowing the mock to handle it gracefully.
+The mock Audio class extended the real `HTMLMediaElement`, which validates volume values. When tests tried to set
+`volume = -0.5`, the real property setter threw an error instead of allowing the mock to handle it gracefully.
 
 **Location**: `tests/unit/audio.test.js:62`
 
 ---
 
 #### Issue 2: Audio Instance Count
+
 **Error**: `Expected: 3, Received: 6`
 
 **Root Cause**:
-`window.__testAudioInstances` array was not cleared between tests. Each test added instances to the same array, causing accumulation:
+`window.__testAudioInstances` array was not cleared between tests. Each test added instances to the same array, causing
+accumulation:
+
 - Test 1: Creates 3 instances (total: 3)
 - Test 2: Creates 3 more instances (total: 6) ❌
 
@@ -42,10 +52,12 @@ The mock Audio class extended the real `HTMLMediaElement`, which validates volum
 ---
 
 #### Issue 3: Source Property
+
 **Error**: `Expected: true, Received: false`
 
 **Root Cause**:
-When setting `audio.src = ""`, the browser's native behavior converts it to a full URL (e.g., `"http://localhost:4200/"`), so checking `audio.src === ""` would fail.
+When setting `audio.src = ""`, the browser's native behavior converts it to a full URL (e.g.,
+`"http://localhost:4200/"`), so checking `audio.src === ""` would fail.
 
 **Location**: `tests/unit/audio.test.js:242`
 
@@ -54,10 +66,12 @@ When setting `audio.src = ""`, the browser's native behavior converts it to a fu
 ### Favorites Test Issues
 
 #### Issue: Function Names Mismatch
+
 **Error**: `TypeError: window.__testFavorites.clearFavorites is not a function`
 
 **Root Cause**:
 The test imported functions with incorrect names. The favorites module exports:
+
 - `addToFavorites` (test used `addFavorite`)
 - `removeFromFavorites` (test used `removeFavorite`)
 - `clearAllFavorites` (test used `clearFavorites`)
@@ -73,11 +87,13 @@ The test imported functions with incorrect names. The favorites module exports:
 **File**: `tests/helpers/test-helpers.js`
 
 **Changes**:
+
 1. Override `volume` property with custom getter/setter that clamps values
 2. Override `src` property to properly handle empty strings
 3. Add `__clearAudioInstances()` helper function
 
 **Before**:
+
 ```javascript
 window.Audio = class extends OriginalAudio {
   constructor(src) {
@@ -91,6 +107,7 @@ window.Audio = class extends OriginalAudio {
 ```
 
 **After**:
+
 ```javascript
 window.Audio = class extends OriginalAudio {
   constructor(src) {
@@ -135,6 +152,7 @@ window.__clearAudioInstances = () => {
 ```
 
 **Benefits**:
+
 - ✅ Handles invalid volume values gracefully (clamps instead of throwing)
 - ✅ Properly manages empty src values
 - ✅ Provides cleanup mechanism for tests
@@ -146,6 +164,7 @@ window.__clearAudioInstances = () => {
 **File**: `tests/unit/audio.test.js`
 
 **Change**:
+
 ```javascript
 test.beforeEach(async ({page}) => {
   await mockAudioAPI(page);
@@ -169,6 +188,7 @@ test.beforeEach(async ({page}) => {
 **File**: `tests/unit/audio.test.js:62-89`
 
 **Before**:
+
 ```javascript
 audio.volume = -0.5;
 results.push(audio.volume);  // Would throw error
@@ -179,6 +199,7 @@ expect(volumes[1]).toBeLessThanOrEqual(1);
 ```
 
 **After**:
+
 ```javascript
 audio.volume = -0.5;
 results.push(audio.volume);  // Should be clamped to 0
@@ -200,6 +221,7 @@ expect(volumes[1]).toBe(1);  // 1.5 clamped to 1
 **File**: `tests/unit/favorites.test.js`
 
 **Before**:
+
 ```javascript
 const {addFavorite, removeFavorite, getFavorites, isFavorite, clearFavorites} =
   await import("/src/js/modules/favorites/index.js");  // ❌ Wrong names
@@ -214,6 +236,7 @@ window.__testFavorites = {
 ```
 
 **After**:
+
 ```javascript
 const {addToFavorites, removeFromFavorites, getFavorites, isFavorite, clearAllFavorites} =
   await import("/src/js/modules/favorites/index.js");  // ✅ Correct names
@@ -249,21 +272,25 @@ tests/
 ### Before Fixes
 
 **Audio Tests**:
+
 - ❌ Volume validation: IndexSizeError
 - ❌ Instance count: Expected 3, got 6
 - ❌ Source clearing: Expected true, got false
 
 **Favorites Tests**:
+
 - ❌ All tests failing: clearFavorites is not a function
 
 ### After Fixes
 
 **Audio Tests**: ✅ All passing
+
 - ✅ Volume validation: Correctly clamps to 0-1 range
 - ✅ Instance count: Always 3 (fresh instances per test)
 - ✅ Source clearing: Properly handles empty strings
 
 **Favorites Tests**: ✅ All passing
+
 - ✅ All functions properly imported with correct names
 - ✅ Aliases maintain test readability
 
@@ -273,7 +300,8 @@ tests/
 
 ### 1. Mock Object Property Handling
 
-When extending native browser objects (like `HTMLMediaElement`), you must override properties that have validation logic:
+When extending native browser objects (like `HTMLMediaElement`), you must override properties that have validation
+logic:
 
 ```javascript
 // ❌ Wrong: Native setter still validates

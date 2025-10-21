@@ -1,20 +1,27 @@
 # Favorites API Migration - Test Fixes
+
 **Date:** October 21, 2025
 
 ## Overview
-Fixed all test failures caused by favorites module API changes. The favorites system was refactored from a simple array of video IDs to a full object-based system with metadata, but tests weren't updated.
+
+Fixed all test failures caused by favorites module API changes. The favorites system was refactored from a simple array
+of video IDs to a full object-based system with metadata, but tests weren't updated.
 
 ## Problem Summary
 
 ### Initial Failures
+
 **14 test failures** across E2E and unit tests:
+
 - 8 favorites E2E tests (mobile mode)
 - 3 UI interaction tests (library panel)
 - 1 music E2E test
 - 2 unit test suites (favorites + storage)
 
 ### Root Cause
+
 Tests were using **old favorites API**:
+
 ```javascript
 // Old API (what tests expected)
 localStorage key: "favorites"
@@ -25,6 +32,7 @@ Data format: {
 ```
 
 But the **actual implementation** uses:
+
 ```javascript
 // New API (current reality)
 localStorage key: "workout-timer-favorites"
@@ -49,7 +57,9 @@ Data format: [
 ### 1. Unit Tests Rewrite
 
 #### `tests/unit/favorites.test.js` (12 tests)
+
 **Before:**
+
 ```javascript
 // Expected old API
 getFavorites() → {songs: ["id1", "id2"]}
@@ -57,6 +67,7 @@ addToFavorites("video-id-123") // Just ID string
 ```
 
 **After:**
+
 ```javascript
 // Uses new API
 getFavorites() → [{videoId: "...", title: "...", ...}]
@@ -70,22 +81,27 @@ addToFavorites({
 ```
 
 **Changes:**
+
 - Added `createMockSong()` helper function
 - Updated all 12 tests to pass full song objects
 - Changed localStorage key from "favorites" to "workout-timer-favorites"
 - Updated assertions to expect array directly, not `{songs: []}`
 
 #### `tests/unit/storage.test.js` (17 tests)
+
 **Before:**
+
 - Tests were generic localStorage API checks
 - No connection to actual storage module
 
 **After:**
+
 - Tests actual `src/js/modules/storage.js` functions
 - 6 tests for timer settings (load, save, clear, merge defaults, error handling)
 - 11 tests for song history (save, play count, metadata, most played, persistence)
 
 **New Coverage:**
+
 - `loadSettings()` / `saveSettings()` / `clearSettings()`
 - `saveSongToHistory()` / `getSongHistory()` / `clearSongHistory()`
 - `removeSongFromHistory()` / `getMostPlayedSongs()`
@@ -98,7 +114,9 @@ addToFavorites({
 ### 2. E2E Tests Update
 
 #### `tests/e2e/favorites.spec.js` (11 tests)
+
 **Changes:**
+
 ```javascript
 // Updated localStorage key constant
 const FAVORITES_KEY = "workout-timer-favorites";
@@ -113,6 +131,7 @@ expect(favorites.length).toBeGreaterThan(0);
 ```
 
 **Tests Updated:**
+
 1. Add song to favorites
 2. Remove song from favorites
 3. Show favorites list
@@ -128,7 +147,9 @@ expect(favorites.length).toBeGreaterThan(0);
 ### 3. Test Fixtures Update
 
 #### `tests/helpers/fixtures.js`
+
 **Before:**
+
 ```javascript
 export const MOCK_FAVORITES = {
   songs: ["test-video-1", "test-video-3", "test-video-5"],
@@ -137,6 +158,7 @@ export const MOCK_FAVORITES = {
 ```
 
 **After:**
+
 ```javascript
 export const MOCK_FAVORITES = [
   {
@@ -153,6 +175,7 @@ export const MOCK_FAVORITES = [
 ```
 
 **Also Updated:**
+
 ```javascript
 // localStorage mock key changed
 export const MOCK_LOCAL_STORAGE = {
@@ -173,16 +196,16 @@ export const MOCK_APP_STATE = {
 
 ## API Comparison Table
 
-| Aspect | Old API | New API |
-|--------|---------|---------|
-| **localStorage Key** | `"favorites"` | `"workout-timer-favorites"` |
-| **Data Structure** | Object with `songs` array | Array of song objects |
-| **Song Format** | String (video ID only) | Full object with metadata |
-| **Add Function** | `addToFavorites(videoId: string)` | `addToFavorites(songData: Object)` |
-| **Get Function** | Returns `{songs: string[]}` | Returns `Array<SongObject>` |
-| **Check Function** | N/A | `isFavorite(videoId: string)` |
-| **Remove Function** | N/A | `removeFromFavorites(videoId: string)` |
-| **Clear Function** | N/A | `clearAllFavorites()` |
+| Aspect               | Old API                           | New API                                |
+|----------------------|-----------------------------------|----------------------------------------|
+| **localStorage Key** | `"favorites"`                     | `"workout-timer-favorites"`            |
+| **Data Structure**   | Object with `songs` array         | Array of song objects                  |
+| **Song Format**      | String (video ID only)            | Full object with metadata              |
+| **Add Function**     | `addToFavorites(videoId: string)` | `addToFavorites(songData: Object)`     |
+| **Get Function**     | Returns `{songs: string[]}`       | Returns `Array<SongObject>`            |
+| **Check Function**   | N/A                               | `isFavorite(videoId: string)`          |
+| **Remove Function**  | N/A                               | `removeFromFavorites(videoId: string)` |
+| **Clear Function**   | N/A                               | `clearAllFavorites()`                  |
 
 ---
 
@@ -205,6 +228,7 @@ interface FavoriteSong {
 ## Files Modified
 
 ### Test Files
+
 ```
 tests/
 ├── unit/
@@ -217,6 +241,7 @@ tests/
 ```
 
 ### Test Helpers
+
 - `createMockSong()` - Helper to generate test song data
 - Updated `MOCK_FAVORITES` - Array of 3 complete song objects
 - Updated `MOCK_LOCAL_STORAGE` - Correct localStorage keys
@@ -226,6 +251,7 @@ tests/
 ## Test Results
 
 ### Before Fixes
+
 ```
 Unit Tests:
 ❌ favorites.test.js: 12/12 failing
@@ -240,6 +266,7 @@ Total: 14 failures
 ```
 
 ### After Fixes
+
 ```
 Unit Tests:
 ✅ favorites.test.js: 12/12 passing
@@ -260,6 +287,7 @@ Total: 100% passing
 If you need to work with favorites in tests:
 
 ### Unit Tests
+
 ```javascript
 // Import the module
 const {addToFavorites, removeFromFavorites, getFavorites, isFavorite} =
@@ -288,6 +316,7 @@ removeFromFavorites("test-123");
 ```
 
 ### E2E Tests
+
 ```javascript
 import {MOCK_FAVORITES} from "../helpers/fixtures.js";
 
@@ -305,22 +334,29 @@ expect(favorites[0].videoId).toBe("test-video-1");
 ## Key Learnings
 
 ### 1. API Evolution Requires Test Updates
+
 When refactoring data structures, ALL tests must be updated:
+
 - Unit tests
 - E2E tests
 - Test fixtures
 - Mock data
 
 ### 2. Storage Key Changes
+
 localStorage keys are part of the contract - changing them breaks persistence:
+
 ```javascript
 // Before: "favorites"
 // After: "workout-timer-favorites"
 ```
+
 All tests must use the same key the code uses.
 
 ### 3. Data Shape Validation
+
 Tests should validate the actual shape of data:
+
 ```javascript
 // ❌ Wrong: Assumes old structure
 expect(favorites.songs).toBeDefined();
@@ -331,7 +367,9 @@ expect(favorites[0].videoId).toBeDefined();
 ```
 
 ### 4. Metadata Completeness
+
 The new API stores rich metadata - tests should validate it:
+
 - `videoId`, `title`, `channel`, `duration`, `url`
 - `thumbnail` (auto-generated)
 - `favoritedAt` (timestamp)
@@ -351,9 +389,11 @@ The new API stores rich metadata - tests should validate it:
 ## Conclusion
 
 All 14 test failures resolved by aligning tests with current favorites API:
+
 - ✅ Unit tests rewritten for new API (29 tests total)
 - ✅ E2E tests updated for new data structure (11 tests)
 - ✅ Fixtures modernized with full metadata
 - ✅ 100% test pass rate achieved
 
-**No production code changes required** - the application was working correctly, tests just needed to catch up to reality.
+**No production code changes required** - the application was working correctly, tests just needed to catch up to
+reality.

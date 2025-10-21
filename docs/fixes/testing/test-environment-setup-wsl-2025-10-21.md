@@ -1,4 +1,5 @@
 # Test Environment Setup for WSL - Complete Solution
+
 **Date:** October 21, 2025
 
 ## Issue Summary
@@ -23,17 +24,20 @@ Error: browserType.launch:
 ## Test Results Breakdown
 
 ### Before Any Fixes
+
 ```
 Total tests: 810
 Failed: 24 (14 unit test failures + 10 environment failures)
 ```
 
 **Failures:**
+
 - 12 unit tests in `favorites.test.js` - API mismatch ✅ **FIXED**
 - 5 unit tests in `storage.test.js` - Wrong module tested ✅ **FIXED**
 - 14 E2E tests - Mix of popover issues + environment ⚠️ **Partially fixed**
 
 ### After Code Fixes (Current State)
+
 ```
 Total tests: 810
 Passed: 797
@@ -41,6 +45,7 @@ Failed: 13 (all environment-related)
 ```
 
 **Remaining failures** (all in mobile/tablet projects):
+
 - 9 tests in `favorites.spec.js` (mobile)
 - 3 tests in `ui-interactions.spec.js` (mobile + mobile-landscape)
 - 1 test in `music.spec.js` (likely tablet)
@@ -88,18 +93,19 @@ projects: [
 
 ### Browser Requirements
 
-| Project | Browser Engine | WSL Status | Requires System Deps |
-|---------|---------------|------------|----------------------|
-| Desktop Chromium | Chromium | ✅ Working | Minimal (already installed) |
-| Desktop Firefox | Firefox | ✅ Working | Minimal (already installed) |
-| Desktop WebKit | WebKit (Safari) | ❌ Needs deps | GTK, GStreamer, etc. |
-| Mobile (iPhone) | WebKit | ❌ Needs deps | GTK, GStreamer, etc. |
-| Mobile Landscape | WebKit | ❌ Needs deps | GTK, GStreamer, etc. |
-| Tablet (iPad) | WebKit | ❌ Needs deps | GTK, GStreamer, etc. |
+| Project          | Browser Engine  | WSL Status   | Requires System Deps        |
+|------------------|-----------------|--------------|-----------------------------|
+| Desktop Chromium | Chromium        | ✅ Working    | Minimal (already installed) |
+| Desktop Firefox  | Firefox         | ✅ Working    | Minimal (already installed) |
+| Desktop WebKit   | WebKit (Safari) | ❌ Needs deps | GTK, GStreamer, etc.        |
+| Mobile (iPhone)  | WebKit          | ❌ Needs deps | GTK, GStreamer, etc.        |
+| Mobile Landscape | WebKit          | ❌ Needs deps | GTK, GStreamer, etc.        |
+| Tablet (iPad)    | WebKit          | ❌ Needs deps | GTK, GStreamer, etc.        |
 
 ### System Dependencies Needed
 
 **For WebKit:**
+
 ```bash
 libgtk-4-1           # GTK 4.0 graphics toolkit
 libevent-2.1-7t64    # Event notification library
@@ -110,6 +116,7 @@ gstreamer1.0-libav   # Audio/video codecs
 ```
 
 **For Chromium (mobile mode):**
+
 ```bash
 libnspr4             # Netscape Portable Runtime
 libnss3              # Network Security Services
@@ -122,16 +129,19 @@ libnss3              # Network Security Services
 ### Option 1: Install System Dependencies (Recommended for Full Coverage)
 
 **Pros:**
+
 - Runs all 810 tests
 - Tests mobile/tablet behavior accurately
 - One-time setup
 
 **Cons:**
+
 - Requires sudo access
 - ~300MB of system packages
 - Only works on Linux/WSL
 
 **Installation:**
+
 ```bash
 # Full installation (all browsers)
 sudo npx playwright install-deps
@@ -149,6 +159,7 @@ sudo apt-get update && sudo apt-get install -y \
 ```
 
 **Verify:**
+
 ```bash
 npm run test
 # Should see: 810 tests, 810 passed
@@ -159,11 +170,13 @@ npm run test
 ### Option 2: Use Chromium for Mobile Tests (Modified Config)
 
 **Pros:**
+
 - No system dependencies needed
 - Chromium already installed
 - Still tests mobile viewport behavior
 
 **Cons:**
+
 - Doesn't test actual WebKit engine
 - Mobile behavior might differ from iOS Safari
 
@@ -184,11 +197,13 @@ The `playwright.config.js` has already been updated (lines 70-97) to use Chromiu
 **However, this still requires Chromium dependencies** (libnspr4, libnss3).
 
 **Install minimal deps:**
+
 ```bash
 sudo apt-get install -y libnspr4 libnss3
 ```
 
 **Verify:**
+
 ```bash
 npm run test
 # Should see: 810 tests, 810 passed
@@ -199,21 +214,25 @@ npm run test
 ### Option 3: Skip Mobile/Tablet Tests
 
 **Pros:**
+
 - No system changes needed
 - Fast test runs
 - Good for quick validation
 
 **Cons:**
+
 - Only 797/810 tests run
 - No mobile behavior validation
 - May miss mobile-specific bugs
 
 **Run desktop tests only:**
+
 ```bash
 npx playwright test --project=chromium --project=firefox
 ```
 
 **Add to `package.json`:**
+
 ```json
 {
   "scripts": {
@@ -229,15 +248,18 @@ npx playwright test --project=chromium --project=firefox
 ### Option 4: Run Tests on Windows (Not WSL)
 
 **Pros:**
+
 - Playwright's Windows binaries include all dependencies
 - No system package installation needed
 - Full test coverage
 
 **Cons:**
+
 - Have to switch from WSL to PowerShell/CMD
 - Different environment than development
 
 **Steps:**
+
 ```powershell
 # Open PowerShell or CMD
 cd "C:\My Stuff\workout-timer-pro"
@@ -249,7 +271,9 @@ npm run test
 ## Recommended Approach
 
 ### For CI/CD (GitHub Actions, etc.)
+
 Use **Option 1** - Install all dependencies
+
 ```yaml
 # .github/workflows/test.yml
 - name: Install Playwright browsers
@@ -257,7 +281,9 @@ Use **Option 1** - Install all dependencies
 ```
 
 ### For Local Development (WSL)
+
 Use **Option 1** OR **Option 2**
+
 ```bash
 # One-time setup
 sudo npx playwright install-deps
@@ -267,7 +293,9 @@ npm run test
 ```
 
 ### For Quick Local Checks
+
 Use **Option 3** - Desktop only
+
 ```bash
 npm run test:desktop  # Add this script to package.json
 ```
@@ -279,13 +307,16 @@ npm run test:desktop  # Add this script to package.json
 All test code issues have been resolved:
 
 ### 1. Favorites API Migration ✅
+
 **Files fixed:**
+
 - `tests/unit/favorites.test.js` - 12 tests updated for new API
 - `tests/unit/storage.test.js` - 17 tests rewritten
 - `tests/e2e/favorites.spec.js` - 11 tests updated
 - `tests/helpers/fixtures.js` - Mock data modernized
 
 **Changes:**
+
 ```javascript
 // Old API
 localStorage: "favorites"
@@ -297,12 +328,15 @@ Format: [{videoId: "id1", title: "...", channel: "...", ...}]
 ```
 
 ### 2. Popover Handling ✅
+
 **Files fixed:**
+
 - `tests/helpers/test-helpers.js` - Added `openMusicLibrary()` helper
 - `tests/e2e/favorites.spec.js` - All tests use helper
 - `tests/e2e/ui-interactions.spec.js` - 3 tests use helper
 
 **Implementation:**
+
 ```javascript
 export async function openMusicLibrary(page,
   libraryButtonSelector = "#historyBtn",
@@ -330,9 +364,11 @@ export async function openMusicLibrary(page,
 ```
 
 ### 3. Playwright Configuration ✅
+
 **File modified:** `playwright.config.js`
 
 **Changes:**
+
 ```javascript
 // Mobile tests now explicitly use Chromium (for WSL compatibility)
 {
@@ -380,8 +416,10 @@ npx playwright test tests/e2e/favorites.spec.js
 ## Common Issues
 
 ### Issue: "Executable doesn't exist" Error
+
 **Cause:** Browser not installed
 **Fix:**
+
 ```bash
 npx playwright install chromium
 # or
@@ -389,15 +427,19 @@ npx playwright install webkit
 ```
 
 ### Issue: "Host system is missing dependencies"
+
 **Cause:** System libraries not installed
 **Fix:**
+
 ```bash
 sudo npx playwright install-deps
 ```
 
 ### Issue: Tests timeout on WSL
+
 **Cause:** Dev server slow to start
 **Fix:** Increase timeout in `playwright.config.js`:
+
 ```javascript
 webServer: {
   timeout: 180 * 1000, // 3 minutes
@@ -408,12 +450,12 @@ webServer: {
 
 ## Final Test Counts
 
-| Category | Count | Status |
-|----------|-------|--------|
-| **Unit Tests** | 29 | ✅ All passing |
-| **E2E Desktop Tests** | 768 | ✅ All passing |
-| **E2E Mobile Tests** | 13 | ⚠️ Need system deps |
-| **Total** | 810 | **797 passing** |
+| Category              | Count | Status              |
+|-----------------------|-------|---------------------|
+| **Unit Tests**        | 29    | ✅ All passing       |
+| **E2E Desktop Tests** | 768   | ✅ All passing       |
+| **E2E Mobile Tests**  | 13    | ⚠️ Need system deps |
+| **Total**             | 810   | **797 passing**     |
 
 ---
 
@@ -422,6 +464,7 @@ webServer: {
 ### Question: "Why are they failing - is something wrong with the test itself or the code?"
 
 **Answer:**
+
 - ❌ **NOT** a test code issue - tests are correctly written
 - ❌ **NOT** a production code issue - application works perfectly
 - ✅ **YES** an environment setup issue - WSL needs system libraries
