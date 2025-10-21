@@ -38,8 +38,12 @@
   width: 1em;
   height: 1em;
   vertical-align: middle;
+  /* Make SVG icons visible on dark backgrounds */
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease, transform 0.2s ease;
 }
 
+/* Icon Sizes */
 .svg-icon-sm {
   width: 0.875em;
   height: 0.875em;
@@ -53,4 +57,139 @@
 .svg-icon-xl {
   width: 1.5em;
   height: 1.5em;
+}
+
+/* Contextual Icon Colors - Cyberpunk Theme */
+
+/* Cyan - Timer, Success, Primary Actions */
+.svg-icon.icon-cyan,
+.svg-icon.icon-timer,
+.svg-icon.icon-success,
+.svg-icon.icon-primary {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
+          hue-rotate(102deg) brightness(104%) contrast(101%);
+  /* Result: #00ffc8 cyan */
+}
+
+/* Hot Pink - Music, Alerts, Favorites */
+.svg-icon.icon-pink,
+.svg-icon.icon-music,
+.svg-icon.icon-alert,
+.svg-icon.icon-favorite {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
+          hue-rotate(322deg) brightness(103%) contrast(108%);
+  /* Result: #ff0096 hot pink */
+}
+
+/* Purple - History, Secondary */
+.svg-icon.icon-purple,
+.svg-icon.icon-history,
+.svg-icon.icon-secondary {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%)
+          hue-rotate(227deg) brightness(103%) contrast(101%);
+  /* Result: #6464ff purple */
+}
+
+/* White - Default, Neutral */
+.svg-icon.icon-white,
+.svg-icon.icon-neutral {
+  filter: brightness(0) invert(1);
+  /* Result: #ffffff white */
+}
+
+/* Gray - Disabled, Inactive */
+.svg-icon.icon-gray,
+.svg-icon.icon-disabled,
+.svg-icon.icon-inactive {
+  filter: brightness(0) invert(1) opacity(0.4);
+  /* Result: dimmed white */
+}
+
+/* Hover States - Enhanced Glow */
+.svg-icon.icon-cyan:hover,
+.svg-icon.icon-timer:hover,
+.svg-icon.icon-success:hover,
+.svg-icon.icon-primary:hover {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
+          hue-rotate(102deg) brightness(104%) contrast(101%)
+          drop-shadow(0 0 8px rgba(0, 255, 200, 0.8));
+  transform: scale(1.1);
+}
+
+.svg-icon.icon-pink:hover,
+.svg-icon.icon-music:hover,
+.svg-icon.icon-alert:hover,
+.svg-icon.icon-favorite:hover {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
+          hue-rotate(322deg) brightness(103%) contrast(108%)
+          drop-shadow(0 0 8px rgba(255, 0, 150, 0.8));
+  transform: scale(1.1);
+}
+
+.svg-icon.icon-purple:hover,
+.svg-icon.icon-history:hover,
+.svg-icon.icon-secondary:hover {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%)
+          hue-rotate(227deg) brightness(103%) contrast(101%)
+          drop-shadow(0 0 8px rgba(100, 100, 255, 0.8));
+  transform: scale(1.1);
+}
+
+/* Active/Pressed States */
+.svg-icon.icon-active {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
+          hue-rotate(102deg) brightness(104%) contrast(101%)
+          drop-shadow(0 0 12px rgba(0, 255, 200, 1));
+  transform: scale(1.15);
+}
+
+/* Special Context Classes */
+.svg-icon.icon-play,
+.svg-icon.icon-pause,
+.svg-icon.icon-shuffle {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
+          hue-rotate(322deg) brightness(103%) contrast(108%);
+}
+
+.svg-icon.icon-clock,
+.svg-icon.icon-calendar {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
+          hue-rotate(102deg) brightness(104%) contrast(101%);
+}
+
+.svg-icon.icon-heart {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
+          hue-rotate(322deg) brightness(103%) contrast(108%);
+}
+
+.svg-icon.icon-heart:hover {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
+          hue-rotate(322deg) brightness(103%) contrast(108%)
+          drop-shadow(0 0 12px rgba(255, 0, 150, 1));
+  animation: heartbeat 0.6s ease-in-out;
+  transform: scale(1.2);
+}
+
+/* Heartbeat Animation for Favorites */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1.1); }
+  75% { transform: scale(1.25); }
+}
+
+/* Gradient Icons (experimental - for special cases) */
+.svg-icon.icon-gradient {
+  filter: brightness(0) invert(1);
+  /* Note: Pure CSS filter can't create gradients, would need inline SVG for true gradients */
+}
+
+/* Spinning Animation for Loading Icons */
+.svg-icon.icon-loading {
+  animation: icon-spin 1s linear infinite;
+}
+
+@keyframes icon-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

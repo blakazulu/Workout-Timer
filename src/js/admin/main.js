@@ -6,10 +6,14 @@
 import {authenticate, isAuthenticated} from "./auth.js";
 import {cleanup, initDashboard} from "./admin-dashboard.js";
 import {createIconImg} from "../utils/icon-mapper.js";
+import {initIconColorEnhancer} from "../utils/icon-color-enhancer.js";
 
 // Initialize admin interface
 document.addEventListener("DOMContentLoaded", () => {
   console.log("[Admin] Initializing admin interface...");
+
+  // Initialize icon color enhancement
+  initIconColorEnhancer();
 
   // Check authentication status
   if (isAuthenticated()) {

@@ -26,6 +26,8 @@ import {setupYouTubeSearch} from "./search/youtube-search-ui.js";
 // Import analytics modules
 import {analytics} from "./core/analytics.js";
 import {initAnalyticsTracking} from "./core/analytics-tracker.js";
+// Import icon color enhancer
+import {initIconColorEnhancer} from "./utils/icon-color-enhancer.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -125,6 +127,9 @@ function init() {
     return;
   }
   isInitialized = true;
+
+  // Initialize icon color enhancement
+  initIconColorEnhancer();
 
   // Initialize PWA install handlers
   initPWAInstall();

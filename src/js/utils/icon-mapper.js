@@ -6,6 +6,62 @@
  */
 
 /**
+ * Contextual color class mapping based on icon category
+ * Automatically applies theme colors to icons
+ */
+const ICON_COLOR_MAP = {
+  // Music & Playback - Hot Pink
+  music: ['ph-play', 'ph-pause', 'ph-shuffle', 'ph-music-notes', 'ph-music-notes-simple',
+          'ph-music-note', 'ph-speaker-high', 'ph-microphone-stage', 'ph-play-circle',
+          'ph-pause-circle', 'ph-stop-circle', 'ph-youtube-logo'],
+
+  // Timer & Time - Cyan
+  timer: ['ph-clock-counter-clockwise', 'ph-timer', 'ph-calendar', 'ph-calendar-blank',
+          'ph-calendar-check'],
+
+  // Favorites & Hearts - Hot Pink
+  favorite: ['ph-heart', 'ph-star'],
+
+  // History & Stats - Purple
+  history: ['ph-chart-pie', 'ph-chart-line', 'ph-chart-line-up', 'ph-trend-up', 'ph-trend-down',
+            'ph-activity', 'ph-gauge'],
+
+  // Success & Primary - Cyan
+  success: ['ph-check-circle'],
+
+  // Alert & Warning - Hot Pink
+  alert: ['ph-warning', 'ph-warning-circle'],
+
+  // User & Profile - Purple
+  secondary: ['ph-users', 'ph-user', 'ph-user-circle', 'ph-user-plus'],
+};
+
+/**
+ * Get contextual color class for an icon
+ * @param {string} iconClass - Phosphor icon class
+ * @returns {string} Color class (e.g., 'icon-music', 'icon-timer')
+ */
+function getIconColorClass(iconClass) {
+  // Clean the icon class
+  const cleanClass = iconClass
+    .replace(/ph-bold/g, '')
+    .replace(/ph-fill/g, '')
+    .replace(/ph-regular/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Check each color category
+  for (const [colorName, icons] of Object.entries(ICON_COLOR_MAP)) {
+    if (icons.some(icon => cleanClass.includes(icon))) {
+      return `icon-${colorName}`;
+    }
+  }
+
+  // Default to white for unmatched icons
+  return 'icon-white';
+}
+
+/**
  * Icon mapping from Phosphor classes to SVG file paths
  * Path is relative to /public/svg-icons/
  */
@@ -184,7 +240,8 @@ export async function createInlineSVG(iconClass, options = {}) {
 export function createIconImg(iconClass, options = {}) {
   const {
     className = '',
-    alt = ''
+    alt = '',
+    color = '' // Allow manual color override
   } = options;
 
   const iconPath = getIconPath(iconClass);
@@ -194,7 +251,11 @@ export function createIconImg(iconClass, options = {}) {
     return `<span class="icon-missing ${className}" aria-label="${alt || iconClass}">?</span>`;
   }
 
-  return `<img src="/svg-icons/${iconPath}" class="svg-icon ${className}" alt="${alt || iconClass}" />`;
+  // Auto-apply contextual color unless manually overridden
+  const colorClass = color || getIconColorClass(iconClass);
+  const classes = `svg-icon ${colorClass} ${className}`.trim();
+
+  return `<img src="/svg-icons/${iconPath}" class="${classes}" alt="${alt || iconClass}" />`;
 }
 
 /**
@@ -218,10 +279,11 @@ export async function replacePhosphorIconsInElement(container) {
       continue;
     }
 
-    // Create img element
+    // Create img element with contextual color
     const img = document.createElement('img');
     img.src = `/svg-icons/${iconPath}`;
-    img.className = iconEl.className.replace(/ph-\S+/g, '').trim() + ' svg-icon';
+    const colorClass = getIconColorClass(phosphorClass);
+    img.className = iconEl.className.replace(/ph-\S+/g, '').trim() + ` svg-icon ${colorClass}`;
     img.alt = iconEl.getAttribute('aria-label') || phosphorClass;
 
     // Replace the icon element
@@ -242,7 +304,8 @@ export function createIcon(iconClass, options = {}) {
   const {
     className = '',
     alt = '',
-    size = '1em'
+    size = '1em',
+    color = '' // Allow manual color override
   } = options;
 
   const iconPath = getIconPath(iconClass);
@@ -258,7 +321,10 @@ export function createIcon(iconClass, options = {}) {
 
   const img = document.createElement('img');
   img.src = `/svg-icons/${iconPath}`;
-  img.className = `svg-icon ${className}`.trim();
+
+  // Auto-apply contextual color unless manually overridden
+  const colorClass = color || getIconColorClass(iconClass);
+  img.className = `svg-icon ${colorClass} ${className}`.trim();
   img.alt = alt || iconClass.replace(/^ph-/, '').replace(/-/g, ' ');
 
   // Set size
