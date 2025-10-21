@@ -9,20 +9,6 @@ import "./css/global.css";
 import "./css/components.css";
 import "./css/animations.css";
 
-// Import icon fallback system (Layer 3: CSS Unicode fallbacks)
-import "./css/components/icon-fallbacks.css";
-// CRITICAL: Always-on fallbacks for Apple devices (shows Unicode immediately)
-import "./css/components/icon-fallbacks-always-on.css";
-
-// Import icon font loader (Layer 4: JavaScript detection)
-import { initIconFontLoader } from "./js/utils/icon-font-loader.js";
-
-// Initialize icon font loader with debugging enabled in development
-initIconFontLoader({
-  debug: import.meta.env.DEV, // Enable logging in dev mode only
-  timeout: 3000, // 3 second timeout (iOS-optimized)
-});
-
 // Import popover polyfill for iOS/Safari compatibility
 import {
   initAllPopovers,

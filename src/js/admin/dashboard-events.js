@@ -4,6 +4,7 @@
  */
 
 import * as posthog from "./posthog-client.js";
+import { createIconImg } from "../utils/icon-mapper.js";
 
 /**
  * Render events section with breakdown and statistics
@@ -74,7 +75,9 @@ function populateEventsTable(events) {
   if (events.length === 0) {
     eventsTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-calendar-blank" style="font-size: 3rem; opacity: 0.3;"></i>
+        <div style="font-size: 3rem; opacity: 0.3;">
+          ${createIconImg('ph-calendar-blank', { className: '', alt: 'no events' })}
+        </div>
         <p style="margin-top: 1rem;">No events found</p>
       </div>
     `;
@@ -93,7 +96,7 @@ function populateEventsTable(events) {
     return `
       <div class="event-row">
         <div class="event-icon">
-          <i class="${iconClass}" aria-hidden="true"></i>
+          ${createIconImg(iconClass, { className: '', alt: eventName })}
         </div>
         <div class="event-info">
           <div class="event-name">${eventName}</div>
@@ -122,7 +125,9 @@ function showEventsError(error) {
         </div>
         <div class="table-container">
           <div style="text-align: center; padding: 3rem; color: var(--error-500);">
-            <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <div style="font-size: 3rem; margin-bottom: 1rem;">
+              ${createIconImg('ph-warning-circle', { className: '', alt: 'error' })}
+            </div>
             <h3 style="margin-bottom: 0.5rem;">Failed to load events</h3>
             <p style="color: var(--text-tertiary); font-size: 0.875rem;">${error.message}</p>
           </div>

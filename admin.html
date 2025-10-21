@@ -15,8 +15,6 @@
   <link rel="preload"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
         as="style">
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" as="style">
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" as="style">
 
   <!-- Google Fonts - Enhanced Inter with more weights -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,10 +22,6 @@
   <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet">
-
-  <!-- Phosphor Icons (Web Font) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 
   <!-- Admin Stylesheet -->
   <link rel="stylesheet" href="/src/css/admin.css">
@@ -90,14 +84,14 @@
               aria-invalid="false"
           >
           <div class="input-icon" aria-hidden="true">
-            <i class="ph-fill ph-lock"></i>
+            <img src="/svg-icons/security/lock.svg" class="svg-icon" alt="lock">
           </div>
         </div>
         <div id="password-error" class="error-message" role="alert" aria-live="polite"></div>
       </div>
 
       <div id="login-error" class="login-error hidden" role="alert" aria-live="assertive">
-        <i class="ph-fill ph-warning" aria-hidden="true"></i>
+        <img src="/svg-icons/alert-notification/alert-01.svg" class="svg-icon" alt="warning" aria-hidden="true">
         <span class="error-text">Invalid password. Please try again.</span>
       </div>
 
@@ -127,7 +121,7 @@
         </div>
       </div>
       <button class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="false">
-        <i class="ph ph-list" aria-hidden="true"></i>
+        <img src="/svg-icons/more-menu/menu-01.svg" class="svg-icon" alt="list" aria-hidden="true">
       </button>
     </div>
 
@@ -135,43 +129,43 @@
       <ul class="nav-list" role="list">
         <li class="nav-item">
           <a href="#hero-section" class="nav-link active" aria-current="page">
-            <i class="ph-fill ph-house" aria-hidden="true"></i>
+            <img src="/svg-icons/home/home-01.svg" class="svg-icon" alt="house" aria-hidden="true">
             <span class="nav-text">Overview</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#metrics-section" class="nav-link">
-            <i class="ph-fill ph-chart-pie" aria-hidden="true"></i>
+            <img src="/svg-icons/business-and-finance/pie-chart.svg" class="svg-icon" alt="chart pie" aria-hidden="true">
             <span class="nav-text">Key Metrics</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#charts-section" class="nav-link">
-            <i class="ph-fill ph-chart-line" aria-hidden="true"></i>
+            <img src="/svg-icons/business-and-finance/chart-line-data-01.svg" class="svg-icon" alt="chart line" aria-hidden="true">
             <span class="nav-text">Data Visualization</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#activity-section" class="nav-link">
-            <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+            <img src="/svg-icons/date-and-time/clock-01.svg" class="svg-icon" alt="clock" aria-hidden="true">
             <span class="nav-text">Recent Activity</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#system-section" class="nav-link">
-            <i class="ph-fill ph-gear" aria-hidden="true"></i>
+            <img src="/svg-icons/setting/setting-01.svg" class="svg-icon" alt="gear" aria-hidden="true">
             <span class="nav-text">System & Actions</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#users-section" class="nav-link">
-            <i class="ph-fill ph-users" aria-hidden="true"></i>
+            <img src="/svg-icons/users/user-group.svg" class="svg-icon" alt="users" aria-hidden="true">
             <span class="nav-text">User Analytics</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="#events-section" class="nav-link">
-            <i class="ph-fill ph-calendar" aria-hidden="true"></i>
+            <img src="/svg-icons/date-and-time/calendar-01.svg" class="svg-icon" alt="calendar" aria-hidden="true">
             <span class="nav-text">Event Analytics</span>
           </a>
         </li>
@@ -181,7 +175,7 @@
     <div class="sidebar-footer">
       <div class="user-info">
         <div class="user-avatar">
-          <i class="ph-fill ph-user" aria-hidden="true"></i>
+          <img src="/svg-icons/users/user.svg" class="svg-icon" alt="user" aria-hidden="true">
         </div>
         <div class="user-details">
           <span class="user-name">Admin</span>
@@ -189,7 +183,7 @@
         </div>
       </div>
       <button id="logout-btn" class="btn btn-ghost logout-btn" aria-label="Sign Out">
-        <i class="ph ph-sign-out" aria-hidden="true"></i>
+        <img src="/svg-icons/login-and-logout/logout-01.svg" class="svg-icon" alt="sign out" aria-hidden="true">
         <span class="btn-text">Sign Out</span>
       </button>
     </div>
@@ -202,11 +196,11 @@
     <header class="top-header">
       <div class="header-left">
         <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-          <i class="ph ph-list" aria-hidden="true"></i>
+          <img src="/svg-icons/more-menu/menu-01.svg" class="svg-icon" alt="list" aria-hidden="true">
         </button>
         <div class="breadcrumb">
           <span class="breadcrumb-item">Dashboard</span>
-          <i class="ph ph-caret-right" aria-hidden="true"></i>
+          <img src="/svg-icons/arrows-round/arrow-right-01-round.svg" class="svg-icon" alt="caret right" aria-hidden="true">
           <span class="breadcrumb-item current">Overview</span>
         </div>
       </div>
@@ -214,7 +208,7 @@
       <div class="header-right">
         <div class="header-actions">
           <button id="refresh-btn" class="btn btn-ghost" aria-label="Refresh data" title="Refresh (Ctrl+R)">
-            <i class="ph ph-arrow-clockwise" aria-hidden="true"></i>
+            <img src="/svg-icons/arrows-round/arrow-reload-horizontal-round.svg" class="svg-icon" alt="arrow clockwise" aria-hidden="true">
           </button>
           <div class="status-indicator">
             <div class="status-dot online" aria-hidden="true"></div>
@@ -273,7 +267,7 @@
           <h2 class="section-title">Data Visualization</h2>
           <div class="section-actions">
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-download-simple" aria-hidden="true"></i>
+              <img src="/svg-icons/download-and-upload/download-01.svg" class="svg-icon" alt="download" aria-hidden="true">
               Export
             </button>
           </div>
@@ -285,7 +279,7 @@
             <div class="chart-header">
               <div class="chart-title">
                 <div class="chart-icon activity">
-                  <i class="ph-fill ph-chart-line" aria-hidden="true"></i>
+                  <img src="/svg-icons/business-and-finance/chart-line-data-01.svg" class="svg-icon" alt="chart line" aria-hidden="true">
                 </div>
                 <h3>Activity Trend</h3>
               </div>
@@ -301,7 +295,7 @@
             <div class="chart-header">
               <div class="chart-title">
                 <div class="chart-icon genre">
-                  <i class="ph-fill ph-music-notes" aria-hidden="true"></i>
+                  <img src="/svg-icons/media/music-note-01.svg" class="svg-icon" alt="music notes" aria-hidden="true">
                 </div>
                 <h3>Genre Mix</h3>
               </div>
@@ -316,7 +310,7 @@
             <div class="chart-header">
               <div class="chart-title">
                 <div class="chart-icon songs">
-                  <i class="ph-fill ph-star" aria-hidden="true"></i>
+                  <img src="/svg-icons/bookmark-favorite/star.svg" class="svg-icon" alt="star" aria-hidden="true">
                 </div>
                 <h3>Top Songs</h3>
               </div>
@@ -331,7 +325,7 @@
             <div class="chart-header">
               <div class="chart-title">
                 <div class="chart-icon duration">
-                  <i class="ph-fill ph-timer" aria-hidden="true"></i>
+                  <img src="/svg-icons/date-and-time/timer-01.svg" class="svg-icon" alt="timer" aria-hidden="true">
                 </div>
                 <h3>Session Duration</h3>
               </div>
@@ -349,7 +343,7 @@
           <h2 class="section-title">Recent Activity</h2>
           <div class="section-actions">
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-funnel" aria-hidden="true"></i>
+              <img src="/svg-icons/filter-sorting/filter.svg" class="svg-icon" alt="funnel" aria-hidden="true">
               Filter
             </button>
           </div>
@@ -373,7 +367,7 @@
             <div class="card-header">
               <div class="card-title">
                 <div class="card-icon system">
-                  <i class="ph-fill ph-info" aria-hidden="true"></i>
+                  <img src="/svg-icons/alert-notification/information-circle.svg" class="svg-icon" alt="info" aria-hidden="true">
                 </div>
                 <h3>System Info</h3>
               </div>
@@ -388,7 +382,7 @@
             <div class="card-header">
               <div class="card-title">
                 <div class="card-icon posthog">
-                  <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
+                  <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="chart line up" aria-hidden="true">
                 </div>
                 <h3>PostHog</h3>
               </div>
@@ -407,7 +401,7 @@
             <div class="card-header">
               <div class="card-title">
                 <div class="card-icon actions">
-                  <i class="ph-fill ph-lightning" aria-hidden="true"></i>
+                  <img src="/svg-icons/energy/energy.svg" class="svg-icon" alt="lightning" aria-hidden="true">
                 </div>
                 <h3>Quick Actions</h3>
               </div>
@@ -415,15 +409,15 @@
             <div class="card-content">
               <div class="actions-list">
                 <button id="export-data-btn" class="btn btn-secondary action-btn">
-                  <i class="ph-fill ph-download-simple" aria-hidden="true"></i>
+                  <img src="/svg-icons/download-and-upload/download-01.svg" class="svg-icon" alt="download" aria-hidden="true">
                   <span>Export Data</span>
                 </button>
                 <button id="posthog-link-btn" class="btn btn-secondary action-btn">
-                  <i class="ph-fill ph-chart-line-up" aria-hidden="true"></i>
+                  <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="chart line up" aria-hidden="true">
                   <span>Open PostHog</span>
                 </button>
                 <button id="clear-cache-btn" class="btn btn-danger action-btn">
-                  <i class="ph-fill ph-trash" aria-hidden="true"></i>
+                  <img src="/svg-icons/add-remove-delete/delete-01.svg" class="svg-icon" alt="trash" aria-hidden="true">
                   <span>Clear Data</span>
                 </button>
               </div>
@@ -438,15 +432,15 @@
           <h2 class="section-title">User Analytics</h2>
           <div class="section-actions">
             <div class="search-box">
-              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <img src="/svg-icons/search/search.svg" class="svg-icon" alt="magnifying glass" aria-hidden="true">
               <input type="text" placeholder="Search users..." class="search-input">
             </div>
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-funnel" aria-hidden="true"></i>
+              <img src="/svg-icons/filter-sorting/filter.svg" class="svg-icon" alt="funnel" aria-hidden="true">
               Filter
             </button>
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-download-simple" aria-hidden="true"></i>
+              <img src="/svg-icons/download-and-upload/download-01.svg" class="svg-icon" alt="download" aria-hidden="true">
               Export
             </button>
           </div>
@@ -458,7 +452,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon total-users">
-                  <i class="ph-fill ph-users" aria-hidden="true"></i>
+                  <img src="/svg-icons/users/user-group.svg" class="svg-icon" alt="users" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="total-users-count">0</span>
@@ -466,7 +460,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+12% this week</span>
               </div>
             </div>
@@ -474,7 +468,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon active-users">
-                  <i class="ph-fill ph-user-circle" aria-hidden="true"></i>
+                  <img src="/svg-icons/users/user-circle.svg" class="svg-icon" alt="user circle" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="active-users-count">0</span>
@@ -482,7 +476,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+8% this week</span>
               </div>
             </div>
@@ -490,7 +484,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon new-users">
-                  <i class="ph-fill ph-user-plus" aria-hidden="true"></i>
+                  <img src="/svg-icons/users/user-add-01.svg" class="svg-icon" alt="user plus" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="new-users-count">0</span>
@@ -498,7 +492,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+15% this week</span>
               </div>
             </div>
@@ -510,7 +504,7 @@
               <h3>Recent Users</h3>
               <div class="table-actions">
                 <button class="btn btn-ghost btn-sm">
-                  <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+                  <img src="/svg-icons/arrows-round/circle-arrow-reload-01-round.svg" class="svg-icon" alt="arrows clockwise" aria-hidden="true">
                   Refresh
                 </button>
               </div>
@@ -530,15 +524,15 @@
           <h2 class="section-title">Event Analytics</h2>
           <div class="section-actions">
             <div class="search-box">
-              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <img src="/svg-icons/search/search.svg" class="svg-icon" alt="magnifying glass" aria-hidden="true">
               <input type="text" placeholder="Search events..." class="search-input">
             </div>
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-funnel" aria-hidden="true"></i>
+              <img src="/svg-icons/filter-sorting/filter.svg" class="svg-icon" alt="funnel" aria-hidden="true">
               Filter
             </button>
             <button class="btn btn-ghost btn-sm">
-              <i class="ph ph-download-simple" aria-hidden="true"></i>
+              <img src="/svg-icons/download-and-upload/download-01.svg" class="svg-icon" alt="download" aria-hidden="true">
               Export
             </button>
           </div>
@@ -550,7 +544,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon total-events">
-                  <i class="ph-fill ph-calendar" aria-hidden="true"></i>
+                  <img src="/svg-icons/date-and-time/calendar-01.svg" class="svg-icon" alt="calendar" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="total-events-count">0</span>
@@ -558,7 +552,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+25% this week</span>
               </div>
             </div>
@@ -566,7 +560,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon session-events">
-                  <i class="ph-fill ph-play" aria-hidden="true"></i>
+                  <img src="/svg-icons/media/play.svg" class="svg-icon" alt="play" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="session-events-count">0</span>
@@ -574,7 +568,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+18% this week</span>
               </div>
             </div>
@@ -582,7 +576,7 @@
             <div class="stat-card">
               <div class="stat-header">
                 <div class="stat-icon music-events">
-                  <i class="ph-fill ph-music-notes" aria-hidden="true"></i>
+                  <img src="/svg-icons/media/music-note-01.svg" class="svg-icon" alt="music notes" aria-hidden="true">
                 </div>
                 <div class="stat-info">
                   <span class="stat-value" id="music-events-count">0</span>
@@ -590,7 +584,7 @@
                 </div>
               </div>
               <div class="stat-change positive">
-                <i class="ph ph-trend-up" aria-hidden="true"></i>
+                <img src="/svg-icons/business-and-finance/chart-increase.svg" class="svg-icon" alt="trend up" aria-hidden="true">
                 <span>+22% this week</span>
               </div>
             </div>
@@ -602,7 +596,7 @@
               <h3>Recent Events</h3>
               <div class="table-actions">
                 <button class="btn btn-ghost btn-sm">
-                  <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+                  <img src="/svg-icons/arrows-round/circle-arrow-reload-01-round.svg" class="svg-icon" alt="arrows clockwise" aria-hidden="true">
                   Refresh
                 </button>
               </div>
@@ -624,7 +618,7 @@
 <div id="refresh-overlay" class="refresh-overlay">
   <div class="refresh-content">
     <div class="refresh-icon">
-      <i class="ph ph-arrow-clockwise" aria-hidden="true"></i>
+      <img src="/svg-icons/arrows-round/arrow-reload-horizontal-round.svg" class="svg-icon" alt="arrow clockwise" aria-hidden="true">
     </div>
     <h3 class="refresh-title">Refreshing Data</h3>
     <p class="refresh-description">Please wait while we update your dashboard...</p>
@@ -638,7 +632,7 @@
     <div class="user-modal-header">
       <div class="user-info-header">
         <div class="user-avatar-large">
-          <i class="ph-fill ph-user" aria-hidden="true"></i>
+          <img src="/svg-icons/users/user.svg" class="svg-icon" alt="user" aria-hidden="true">
         </div>
         <div class="user-details">
           <h2 id="user-modal-title" class="user-name">User Journey</h2>
@@ -660,18 +654,18 @@
         </div>
       </div>
       <button class="user-modal-close" aria-label="Close user journey">
-        <i class="ph ph-x" aria-hidden="true"></i>
+        <img src="/svg-icons/add-remove-delete/cancel-01.svg" class="svg-icon" alt="x" aria-hidden="true">
       </button>
     </div>
 
     <div class="user-modal-body">
       <div class="journey-tabs">
         <button class="journey-tab active" data-tab="timeline">
-          <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+          <img src="/svg-icons/date-and-time/clock-01.svg" class="svg-icon" alt="clock" aria-hidden="true">
           <span>Timeline</span>
         </button>
         <button class="journey-tab" data-tab="sessions">
-          <i class="ph-fill ph-play" aria-hidden="true"></i>
+          <img src="/svg-icons/media/play.svg" class="svg-icon" alt="play" aria-hidden="true">
           <span>Sessions</span>
         </button>
       </div>

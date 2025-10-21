@@ -5,6 +5,7 @@
 
 import {authenticate, isAuthenticated} from "./auth.js";
 import {cleanup, initDashboard} from "./admin-dashboard.js";
+import {createIconImg} from "../utils/icon-mapper.js";
 
 // Initialize admin interface
 document.addEventListener("DOMContentLoaded", () => {
@@ -535,7 +536,7 @@ function setupUserJourneyModal() {
     timelineContainer.innerHTML = timeline.map(event => `
       <div class="timeline-event">
         <div class="timeline-icon">
-          <i class="ph-fill ph-${event.icon || "circle"}" aria-hidden="true"></i>
+          ${createIconImg(`ph-${event.icon || "circle"}`, { className: '', alt: event.title || 'Event' })}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">${event.title || "Event"}</div>
@@ -554,7 +555,7 @@ function setupUserJourneyModal() {
     sessionsContainer.innerHTML = sessions.map(session => `
       <div class="session-item">
         <div class="session-icon">
-          <i class="ph-fill ph-play" aria-hidden="true"></i>
+          ${createIconImg('ph-play', { className: '', alt: 'session' })}
         </div>
         <div class="session-content">
           <div class="session-title">${session.title || "Workout Session"}</div>
@@ -573,7 +574,7 @@ function setupUserJourneyModal() {
     const prefs = Object.entries(preferences).map(([key, value]) => `
       <div class="preference-item">
         <div class="preference-icon">
-          <i class="ph-fill ph-heart" aria-hidden="true"></i>
+          ${createIconImg('ph-heart', { className: '', alt: 'preference' })}
         </div>
         <div class="preference-content">
           <div class="preference-title">${key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}</div>

@@ -133,21 +133,6 @@ export default defineConfig({
             }
           },
           {
-            // Cache Phosphor Icons CDN fonts (Layer 2 fallback)
-            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/npm\/@phosphor-icons\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'phosphor-icons-cdn',
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year (fonts don't change)
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          },
-          {
             // Cache other CDN resources (Google Fonts, etc.)
             urlPattern: /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\/.*/i,
             handler: 'CacheFirst',

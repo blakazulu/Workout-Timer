@@ -59,7 +59,14 @@
       "Bash(sudo apt-get update:*)",
       "Bash(sudo apt-get install:*)",
       "Bash(rm:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(while read path)",
+      "Bash(do if [ -f \"public/svg-icons/$path\" ])",
+      "Bash(then echo \"✓ $path\" else echo \"✗ MISSING: $path\" fi done)",
+      "Bash(do test -f \"$path\")",
+      "Bash(echo:*)",
+      "Bash(bash:*)",
+      "Bash(do echo \"Checking $dir:\")"
     ],
     "deny": [],
     "ask": []

@@ -8,6 +8,7 @@ import * as metrics from "./metrics-calculator.js";
 import * as posthogData from "./posthog-data.js";
 import {initializeUserModal, renderUsersSection} from "./dashboard-users.js";
 import {renderEventsSection} from "./dashboard-events.js";
+import {getIconPath, createIconImg} from "../utils/icon-mapper.js";
 
 // Chart instances
 let charts = {
@@ -138,11 +139,16 @@ function renderMetricsCards(overview) {
     }
   ];
 
-  container.innerHTML = metrics_data.map(stat => `
+  container.innerHTML = metrics_data.map(stat => {
+    const iconPath = getIconPath(stat.icon);
+    const trendIcon = stat.trend > 0 ? "ph-trend-up" : stat.trend < 0 ? "ph-trend-down" : "ph-minus";
+    const trendIconPath = getIconPath(trendIcon);
+
+    return `
     <div class="stat-card fade-in" style="--stat-color: ${stat.color};">
       <div class="stat-header">
         <div class="stat-icon" style="background: linear-gradient(135deg, ${stat.color}, ${stat.color}80);">
-          <i class="ph-fill ${stat.icon}" aria-hidden="true"></i>
+          <img src="/svg-icons/${iconPath}" class="svg-icon" alt="${stat.label}" aria-hidden="true">
         </div>
         <div class="stat-info">
           <span class="stat-value">${stat.value}</span>
@@ -151,12 +157,13 @@ function renderMetricsCards(overview) {
       </div>
       ${stat.trend !== null ? `
         <div class="stat-change ${stat.trend > 0 ? "positive" : stat.trend < 0 ? "negative" : "neutral"}">
-          <i class="ph-fill ${stat.trend > 0 ? "ph-trend-up" : stat.trend < 0 ? "ph-trend-down" : "ph-minus"}" aria-hidden="true"></i>
+          <img src="/svg-icons/${trendIconPath}" class="svg-icon" alt="trend" aria-hidden="true">
           <span>${stat.trend > 0 ? "+" : ""}${stat.trend}% vs last week</span>
         </div>
       ` : ""}
     </div>
-  `).join("");
+  `;
+  }).join("");
 }
 
 /**
@@ -612,7 +619,9 @@ function renderRecentActivity(recentActivity) {
   if (activities.length === 0) {
     container.innerHTML = `
       <div class="text-center" style="text-align: center; padding: 2rem; opacity: 0.5;">
-        <i class="ph ph-clipboard" style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+        <div style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;">
+          ${createIconImg('ph-clipboard', { className: '', alt: 'no activity' })}
+        </div>
         No recent activity
       </div>
     `;
@@ -633,7 +642,7 @@ function renderRecentActivity(recentActivity) {
     return `
       <div class="activity-item">
         <div class="activity-icon" style="background: linear-gradient(135deg, ${color}, ${color}80);">
-          <i class="${icon}" aria-hidden="true"></i>
+          ${createIconImg(icon, { className: '', alt: eventType })}
         </div>
         <div class="activity-content">
           <div class="activity-title">${description}</div>
@@ -768,7 +777,9 @@ function renderPostHogPanel() {
 
     container.innerHTML = `
       <div class="text-center" style="text-align: center; padding: 1rem; opacity: 0.5;">
-        <i class="ph ph-warning-circle" style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+        <div style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;">
+          ${createIconImg('ph-warning-circle', { className: '', alt: 'warning' })}
+        </div>
         ${analytics.reason || "Not connected"}
       </div>
     `;

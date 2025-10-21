@@ -47,7 +47,7 @@ export function render(instance) {
   if (instance.results.length === 0) {
     instance.dropdown.innerHTML = `
       <div class="search-dropdown-empty">
-        <i class="ph-bold ph-magnifying-glass"></i>
+        <img src="/svg-icons/search/search.svg" class="svg-icon" alt="Search" />
         <span>No results found</span>
       </div>
     `;
@@ -76,7 +76,7 @@ export function render(instance) {
                loading="lazy">
         ` : `
           <div class="search-dropdown-item-icon">
-            <i class="ph-bold ph-magnifying-glass"></i>
+            <img src="/svg-icons/search/search.svg" class="svg-icon" alt="Search" />
           </div>
         `}
         <div class="search-dropdown-item-content">
@@ -94,7 +94,7 @@ export function render(instance) {
 
   instance.dropdown.innerHTML = `
     <div class="search-dropdown-header">
-      <i class="ph-bold ph-youtube-logo"></i>
+      <img src="/svg-icons/brand-logo/youtube.svg" class="svg-icon" alt="YouTube" />
       <span>YouTube Search Suggestions</span>
     </div>
     ${items}

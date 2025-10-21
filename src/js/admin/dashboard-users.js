@@ -4,6 +4,7 @@
  */
 
 import * as posthog from "./posthog-client.js";
+import { createIconImg } from "../utils/icon-mapper.js";
 
 /**
  * Initialize modal event listeners
@@ -65,7 +66,9 @@ export async function renderUsersSection() {
   if (usersTable) {
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-spinner" style="font-size: 3rem; animation: spin 1s linear infinite;"></i>
+        <div style="font-size: 3rem; animation: spin 1s linear infinite;">
+          ${createIconImg('ph-spinner', { className: '', alt: 'loading' })}
+        </div>
         <p style="margin-top: 1rem;">Loading users...</p>
       </div>
     `;
@@ -136,7 +139,9 @@ function populateUsersTable(users) {
     console.log("[populateUsersTable] No users, showing empty state");
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-users" style="font-size: 3rem; opacity: 0.3;"></i>
+        <div style="font-size: 3rem; opacity: 0.3;">
+          ${createIconImg('ph-users', { className: '', alt: 'no users' })}
+        </div>
         <p style="margin-top: 1rem;">No users found</p>
       </div>
     `;
@@ -168,7 +173,7 @@ function populateUsersTable(users) {
     return `
       <div class="user-row" onclick="openUserModal(${JSON.stringify(userData).replace(/"/g, "&quot;")})">
         <div class="user-avatar" style="background: linear-gradient(135deg, ${engagementColor}, ${engagementColor}80);">
-          <i class="ph-fill ph-user" aria-hidden="true"></i>
+          ${createIconImg('ph-user', { className: '', alt: 'user' })}
         </div>
         <div class="user-info">
           <div class="user-name">User ${user.userId.substring(0, 8)}</div>
@@ -197,7 +202,9 @@ function showUsersError(error) {
 
   usersTable.innerHTML = `
     <div style="text-align: center; padding: 3rem; color: var(--error-500);">
-      <i class="ph ph-warning-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+      <div style="font-size: 3rem; margin-bottom: 1rem;">
+        ${createIconImg('ph-warning-circle', { className: '', alt: 'error' })}
+      </div>
       <h3 style="margin-bottom: 0.5rem;">Failed to load users</h3>
       <p style="color: var(--text-tertiary); font-size: 0.875rem;">${error.message}</p>
     </div>
@@ -246,7 +253,9 @@ window.openUserModal = async function (userData) {
 
   timelineContainer.innerHTML = `
     <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-      <i class="ph ph-spinner" style="font-size: 3rem; animation: spin 1s linear infinite;"></i>
+      <div style="font-size: 3rem; animation: spin 1s linear infinite;">
+        ${createIconImg('ph-spinner', { className: '', alt: 'loading' })}
+      </div>
       <p style="margin-top: 1rem;">Loading timeline...</p>
     </div>
   `;
@@ -279,7 +288,9 @@ window.openUserModal = async function (userData) {
     console.error("[User Modal] Error stack:", error.stack);
     timelineContainer.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--error-500);">
-        <i class="ph ph-warning-circle" style="font-size: 3rem;"></i>
+        <div style="font-size: 3rem;">
+          ${createIconImg('ph-warning-circle', { className: '', alt: 'error' })}
+        </div>
         <p style="margin-top: 1rem;">Failed to load timeline</p>
         <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
       </div>
@@ -321,7 +332,9 @@ function renderTimeline(activity) {
     console.log("[renderTimeline] No activity, showing empty state");
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-clock-counter-clockwise" style="font-size: 3rem; opacity: 0.3;"></i>
+        <div style="font-size: 3rem; opacity: 0.3;">
+          ${createIconImg('ph-clock-counter-clockwise', { className: '', alt: 'no activity' })}
+        </div>
         <p style="margin-top: 1rem;">No activity found</p>
       </div>
     `;
@@ -359,7 +372,7 @@ function renderTimeline(activity) {
     return `
       <div class="timeline-event">
         <div class="timeline-icon">
-          <i class="${iconClass}" aria-hidden="true"></i>
+          ${createIconImg(iconClass, { className: '', alt: eventName })}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">${eventName}</div>
@@ -403,7 +416,9 @@ function renderSessions(activity) {
     console.log("[renderSessions] No activity, showing empty state");
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-calendar-blank" style="font-size: 3rem; opacity: 0.3;"></i>
+        <div style="font-size: 3rem; opacity: 0.3;">
+          ${createIconImg('ph-calendar-blank', { className: '', alt: 'no sessions' })}
+        </div>
         <p style="margin-top: 1rem;">No sessions found</p>
       </div>
     `;
@@ -459,7 +474,9 @@ function renderSessions(activity) {
   if (sessions.length === 0) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
-        <i class="ph ph-calendar-blank" style="font-size: 3rem; opacity: 0.3;"></i>
+        <div style="font-size: 3rem; opacity: 0.3;">
+          ${createIconImg('ph-calendar-blank', { className: '', alt: 'no sessions' })}
+        </div>
         <p style="margin-top: 1rem;">No complete sessions found</p>
       </div>
     `;
@@ -488,7 +505,7 @@ function renderSessions(activity) {
     return `
       <div class="timeline-event">
         <div class="timeline-icon">
-          <i class="ph-fill ph-calendar-check" aria-hidden="true"></i>
+          ${createIconImg('ph-calendar-check', { className: '', alt: 'session' })}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">Session ${index + 1}</div>

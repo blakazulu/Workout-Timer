@@ -51,7 +51,7 @@ export function renderFavorites(loadYouTubeModule, showNotification) {
           </div>
           <div class="song-card-controls">
             <button class="song-card-remove" data-video-id="${escapeHtml(videoId)}" title="Remove from favorites">
-              <i class="ph-bold ph-x"></i>
+              <img src="/svg-icons/add-remove-delete/cancel-01.svg" class="svg-icon" alt="Remove" />
             </button>
             <div class="song-card-duration">${duration}</div>
           </div>
