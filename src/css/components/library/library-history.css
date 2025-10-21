@@ -26,8 +26,10 @@
   box-shadow: 0 0 15px rgba(100, 100, 255, 0.3);
 }
 
-.btn-history svg {
+.btn-history .svg-icon {
   filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.6));
+  width: 1.5em !important;
+  height: 1.5em !important;
 }
 
 .history-header {

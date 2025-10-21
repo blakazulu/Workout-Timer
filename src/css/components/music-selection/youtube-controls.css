@@ -44,6 +44,12 @@
   transform: translateY(-2px);
 }
 
+/* SVG icon sizing for loadYoutubeBtn */
+.youtube-controls button .svg-icon {
+  width: 1.5em !important;
+  height: 1.5em !important;
+}
+
 .youtube-loading,
 .youtube-error {
   border-radius: var(--radius-md);

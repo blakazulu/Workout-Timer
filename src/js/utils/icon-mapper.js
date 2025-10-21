@@ -13,7 +13,7 @@ const ICON_COLOR_MAP = {
   // Music & Playback - Hot Pink
   music: ['ph-play', 'ph-pause', 'ph-shuffle', 'ph-music-notes', 'ph-music-notes-simple',
           'ph-music-note', 'ph-speaker-high', 'ph-microphone-stage', 'ph-play-circle',
-          'ph-pause-circle', 'ph-stop-circle', 'ph-youtube-logo'],
+          'ph-pause-circle', 'ph-stop-circle', 'ph-youtube-logo', 'ph-smiley'],
 
   // Timer & Time - Cyan
   timer: ['ph-clock-counter-clockwise', 'ph-timer', 'ph-calendar', 'ph-calendar-blank',
@@ -34,6 +34,15 @@ const ICON_COLOR_MAP = {
 
   // User & Profile - Purple
   secondary: ['ph-users', 'ph-user', 'ph-user-circle', 'ph-user-plus'],
+
+  // Energy & Power - Orange
+  energy: ['ph-fire', 'ph-fire-simple', 'ph-lightning', 'ph-lightning-slash', 'ph-barbell'],
+
+  // Health & Growth - Green
+  health: ['ph-heartbeat', 'ph-activity', 'ph-wellness'],
+
+  // Information & Settings - Blue
+  info: ['ph-info', 'ph-gear', 'ph-setting', 'ph-funnel', 'ph-list'],
 };
 
 /**

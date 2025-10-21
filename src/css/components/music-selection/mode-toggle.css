@@ -33,9 +33,20 @@
   z-index: 1;
 }
 
+/* Font size for spans inside music-mode-toggle buttons */
+.music-mode-toggle .mode-toggle-btn span {
+  font-size: 16px;
+}
+
 .mode-toggle-btn svg {
   flex-shrink: 0;
   transition: all 0.3s ease;
+}
+
+/* Specific sizing for music-mode-toggle SVG icons */
+.music-mode-toggle .svg-icon {
+  width: 2em;
+  height: 2em;
 }
 
 .mode-toggle-btn:hover:not(.active) {

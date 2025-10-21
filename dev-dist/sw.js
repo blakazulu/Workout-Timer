@@ -70,7 +70,7 @@ if (!self.define) {
 define(['./workbox-1da5ea8f'], (function (workbox) { 'use strict';
 
   workbox.setCacheNameDetails({
-    prefix: "cycle-v1.0.41"
+    prefix: "cycle-v1.0.43"
   });
   self.skipWaiting();
   workbox.clientsClaim();
@@ -82,7 +82,7 @@ define(['./workbox-1da5ea8f'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.2cr6c3vsrug"
+    "revision": "0.m4ao8gk2d0g"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {

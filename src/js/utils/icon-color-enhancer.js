@@ -31,6 +31,9 @@ const ICON_PATH_TO_COLOR = {
   'bookmark-favorite/favourite.svg': 'icon-favorite',
   'bookmark-favorite/star.svg': 'icon-favorite',
 
+  // Mood & Emotions - Hot Pink (same as music)
+  'smiley-and-emojis/smile.svg': 'icon-music',
+
   // Stats & Charts - Purple
   'business-and-finance/pie-chart.svg': 'icon-history',
   'business-and-finance/chart-line-data-01.svg': 'icon-history',
