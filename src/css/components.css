@@ -35,28 +35,28 @@
 /* SVG Icon Utilities */
 .svg-icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  /* Make SVG icons visible on dark backgrounds */
   filter: brightness(0) invert(1);
+  height: 1em;
   transition: filter 0.3s ease, transform 0.2s ease;
+  /* Make SVG icons visible on dark backgrounds */
+  vertical-align: middle;
+  width: 1em;
 }
 
 /* Icon Sizes */
 .svg-icon-sm {
-  width: 0.875em;
   height: 0.875em;
+  width: 0.875em;
 }
 
 .svg-icon-lg {
-  width: 1.25em;
   height: 1.25em;
+  width: 1.25em;
 }
 
 .svg-icon-xl {
-  width: 1.5em;
   height: 1.5em;
+  width: 1.5em;
 }
 
 /* Contextual Icon Colors - Enhanced Cyberpunk Theme */
@@ -66,8 +66,7 @@
 .svg-icon.icon-timer,
 .svg-icon.icon-success,
 .svg-icon.icon-primary {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-          hue-rotate(102deg) brightness(104%) contrast(101%);
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%);
   /* Result: #00ffc8 cyan */
 }
 
@@ -76,8 +75,7 @@
 .svg-icon.icon-music,
 .svg-icon.icon-alert,
 .svg-icon.icon-favorite {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-          hue-rotate(322deg) brightness(103%) contrast(108%);
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%);
   /* Result: #ff0096 hot pink */
 }
 
@@ -85,8 +83,7 @@
 .svg-icon.icon-purple,
 .svg-icon.icon-history,
 .svg-icon.icon-secondary {
-  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%)
-          hue-rotate(227deg) brightness(103%) contrast(101%);
+  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%) hue-rotate(227deg) brightness(103%) contrast(101%);
   /* Result: #6464ff purple */
 }
 
@@ -94,8 +91,7 @@
 .svg-icon.icon-orange,
 .svg-icon.icon-energy,
 .svg-icon.icon-power {
-  filter: brightness(0) saturate(100%) invert(58%) sepia(98%) saturate(2000%)
-          hue-rotate(15deg) brightness(110%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(58%) sepia(98%) saturate(2000%) hue-rotate(15deg) brightness(110%) contrast(105%);
   /* Result: #ff6b35 orange */
 }
 
@@ -103,8 +99,7 @@
 .svg-icon.icon-green,
 .svg-icon.icon-health,
 .svg-icon.icon-growth {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1200%)
-          hue-rotate(90deg) brightness(110%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1200%) hue-rotate(90deg) brightness(110%) contrast(105%);
   /* Result: #00ff88 green */
 }
 
@@ -112,8 +107,7 @@
 .svg-icon.icon-blue,
 .svg-icon.icon-info,
 .svg-icon.icon-settings {
-  filter: brightness(0) saturate(100%) invert(45%) sepia(89%) saturate(1200%)
-          hue-rotate(200deg) brightness(110%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(45%) sepia(89%) saturate(1200%) hue-rotate(200deg) brightness(110%) contrast(105%);
   /* Result: #00a8ff blue */
 }
 
@@ -137,10 +131,7 @@
 .svg-icon.icon-timer:hover,
 .svg-icon.icon-success:hover,
 .svg-icon.icon-primary:hover {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-          hue-rotate(102deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(0, 255, 200, 0.9))
-          drop-shadow(0 0 24px rgba(0, 255, 200, 0.4));
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.9)) drop-shadow(0 0 24px rgba(0, 255, 200, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -149,10 +140,7 @@
 .svg-icon.icon-music:hover,
 .svg-icon.icon-alert:hover,
 .svg-icon.icon-favorite:hover {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-          hue-rotate(322deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(255, 0, 150, 0.9))
-          drop-shadow(0 0 24px rgba(255, 0, 150, 0.4));
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(255, 0, 150, 0.9)) drop-shadow(0 0 24px rgba(255, 0, 150, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -160,10 +148,7 @@
 .svg-icon.icon-purple:hover,
 .svg-icon.icon-history:hover,
 .svg-icon.icon-secondary:hover {
-  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%)
-          hue-rotate(227deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(100, 100, 255, 0.9))
-          drop-shadow(0 0 24px rgba(100, 100, 255, 0.4));
+  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%) hue-rotate(227deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(100, 100, 255, 0.9)) drop-shadow(0 0 24px rgba(100, 100, 255, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -172,10 +157,7 @@
 .svg-icon.icon-orange:hover,
 .svg-icon.icon-energy:hover,
 .svg-icon.icon-power:hover {
-  filter: brightness(0) saturate(100%) invert(58%) sepia(98%) saturate(2000%)
-          hue-rotate(15deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(255, 107, 53, 0.9))
-          drop-shadow(0 0 24px rgba(255, 107, 53, 0.4));
+  filter: brightness(0) saturate(100%) invert(58%) sepia(98%) saturate(2000%) hue-rotate(15deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(255, 107, 53, 0.9)) drop-shadow(0 0 24px rgba(255, 107, 53, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -183,10 +165,7 @@
 .svg-icon.icon-green:hover,
 .svg-icon.icon-health:hover,
 .svg-icon.icon-growth:hover {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1200%)
-          hue-rotate(90deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(0, 255, 136, 0.9))
-          drop-shadow(0 0 24px rgba(0, 255, 136, 0.4));
+  filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1200%) hue-rotate(90deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(0, 255, 136, 0.9)) drop-shadow(0 0 24px rgba(0, 255, 136, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -194,19 +173,14 @@
 .svg-icon.icon-blue:hover,
 .svg-icon.icon-info:hover,
 .svg-icon.icon-settings:hover {
-  filter: brightness(0) saturate(100%) invert(45%) sepia(89%) saturate(1200%)
-          hue-rotate(200deg) brightness(120%) contrast(110%)
-          drop-shadow(0 0 12px rgba(0, 168, 255, 0.9))
-          drop-shadow(0 0 24px rgba(0, 168, 255, 0.4));
+  filter: brightness(0) saturate(100%) invert(45%) sepia(89%) saturate(1200%) hue-rotate(200deg) brightness(120%) contrast(110%) drop-shadow(0 0 12px rgba(0, 168, 255, 0.9)) drop-shadow(0 0 24px rgba(0, 168, 255, 0.4));
   transform: scale(1.15) translateY(-1px);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Active/Pressed States */
 .svg-icon.icon-active {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-          hue-rotate(102deg) brightness(104%) contrast(101%)
-          drop-shadow(0 0 12px rgba(0, 255, 200, 1));
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 1));
   transform: scale(1.15);
 }
 
@@ -214,26 +188,21 @@
 .svg-icon.icon-play,
 .svg-icon.icon-pause,
 .svg-icon.icon-shuffle {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-          hue-rotate(322deg) brightness(103%) contrast(108%);
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%);
 }
 
 .svg-icon.icon-clock,
 .svg-icon.icon-calendar {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-          hue-rotate(102deg) brightness(104%) contrast(101%);
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%);
 }
 
 .svg-icon.icon-heart {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-          hue-rotate(322deg) brightness(103%) contrast(108%);
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%);
 }
 
 .svg-icon.icon-heart:hover {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-          hue-rotate(322deg) brightness(103%) contrast(108%)
-          drop-shadow(0 0 12px rgba(255, 0, 150, 1));
   animation: heartbeat 0.6s ease-in-out;
+  filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%) drop-shadow(0 0 12px rgba(255, 0, 150, 1));
   transform: scale(1.2);
 }
 
@@ -241,37 +210,31 @@
 
 /* Heartbeat Animation for Favorites - More Realistic */
 @keyframes heartbeat {
-  0%, 100% { 
-    transform: scale(1); 
-    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-            hue-rotate(322deg) brightness(103%) contrast(108%);
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%);
   }
-  25% { 
-    transform: scale(1.3); 
-    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-            hue-rotate(322deg) brightness(130%) contrast(120%)
-            drop-shadow(0 0 8px rgba(255, 0, 150, 0.8));
+  25% {
+    transform: scale(1.3);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(130%) contrast(120%) drop-shadow(0 0 8px rgba(255, 0, 150, 0.8));
   }
-  50% { 
-    transform: scale(1.1); 
-    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-            hue-rotate(322deg) brightness(110%) contrast(110%);
+  50% {
+    transform: scale(1.1);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(110%) contrast(110%);
   }
-  75% { 
-    transform: scale(1.4); 
-    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-            hue-rotate(322deg) brightness(140%) contrast(125%)
-            drop-shadow(0 0 12px rgba(255, 0, 150, 1));
+  75% {
+    transform: scale(1.4);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(140%) contrast(125%) drop-shadow(0 0 12px rgba(255, 0, 150, 1));
   }
 }
 
 /* Pulse Animation for Active States */
 @keyframes pulse {
-  0%, 100% { 
+  0%, 100% {
     transform: scale(1);
     opacity: 1;
   }
-  50% { 
+  50% {
     transform: scale(1.05);
     opacity: 0.8;
   }
@@ -295,21 +258,24 @@
 
 /* Shake Animation for Errors */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-  20%, 40%, 60%, 80% { transform: translateX(2px); }
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
 }
 
 /* Glow Pulse for Important Actions */
 @keyframes glow-pulse {
-  0%, 100% { 
-    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-            hue-rotate(102deg) brightness(104%) contrast(101%);
+  0%, 100% {
+    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%);
   }
-  50% { 
-    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-            hue-rotate(102deg) brightness(130%) contrast(120%)
-            drop-shadow(0 0 16px rgba(0, 255, 200, 0.8));
+  50% {
+    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(130%) contrast(120%) drop-shadow(0 0 16px rgba(0, 255, 200, 0.8));
   }
 }
 
@@ -319,8 +285,12 @@
 }
 
 @keyframes icon-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Special Animation Classes */
@@ -342,9 +312,9 @@
 
 /* Focus States for Accessibility */
 .svg-icon:focus {
+  border-radius: 2px;
   outline: 2px solid var(--color-cyan, #00ffc8);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 .svg-icon:focus:not(:focus-visible) {
@@ -356,21 +326,19 @@
   .svg-icon {
     filter: brightness(0) invert(1) contrast(200%);
   }
-  
+
   .svg-icon.icon-cyan,
   .svg-icon.icon-timer,
   .svg-icon.icon-success,
   .svg-icon.icon-primary {
-    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
-            hue-rotate(102deg) brightness(150%) contrast(150%);
+    filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(150%) contrast(150%);
   }
-  
+
   .svg-icon.icon-pink,
   .svg-icon.icon-music,
   .svg-icon.icon-alert,
   .svg-icon.icon-favorite {
-    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%)
-            hue-rotate(322deg) brightness(150%) contrast(150%);
+    filter: brightness(0) saturate(100%) invert(13%) sepia(95%) saturate(7471%) hue-rotate(322deg) brightness(150%) contrast(150%);
   }
 }
 
@@ -379,16 +347,16 @@
   .svg-icon {
     transition: none;
   }
-  
+
   .svg-icon:hover {
-    transform: none;
     animation: none;
+    transform: none;
   }
-  
+
   .svg-icon.icon-loading {
     animation: none;
   }
-  
+
   .svg-icon.icon-pulse,
   .svg-icon.icon-glow {
     animation: none;

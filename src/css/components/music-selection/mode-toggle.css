@@ -45,8 +45,8 @@
 
 /* Specific sizing for music-mode-toggle SVG icons */
 .music-mode-toggle .svg-icon {
-  width: 2em;
   height: 2em;
+  width: 2em;
 }
 
 .mode-toggle-btn:hover:not(.active) {

@@ -15,8 +15,8 @@
  * @returns {boolean}
  */
 export function isPopoverSupported() {
-  return typeof HTMLElement !== 'undefined' &&
-         HTMLElement.prototype.hasOwnProperty('popover');
+  return typeof HTMLElement !== "undefined" &&
+    HTMLElement.prototype.hasOwnProperty("popover");
 }
 
 /**
@@ -26,7 +26,7 @@ export function isPopoverSupported() {
  */
 export function initPopoverPolyfill(popoverElement) {
   if (!popoverElement) {
-    console.warn('[Popover Polyfill] Element not found');
+    console.warn("[Popover Polyfill] Element not found");
     return null;
   }
 
@@ -36,7 +36,7 @@ export function initPopoverPolyfill(popoverElement) {
       show: () => popoverElement.showPopover(),
       hide: () => popoverElement.hidePopover(),
       toggle: () => popoverElement.togglePopover(),
-      isOpen: () => popoverElement.matches(':popover-open'),
+      isOpen: () => popoverElement.matches(":popover-open"),
       element: popoverElement,
       native: true
     };
@@ -55,8 +55,8 @@ export function initPopoverPolyfill(popoverElement) {
     if (isOpen) return;
 
     // Add CSS class for visibility
-    popoverElement.classList.add('popover-open');
-    popoverElement.style.display = 'block';
+    popoverElement.classList.add("popover-open");
+    popoverElement.style.display = "block";
 
     // Position popover (adjust if needed)
     positionPopover(popoverElement);
@@ -65,8 +65,8 @@ export function initPopoverPolyfill(popoverElement) {
     isOpen = true;
 
     // Dispatch custom toggle event to match native API
-    const toggleEvent = new Event('toggle', { bubbles: true });
-    toggleEvent.newState = 'open';
+    const toggleEvent = new Event("toggle", {bubbles: true});
+    toggleEvent.newState = "open";
     popoverElement.dispatchEvent(toggleEvent);
 
     // Add backdrop/overlay to detect outside clicks
@@ -80,15 +80,15 @@ export function initPopoverPolyfill(popoverElement) {
     if (!isOpen) return;
 
     // Remove CSS class
-    popoverElement.classList.remove('popover-open');
-    popoverElement.style.display = 'none';
+    popoverElement.classList.remove("popover-open");
+    popoverElement.style.display = "none";
 
     // Update state
     isOpen = false;
 
     // Dispatch custom toggle event
-    const toggleEvent = new Event('toggle', { bubbles: true });
-    toggleEvent.newState = 'closed';
+    const toggleEvent = new Event("toggle", {bubbles: true});
+    toggleEvent.newState = "closed";
     popoverElement.dispatchEvent(toggleEvent);
 
     // Remove backdrop
@@ -113,29 +113,29 @@ export function initPopoverPolyfill(popoverElement) {
   function positionPopover(element) {
     // Basic centering for mobile
     // Can be enhanced with anchor positioning if needed
-    element.style.position = 'fixed';
+    element.style.position = "fixed";
 
     // Check if it's a full-screen popover or positioned popover
-    const isFullscreen = element.classList.contains('music-library-popover') ||
-                         element.classList.contains('mood-popover') ||
-                         element.classList.contains('genre-popover');
+    const isFullscreen = element.classList.contains("music-library-popover") ||
+      element.classList.contains("mood-popover") ||
+      element.classList.contains("genre-popover");
 
     if (isFullscreen) {
       // Full screen overlay positioning
-      element.style.inset = '0';
-      element.style.margin = 'auto';
+      element.style.inset = "0";
+      element.style.margin = "auto";
     } else {
       // Centered positioning for tooltips/smaller popovers
-      element.style.top = '50%';
-      element.style.left = '50%';
-      element.style.transform = 'translate(-50%, -50%)';
-      element.style.maxHeight = '80vh';
-      element.style.maxWidth = '90vw';
-      element.style.overflow = 'auto';
+      element.style.top = "50%";
+      element.style.left = "50%";
+      element.style.transform = "translate(-50%, -50%)";
+      element.style.maxHeight = "80vh";
+      element.style.maxWidth = "90vw";
+      element.style.overflow = "auto";
     }
 
     // Ensure z-index is high
-    element.style.zIndex = '999';
+    element.style.zIndex = "999";
   }
 
   /**
@@ -149,9 +149,9 @@ export function initPopoverPolyfill(popoverElement) {
     removeBackdrop(popover);
 
     // Create backdrop
-    const backdrop = document.createElement('div');
+    const backdrop = document.createElement("div");
     backdrop.id = backdropId;
-    backdrop.className = 'popover-backdrop';
+    backdrop.className = "popover-backdrop";
     backdrop.style.cssText = `
       position: fixed;
       inset: 0;
@@ -161,7 +161,7 @@ export function initPopoverPolyfill(popoverElement) {
     `;
 
     // Click backdrop to close
-    backdrop.addEventListener('click', () => {
+    backdrop.addEventListener("click", () => {
       hidePopover();
     });
 
@@ -201,7 +201,7 @@ export function initPopoverPolyfill(popoverElement) {
  * Scans for [popover] attribute and initializes polyfill if needed
  */
 export function initAllPopovers() {
-  const popovers = document.querySelectorAll('[popover]');
+  const popovers = document.querySelectorAll("[popover]");
   const instances = [];
 
   popovers.forEach(popover => {
@@ -224,11 +224,11 @@ export function initAllPopovers() {
 function setupPopoverTriggers() {
   if (isPopoverSupported()) return; // Native API handles this
 
-  const triggers = document.querySelectorAll('[popovertarget]');
+  const triggers = document.querySelectorAll("[popovertarget]");
 
   triggers.forEach(trigger => {
-    const targetId = trigger.getAttribute('popovertarget');
-    const action = trigger.getAttribute('popovertargetaction') || 'toggle';
+    const targetId = trigger.getAttribute("popovertarget");
+    const action = trigger.getAttribute("popovertargetaction") || "toggle";
     const targetPopover = document.getElementById(targetId);
 
     if (!targetPopover) {
@@ -236,17 +236,17 @@ function setupPopoverTriggers() {
       return;
     }
 
-    trigger.addEventListener('click', (e) => {
+    trigger.addEventListener("click", (e) => {
       e.preventDefault();
 
       switch (action) {
-        case 'show':
+        case "show":
           targetPopover.showPopover?.();
           break;
-        case 'hide':
+        case "hide":
           targetPopover.hidePopover?.();
           break;
-        case 'toggle':
+        case "toggle":
         default:
           targetPopover.togglePopover?.();
           break;
@@ -261,10 +261,10 @@ function setupPopoverTriggers() {
 export function injectPopoverPolyfillStyles() {
   if (isPopoverSupported()) return;
 
-  const styleId = 'popover-polyfill-styles';
+  const styleId = "popover-polyfill-styles";
   if (document.getElementById(styleId)) return;
 
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.id = styleId;
   style.textContent = `
     /* Popover Polyfill Styles - iOS Safari Fallback */
@@ -308,5 +308,5 @@ export function injectPopoverPolyfillStyles() {
   `;
 
   document.head.appendChild(style);
-  console.log('[Popover Polyfill] Styles injected');
+  console.log("[Popover Polyfill] Styles injected");
 }

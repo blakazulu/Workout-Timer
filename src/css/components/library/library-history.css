@@ -28,8 +28,8 @@
 
 .btn-history .svg-icon {
   filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.6));
-  width: 1.5em !important;
   height: 1.5em !important;
+  width: 1.5em !important;
 }
 
 .history-header {

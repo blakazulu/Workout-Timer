@@ -8,6 +8,7 @@
 ## 🎯 Testing Scope
 
 This guide covers testing for:
+
 - **iOS Safari Browser** (iOS 14.0+)
 - **PWA Standalone Mode** (Add to Home Screen)
 - **Edge Cases**: Low Power Mode, Background/Foreground, Offline
@@ -17,11 +18,13 @@ This guide covers testing for:
 ## 📱 Test Devices Required
 
 ### Minimum Requirements:
+
 - iPhone with iOS 14.0 or later
 - Safari browser (built-in)
 - Stable WiFi connection (for initial testing)
 
 ### Recommended for Comprehensive Testing:
+
 - iPhone SE (small screen - 4.7")
 - iPhone 14/15 (standard screen - 6.1")
 - iPhone 14/15 Pro Max (large screen + notch - 6.7")
@@ -34,6 +37,7 @@ This guide covers testing for:
 ### 1. **Popover Systems** (Critical - Uses Polyfill)
 
 #### Music Library Popover
+
 - [ ] Click library icon - popover opens
 - [ ] Popover displays centered on screen
 - [ ] Can switch between Recent/Most Played/Favorites tabs
@@ -43,6 +47,7 @@ This guide covers testing for:
 - [ ] No scroll issues or layout breaks
 
 #### Mood Selector Popover
+
 - [ ] Click mood button - popover opens
 - [ ] All mood tags visible and scrollable
 - [ ] Clicking mood tag closes popover and searches
@@ -50,12 +55,14 @@ This guide covers testing for:
 - [ ] Icons display correctly (Phosphor or Unicode)
 
 #### Genre Selector Popover
+
 - [ ] Click genre button - popover opens
 - [ ] All genre tags visible and scrollable
 - [ ] Clicking genre tag closes popover and searches
 - [ ] No overlapping or z-index issues
 
 #### Music Info Tooltip
+
 - [ ] Hover/tap on music info icon
 - [ ] Tooltip appears with song details
 - [ ] Tooltip closes when tapping outside
@@ -66,6 +73,7 @@ This guide covers testing for:
 ### 2. **Audio System** (iOS-Specific Enhancements)
 
 #### Timer Alert Beeps (Web Audio API)
+
 - [ ] Start timer - beeps play at 3-2-1 countdown
 - [ ] Beep frequency: 800Hz audible
 - [ ] Beeps work during active use
@@ -73,6 +81,7 @@ This guide covers testing for:
 - [ ] No audio glitches or stutters
 
 #### Sound Effects (MP3 Files)
+
 - [ ] End of rest sound plays (whistle)
 - [ ] Round end sound plays (boxing bell)
 - [ ] Workout over sound plays (three bells)
@@ -80,12 +89,14 @@ This guide covers testing for:
 - [ ] Sounds play even with YouTube music
 
 #### Low Power Mode Testing
+
 - [ ] Enable Low Power Mode (Settings → Battery)
 - [ ] Audio still plays (may have delay)
 - [ ] Beeps still audible
 - [ ] App remains functional
 
 #### Background Audio Testing
+
 - [ ] Start timer, press Home button (background app)
 - [ ] Alert beeps continue (may not play while backgrounded)
 - [ ] Return to app - missed alerts play catch-up
@@ -96,6 +107,7 @@ This guide covers testing for:
 ### 3. **Timer Functionality** (Background Accuracy)
 
 #### Basic Timer Operation
+
 - [ ] Set duration (e.g., 30 seconds)
 - [ ] Set alert time (e.g., 3 seconds)
 - [ ] Set repetitions (e.g., 3 reps)
@@ -105,6 +117,7 @@ This guide covers testing for:
 - [ ] Rep counter shows "Rep 1 / 3" format
 
 #### Background Timer Accuracy
+
 - [ ] Start 60-second timer
 - [ ] Press Home button (background app)
 - [ ] Wait 30 seconds
@@ -113,6 +126,7 @@ This guide covers testing for:
 - [ ] Missed beeps play on return (iOS feature)
 
 #### Multi-Rep Timer Flow
+
 - [ ] Complete rep 1 - round end sound plays
 - [ ] Rest period starts (if restTime > 0)
 - [ ] Rest countdown displays correctly
@@ -122,6 +136,7 @@ This guide covers testing for:
 - [ ] Final completion sound plays (three bells)
 
 #### Timer State Persistence
+
 - [ ] Pause timer mid-countdown
 - [ ] Background app
 - [ ] Return to app
@@ -132,6 +147,7 @@ This guide covers testing for:
 ### 4. **YouTube Integration**
 
 #### Video Loading
+
 - [ ] Paste YouTube URL (youtube.com/watch?v=...)
 - [ ] Press Enter or click Load
 - [ ] Video loads in background (30% opacity)
@@ -139,6 +155,7 @@ This guide covers testing for:
 - [ ] Video title displays in music controls
 
 #### YouTube Playback
+
 - [ ] Click Play button - video plays
 - [ ] Audio is audible
 - [ ] Progress bar updates
@@ -147,6 +164,7 @@ This guide covers testing for:
 - [ ] Volume ducking works during alert countdown
 
 #### YouTube + Timer Integration
+
 - [ ] Start timer with YouTube video playing
 - [ ] Music continues during workout
 - [ ] Music volume reduces to 25% during alerts (3-2-1 countdown)
@@ -154,6 +172,7 @@ This guide covers testing for:
 - [ ] Music continues after rep completion sounds
 
 #### PWA Standalone Mode
+
 - [ ] Install PWA (Add to Home Screen)
 - [ ] Open from home screen
 - [ ] Load YouTube video in PWA
@@ -165,6 +184,7 @@ This guide covers testing for:
 ### 5. **Favorites System**
 
 #### Adding Favorites
+
 - [ ] Play a song
 - [ ] Click heart icon (empty → filled)
 - [ ] Notification: "Added to favorites"
@@ -172,12 +192,14 @@ This guide covers testing for:
 - [ ] Favorite persists after page reload
 
 #### Removing Favorites
+
 - [ ] Click filled heart icon (filled → empty)
 - [ ] Notification: "Removed from favorites"
 - [ ] Badge count decrements
 - [ ] Removal persists after reload
 
 #### Favorites List
+
 - [ ] Open Music Library
 - [ ] Click Favorites tab
 - [ ] All favorited songs display
@@ -186,6 +208,7 @@ This guide covers testing for:
 - [ ] Remove button (X) works on each favorite
 
 #### localStorage Limit Testing
+
 - [ ] Add 50 favorites (max limit)
 - [ ] Try to add 51st - shows limit message
 - [ ] Favorites persist after closing/reopening app
@@ -196,18 +219,21 @@ This guide covers testing for:
 ### 6. **UI/UX Touch Interactions**
 
 #### Touch Gestures
+
 - [ ] Double-tap timer display - starts/pauses timer
 - [ ] Swipe down on timer - confirms new timer
 - [ ] All buttons respond to tap (no delay)
 - [ ] No accidental zoom on button taps
 
 #### Scrolling
+
 - [ ] Music library list scrolls smoothly
 - [ ] Mood/genre popovers scroll if needed
 - [ ] No bounce/rubber-band on fixed elements
 - [ ] Webkit smooth scrolling active
 
 #### Input Focus
+
 - [ ] Tap YouTube URL input - keyboard appears
 - [ ] Input field zooms to readable size
 - [ ] No unintended page zoom
@@ -218,12 +244,14 @@ This guide covers testing for:
 ### 7. **PWA Features** (iOS Specific)
 
 #### Installation
+
 - [ ] Safari → Share → Add to Home Screen
 - [ ] Icon appears on home screen
 - [ ] App name displays as "CYCLE"
 - [ ] Icon uses correct size (180x180 apple-touch-icon)
 
 #### Standalone Mode Detection
+
 - [ ] Open PWA from home screen
 - [ ] App opens in standalone mode (no Safari UI)
 - [ ] Safe area insets respected (notch area clear)
@@ -231,6 +259,7 @@ This guide covers testing for:
 - [ ] Status bar displays correctly
 
 #### PWA Updates
+
 - [ ] Deploy new version (bump package.json version)
 - [ ] Open PWA - update overlay appears
 - [ ] Accept update - new version loads
@@ -238,6 +267,7 @@ This guide covers testing for:
 - [ ] Icons still display after update
 
 #### Offline Mode
+
 - [ ] Load app with internet
 - [ ] Enable Airplane Mode
 - [ ] Open PWA from home screen
@@ -251,6 +281,7 @@ This guide covers testing for:
 ### 8. **Screen Wake Lock** (iOS Limitation)
 
 #### Wake Lock Status
+
 - [ ] Start timer
 - [ ] Check if screen stays on (iOS does NOT support Wake Lock API)
 - [ ] App detects wake lock unsupported (no errors)
@@ -264,6 +295,7 @@ This guide covers testing for:
 ### 9. **Icon System** (Multi-Layer Fallbacks)
 
 #### Icon Display
+
 - [ ] All icons visible on first load
 - [ ] Icons are Unicode (▶♥🔥) or Phosphor glyphs
 - [ ] No blank spaces where icons should be
@@ -272,12 +304,14 @@ This guide covers testing for:
 - [ ] Icons in popovers work
 
 #### Low Power Mode Icon Test
+
 - [ ] Enable Low Power Mode
 - [ ] Reload page
 - [ ] Unicode fallback icons display immediately
 - [ ] Icons remain functional (clickable)
 
 #### Icon Fallback Verification
+
 - [ ] Test page: `/test-icon-fallbacks.html`
 - [ ] Click "Simulate Font Failure"
 - [ ] Verify Unicode fallbacks appear
@@ -288,12 +322,14 @@ This guide covers testing for:
 ### 10. **Storage & Data Persistence**
 
 #### Settings Persistence
+
 - [ ] Change timer settings (duration, reps, etc.)
 - [ ] Close/reopen app
 - [ ] Settings restored from localStorage
 - [ ] Values match last session
 
 #### Song History
+
 - [ ] Play 5 different songs
 - [ ] Reload page
 - [ ] Open Music Library → Recent tab
@@ -302,6 +338,7 @@ This guide covers testing for:
 - [ ] Thumbnails load (last 20 only)
 
 #### Storage Optimization
+
 - [ ] Play 100 songs (stress test)
 - [ ] Check localStorage usage (< 50MB limit)
 - [ ] Old thumbnails cleared automatically
@@ -312,6 +349,7 @@ This guide covers testing for:
 ## 🔬 Edge Case Testing
 
 ### Scenario 1: Timer During Phone Call
+
 1. Start timer with music
 2. Receive/make phone call
 3. Answer call
@@ -319,24 +357,28 @@ This guide covers testing for:
 5. **Expected**: Timer paused, music stopped, can resume after call
 
 ### Scenario 2: Low Battery + Low Power Mode
+
 1. Drain battery to 20%
 2. Enable Low Power Mode automatically
 3. Start timer with music
 4. **Expected**: App functions, may have performance throttling
 
 ### Scenario 3: Rapid App Switching
+
 1. Start timer
 2. Quickly switch to 5 different apps
 3. Return to CYCLE app
 4. **Expected**: Timer syncs accurately, no crashes
 
 ### Scenario 4: Long Background Duration
+
 1. Start 30-minute timer
 2. Background app for 20 minutes
 3. Return to app
 4. **Expected**: ~10 minutes remaining, missed alerts play
 
 ### Scenario 5: Network Interruption
+
 1. Start YouTube video
 2. Enable Airplane Mode mid-playback
 3. **Expected**: Music stops, timer continues, no crashes
@@ -346,6 +388,7 @@ This guide covers testing for:
 ## 📊 Pass/Fail Criteria
 
 ### Critical (Must Pass):
+
 - ✅ All popovers open and close correctly
 - ✅ Timer countdown accurate (±2s after backgrounding)
 - ✅ Audio beeps and sounds play
@@ -354,6 +397,7 @@ This guide covers testing for:
 - ✅ Data persists (localStorage)
 
 ### High Priority (Should Pass):
+
 - ✅ YouTube integration works
 - ✅ Touch gestures respond
 - ✅ PWA installs and updates
@@ -361,6 +405,7 @@ This guide covers testing for:
 - ✅ Safe area insets respected
 
 ### Known Limitations (Acceptable):
+
 - ⚠️ Wake Lock API not supported on iOS (timer continues, screen may lock)
 - ⚠️ Vibration API not supported on iOS (no haptic feedback)
 - ⚠️ Background audio may not play while app is backgrounded (catches up on return)

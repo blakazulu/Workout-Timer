@@ -8,7 +8,7 @@ import * as metrics from "./metrics-calculator.js";
 import * as posthogData from "./posthog-data.js";
 import {initializeUserModal, renderUsersSection} from "./dashboard-users.js";
 import {renderEventsSection} from "./dashboard-events.js";
-import {getIconPath, createIconImg} from "../utils/icon-mapper.js";
+import {createIconImg, getIconPath} from "../utils/icon-mapper.js";
 
 // Chart instances
 let charts = {
@@ -620,7 +620,7 @@ function renderRecentActivity(recentActivity) {
     container.innerHTML = `
       <div class="text-center" style="text-align: center; padding: 2rem; opacity: 0.5;">
         <div style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;">
-          ${createIconImg('ph-clipboard', { className: '', alt: 'no activity' })}
+          ${createIconImg("ph-clipboard", {className: "", alt: "no activity"})}
         </div>
         No recent activity
       </div>
@@ -642,7 +642,7 @@ function renderRecentActivity(recentActivity) {
     return `
       <div class="activity-item">
         <div class="activity-icon" style="background: linear-gradient(135deg, ${color}, ${color}80);">
-          ${createIconImg(icon, { className: '', alt: eventType })}
+          ${createIconImg(icon, {className: "", alt: eventType})}
         </div>
         <div class="activity-content">
           <div class="activity-title">${description}</div>
@@ -778,7 +778,7 @@ function renderPostHogPanel() {
     container.innerHTML = `
       <div class="text-center" style="text-align: center; padding: 1rem; opacity: 0.5;">
         <div style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;">
-          ${createIconImg('ph-warning-circle', { className: '', alt: 'warning' })}
+          ${createIconImg("ph-warning-circle", {className: "", alt: "warning"})}
         </div>
         ${analytics.reason || "Not connected"}
       </div>

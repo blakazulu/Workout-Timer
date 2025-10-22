@@ -67,7 +67,7 @@ export class AudioManager {
     setInterval(() => this.cleanupStaleClones(), 10000);
 
     if (this.debugMode && this.isIOS) {
-      console.log('[Audio] iOS detected - using sequential audio playback mode');
+      console.log("[Audio] iOS detected - using sequential audio playback mode");
     }
   }
 
@@ -122,7 +122,7 @@ export class AudioManager {
     this.isPlayingQueued = true;
 
     while (this.audioQueue.length > 0) {
-      const { soundKey, onEnded } = this.audioQueue.shift();
+      const {soundKey, onEnded} = this.audioQueue.shift();
 
       await new Promise((resolve) => {
         this.playSound(soundKey, () => {
@@ -199,7 +199,7 @@ export class AudioManager {
       if (this.debugMode) {
         console.log(`[Audio] iOS: Queueing ${soundKey} for sequential playback`);
       }
-      this.audioQueue.push({ soundKey, onEnded });
+      this.audioQueue.push({soundKey, onEnded});
       this.processAudioQueue();
       return;
     }
@@ -221,7 +221,7 @@ export class AudioManager {
       sound.currentTime = 0;
 
       if (this.debugMode) {
-        console.log(`[Audio] Playing ${soundKey} (original)${this.isIOS ? ' [iOS]' : ''}`);
+        console.log(`[Audio] Playing ${soundKey} (original)${this.isIOS ? " [iOS]" : ""}`);
       }
 
       // Add ended callback if provided
@@ -346,14 +346,14 @@ export class AudioManager {
    */
   getStats() {
     return {
-      platform: this.isIOS ? 'iOS' : 'other',
+      platform: this.isIOS ? "iOS" : "other",
       activeClones: this.activeClones.length,
       maxClones: this.maxClones,
       audioEnabled: this.audioEnabled,
       vibrationEnabled: this.vibrationEnabled,
       audioQueueLength: this.audioQueue.length,
       isPlayingQueued: this.isPlayingQueued,
-      audioContextState: this.audioContext?.state || 'unavailable',
+      audioContextState: this.audioContext?.state || "unavailable",
       sounds: Object.keys(this.sounds).map(key => ({
         key,
         paused: this.sounds[key].paused,

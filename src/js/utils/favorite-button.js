@@ -20,13 +20,17 @@ export function createFavoriteButtonHTML(videoId, options = {}) {
   const favoritedClass = favorited ? "favorited" : "";
   const sizeClass = `favorite-btn-${size}`;
 
+  const iconSrc = favorited
+    ? "/svg-icons/bookmark-favorite/favourite-filled.svg"
+    : "/svg-icons/bookmark-favorite/favourite.svg";
+
   return `
     <button class="song-favorite-btn ${sizeClass} ${favoritedClass} ${className}"
             data-video-id="${escapeHtml(videoId)}"
             data-action="toggle-favorite"
             title="${favorited ? "Remove from favorites" : "Add to favorites"}"
             aria-label="${favorited ? "Remove from favorites" : "Add to favorites"}">
-      <img src="/svg-icons/bookmark-favorite/favourite.svg" class="svg-icon" alt="Favorite" />
+      <img src="${iconSrc}" class="svg-icon" alt="Favorite" />
     </button>
   `;
 }
@@ -208,10 +212,22 @@ function updateButtonState(button, isFavorited) {
     button.classList.add("favorited");
     button.title = "Remove from favorites";
     button.setAttribute("aria-label", "Remove from favorites");
+
+    // Switch to filled icon
+    const img = button.querySelector("img.svg-icon");
+    if (img) {
+      img.src = "/svg-icons/bookmark-favorite/favourite-filled.svg";
+    }
   } else {
     button.classList.remove("favorited");
     button.title = "Add to favorites";
     button.setAttribute("aria-label", "Add to favorites");
+
+    // Switch to outline icon
+    const img = button.querySelector("img.svg-icon");
+    if (img) {
+      img.src = "/svg-icons/bookmark-favorite/favourite.svg";
+    }
   }
 }
 

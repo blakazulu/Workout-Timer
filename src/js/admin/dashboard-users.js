@@ -4,7 +4,7 @@
  */
 
 import * as posthog from "./posthog-client.js";
-import { createIconImg } from "../utils/icon-mapper.js";
+import {createIconImg} from "../utils/icon-mapper.js";
 
 /**
  * Initialize modal event listeners
@@ -67,7 +67,7 @@ export async function renderUsersSection() {
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <div style="font-size: 3rem; animation: spin 1s linear infinite;">
-          ${createIconImg('ph-spinner', { className: '', alt: 'loading' })}
+          ${createIconImg("ph-spinner", {className: "", alt: "loading"})}
         </div>
         <p style="margin-top: 1rem;">Loading users...</p>
       </div>
@@ -140,7 +140,7 @@ function populateUsersTable(users) {
     usersTable.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <div style="font-size: 3rem; opacity: 0.3;">
-          ${createIconImg('ph-users', { className: '', alt: 'no users' })}
+          ${createIconImg("ph-users", {className: "", alt: "no users"})}
         </div>
         <p style="margin-top: 1rem;">No users found</p>
       </div>
@@ -173,7 +173,7 @@ function populateUsersTable(users) {
     return `
       <div class="user-row" onclick="openUserModal(${JSON.stringify(userData).replace(/"/g, "&quot;")})">
         <div class="user-avatar" style="background: linear-gradient(135deg, ${engagementColor}, ${engagementColor}80);">
-          ${createIconImg('ph-user', { className: '', alt: 'user' })}
+          ${createIconImg("ph-user", {className: "", alt: "user"})}
         </div>
         <div class="user-info">
           <div class="user-name">User ${user.userId.substring(0, 8)}</div>
@@ -203,7 +203,7 @@ function showUsersError(error) {
   usersTable.innerHTML = `
     <div style="text-align: center; padding: 3rem; color: var(--error-500);">
       <div style="font-size: 3rem; margin-bottom: 1rem;">
-        ${createIconImg('ph-warning-circle', { className: '', alt: 'error' })}
+        ${createIconImg("ph-warning-circle", {className: "", alt: "error"})}
       </div>
       <h3 style="margin-bottom: 0.5rem;">Failed to load users</h3>
       <p style="color: var(--text-tertiary); font-size: 0.875rem;">${error.message}</p>
@@ -254,7 +254,7 @@ window.openUserModal = async function (userData) {
   timelineContainer.innerHTML = `
     <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
       <div style="font-size: 3rem; animation: spin 1s linear infinite;">
-        ${createIconImg('ph-spinner', { className: '', alt: 'loading' })}
+        ${createIconImg("ph-spinner", {className: "", alt: "loading"})}
       </div>
       <p style="margin-top: 1rem;">Loading timeline...</p>
     </div>
@@ -289,7 +289,7 @@ window.openUserModal = async function (userData) {
     timelineContainer.innerHTML = `
       <div style="text-align: center; padding: 3rem; color: var(--error-500);">
         <div style="font-size: 3rem;">
-          ${createIconImg('ph-warning-circle', { className: '', alt: 'error' })}
+          ${createIconImg("ph-warning-circle", {className: "", alt: "error"})}
         </div>
         <p style="margin-top: 1rem;">Failed to load timeline</p>
         <p style="font-size: 0.875rem; margin-top: 0.5rem;">${error.message}</p>
@@ -333,7 +333,7 @@ function renderTimeline(activity) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <div style="font-size: 3rem; opacity: 0.3;">
-          ${createIconImg('ph-clock-counter-clockwise', { className: '', alt: 'no activity' })}
+          ${createIconImg("ph-clock-counter-clockwise", {className: "", alt: "no activity"})}
         </div>
         <p style="margin-top: 1rem;">No activity found</p>
       </div>
@@ -372,7 +372,7 @@ function renderTimeline(activity) {
     return `
       <div class="timeline-event">
         <div class="timeline-icon">
-          ${createIconImg(iconClass, { className: '', alt: eventName })}
+          ${createIconImg(iconClass, {className: "", alt: eventName})}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">${eventName}</div>
@@ -417,7 +417,7 @@ function renderSessions(activity) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <div style="font-size: 3rem; opacity: 0.3;">
-          ${createIconImg('ph-calendar-blank', { className: '', alt: 'no sessions' })}
+          ${createIconImg("ph-calendar-blank", {className: "", alt: "no sessions"})}
         </div>
         <p style="margin-top: 1rem;">No sessions found</p>
       </div>
@@ -475,7 +475,7 @@ function renderSessions(activity) {
     return `
       <div style="text-align: center; padding: 3rem; color: var(--text-tertiary);">
         <div style="font-size: 3rem; opacity: 0.3;">
-          ${createIconImg('ph-calendar-blank', { className: '', alt: 'no sessions' })}
+          ${createIconImg("ph-calendar-blank", {className: "", alt: "no sessions"})}
         </div>
         <p style="margin-top: 1rem;">No complete sessions found</p>
       </div>
@@ -505,7 +505,7 @@ function renderSessions(activity) {
     return `
       <div class="timeline-event">
         <div class="timeline-icon">
-          ${createIconImg('ph-calendar-check', { className: '', alt: 'session' })}
+          ${createIconImg("ph-calendar-check", {className: "", alt: "session"})}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">Session ${index + 1}</div>

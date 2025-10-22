@@ -38,7 +38,7 @@ export class Timer {
     this.debugMode = localStorage.getItem("timer_debug") === "true";
 
     if (this.debugMode && this.isIOS) {
-      console.log('[Timer] iOS detected - using enhanced background handling');
+      console.log("[Timer] iOS detected - using enhanced background handling");
     }
 
     // DOM elements
@@ -102,9 +102,9 @@ export class Timer {
         // Play missed sounds (limited to most recent to avoid spam)
         const recentMissed = this.missedAlerts.slice(-3); // Last 3 only
         recentMissed.forEach(alert => {
-          if (alert.type === 'alert') {
+          if (alert.type === "alert") {
             this.audio.playAlert();
-          } else if (alert.type === 'complete') {
+          } else if (alert.type === "complete") {
             this.audio.playComplete();
           }
         });
@@ -123,7 +123,7 @@ export class Timer {
       this.backgroundStartTime = Date.now();
 
       if (this.debugMode) {
-        console.log('[Timer] Page hidden - tracking background time');
+        console.log("[Timer] Page hidden - tracking background time");
       }
     }
   }
@@ -399,10 +399,10 @@ export class Timer {
     if (this.currentTime <= this.alertTime && this.currentTime > 0) {
       if (this.lastAlertSecond !== this.currentTime) {
         // iOS: Track missed alerts when in background
-        const isInBackground = document.visibilityState === 'hidden';
+        const isInBackground = document.visibilityState === "hidden";
         if (this.isIOS && isInBackground) {
           this.missedAlerts.push({
-            type: 'alert',
+            type: "alert",
             time: this.currentTime,
             timestamp: Date.now()
           });

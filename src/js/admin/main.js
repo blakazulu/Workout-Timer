@@ -540,7 +540,7 @@ function setupUserJourneyModal() {
     timelineContainer.innerHTML = timeline.map(event => `
       <div class="timeline-event">
         <div class="timeline-icon">
-          ${createIconImg(`ph-${event.icon || "circle"}`, { className: '', alt: event.title || 'Event' })}
+          ${createIconImg(`ph-${event.icon || "circle"}`, {className: "", alt: event.title || "Event"})}
         </div>
         <div class="timeline-content">
           <div class="timeline-title">${event.title || "Event"}</div>
@@ -559,7 +559,7 @@ function setupUserJourneyModal() {
     sessionsContainer.innerHTML = sessions.map(session => `
       <div class="session-item">
         <div class="session-icon">
-          ${createIconImg('ph-play', { className: '', alt: 'session' })}
+          ${createIconImg("ph-play", {className: "", alt: "session"})}
         </div>
         <div class="session-content">
           <div class="session-title">${session.title || "Workout Session"}</div>
@@ -578,7 +578,7 @@ function setupUserJourneyModal() {
     const prefs = Object.entries(preferences).map(([key, value]) => `
       <div class="preference-item">
         <div class="preference-icon">
-          ${createIconImg('ph-heart', { className: '', alt: 'preference' })}
+          ${createIconImg("ph-heart", {className: "", alt: "preference"})}
         </div>
         <div class="preference-content">
           <div class="preference-title">${key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}</div>

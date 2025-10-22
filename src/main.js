@@ -10,14 +10,12 @@ import "./css/components.css";
 import "./css/animations.css";
 
 // Import popover polyfill for iOS/Safari compatibility
-import {
-  initAllPopovers,
-  injectPopoverPolyfillStyles,
-  isPopoverSupported
-} from "./js/utils/popover-polyfill.js";
+import {initAllPopovers, injectPopoverPolyfillStyles, isPopoverSupported} from "./js/utils/popover-polyfill.js";
+// Import and initialize the application
+import "./js/app.js";
 
 // Initialize popover polyfill on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Inject polyfill styles if needed
   injectPopoverPolyfillStyles();
 
@@ -30,5 +28,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Import and initialize the application
-import "./js/app.js";

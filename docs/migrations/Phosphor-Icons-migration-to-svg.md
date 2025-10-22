@@ -8,7 +8,8 @@
 
 ## Overview
 
-Successfully migrated from external Phosphor Icons CDN to self-hosted SVG icons located in `/public/svg-icons/`. This migration eliminates external dependencies, improves performance, and provides complete control over icon assets.
+Successfully migrated from external Phosphor Icons CDN to self-hosted SVG icons located in `/public/svg-icons/`. This
+migration eliminates external dependencies, improves performance, and provides complete control over icon assets.
 
 ---
 
@@ -17,12 +18,14 @@ Successfully migrated from external Phosphor Icons CDN to self-hosted SVG icons 
 ### What Changed
 
 **Before:**
+
 - Used Phosphor Icons from CDN (`@phosphor-icons/web`)
 - Required external CSS files (~100KB+)
 - Icon fonts loaded from jsdelivr CDN
 - Classes like `<i class="ph-heart ph-fill"></i>`
 
 **After:**
+
 - Self-hosted SVG icons in `/public/svg-icons/`
 - 4,016 SVG icons across 61 categories
 - Zero external dependencies
@@ -174,32 +177,33 @@ const ICON_MAP = {
 ### ✅ Completed
 
 1. **Icon Mapper Utility Created**
-   - `/src/js/utils/icon-mapper.js` - Complete mapping system
-   - All 65+ Phosphor icons mapped to SVG equivalents
-   - Multiple helper functions for different use cases
-   - Handles `ph-fill`, `ph-bold`, `ph-regular` variants automatically
+    - `/src/js/utils/icon-mapper.js` - Complete mapping system
+    - All 65+ Phosphor icons mapped to SVG equivalents
+    - Multiple helper functions for different use cases
+    - Handles `ph-fill`, `ph-bold`, `ph-regular` variants automatically
 
 2. **Admin Dashboard Migrated**
-   - `/src/js/admin/main.js` - Using `createIconImg()`
-   - `/src/js/admin/dashboard-events.js` - Using `createIconImg()`
-   - `/src/js/admin/dashboard-users.js` - Using `createIconImg()`
-   - `/src/js/admin/admin-dashboard.js` - Icon references updated
-   - `/src/js/admin/posthog-client.js` - Icon mapping for analytics
+    - `/src/js/admin/main.js` - Using `createIconImg()`
+    - `/src/js/admin/dashboard-events.js` - Using `createIconImg()`
+    - `/src/js/admin/dashboard-users.js` - Using `createIconImg()`
+    - `/src/js/admin/admin-dashboard.js` - Icon references updated
+    - `/src/js/admin/posthog-client.js` - Icon mapping for analytics
 
 3. **No Hardcoded Phosphor Classes**
-   - ✅ Zero `<i class="ph-*">` tags in active source files
-   - ✅ No Phosphor npm package in `package.json`
-   - ✅ No Phosphor CDN links in HTML
-   - ⚠️ Only references in `.backup.js` files (not active)
+    - ✅ Zero `<i class="ph-*">` tags in active source files
+    - ✅ No Phosphor npm package in `package.json`
+    - ✅ No Phosphor CDN links in HTML
+    - ⚠️ Only references in `.backup.js` files (not active)
 
 4. **SVG Assets Ready**
-   - 4,016 SVG icons downloaded and organized
-   - All icon paths verified to exist
-   - Organized in 61 logical categories
+    - 4,016 SVG icons downloaded and organized
+    - All icon paths verified to exist
+    - Organized in 61 logical categories
 
 ### 🔍 Files Analyzed
 
 **Active Files (All Clean):**
+
 - ✅ `src/js/admin/main.js` - Uses `createIconImg()`
 - ✅ `src/js/admin/dashboard-events.js` - Uses `createIconImg()`
 - ✅ `src/js/admin/dashboard-users.js` - Uses `createIconImg()`
@@ -208,6 +212,7 @@ const ICON_MAP = {
 - ✅ `src/js/utils/icon-mapper.js` - Mapping utility
 
 **Backup Files (Ignored):**
+
 - ⚠️ `src/js/modules/favorites-ui.backup.js` - Has `<i class="ph-*">` (not in use)
 - ⚠️ `src/js/components/search-dropdown.backup.js` - Has `<i class="ph-*">` (not in use)
 
@@ -220,6 +225,7 @@ const ICON_MAP = {
 When you need to add an icon to your code:
 
 **Option 1: Using createIconImg (Template Strings)**
+
 ```javascript
 import { createIconImg } from './utils/icon-mapper.js';
 
@@ -232,6 +238,7 @@ const html = `
 ```
 
 **Option 2: Using createIcon (DOM Manipulation)**
+
 ```javascript
 import { createIcon } from './utils/icon-mapper.js';
 
@@ -244,6 +251,7 @@ container.appendChild(icon);
 ```
 
 **Option 3: Direct Path (If you know the exact SVG)**
+
 ```html
 <img src="/svg-icons/media/play.svg" class="svg-icon" alt="Play" />
 ```
@@ -269,12 +277,14 @@ export const ICON_MAP = {
 ## Performance Benefits
 
 ### Before Migration
+
 - **External CSS:** ~100KB+ from Phosphor CDN
 - **Font Files:** Additional web fonts loaded
 - **Network Requests:** Multiple CDN requests
 - **FOUC Risk:** Icons might flash before loading
 
 ### After Migration
+
 - **Zero External Dependencies:** All assets self-hosted
 - **On-Demand Loading:** Icons load only when needed
 - **Smaller Payload:** Individual SVGs (typically 500B-2KB each)
@@ -285,10 +295,12 @@ export const ICON_MAP = {
 ### Size Comparison
 
 **Per Icon:**
+
 - Phosphor font approach: Entire font loaded (~100KB)
 - SVG approach: Individual icon (~1KB)
 
 **Total Savings:**
+
 - Eliminated ~100KB+ of external CSS
 - Eliminated ~200KB+ of font files
 - Reduced initial page load by ~300KB
@@ -298,11 +310,13 @@ export const ICON_MAP = {
 ## File Organization
 
 ### Icon Mapper Location
+
 ```
 src/js/utils/icon-mapper.js
 ```
 
 ### SVG Assets Location
+
 ```
 public/svg-icons/
   ├── [61 categories]/
@@ -310,6 +324,7 @@ public/svg-icons/
 ```
 
 ### Usage Examples Location
+
 ```
 src/js/admin/           # Admin dashboard examples
   ├── main.js
@@ -325,18 +340,18 @@ src/js/admin/           # Admin dashboard examples
 
 ### Most Commonly Used Icons
 
-| Purpose | Phosphor Class | SVG Path | Preview Category |
-|---------|---------------|----------|------------------|
-| Play | `ph-play` | `media/play.svg` | Media |
-| Pause | `ph-pause` | `media/pause.svg` | Media |
-| Heart/Favorite | `ph-heart` | `bookmark-favorite/favourite.svg` | Favorites |
-| Search | `ph-magnifying-glass` | `search/search.svg` | Search |
-| Close/Cancel | `ph-x` | `add-remove-delete/cancel-01.svg` | Actions |
-| Loading | `ph-spinner` | `mouse-and-courses/loading-01.svg` | UI |
-| User | `ph-user` | `users/user.svg` | People |
-| Settings | `ph-gear` | `setting/setting-01.svg` | Controls |
-| Calendar | `ph-calendar` | `date-and-time/calendar-01.svg` | Time |
-| Warning | `ph-warning-circle` | `alert-notification/alert-circle.svg` | Alerts |
+| Purpose        | Phosphor Class        | SVG Path                              | Preview Category |
+|----------------|-----------------------|---------------------------------------|------------------|
+| Play           | `ph-play`             | `media/play.svg`                      | Media            |
+| Pause          | `ph-pause`            | `media/pause.svg`                     | Media            |
+| Heart/Favorite | `ph-heart`            | `bookmark-favorite/favourite.svg`     | Favorites        |
+| Search         | `ph-magnifying-glass` | `search/search.svg`                   | Search           |
+| Close/Cancel   | `ph-x`                | `add-remove-delete/cancel-01.svg`     | Actions          |
+| Loading        | `ph-spinner`          | `mouse-and-courses/loading-01.svg`    | UI               |
+| User           | `ph-user`             | `users/user.svg`                      | People           |
+| Settings       | `ph-gear`             | `setting/setting-01.svg`              | Controls         |
+| Calendar       | `ph-calendar`         | `date-and-time/calendar-01.svg`       | Time             |
+| Warning        | `ph-warning-circle`   | `alert-notification/alert-circle.svg` | Alerts           |
 
 ---
 
@@ -345,6 +360,7 @@ src/js/admin/           # Admin dashboard examples
 ### Verification Commands
 
 **Check for remaining Phosphor references:**
+
 ```bash
 # Search for Phosphor icon classes in active files
 grep -r "ph-" src/js --include="*.js" --exclude="*.backup.js" --exclude="icon-mapper.js"
@@ -357,6 +373,7 @@ cat package.json | grep phosphor
 ```
 
 **Verify icon paths exist:**
+
 ```bash
 cd public/svg-icons
 ls media/play.svg          # Should exist
@@ -411,29 +428,29 @@ If issues arise and rollback is needed:
 ### Potential Optimizations
 
 1. **Icon Sprite Sheet**
-   - Combine frequently used icons into single SVG sprite
-   - Reduce HTTP requests further
-   - Implement `<use>` tags for better caching
+    - Combine frequently used icons into single SVG sprite
+    - Reduce HTTP requests further
+    - Implement `<use>` tags for better caching
 
 2. **Icon Component System**
-   - Create React/Vue components if framework is added
-   - Type-safe icon names with TypeScript
-   - Better IDE autocomplete
+    - Create React/Vue components if framework is added
+    - Type-safe icon names with TypeScript
+    - Better IDE autocomplete
 
 3. **Lazy Loading**
-   - Load icon categories on-demand
-   - Reduce initial bundle size
-   - Dynamic imports for admin icons
+    - Load icon categories on-demand
+    - Reduce initial bundle size
+    - Dynamic imports for admin icons
 
 4. **Build-Time Optimization**
-   - Inline critical icons in HTML
-   - Optimize SVG files (remove metadata)
-   - Compress SVGs with SVGO
+    - Inline critical icons in HTML
+    - Optimize SVG files (remove metadata)
+    - Compress SVGs with SVGO
 
 5. **Icon Preview Tool**
-   - Create HTML page to browse all 4,016 icons
-   - Search and filter functionality
-   - Copy icon code snippets
+    - Create HTML page to browse all 4,016 icons
+    - Search and filter functionality
+    - Copy icon code snippets
 
 ---
 
@@ -448,16 +465,16 @@ If issues arise and rollback is needed:
 
 ## Migration Statistics
 
-| Metric | Count |
-|--------|-------|
-| **SVG Icons Available** | 4,016 |
-| **Icon Categories** | 61 |
-| **Phosphor Icons Mapped** | 65+ |
-| **Files Modified** | 6 |
+| Metric                            | Count                   |
+|-----------------------------------|-------------------------|
+| **SVG Icons Available**           | 4,016                   |
+| **Icon Categories**               | 61                      |
+| **Phosphor Icons Mapped**         | 65+                     |
+| **Files Modified**                | 6                       |
 | **External Dependencies Removed** | 1 (@phosphor-icons/web) |
-| **Size Reduction** | ~300KB |
-| **Active Files with Phosphor** | 0 |
-| **Backup Files with Phosphor** | 2 (ignored) |
+| **Size Reduction**                | ~300KB                  |
+| **Active Files with Phosphor**    | 0                       |
+| **Backup Files with Phosphor**    | 2 (ignored)             |
 
 ---
 
@@ -465,9 +482,12 @@ If issues arise and rollback is needed:
 
 ✅ **Migration Status: COMPLETE**
 
-The Phosphor Icons to self-hosted SVG migration is fully complete. All active code now uses the icon-mapper system with self-hosted SVG assets. Zero external dependencies remain, performance is improved, and the system is fully maintainable.
+The Phosphor Icons to self-hosted SVG migration is fully complete. All active code now uses the icon-mapper system with
+self-hosted SVG assets. Zero external dependencies remain, performance is improved, and the system is fully
+maintainable.
 
 **Key Achievements:**
+
 - ✅ Zero Phosphor dependencies
 - ✅ 4,016 SVG icons available
 - ✅ Comprehensive mapping system
@@ -476,6 +496,7 @@ The Phosphor Icons to self-hosted SVG migration is fully complete. All active co
 - ✅ Future-proof architecture
 
 **Next Steps:**
+
 - Monitor icon rendering in production
 - Consider implementing icon sprite system
 - Add more icons to mapping as needed

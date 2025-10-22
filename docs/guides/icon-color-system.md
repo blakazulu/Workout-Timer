@@ -8,7 +8,8 @@
 
 ## Overview
 
-The icon color system provides **automatic contextual coloring** for all SVG icons based on the cyberpunk theme. Icons are automatically colored based on their purpose and category.
+The icon color system provides **automatic contextual coloring** for all SVG icons based on the cyberpunk theme. Icons
+are automatically colored based on their purpose and category.
 
 ---
 
@@ -16,12 +17,12 @@ The icon color system provides **automatic contextual coloring** for all SVG ico
 
 ### Primary Colors
 
-| Color | Hex | Usage | Examples |
-|-------|-----|-------|----------|
-| **Cyan** | `#00ffc8` | Timer, Success, Primary Actions | Clock, Calendar, Checkmark |
-| **Hot Pink** | `#ff0096` | Music, Alerts, Favorites | Play, Heart, Warning |
-| **Purple** | `#6464ff` | History, Stats, Secondary | Charts, Users, Activity |
-| **White** | `#ffffff` | Default, Neutral | Generic icons |
+| Color        | Hex       | Usage                           | Examples                   |
+|--------------|-----------|---------------------------------|----------------------------|
+| **Cyan**     | `#00ffc8` | Timer, Success, Primary Actions | Clock, Calendar, Checkmark |
+| **Hot Pink** | `#ff0096` | Music, Alerts, Favorites        | Play, Heart, Warning       |
+| **Purple**   | `#6464ff` | History, Stats, Secondary       | Charts, Users, Activity    |
+| **White**    | `#ffffff` | Default, Neutral                | Generic icons              |
 
 ---
 
@@ -30,6 +31,7 @@ The icon color system provides **automatic contextual coloring** for all SVG ico
 Icons are **automatically colored** when created using `createIconImg()` or `createIcon()`:
 
 ### Music & Playback → Hot Pink (#ff0096)
+
 - Play, Pause, Shuffle
 - Music notes, Speaker
 - YouTube logo
@@ -40,6 +42,7 @@ createIcon('ph-music-note'); // Automatically pink
 ```
 
 ### Timer & Time → Cyan (#00ffc8)
+
 - Clock, Timer, Calendar
 - All time-related icons
 
@@ -49,6 +52,7 @@ createIcon('ph-calendar'); // Automatically cyan
 ```
 
 ### Favorites → Hot Pink (#ff0096)
+
 - Heart, Star icons
 - Bookmark icons
 
@@ -57,6 +61,7 @@ createIconImg('ph-heart'); // Automatically pink
 ```
 
 ### History & Stats → Purple (#6464ff)
+
 - Charts, Graphs
 - Activity, Gauge
 - Trends
@@ -67,6 +72,7 @@ createIcon('ph-trend-up'); // Automatically purple
 ```
 
 ### Users & Profiles → Purple (#6464ff)
+
 - User, User Group
 - Profile icons
 
@@ -98,6 +104,7 @@ createIconImg('ph-x', { color: 'icon-white' });
 Use these classes in HTML or pass to `color` option:
 
 ### Semantic Classes
+
 ```css
 .icon-music      /* Hot pink - Music controls */
 .icon-timer      /* Cyan - Time/timer */
@@ -109,6 +116,7 @@ Use these classes in HTML or pass to `color` option:
 ```
 
 ### Color Classes
+
 ```css
 .icon-cyan       /* #00ffc8 - Cyan */
 .icon-pink       /* #ff0096 - Hot pink */
@@ -118,6 +126,7 @@ Use these classes in HTML or pass to `color` option:
 ```
 
 ### State Classes
+
 ```css
 .icon-disabled   /* 40% opacity */
 .icon-inactive   /* 40% opacity */
@@ -130,6 +139,7 @@ Use these classes in HTML or pass to `color` option:
 ## Special Icon Classes
 
 ### Specific Icons
+
 ```css
 .icon-play       /* Pink */
 .icon-pause      /* Pink */
@@ -140,6 +150,7 @@ Use these classes in HTML or pass to `color` option:
 ```
 
 ### Heartbeat Animation
+
 The heart icon has a special animation on hover:
 
 ```css
@@ -301,6 +312,7 @@ To generate filters for specific hex colors, use:
 3. Add to `.svg-icon.icon-yourcolor` class
 
 Example for `#00ffc8` (cyan):
+
 ```
 brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%)
 hue-rotate(102deg) brightness(104%) contrast(101%)
@@ -369,6 +381,7 @@ Combine color classes with size classes:
 ```
 
 Size classes:
+
 - **Default:** `1em` (inherits font size)
 - `.svg-icon-sm`: `0.875em` (14px at 16px font size)
 - `.svg-icon-lg`: `1.25em` (20px at 16px font size)
@@ -389,6 +402,7 @@ createIcon('ph-heart', { alt: 'Add to favorites' });
 ```
 
 HTML output:
+
 ```html
 <img src="/svg-icons/media/play.svg"
      class="svg-icon icon-music"
@@ -400,13 +414,16 @@ HTML output:
 ## Performance
 
 ### Filter Performance
+
 - CSS filters are GPU-accelerated
 - Minimal performance impact
 - Better than inline SVG + CSS variables approach
 - Scales well with hundreds of icons
 
 ### Transitions
+
 All icons use smooth transitions:
+
 ```css
 transition: filter 0.3s ease, transform 0.2s ease;
 ```
@@ -416,6 +433,7 @@ transition: filter 0.3s ease, transform 0.2s ease;
 ## Browser Support
 
 CSS filters used for coloring:
+
 - ✅ Chrome/Edge 18+
 - ✅ Firefox 35+
 - ✅ Safari 9.1+
@@ -431,11 +449,13 @@ Coverage: **97%+ of users**
 ### Icon appears white instead of colored
 
 **Check:**
+
 1. Is the icon in the `ICON_COLOR_MAP`?
 2. Is the icon-mapper creating it with `createIconImg()` or `createIcon()`?
 3. Inspect element - does it have a color class like `icon-music`?
 
 **Fix:**
+
 ```javascript
 // Add to ICON_COLOR_MAP or use manual override
 createIconImg('ph-youricon', { color: 'icon-cyan' });
@@ -444,6 +464,7 @@ createIconImg('ph-youricon', { color: 'icon-cyan' });
 ### Icon color doesn't match theme
 
 **Check:**
+
 1. Is the hex color correct in CSS?
 2. Did you use the CSS Filter Generator?
 
@@ -453,10 +474,12 @@ Re-generate filter with [CSS Filter Generator](https://codepen.io/sosuke/pen/Pjo
 ### Hover effect not working
 
 **Check:**
+
 1. Does the icon have a color class?
 2. Is CSS being overridden?
 
 **Fix:**
+
 ```css
 /* Ensure hover state is defined */
 .svg-icon.icon-yourcolor:hover {
@@ -469,15 +492,15 @@ Re-generate filter with [CSS Filter Generator](https://codepen.io/sosuke/pen/Pjo
 
 ## Quick Reference
 
-| Use Case | Code | Result |
-|----------|------|--------|
-| **Music Play Button** | `createIconImg('ph-play')` | Pink with glow on hover |
-| **Timer Icon** | `createIcon('ph-timer')` | Cyan with glow on hover |
-| **Favorite Heart** | `createIconImg('ph-heart')` | Pink with heartbeat on hover |
-| **Chart Stats** | `createIcon('ph-chart-pie')` | Purple with glow on hover |
-| **White Close** | `createIconImg('ph-x', {color: 'icon-white'})` | White (no auto-color) |
-| **Disabled Icon** | `createIcon('ph-gear', {className: 'icon-disabled'})` | 40% opacity |
-| **Loading Spinner** | `createIcon('ph-spinner', {className: 'icon-loading'})` | Spinning animation |
+| Use Case              | Code                                                    | Result                       |
+|-----------------------|---------------------------------------------------------|------------------------------|
+| **Music Play Button** | `createIconImg('ph-play')`                              | Pink with glow on hover      |
+| **Timer Icon**        | `createIcon('ph-timer')`                                | Cyan with glow on hover      |
+| **Favorite Heart**    | `createIconImg('ph-heart')`                             | Pink with heartbeat on hover |
+| **Chart Stats**       | `createIcon('ph-chart-pie')`                            | Purple with glow on hover    |
+| **White Close**       | `createIconImg('ph-x', {color: 'icon-white'})`          | White (no auto-color)        |
+| **Disabled Icon**     | `createIcon('ph-gear', {className: 'icon-disabled'})`   | 40% opacity                  |
+| **Loading Spinner**   | `createIcon('ph-spinner', {className: 'icon-loading'})` | Spinning animation           |
 
 ---
 

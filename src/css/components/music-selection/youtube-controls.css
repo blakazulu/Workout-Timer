@@ -46,8 +46,8 @@
 
 /* SVG icon sizing for loadYoutubeBtn */
 .youtube-controls button .svg-icon {
-  width: 1.5em !important;
   height: 1.5em !important;
+  width: 1.5em !important;
 }
 
 .youtube-loading,

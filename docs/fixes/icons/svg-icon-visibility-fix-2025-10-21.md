@@ -9,11 +9,13 @@
 
 ## Problem Description
 
-After migrating from Phosphor Icons font library to self-hosted SVG icons, almost all icons became nearly invisible on the application's dark background. The icons appeared as very dark/black shapes instead of white/light colored icons.
+After migrating from Phosphor Icons font library to self-hosted SVG icons, almost all icons became nearly invisible on
+the application's dark background. The icons appeared as very dark/black shapes instead of white/light colored icons.
 
 ### Root Cause
 
-1. **SVG Default Colors**: The SVG files from the icon library have dark stroke colors by default (e.g., `stroke="#141B34"`)
+1. **SVG Default Colors**: The SVG files from the icon library have dark stroke colors by default (e.g.,
+   `stroke="#141B34"`)
 2. **Dark Background**: The app uses a dark theme with background color `#0f0f23` (near black)
 3. **Missing Color Filter**: The `.svg-icon` CSS class only defined sizing properties but no color transformation
 4. **Contrast Issue**: Dark icons on dark background = nearly invisible
@@ -39,6 +41,7 @@ Added CSS filter to make SVG icons white/visible on dark backgrounds.
 **File:** `/src/css/components.css`
 
 **Before:**
+
 ```css
 .svg-icon {
   display: inline-block;
@@ -49,6 +52,7 @@ Added CSS filter to make SVG icons white/visible on dark backgrounds.
 ```
 
 **After:**
+
 ```css
 .svg-icon {
   display: inline-block;
@@ -74,6 +78,7 @@ This is a standard technique for making `<img>`-based SVG icons adapt to differe
 This same filter was already being used in the admin dashboard for the logo SVG:
 
 **File:** `/src/css/admin.css:1091`
+
 ```css
 .login-logo .logo-svg {
   filter: brightness(0) invert(1); /* Makes the SVG white */
@@ -91,14 +96,15 @@ The fix extends this approach to all `.svg-icon` elements across the entire appl
 
 ### Why Not Use `fill` or `stroke` CSS?
 
-When SVG icons are loaded as `<img src="...">`, they cannot be styled with CSS `fill` or `stroke` properties. The CSS cannot penetrate the shadow DOM of the image. Options for SVG coloring:
+When SVG icons are loaded as `<img src="...">`, they cannot be styled with CSS `fill` or `stroke` properties. The CSS
+cannot penetrate the shadow DOM of the image. Options for SVG coloring:
 
-| Method | Pros | Cons | Used Here |
-|--------|------|------|-----------|
-| **Inline SVG** | Full CSS control with `fill`/`stroke` | Increases HTML size, harder to manage | ❌ No |
-| **CSS Filter** | Works with `<img>` tags, simple | Limited to grayscale/invert | ✅ **Yes** |
-| **SVG `<use>`** | Reusable, CSS-controllable | Requires sprite sheet setup | ❌ No |
-| **Icon Font** | CSS color control | Accessibility issues, deprecated approach | ❌ No (migrated away) |
+| Method          | Pros                                  | Cons                                      | Used Here            |
+|-----------------|---------------------------------------|-------------------------------------------|----------------------|
+| **Inline SVG**  | Full CSS control with `fill`/`stroke` | Increases HTML size, harder to manage     | ❌ No                 |
+| **CSS Filter**  | Works with `<img>` tags, simple       | Limited to grayscale/invert               | ✅ **Yes**            |
+| **SVG `<use>`** | Reusable, CSS-controllable            | Requires sprite sheet setup               | ❌ No                 |
+| **Icon Font**   | CSS color control                     | Accessibility issues, deprecated approach | ❌ No (migrated away) |
 
 ### Browser Compatibility
 
@@ -184,6 +190,7 @@ grep -r "filter.*invert" src/css/
 **Approach:** Edit all 4,016 SVG files to change `stroke="#141B34"` to `stroke="white"`
 
 **Rejected because:**
+
 - ❌ Time-consuming (4,016 files to edit)
 - ❌ Error-prone manual process
 - ❌ Hard to maintain if icons updated
@@ -194,6 +201,7 @@ grep -r "filter.*invert" src/css/
 **Approach:** Convert icon-mapper to generate inline `<svg>` instead of `<img>`
 
 **Rejected because:**
+
 - ❌ Increases HTML payload significantly
 - ❌ Slower rendering (browser can't cache as separate resources)
 - ❌ More complex icon mapper code
@@ -204,6 +212,7 @@ grep -r "filter.*invert" src/css/
 **Approach:** Combine all icons into single SVG sprite, use `<use>` tags
 
 **Rejected for now (future optimization):**
+
 - ⚠️ Requires build step to generate sprite
 - ⚠️ More complex implementation
 - ⚠️ Current solution works well

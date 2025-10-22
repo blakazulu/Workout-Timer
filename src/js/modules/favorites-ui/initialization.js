@@ -95,9 +95,21 @@ export function updateFavoriteButton(videoId) {
   if (isCurrentlyFavorited) {
     favoriteBtn.classList.add("favorited");
     favoriteBtn.title = "Remove from favorites";
+
+    // Switch to filled icon
+    const img = favoriteBtn.querySelector("img.svg-icon");
+    if (img) {
+      img.src = "/svg-icons/bookmark-favorite/favourite-filled.svg";
+    }
   } else {
     favoriteBtn.classList.remove("favorited");
     favoriteBtn.title = "Add to favorites";
+
+    // Switch to outline icon
+    const img = favoriteBtn.querySelector("img.svg-icon");
+    if (img) {
+      img.src = "/svg-icons/bookmark-favorite/favourite.svg";
+    }
   }
 }
 
