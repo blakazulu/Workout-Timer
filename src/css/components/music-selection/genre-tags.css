@@ -7,9 +7,16 @@
   gap: 8px;
   justify-content: center;
   max-width: 100%;
-  min-width: 430px;
   padding: 20px 10px;
   position: relative;
+}
+
+/* Mobile-first responsive sizing */
+@media (max-width: 480px) {
+  .genre-tags {
+    gap: 6px;
+    padding: 12px 4px;
+  }
 }
 
 .genre-tag {
@@ -34,6 +41,26 @@
   text-transform: uppercase;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 130px;
+}
+
+/* Mobile responsive sizing - smaller hexagons */
+@media (max-width: 480px) {
+  .genre-tag {
+    width: 100px;
+    height: 108px;
+    gap: 6px;
+    font-size: 10px;
+  }
+}
+
+/* Very small screens - even smaller */
+@media (max-width: 360px) {
+  .genre-tag {
+    width: 90px;
+    height: 98px;
+    gap: 4px;
+    font-size: 9px;
+  }
 }
 
 /* Hexagon offset for honeycomb effect - 3x3 grid */
@@ -110,6 +137,19 @@
   position: relative;
   transition: all 0.3s ease;
   z-index: 1;
+}
+
+/* Mobile responsive icon sizing */
+@media (max-width: 480px) {
+  .genre-icon {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .genre-icon {
+    font-size: 24px;
+  }
 }
 
 .genre-tag:hover .genre-icon {
