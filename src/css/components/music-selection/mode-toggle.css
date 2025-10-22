@@ -15,7 +15,7 @@
 .mode-toggle-btn {
   align-items: center;
   background: transparent;
-  border: none;
+  border: rgba(125, 125, 236, 0.4) solid 1px;
   border-radius: 8px;
   color: rgba(100, 100, 255, 0.6);
   cursor: pointer;
@@ -51,6 +51,7 @@
 
 .mode-toggle-btn:hover:not(.active) {
   background: rgba(100, 100, 255, 0.1);
+  border: #7d7dec solid 1px;
   color: #6464ff;
 }
 
