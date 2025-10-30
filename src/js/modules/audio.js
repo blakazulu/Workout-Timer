@@ -44,7 +44,7 @@ export class AudioManager {
 
     // Set volume for sound effects (0-1 range)
     Object.values(this.sounds).forEach((sound) => {
-      sound.volume = 0.8;
+      sound.volume = 1.0;
       // iOS ignores preload="auto" to save bandwidth, so only set it for non-iOS
       if (!this.isIOS) {
         sound.preload = "auto";
