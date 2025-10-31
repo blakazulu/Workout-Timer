@@ -94,7 +94,7 @@ export class Timer {
       return;
     }
 
-    this.planSegments = segments.map(seg => ({ ...seg }));
+    this.planSegments = segments.map(seg => ({...seg}));
     this.currentSegmentIndex = 0;
     this.isSegmentMode = true;
 

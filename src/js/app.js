@@ -32,7 +32,7 @@ import {initIconColorEnhancer} from "./utils/icon-color-enhancer.js";
 // Import plan system modules
 import {initPlanSelector, updateActivePlanDisplay} from "./ui/plan-selector.js";
 import {initPlanBuilder} from "./ui/plan-builder.js";
-import {loadActivePlan, getPlanById} from "./modules/plans/index.js";
+import {getPlanById, loadActivePlan} from "./modules/plans/index.js";
 
 // Lazy loaded modules
 let youtubeModule = null;

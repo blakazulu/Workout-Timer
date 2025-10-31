@@ -3,19 +3,19 @@
  * Clean, intuitive custom workout plan creation
  */
 
-import { savePlan, validatePlan, getPlanById } from "../modules/plans/index.js";
-import { eventBus } from "../core/event-bus.js";
-import { analytics } from "../core/analytics.js";
+import {getPlanById, savePlan, validatePlan} from "../modules/plans/index.js";
+import {eventBus} from "../core/event-bus.js";
+import {analytics} from "../core/analytics.js";
 import Sortable from "sortablejs";
 
 // ========== CONSTANTS ==========
 
 const SEGMENT_TYPE_DEFAULTS = {
-  prepare: { duration: 120, name: "Prepare" },
-  warmup: { duration: 300, name: "Warm-up" },
-  work: { duration: 30, name: "Work" },
-  rest: { duration: 15, name: "Rest" },
-  cooldown: { duration: 300, name: "Cool-down" }
+  prepare: {duration: 120, name: "Prepare"},
+  warmup: {duration: 300, name: "Warm-up"},
+  work: {duration: 30, name: "Work"},
+  rest: {duration: 15, name: "Rest"},
+  cooldown: {duration: 300, name: "Cool-down"}
 };
 
 // ========== STATE MANAGEMENT ==========
@@ -26,8 +26,8 @@ const builderState = {
   isAddingSegment: false, // True when segment config is shown
   editingSegmentIndex: null, // Index when editing existing segment
   planDetails: {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     repetitions: 1,
     alertTime: 3
   },
@@ -67,7 +67,7 @@ function setupStep1Listeners() {
   const popover = document.getElementById("planBuilderPopover");
   console.log("[PlanBuilder] Popover element:", popover);
   console.log("[PlanBuilder] Popover innerHTML length:", popover?.innerHTML.length);
-  console.log("[PlanBuilder] Looking for 'segmentForm' in HTML:", popover?.innerHTML.includes('id="segmentForm"'));
+  console.log("[PlanBuilder] Looking for 'segmentForm' in HTML:", popover?.innerHTML.includes("id=\"segmentForm\""));
 
   const addSegmentBtn = document.getElementById("addSegmentBtn");
   const cancelSegmentBtn = document.getElementById("cancelSegmentBtn");
@@ -156,8 +156,8 @@ export function openPlanBuilder(planId = null) {
   builderState.isEditMode = !!planId;
   builderState.currentPlanId = planId;
   builderState.planDetails = {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     repetitions: 1,
     alertTime: 3
   };
@@ -172,7 +172,7 @@ export function openPlanBuilder(planId = null) {
   if (builderState.isEditMode && planId) {
     const plan = getPlanById(planId);
     if (plan) {
-      builderState.segments = plan.segments.map(seg => ({ ...seg }));
+      builderState.segments = plan.segments.map(seg => ({...seg}));
       builderState.planDetails.name = plan.name;
       builderState.planDetails.description = plan.description || "";
       builderState.planDetails.repetitions = plan.repetitions || 1;
@@ -388,20 +388,23 @@ function confirmSegment() {
     return;
   }
 
+  // Create segment with required fields
+  const typeDefaults = SEGMENT_TYPE_DEFAULTS[type];
   const segment = {
     type,
-    duration
+    duration,
+    name: typeDefaults?.name || type
   };
 
   // Add or update segment
   if (builderState.editingSegmentIndex !== null) {
     // Update existing segment
     builderState.segments[builderState.editingSegmentIndex] = segment;
-    analytics.track("plan_builder:segment_edited", { type, duration });
+    analytics.track("plan_builder:segment_edited", {type, duration});
   } else {
     // Add new segment
     builderState.segments.push(segment);
-    analytics.track("plan_builder:segment_added", { type, duration });
+    analytics.track("plan_builder:segment_added", {type, duration});
   }
 
   // Hide form
@@ -597,7 +600,7 @@ function editSegment(index) {
   setTimeout(() => durationInput?.focus(), 100);
 
   // Track analytics
-  analytics.track("plan_builder:segment_edit_started", { index });
+  analytics.track("plan_builder:segment_edit_started", {index});
 }
 
 /**
@@ -660,7 +663,7 @@ function goToStep2() {
   }
 
   // Track analytics
-  analytics.track("plan_builder:step_completed", { step: 1 });
+  analytics.track("plan_builder:step_completed", {step: 1});
 
   // Show step 2
   showStep(2);
@@ -702,7 +705,7 @@ function backToStep1() {
   if (planAlertTime) builderState.planDetails.alertTime = parseInt(planAlertTime.value) || 3;
 
   // Track analytics
-  analytics.track("plan_builder:step_back", { from: 2, to: 1 });
+  analytics.track("plan_builder:step_back", {from: 2, to: 1});
 
   // Show step 1
   showStep(1);
@@ -723,24 +726,24 @@ function validatePlanDetails() {
 
   // Validate name
   if (!name) {
-    return { isValid: false, field: "name", message: "Plan name is required" };
+    return {isValid: false, field: "name", message: "Plan name is required"};
   }
 
   if (name.length < 3) {
-    return { isValid: false, field: "name", message: "Plan name must be at least 3 characters" };
+    return {isValid: false, field: "name", message: "Plan name must be at least 3 characters"};
   }
 
   // Validate repetitions
   if (repetitions < 1 || repetitions > 99) {
-    return { isValid: false, field: "repetitions", message: "Repetitions must be between 1 and 99" };
+    return {isValid: false, field: "repetitions", message: "Repetitions must be between 1 and 99"};
   }
 
   // Validate alert time
   if (alertTime < 0 || alertTime > 60) {
-    return { isValid: false, field: "alertTime", message: "Alert time must be between 0 and 60 seconds" };
+    return {isValid: false, field: "alertTime", message: "Alert time must be between 0 and 60 seconds"};
   }
 
-  return { isValid: true };
+  return {isValid: true};
 }
 
 /**
@@ -816,7 +819,7 @@ function handleSavePlan() {
     }, 600);
 
     // Emit event to refresh plan selector
-    eventBus.emit("plan:saved", { planId: result.planId });
+    eventBus.emit("plan:saved", {planId: result.planId});
 
     // Show success notification
     showNotification("Plan saved successfully!", "success");

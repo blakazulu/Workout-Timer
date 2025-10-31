@@ -2,7 +2,9 @@
 
 ## Problem Statement
 
-After the initial redesign, the segment configuration form still appeared inline within the scrollable content area. This caused:
+After the initial redesign, the segment configuration form still appeared inline within the scrollable content area.
+This caused:
+
 - Layout shifting when the form appeared
 - Segments list moving down when adding a new segment
 - Lack of visual focus on the configuration task
@@ -10,7 +12,8 @@ After the initial redesign, the segment configuration form still appeared inline
 
 ## Solution: Absolute Positioned Overlay
 
-Converted the segment configuration form to an **absolute positioned overlay** that appears on top of the segments list, similar to a modal dialog.
+Converted the segment configuration form to an **absolute positioned overlay** that appears on top of the segments list,
+similar to a modal dialog.
 
 ## Visual Architecture
 
@@ -65,6 +68,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ```
 
 **Key Changes:**
+
 - Moved config from inline to end of `.plan-builder-content`
 - Wrapped in `.segment-config-overlay` container
 - Added `.segment-config-backdrop` for dimming
@@ -73,6 +77,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ### 2. CSS Styling (`plans.css`)
 
 #### Content Area as Positioning Context
+
 ```css
 .plan-builder-content {
   position: relative; /* For absolute positioned overlay */
@@ -81,6 +86,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ```
 
 #### Overlay Container
+
 ```css
 .segment-config-overlay {
   position: absolute;
@@ -95,6 +101,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ```
 
 #### Backdrop Dimming
+
 ```css
 .segment-config-backdrop {
   position: absolute;
@@ -106,6 +113,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ```
 
 #### Configuration Card
+
 ```css
 .segment-config-card {
   padding: var(--spacing-xl);
@@ -125,6 +133,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ```
 
 #### Enhanced Animations
+
 ```css
 @keyframes overlayFadeIn {
   from { opacity: 0; }
@@ -157,6 +166,7 @@ Converted the segment configuration form to an **absolute positioned overlay** t
 ### 3. JavaScript Updates (`plan-builder.js`)
 
 #### Backdrop Click-to-Close
+
 ```javascript
 function setupStep1Listeners() {
   // ... existing listeners
@@ -175,6 +185,7 @@ function setupStep1Listeners() {
 ```
 
 **Behavior:**
+
 - Click anywhere on dark backdrop → Close overlay
 - Click inside the config card → Keep overlay open
 - Click ✕ button → Close overlay
@@ -183,12 +194,14 @@ function setupStep1Listeners() {
 ## Visual Improvements
 
 ### Before
+
 - Config form slides in, pushing segments down
 - Content shifts and scrolls
 - No visual separation
 - Distracting layout changes
 
 ### After
+
 - ✅ **Zero layout shift** - Segments stay in place
 - ✅ **Dark backdrop** - Focuses attention on the form
 - ✅ **Blur effect** - Backgrounds blurs slightly for depth
@@ -200,6 +213,7 @@ function setupStep1Listeners() {
 ## User Experience Flow
 
 ### Opening Config
+
 1. User clicks "Add Segment" button
 2. Dark backdrop fades in (300ms)
 3. Configuration card slides up from below (400ms)
@@ -207,17 +221,19 @@ function setupStep1Listeners() {
 5. Form is ready for input
 
 ### Closing Config
+
 1. User can:
-   - Click backdrop (outside card)
-   - Click ✕ close button
-   - Click Cancel button
-   - Complete the form
+    - Click backdrop (outside card)
+    - Click ✕ close button
+    - Click Cancel button
+    - Complete the form
 2. Overlay fades out smoothly
 3. Segments list revealed unchanged
 
 ## Technical Details
 
 ### Z-Index Layering
+
 ```
 Base Content:     z-index: auto
 Backdrop:         z-index: 100 (via parent)
@@ -225,12 +241,14 @@ Config Card:      z-index: 101
 ```
 
 ### Positioning Strategy
+
 - **Parent Container**: `position: relative` (`.plan-builder-content`)
 - **Overlay**: `position: absolute; inset: 0;` (covers entire content area)
 - **Backdrop**: `position: absolute; inset: 0;` (fills overlay)
 - **Card**: `position: relative; z-index: 101;` (floats above backdrop)
 
 ### Flexbox Centering
+
 ```css
 .segment-config-overlay {
   display: flex;
@@ -249,15 +267,18 @@ Config Card:      z-index: 101
 ## Responsive Behavior
 
 ### Desktop (> 640px)
+
 - Card max-width: 450px
 - Comfortable padding around card
 - Full animations
 
 ### Tablet (640px - 768px)
+
 - Card adapts to 90% width
 - Maintains padding
 
 ### Mobile (< 640px)
+
 - Card expands to near full-width
 - Reduced padding for space
 - Animations remain smooth
@@ -265,11 +286,13 @@ Config Card:      z-index: 101
 ## Performance
 
 ### Optimizations
+
 - GPU-accelerated animations (transform, opacity)
 - backdrop-filter with will-change hint
 - Minimal reflows (absolute positioning)
 
 ### Animation Timing
+
 - Overlay fade: 300ms
 - Card slide: 400ms with spring easing
 - Total perceived load: ~400ms
@@ -305,23 +328,24 @@ Config Card:      z-index: 101
 ## Files Changed
 
 1. `src/partials/popovers/plan-builder.html`
-   - Moved segment config to absolute overlay
-   - Added backdrop element
-   - Renamed classes
+    - Moved segment config to absolute overlay
+    - Added backdrop element
+    - Renamed classes
 
 2. `src/css/components/plans.css`
-   - Added overlay positioning
-   - Added backdrop styling
-   - Enhanced card styling
-   - Added new animations
+    - Added overlay positioning
+    - Added backdrop styling
+    - Enhanced card styling
+    - Added new animations
 
 3. `src/js/ui/plan-builder.js`
-   - Added backdrop click handler
-   - Updated event listener setup
+    - Added backdrop click handler
+    - Updated event listener setup
 
 ## Visual Comparison
 
 ### Before Enhancement
+
 ```
 [Header]
 [Add Segment]
@@ -339,6 +363,7 @@ Config Card:      z-index: 101
 ```
 
 ### After Enhancement
+
 ```
 [Header]
 [Add Segment]
@@ -369,4 +394,6 @@ Config Card:      z-index: 101
 
 ## Conclusion
 
-The absolute positioned overlay transforms the segment configuration from an inline form to a **polished modal-like experience**. Users get clear visual focus, zero layout disruption, and smooth professional animations - all while maintaining the app's cyberpunk aesthetic with enhanced glow effects and backdrop blur.
+The absolute positioned overlay transforms the segment configuration from an inline form to a **polished modal-like
+experience**. Users get clear visual focus, zero layout disruption, and smooth professional animations - all while
+maintaining the app's cyberpunk aesthetic with enhanced glow effects and backdrop blur.

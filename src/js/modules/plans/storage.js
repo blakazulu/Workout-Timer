@@ -3,9 +3,9 @@
  * Manages localStorage operations for workout plans
  */
 
-import { eventBus } from "../../core/event-bus.js";
-import { getAllPresets } from "./presets.js";
-import { isValidSegmentType } from "./segment-types.js";
+import {eventBus} from "../../core/event-bus.js";
+import {getAllPresets} from "./presets.js";
+import {isValidSegmentType} from "./segment-types.js";
 
 // Storage keys
 export const PLANS_STORAGE_KEY = "workout-timer-plans";
@@ -56,14 +56,14 @@ export function getPlanById(planId) {
     const customPlans = loadPlans();
     const customPlan = customPlans.find(p => p.id === planId);
     if (customPlan) {
-      return { ...customPlan };
+      return {...customPlan};
     }
 
     // Check presets
     const presets = getAllPresets();
     const preset = presets.find(p => p.id === planId);
     if (preset) {
-      return { ...preset };
+      return {...preset};
     }
 
     return null;
@@ -113,7 +113,11 @@ export function validatePlan(planData) {
 
     // Validate each segment
     planData.segments.forEach((segment, index) => {
-      if (!segment.type || !isValidSegmentType(segment.type)) {
+      // Accept simplified types (prepare, warmup, work, rest, cooldown) or full segment types
+      const validSimplifiedTypes = ["prepare", "warmup", "work", "rest", "cooldown"];
+      const isValidType = validSimplifiedTypes.includes(segment.type) || isValidSegmentType(segment.type);
+
+      if (!segment.type || !isValidType) {
         errors.push(`Segment ${index + 1}: Invalid segment type "${segment.type}"`);
       }
 
@@ -125,13 +129,7 @@ export function validatePlan(planData) {
         errors.push(`Segment ${index + 1}: Name is required and must be a string`);
       }
 
-      if (!segment.intensity || typeof segment.intensity !== "string") {
-        errors.push(`Segment ${index + 1}: Intensity is required`);
-      }
-
-      if (!segment.soundCue || typeof segment.soundCue !== "string") {
-        errors.push(`Segment ${index + 1}: Sound cue is required`);
-      }
+      // Intensity and soundCue are now optional
     });
   }
 
@@ -258,7 +256,7 @@ export function deletePlan(planId) {
     }
 
     // Emit analytics event
-    eventBus.emit("plan:deleted", { planId });
+    eventBus.emit("plan:deleted", {planId});
 
     return true;
   } catch (error) {
@@ -477,7 +475,7 @@ export function importPlanFromJSON(jsonString) {
  * @returns {Object} Quick Start plan object
  */
 export function createQuickStartPlan(settings) {
-  const { duration = 30, restTime = 10, repetitions = 3, alertTime = 3 } = settings;
+  const {duration = 30, restTime = 10, repetitions = 3, alertTime = 3} = settings;
 
   return {
     id: "quick-start",

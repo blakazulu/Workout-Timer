@@ -3,6 +3,7 @@
 ## Problem Statement
 
 The plan-builder popover had poor UX when adding segments:
+
 - Segment configuration form appeared inline, causing content to shift awkwardly
 - Poor visual hierarchy with competing elements
 - Content (total duration, navigation) could be pushed out of view
@@ -38,6 +39,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ### 1. HTML Structure (`plan-builder.html`)
 
 **Before:**
+
 ```html
 <div class="plan-builder-step">
   <div class="step-header">...</div>
@@ -52,6 +54,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ```
 
 **After:**
+
 ```html
 <div class="plan-builder-step">
   <!-- Fixed Header -->
@@ -94,6 +97,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ### 2. CSS Improvements (`plans.css`)
 
 #### Fixed Layout Container
+
 ```css
 .plan-builder-step {
   @apply flex flex-col;
@@ -104,6 +108,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ```
 
 #### Scrollable Content Area
+
 ```css
 .plan-builder-content {
   @apply flex-1 overflow-y-auto;
@@ -115,6 +120,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ```
 
 #### Enhanced Segment Config
+
 ```css
 .segment-config-inner {
   @apply flex flex-col gap-4;
@@ -129,6 +135,7 @@ Redesigned the plan builder with a **three-tier fixed layout**:
 ```
 
 #### Fixed Footer
+
 ```css
 .plan-builder-footer {
   @apply shrink-0 flex flex-col gap-3;
@@ -159,18 +166,21 @@ function renderSegmentsList() {
 ## Key Improvements
 
 ### Visual Hierarchy
+
 1. **Clear Section Separation**: Each functional area has distinct visual boundaries
 2. **Fixed Navigation**: Users always see total duration and navigation buttons
 3. **Better Focus**: Segment config appears as a prominent, self-contained card
 4. **Professional Header**: Config form has its own header with close button
 
 ### User Experience
+
 1. **No Content Shifting**: Fixed layout prevents jarring movements
 2. **Always Accessible**: Add Segment button always visible at the top
 3. **Scroll Awareness**: Only the content area scrolls, preserving context
 4. **Visual Feedback**: Segment count badge shows progress at a glance
 
 ### Design Enhancements
+
 1. **Cyberpunk Consistency**: Enhanced neon effects and gradients
 2. **Better Spacing**: Improved padding and gaps throughout
 3. **Clearer Actions**: Full-width buttons with better visual weight
@@ -179,6 +189,7 @@ function renderSegmentsList() {
 ## User Flow
 
 ### Before Redesign
+
 1. Click "Add Segment" → Form slides in
 2. Content below shifts down (awkward)
 3. May need to scroll to see total duration
@@ -186,6 +197,7 @@ function renderSegmentsList() {
 5. Cancel returns to previous state
 
 ### After Redesign
+
 1. Click "Add Segment" → Card appears prominently in scrollable area
 2. Total duration and navigation always visible
 3. Config has its own close button (✕) for quick dismissal
@@ -195,11 +207,13 @@ function renderSegmentsList() {
 ## Technical Details
 
 ### Flexbox Layout
+
 - **Container**: `flex flex-col` with fixed height
 - **Header/Footer**: `shrink-0` to maintain size
 - **Content**: `flex-1 overflow-y-auto` to fill remaining space
 
 ### Responsive Behavior
+
 - Height adapts to viewport: `calc(90vh - 100px)`
 - Maximum height prevents oversizing: `max-height: 650px`
 - Mobile adjustments maintain usability
@@ -228,12 +242,14 @@ function renderSegmentsList() {
 ## Visual Comparison
 
 ### Before
+
 - Inline segment config
 - Content shifts down when adding
 - May lose sight of navigation
 - Cluttered appearance
 
 ### After
+
 - Prominent config card
 - Stable, fixed layout
 - Always see navigation
@@ -257,4 +273,6 @@ function renderSegmentsList() {
 
 ## Conclusion
 
-The redesigned plan builder provides a **professional, stable, and intuitive interface** for creating workout plans. The fixed-layout architecture ensures users always have context and control, while the enhanced visual design maintains the app's cyberpunk aesthetic.
+The redesigned plan builder provides a **professional, stable, and intuitive interface** for creating workout plans. The
+fixed-layout architecture ensures users always have context and control, while the enhanced visual design maintains the
+app's cyberpunk aesthetic.

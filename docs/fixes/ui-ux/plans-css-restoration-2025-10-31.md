@@ -2,11 +2,14 @@
 
 ## Overview
 
-Restored the complete, beautiful cyberpunk styling for the workout plan system. The previous agent had reduced the CSS from ~2700 lines of enhanced styling to only ~727 lines of basic styles, removing all the visual polish and animations. This fix restores all the beautiful design while maintaining the simplified 2-step builder HTML/JS structure.
+Restored the complete, beautiful cyberpunk styling for the workout plan system. The previous agent had reduced the CSS
+from ~2700 lines of enhanced styling to only ~727 lines of basic styles, removing all the visual polish and animations.
+This fix restores all the beautiful design while maintaining the simplified 2-step builder HTML/JS structure.
 
 ## Problem
 
 The CSS file at `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css` was drastically simplified, losing:
+
 - Animated gradient borders and neon glow effects
 - Mode tab active states and animations
 - Plan card hover effects and shimmer animations
@@ -21,6 +24,7 @@ The CSS file at `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css`
 ## Solution Applied
 
 ### File Restored
+
 - **File**: `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css`
 - **Before**: ~727 lines (basic styling)
 - **After**: ~1772 lines (complete enhanced styling)
@@ -28,6 +32,7 @@ The CSS file at `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css`
 ### Components Styled
 
 #### 1. Active Plan Display (Settings Panel)
+
 ```css
 - Animated gradient borders with borderGlow animation
 - Shimmer effect on hover (translateX animation)
@@ -37,6 +42,7 @@ The CSS file at `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css`
 ```
 
 #### 2. Plan Selector Modal
+
 ```css
 - Mode tabs with active states
   - Cyan glow for active tab
@@ -58,6 +64,7 @@ The CSS file at `/mnt/c/My Stuff/workout-timer-pro/src/css/components/plans.css`
 ```
 
 #### 3. Plan Builder Modal (2-Step)
+
 ```css
 Step 1: Segment Building
 - Add segment button with glow effects
@@ -90,6 +97,7 @@ Step 2: Plan Details
 ```
 
 #### 4. Segment Type Color System
+
 ```css
 - Prepare: Blue (#6464ff)
   - Badge: rgba(100, 100, 255, 0.2) bg
@@ -120,6 +128,7 @@ Step 2: Plan Details
 ### Animations Restored
 
 #### Keyframe Animations
+
 ```css
 1. borderGlow - Animated gradient border (3s cycle)
 2. gradientFlow - Background gradient animation (3s linear)
@@ -139,6 +148,7 @@ Step 2: Plan Details
 ```
 
 #### Transition Effects
+
 ```css
 - Hover states: 0.3s duration
 - Transform effects: translateY, scale, rotate
@@ -148,6 +158,7 @@ Step 2: Plan Details
 ```
 
 ### Custom Scrollbars
+
 ```css
 Track: rgba(100, 100, 255, 0.1)
 Thumb: linear-gradient(180deg, #6464ff, #ff0096)
@@ -158,6 +169,7 @@ Width: 8px (builder), 10px (plan list), 6px (segments)
 ### Responsive Design
 
 #### Tablets (max-width: 768px)
+
 ```css
 - Width: 95vw
 - Flex-wrap mode tabs
@@ -166,6 +178,7 @@ Width: 8px (builder), 10px (plan list), 6px (segments)
 ```
 
 #### Mobile (max-width: 640px)
+
 ```css
 - Full viewport width/height
 - Remove border radius
@@ -177,6 +190,7 @@ Width: 8px (builder), 10px (plan list), 6px (segments)
 ```
 
 #### Small Mobile (max-width: 480px)
+
 ```css
 - Reduced padding
 - Smaller badge text (10px)
@@ -186,12 +200,14 @@ Width: 8px (builder), 10px (plan list), 6px (segments)
 ### Accessibility Features
 
 #### Focus States
+
 ```css
 button:focus-visible,
 input:focus-visible - 2px cyan outline with offset
 ```
 
 #### Reduced Motion
+
 ```css
 @media (prefers-reduced-motion: reduce)
 - All animations: 0.01ms duration
@@ -199,6 +215,7 @@ input:focus-visible - 2px cyan outline with offset
 ```
 
 #### High Contrast
+
 ```css
 @media (prefers-contrast: high)
 - Increased border width (2px)
@@ -206,6 +223,7 @@ input:focus-visible - 2px cyan outline with offset
 ```
 
 #### Dark Mode
+
 ```css
 @media (prefers-color-scheme: dark)
 - Darker background: rgba(5, 5, 5, 0.99)
@@ -256,6 +274,7 @@ input:focus-visible - 2px cyan outline with offset
 ## Performance Optimizations
 
 ### GPU Acceleration
+
 ```css
 - transform (instead of top/left)
 - opacity (instead of visibility)
@@ -263,6 +282,7 @@ input:focus-visible - 2px cyan outline with offset
 ```
 
 ### Efficient Selectors
+
 ```css
 - Direct child selectors (>)
 - :has() pseudo-class for modern browsers
@@ -270,6 +290,7 @@ input:focus-visible - 2px cyan outline with offset
 ```
 
 ### Animation Performance
+
 ```css
 - 60fps animations
 - Hardware-accelerated properties only
@@ -279,6 +300,7 @@ input:focus-visible - 2px cyan outline with offset
 ## Visual Effects Breakdown
 
 ### Neon Glows
+
 ```css
 Box shadows with multiple layers:
 - Inner glow: inset 0 0 30px
@@ -288,6 +310,7 @@ Box shadows with multiple layers:
 ```
 
 ### Gradient Borders
+
 ```css
 ::before pseudo-element technique:
 - Absolute positioning (inset: -2px)
@@ -298,6 +321,7 @@ Box shadows with multiple layers:
 ```
 
 ### Shimmer Effects
+
 ```css
 ::after pseudo-element technique:
 - Linear gradient (transparent → white → transparent)
@@ -313,49 +337,54 @@ Box shadows with multiple layers:
 ## Testing Recommendations
 
 ### Visual Testing
+
 1. **Active Plan Display** (Settings Panel)
-   - Hover to see shimmer and glow
-   - Check icon pulse animation
-   - Verify gradient border animation
+    - Hover to see shimmer and glow
+    - Check icon pulse animation
+    - Verify gradient border animation
 
 2. **Plan Selector Modal**
-   - Test mode tab switching
-   - Verify active tab styling and animations
-   - Hover over plan cards for effects
-   - Check badge colors and pulse
-   - Verify empty/loading states
+    - Test mode tab switching
+    - Verify active tab styling and animations
+    - Hover over plan cards for effects
+    - Check badge colors and pulse
+    - Verify empty/loading states
 
 3. **Plan Builder Modal**
-   - Click "Add Segment" for slideDown animation
-   - Add segments and verify slideUp animation
-   - Check segment type badge colors (all 5 types)
-   - Hover segment cards for color accent
-   - Test edit/delete button rotations
-   - Verify total duration glow animation
-   - Navigate to Step 2 and test form inputs
-   - Check focus states (cyan glow)
-   - Test error states (shake animation)
-   - Verify save button success pulse
+    - Click "Add Segment" for slideDown animation
+    - Add segments and verify slideUp animation
+    - Check segment type badge colors (all 5 types)
+    - Hover segment cards for color accent
+    - Test edit/delete button rotations
+    - Verify total duration glow animation
+    - Navigate to Step 2 and test form inputs
+    - Check focus states (cyan glow)
+    - Test error states (shake animation)
+    - Verify save button success pulse
 
 ### Browser Testing
+
 - Chrome/Edge (webkit scrollbars)
 - Firefox (standard scrollbars)
 - Safari (webkit features)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ### Responsive Testing
+
 - Desktop (1920×1080)
 - Tablet (768×1024)
 - Mobile (375×667, 390×844)
 - Small mobile (320×568)
 
 ### Performance Testing
+
 - Check for 60fps animations (Chrome DevTools Performance)
 - Verify no layout thrashing
 - Test on low-end devices
 - Check reduced motion support
 
 ### Accessibility Testing
+
 - Keyboard navigation (Tab key)
 - Focus indicators (cyan outline)
 - Screen reader compatibility
@@ -398,4 +427,7 @@ This restoration follows the cyberpunk aesthetic of the entire app:
 
 ## Conclusion
 
-The plan system CSS has been fully restored to its beautiful, polished state with complete cyberpunk styling. All components now feature smooth animations, neon glows, gradient effects, and responsive design while maintaining the simplified 2-step builder structure. The visual experience is now consistent with the rest of the application's design language.
+The plan system CSS has been fully restored to its beautiful, polished state with complete cyberpunk styling. All
+components now feature smooth animations, neon glows, gradient effects, and responsive design while maintaining the
+simplified 2-step builder structure. The visual experience is now consistent with the rest of the application's design
+language.

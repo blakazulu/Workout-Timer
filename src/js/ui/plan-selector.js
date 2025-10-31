@@ -3,20 +3,20 @@
  * Handles workout plan selection interface with 3 modes: Simple, Preset, Custom
  */
 
-import { $ } from "../utils/dom.js";
-import { formatTime } from "../utils/time.js";
+import {$} from "../utils/dom.js";
+import {formatTime} from "../utils/time.js";
 import {
-  loadActivePlan,
-  setActivePlan,
-  getPlanById,
-  loadPlans,
+  createQuickStartPlan,
   deletePlan,
-  createQuickStartPlan
+  getAllPresets,
+  getPlanById,
+  loadActivePlan,
+  loadPlans,
+  setActivePlan
 } from "../modules/plans/index.js";
-import { getAllPresets } from "../modules/plans/index.js";
-import { loadSettings } from "../modules/storage.js";
-import { eventBus } from "../core/event-bus.js";
-import { analytics } from "../core/analytics.js";
+import {loadSettings} from "../modules/storage.js";
+import {eventBus} from "../core/event-bus.js";
+import {analytics} from "../core/analytics.js";
 
 // Current mode state
 let currentMode = "simple";
@@ -95,7 +95,7 @@ function switchMode(mode) {
   renderPlanList(mode);
 
   // Track analytics
-  analytics.track("plan_selector:mode_switched", { mode });
+  analytics.track("plan_selector:mode_switched", {mode});
 }
 
 /**
@@ -165,10 +165,6 @@ function renderCustomMode(container) {
       <div class="no-plans-message">
         <img alt="No plans" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
         <p>No custom plans yet</p>
-        <button class="create-first-plan-btn" id="createFirstPlanBtn">
-          <img alt="Add" class="svg-icon" src="/svg-icons/users/user-add-01.svg"/>
-          <span>Create Your First Plan</span>
-        </button>
       </div>
     `;
 
@@ -222,7 +218,7 @@ function createPlanCard(plan, mode) {
   card.innerHTML = `
     <div class="plan-card-header">
       <h4 class="plan-name">${escapeHtml(plan.name)}</h4>
-      ${isActive ? '<span class="active-badge">Active</span>' : ""}
+      ${isActive ? "<span class=\"active-badge\">Active</span>" : ""}
     </div>
     <p class="plan-description">${escapeHtml(plan.description || "")}</p>
     <div class="plan-card-footer">
@@ -324,7 +320,7 @@ export function selectPlan(planId) {
   }
 
   // Emit event for timer to load plan segments
-  eventBus.emit("plan:selected", { plan });
+  eventBus.emit("plan:selected", {plan});
 
   // Track analytics
   analytics.track("plan:selected", {
@@ -350,10 +346,10 @@ function editPlan(planId) {
   }
 
   // Open builder in edit mode
-  eventBus.emit("plan-builder:open", { planId });
+  eventBus.emit("plan-builder:open", {planId});
 
   // Track analytics
-  analytics.track("plan:edit_started", { planId });
+  analytics.track("plan:edit_started", {planId});
 }
 
 /**
@@ -378,7 +374,7 @@ function deletePlanWithConfirmation(planId) {
     updateActivePlanDisplay();
 
     // Track analytics
-    analytics.track("plan:deleted", { planId, planName: plan.name });
+    analytics.track("plan:deleted", {planId, planName: plan.name});
   } else {
     console.error(`[PlanSelector] Failed to delete plan: ${planId}`);
     alert("Failed to delete plan. Please try again.");

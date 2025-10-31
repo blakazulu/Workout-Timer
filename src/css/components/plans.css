@@ -9,40 +9,40 @@
 
 :root {
   /* Segment Type Colors */
-  --plan-color-prepare: #6464ff;
-  --plan-color-prepare-glow: rgba(100, 100, 255, 0.5);
-  --plan-color-warmup: #ff9600;
-  --plan-color-warmup-glow: rgba(255, 150, 0, 0.5);
-  --plan-color-work: #ff0096;
-  --plan-color-work-glow: rgba(255, 0, 150, 0.5);
-  --plan-color-rest: #00ffc8;
-  --plan-color-rest-glow: rgba(0, 255, 200, 0.5);
-  --plan-color-cooldown: #64c8ff;
-  --plan-color-cooldown-glow: rgba(100, 200, 255, 0.5);
-
-  /* Primary Palette */
-  --plan-primary-cyan: #00ffc8;
-  --plan-primary-pink: #ff0096;
-  --plan-primary-purple: #6464ff;
-  --plan-primary-orange: #ff9600;
-  --plan-primary-green: #00ff88;
-
-  /* Background & Surface Colors */
-  --plan-bg-primary: rgba(10, 10, 10, 0.98);
-  --plan-bg-secondary: rgba(0, 0, 0, 0.3);
   --plan-bg-elevated: rgba(255, 255, 255, 0.05);
   --plan-bg-hover: rgba(255, 255, 255, 0.08);
-
-  /* Border Colors */
+  --plan-bg-primary: rgba(10, 10, 10, 0.98);
+  --plan-bg-secondary: rgba(0, 0, 0, 0.3);
+  --plan-border-active: rgba(0, 255, 200, 0.6);
   --plan-border-primary: rgba(100, 100, 255, 0.3);
   --plan-border-secondary: rgba(255, 255, 255, 0.1);
-  --plan-border-active: rgba(0, 255, 200, 0.6);
+  --plan-color-cooldown: #64c8ff;
+  --plan-color-cooldown-glow: rgba(100, 200, 255, 0.5);
+  --plan-color-prepare: #6464ff;
+
+  /* Primary Palette */
+  --plan-color-prepare-glow: rgba(100, 100, 255, 0.5);
+  --plan-color-rest: #00ffc8;
+  --plan-color-rest-glow: rgba(0, 255, 200, 0.5);
+  --plan-color-warmup: #ff9600;
+  --plan-color-warmup-glow: rgba(255, 150, 0, 0.5);
+
+  /* Background & Surface Colors */
+  --plan-color-work: #ff0096;
+  --plan-color-work-glow: rgba(255, 0, 150, 0.5);
+  --plan-primary-cyan: #00ffc8;
+  --plan-primary-green: #00ff88;
+
+  /* Border Colors */
+  --plan-primary-orange: #ff9600;
+  --plan-primary-pink: #ff0096;
+  --plan-primary-purple: #6464ff;
 
   /* Text Colors */
+  --plan-text-accent: #00ffc8;
+  --plan-text-muted: rgba(255, 255, 255, 0.5);
   --plan-text-primary: #ffffff;
   --plan-text-secondary: rgba(255, 255, 255, 0.7);
-  --plan-text-muted: rgba(255, 255, 255, 0.5);
-  --plan-text-accent: #00ffc8;
 }
 
 /* ========================================
@@ -63,28 +63,28 @@
 }
 
 .active-plan-display button::before {
+  animation: borderGlow 3s ease-in-out infinite;
   background: linear-gradient(135deg, #6464ff, #ff0096, #00ffc8);
   background-size: 200% 200%;
+  border-radius: 12px;
   content: '';
   inset: -2px;
   opacity: 0;
   position: absolute;
   transition: opacity 0.3s ease;
   z-index: -1;
-  animation: borderGlow 3s ease-in-out infinite;
-  border-radius: 12px;
 }
 
 .active-plan-display button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 100%
   );
+  content: '';
+  inset: 0;
+  position: absolute;
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
@@ -100,10 +100,9 @@
 .active-plan-display button:hover {
   background: linear-gradient(135deg, rgba(100, 100, 255, 0.15) 0%, rgba(255, 0, 150, 0.15) 100%);
   border-color: rgba(100, 100, 255, 0.6);
-  box-shadow:
-    0 0 30px rgba(100, 100, 255, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.6),
-    inset 0 0 30px rgba(100, 100, 255, 0.1);
+  box-shadow: 0 0 30px rgba(100, 100, 255, 0.4),
+  0 4px 16px rgba(0, 0, 0, 0.6),
+  inset 0 0 30px rgba(100, 100, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -117,9 +116,9 @@
 
 .active-plan-info .svg-icon {
   @apply w-6 h-6;
+  animation: iconPulse 2s ease-in-out infinite;
   filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(100, 100, 255, 0.6));
   transition: all 0.3s ease;
-  animation: iconPulse 2s ease-in-out infinite;
 }
 
 .active-plan-display button:hover .svg-icon {
@@ -152,20 +151,20 @@
    ======================================== */
 
 .plan-selector-popover::backdrop {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
   animation: fadeIn 0.3s ease;
-  pointer-events: auto !important;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.3);
   cursor: default;
+  pointer-events: auto !important;
   z-index: 999;
 }
 
 /* Hide start button when plan selector is open */
 body:has(.plan-selector-popover:popover-open) #startBtn,
 body:has(.plan-builder-popover:popover-open) #startBtn {
-  pointer-events: none;
-  opacity: 0.3;
   filter: grayscale(1);
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .plan-selector-popover {
@@ -175,10 +174,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.98);
   border-color: rgba(100, 100, 255, 0.5);
-  box-shadow:
-    0 0 60px rgba(100, 100, 255, 0.4),
-    0 12px 48px rgba(0, 0, 0, 0.9),
-    inset 0 0 100px rgba(100, 100, 255, 0.05);
+  box-shadow: 0 0 60px rgba(100, 100, 255, 0.4),
+  0 12px 48px rgba(0, 0, 0, 0.9),
+  inset 0 0 100px rgba(100, 100, 255, 0.05);
   width: min(550px, 92vw);
 }
 
@@ -195,32 +193,32 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-selector-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--plan-primary-cyan),
-    var(--plan-primary-pink),
-    transparent
-  );
   animation: gradientFlow 3s linear infinite;
+  background: linear-gradient(
+          90deg,
+          transparent,
+          var(--plan-primary-cyan),
+          var(--plan-primary-pink),
+          transparent
+  );
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
 }
 
 .plan-selector-header h3 {
   @apply text-xl font-bold m-0;
+  animation: gradientFlow 5s ease infinite;
   background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
-  background-size: 200% 200%;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% 200%;
   font-family: var(--font-family-display);
   letter-spacing: 2px;
-  animation: gradientFlow 5s ease infinite;
+  -webkit-text-fill-color: transparent;
 }
 
 .plan-selector-close {
@@ -263,17 +261,17 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   font-size: var(--font-size-sm);
   font-weight: 600;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
   overflow: hidden;
+  text-transform: uppercase;
 }
 
 .plan-mode-tab::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
   background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-purple));
-  opacity: 0;
   border-radius: 8px;
+  content: '';
+  inset: -2px;
+  opacity: 0;
+  position: absolute;
   transition: opacity 0.3s ease;
   z-index: -1;
 }
@@ -288,34 +286,33 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-mode-tab.active {
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
   border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3),
+  inset 0 0 20px rgba(0, 255, 200, 0.1);
   color: var(--plan-primary-cyan);
-  box-shadow:
-    0 0 20px rgba(0, 255, 200, 0.3),
-    inset 0 0 20px rgba(0, 255, 200, 0.1);
   text-shadow: 0 0 8px rgba(0, 255, 200, 0.5);
 }
 
 .plan-mode-tab.active::before {
-  opacity: 0.2;
   animation: borderGlow 3s ease-in-out infinite;
+  opacity: 0.2;
 }
 
 .plan-mode-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 20%;
-  right: 20%;
-  height: 3px;
   background: linear-gradient(90deg, transparent, var(--plan-primary-cyan), transparent);
   border-radius: 3px;
+  bottom: -1px;
   box-shadow: 0 0 10px var(--plan-primary-cyan);
+  content: '';
+  height: 3px;
+  left: 20%;
+  position: absolute;
+  right: 20%;
 }
 
 .plan-mode-icon {
-  width: 32px !important;
   height: 32px !important;
   transition: all 0.3s ease;
+  width: 32px !important;
 }
 
 /* Simple mode - Blue (default and hover) */
@@ -329,8 +326,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-mode-tab[data-mode="simple"].active .plan-mode-icon {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
   animation: iconBounce 2s ease-in-out infinite;
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
 }
 
 /* Built-in Plans mode - Purple (default and hover) */
@@ -344,8 +341,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-mode-tab[data-mode="preset"].active .plan-mode-icon {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
   animation: iconBounce 2s ease-in-out infinite;
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
 }
 
 /* My Plans mode - Pink (default and hover) */
@@ -359,8 +356,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-mode-tab[data-mode="custom"].active .plan-mode-icon {
-  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
   animation: iconBounce 2s ease-in-out infinite;
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
 }
 
 /* ========================================
@@ -370,8 +367,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-list-container {
   @apply flex-1 overflow-y-auto p-5;
   background: rgba(0, 0, 0, 0.2);
-  min-height: 300px;
   max-height: 400px;
+  min-height: 300px;
 }
 
 .plan-list-container::-webkit-scrollbar {
@@ -386,8 +383,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .plan-list-container::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #6464ff, #ff0096);
-  border-radius: 5px;
   border: 2px solid rgba(10, 10, 10, 0.5);
+  border-radius: 5px;
 }
 
 .plan-list-container::-webkit-scrollbar-thumb:hover {
@@ -412,26 +409,26 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
   background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-pink));
-  opacity: 0;
   border-radius: 8px;
+  content: '';
+  inset: -2px;
+  opacity: 0;
+  position: absolute;
   transition: opacity 0.3s ease;
   z-index: -1;
 }
 
 .plan-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 70%
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.05) 50%,
+          transparent 70%
   );
+  content: '';
+  inset: 0;
+  position: absolute;
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
@@ -447,10 +444,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-card:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   border-color: rgba(0, 255, 200, 0.6);
-  box-shadow:
-    0 0 25px rgba(0, 255, 200, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.5),
-    inset 0 0 30px rgba(0, 255, 200, 0.05);
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.3),
+  0 4px 12px rgba(0, 0, 0, 0.5),
+  inset 0 0 30px rgba(0, 255, 200, 0.05);
   transform: translateY(-3px) scale(1.01);
 }
 
@@ -459,16 +455,15 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-card.active {
-  border-color: rgba(0, 255, 200, 0.8);
-  box-shadow:
-    0 0 30px rgba(0, 255, 200, 0.5),
-    inset 0 0 40px rgba(0, 255, 200, 0.1);
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.1) 0%, rgba(100, 100, 255, 0.1) 100%);
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.5),
+  inset 0 0 40px rgba(0, 255, 200, 0.1);
 }
 
 .plan-card.active::before {
-  opacity: 0.4;
   animation: borderGlow 2s ease-in-out infinite;
+  opacity: 0.4;
 }
 
 /* Plan Card Header */
@@ -527,11 +522,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-badge-active {
+  animation: badgePulse 2s ease-in-out infinite;
   background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 200, 0.3));
   border: 1px solid rgba(0, 255, 136, 0.6);
   color: #00ff88;
   text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
-  animation: badgePulse 2s ease-in-out infinite;
 }
 
 /* Plan Card Stats */
@@ -586,8 +581,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-action-btn:hover {
   background: rgba(0, 255, 200, 0.1);
   border-color: rgba(0, 255, 200, 0.5);
-  color: var(--plan-primary-cyan);
   box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+  color: var(--plan-primary-cyan);
   transform: translateY(-2px);
 }
 
@@ -625,38 +620,73 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
    ======================================== */
 
 .plan-loading,
-.plan-empty {
+.plan-empty,
+.no-plans-message {
   @apply flex flex-col items-center justify-center gap-4 py-12;
   color: var(--plan-text-muted);
   text-align: center;
 }
 
 .plan-loading .svg-icon,
-.plan-empty .svg-icon {
+.plan-empty .svg-icon,
+.no-plans-message .svg-icon {
   @apply w-16 h-16;
-  filter: drop-shadow(0 0 15px rgba(100, 100, 255, 0.4));
-  opacity: 0.6;
+  filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1739%) hue-rotate(227deg) brightness(103%) contrast(101%) drop-shadow(0 0 15px rgba(100, 100, 255, 0.5));
+  opacity: 0.8;
 }
 
 .plan-loading .svg-icon {
   animation: spin 2s linear infinite;
 }
 
-.plan-empty .svg-icon {
+.plan-empty .svg-icon,
+.no-plans-message .svg-icon {
   animation: float 3s ease-in-out infinite;
 }
 
 .plan-loading p,
-.plan-empty p {
+.plan-empty p,
+.no-plans-message p {
   @apply text-base font-bold m-0;
   color: var(--plan-text-secondary);
   font-family: var(--font-family-display);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(100, 100, 255, 0.3);
 }
 
 .plan-empty .empty-hint {
   @apply text-sm;
   color: var(--plan-text-muted);
   max-width: 300px;
+}
+
+/* Create first plan button inside no-plans message */
+.no-plans-message .create-first-plan-btn {
+  @apply mt-4 px-6 py-3 rounded-lg flex items-center gap-2;
+  @apply transition-all duration-300 cursor-pointer;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
+  border: 2px solid rgba(0, 255, 200, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+  color: var(--plan-primary-cyan);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.no-plans-message .create-first-plan-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(100, 100, 255, 0.25));
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+  transform: translateY(-2px);
+}
+
+.no-plans-message .create-first-plan-btn .svg-icon {
+  @apply w-5 h-5;
+  animation: none;
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%);
+  opacity: 1;
 }
 
 /* ========================================
@@ -679,32 +709,31 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   font-size: var(--font-size-md);
   font-weight: 700;
   letter-spacing: 1px;
-  text-transform: uppercase;
   text-shadow: 0 0 8px rgba(0, 255, 200, 0.4);
+  text-transform: uppercase;
 }
 
 .create-custom-plan-btn::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
   background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-purple));
-  opacity: 0;
   border-radius: 8px;
+  content: '';
+  inset: -2px;
+  opacity: 0;
+  position: absolute;
   transition: opacity 0.3s ease;
   z-index: -1;
 }
 
 .create-custom-plan-btn:hover::before {
-  opacity: 0.3;
   animation: borderGlow 2s ease-in-out infinite;
+  opacity: 0.3;
 }
 
 .create-custom-plan-btn:hover {
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(100, 100, 255, 0.25));
   border-color: rgba(0, 255, 200, 0.8);
-  box-shadow:
-    0 0 30px rgba(0, 255, 200, 0.5),
-    inset 0 0 30px rgba(0, 255, 200, 0.1);
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.5),
+  inset 0 0 30px rgba(0, 255, 200, 0.1);
   transform: translateY(-2px);
 }
 
@@ -719,7 +748,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .create-custom-plan-btn:hover .svg-icon {
-  filter:  brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
   transform: rotate(90deg) scale(1.1);
 }
 
@@ -728,28 +757,27 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
    ======================================== */
 
 .plan-builder-popover::backdrop {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
   animation: fadeIn 0.3s ease;
-  pointer-events: auto !important;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.3);
   cursor: default;
+  pointer-events: auto !important;
   z-index: 999;
 }
 
 /* Popover Container */
 .plan-builder-popover {
   @apply hidden flex-col m-auto p-0;
-  width: min(550px, 92vw);
-  max-height: 85vh;
+  backdrop-filter: blur(20px);
   background: rgba(10, 10, 10, 0.98);
   border: 2px solid rgba(100, 100, 255, 0.5);
   border-radius: 12px;
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 0 60px rgba(100, 100, 255, 0.4),
-    0 12px 48px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 60px rgba(100, 100, 255, 0.4),
+  0 12px 48px rgba(0, 0, 0, 0.9);
   color: white;
+  max-height: 85vh;
   overflow: hidden;
+  width: min(550px, 92vw);
 }
 
 .plan-builder-popover:popover-open {
@@ -779,9 +807,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   @apply text-lg font-bold m-0;
   background: linear-gradient(135deg, #00ffc8, #ff0096, #6464ff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   font-family: var(--font-family-display);
   letter-spacing: 1px;
+  -webkit-text-fill-color: transparent;
 }
 
 .plan-builder-close {
@@ -836,11 +864,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* Step Body (Scrollable) */
 .step-body {
-  @apply flex-1 overflow-y-auto p-4;
+  @apply flex-1 overflow-y-auto p-4 pt-0;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: rgba(0, 0, 0, 0.3);
 }
 
 .step-body::-webkit-scrollbar {
@@ -872,11 +900,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* Add Segment Section (fixed at top, relative container for dropdown) */
 .add-segment-section {
+  background: rgba(0, 0, 0);
+  padding-bottom: 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(0, 0, 0);
-  padding-bottom: 1rem;
 }
 
 /* Add Segment Button */
@@ -885,12 +913,12 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
   border: 2px solid rgba(0, 255, 200, 0.5);
   color: #00ffc8;
+  cursor: pointer;
   font-family: var(--font-family-display);
   font-size: var(--font-size-sm);
   font-weight: 700;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
-  cursor: pointer;
+  text-transform: uppercase;
   transition: all 0.2s ease;
 }
 
@@ -909,21 +937,20 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 /* Segment Form (Dropdown overlay anchored below button) */
 .segment-form {
   @apply p-4 rounded-lg;
-  position: absolute;
-  top: calc(100% + 0.5rem); /* Position below button with 0.5rem gap */
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1000;
+  animation: dropdownSlideIn 0.3s ease;
+  backdrop-filter: blur(10px);
   background: linear-gradient(135deg, rgba(100, 100, 255, 0.25), rgba(255, 0, 150, 0.15));
   border: 2px solid rgba(100, 100, 255, 0.6);
   border-radius: 12px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(100, 100, 255, 0.4),
-    inset 0 0 30px rgba(100, 100, 255, 0.1);
-  backdrop-filter: blur(10px);
-  animation: dropdownSlideIn 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8),
+  0 0 40px rgba(100, 100, 255, 0.4),
+  inset 0 0 30px rgba(100, 100, 255, 0.1);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem); /* Position below button with 0.5rem gap */
+  width: 100%;
+  z-index: 1000;
 }
 
 .segment-form[hidden] {
@@ -954,8 +981,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   @apply text-xs font-bold;
   color: rgba(100, 100, 255, 0.9);
   font-family: var(--font-family-display);
-  text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .form-field input,
@@ -1044,8 +1071,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .btn-primary:disabled {
-  opacity: 0.5;
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* ========================================
@@ -1067,8 +1094,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   @apply text-sm font-bold;
   color: rgba(100, 100, 255, 0.9);
   font-family: var(--font-family-display);
-  text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .segments-count {
@@ -1090,8 +1117,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .segments-empty .svg-icon {
   @apply w-10 h-10;
-  opacity: 0.4;
   filter: drop-shadow(0 0 8px rgba(100, 100, 255, 0.3));
+  opacity: 0.4;
 }
 
 .segments-empty p {
@@ -1103,11 +1130,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .segment-card {
   @apply flex items-center gap-3 p-3 rounded-lg relative overflow-hidden;
   @apply transition-all duration-300;
+  animation: slideUp 0.3s ease;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 1px solid rgba(100, 100, 255, 0.3);
-  min-height: 60px;
-  animation: slideUp 0.3s ease;
   cursor: move;
+  min-height: 60px;
 }
 
 /* Drag Handle */
@@ -1135,23 +1162,23 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* Ghost element (the element being dragged) */
 .segment-ghost {
-  opacity: 0.4;
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
   border: 2px solid rgba(0, 255, 200, 0.6);
+  opacity: 0.4;
 }
 
 /* Chosen element (element when first grabbed) */
 .segment-chosen {
-  transform: scale(1.02);
   border-color: rgba(0, 255, 200, 0.8);
   box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+  transform: scale(1.02);
 }
 
 /* Dragging element (placeholder in original position) */
 .segment-dragging {
-  opacity: 0.2;
-  border: 2px dashed rgba(100, 100, 255, 0.5);
   background: rgba(100, 100, 255, 0.05);
+  border: 2px dashed rgba(100, 100, 255, 0.5);
+  opacity: 0.2;
 }
 
 @keyframes slideUp {
@@ -1166,21 +1193,20 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .segment-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
   bottom: 0;
-  width: 3px;
+  content: '';
+  left: 0;
+  position: absolute;
+  top: 0;
   transition: all 0.3s ease;
+  width: 3px;
 }
 
 .segment-card:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(0, 255, 200, 0.5);
-  box-shadow:
-    0 0 15px rgba(0, 255, 200, 0.2),
-    inset 0 0 20px rgba(0, 255, 200, 0.05);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2),
+  inset 0 0 20px rgba(0, 255, 200, 0.05);
   transform: translateX(4px);
 }
 
@@ -1193,20 +1219,20 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   font-family: var(--font-family-display);
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  white-space: nowrap;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .segment-type-badge::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 70%
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 70%
   );
+  content: '';
+  inset: 0;
+  position: absolute;
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
@@ -1385,26 +1411,32 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .error-message {
   @apply text-xs;
   color: var(--plan-primary-pink);
-  font-weight: 600;
   display: none;
+  font-weight: 600;
   text-shadow: 0 0 5px rgba(255, 0, 150, 0.4);
 }
 
 .error-message[role="alert"] {
-  display: block;
   animation: shake 0.4s ease;
+  display: block;
 }
 
 .input-error {
+  animation: shake 0.4s ease;
   border-color: var(--plan-primary-pink) !important;
   box-shadow: 0 0 15px rgba(255, 0, 150, 0.4) !important;
-  animation: shake 0.4s ease;
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* ========================================
@@ -1454,11 +1486,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .btn-next::before,
 .btn-save::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  content: '';
+  inset: 0;
   opacity: 0;
+  position: absolute;
   transition: opacity 0.3s ease;
 }
 
@@ -1469,10 +1501,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .btn-next:hover:not(:disabled),
 .btn-save:hover:not(:disabled) {
-  box-shadow:
-    0 0 25px rgba(0, 255, 200, 0.6),
-    0 0 50px rgba(0, 255, 200, 0.3),
-    inset 0 0 30px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.6),
+  0 0 50px rgba(0, 255, 200, 0.3),
+  inset 0 0 30px rgba(255, 255, 255, 0.2);
   transform: translateY(-2px) scale(1.02);
 }
 
@@ -1482,9 +1513,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .btn-next:disabled {
-  opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(0.5);
+  opacity: 0.5;
 }
 
 .btn-next .svg-icon,
@@ -1504,12 +1535,13 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 @keyframes successPulse {
-  0%, 100% { transform: scale(1); }
+  0%, 100% {
+    transform: scale(1);
+  }
   50% {
     transform: scale(1.05);
-    box-shadow:
-      0 0 40px rgba(0, 255, 200, 0.8),
-      0 0 80px rgba(0, 255, 200, 0.4);
+    box-shadow: 0 0 40px rgba(0, 255, 200, 0.8),
+    0 0 80px rgba(0, 255, 200, 0.4);
   }
 }
 
@@ -1529,8 +1561,12 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 @keyframes gradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes pulseGlow {
@@ -1556,8 +1592,12 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 @keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 @keyframes textGlow {
@@ -1570,18 +1610,30 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes scanline {
-  0% { left: -100%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
 }
 
 @keyframes modalEnter {
@@ -1640,9 +1692,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 @media (max-width: 640px) {
   .plan-selector-popover,
   .plan-builder-popover {
-    width: 100vw;
-    max-height: 100vh;
     border-radius: 0;
+    max-height: 100vh;
+    width: 100vw;
   }
 
   .plan-selector-header h3,
@@ -1666,13 +1718,13 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   .add-segment-btn,
   .btn-next,
   .btn-save {
-    min-height: 44px;
     font-size: var(--font-size-sm);
+    min-height: 44px;
   }
 
   .segment-card {
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
     gap: var(--spacing-sm);
   }
 

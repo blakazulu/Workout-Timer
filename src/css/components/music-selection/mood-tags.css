@@ -46,20 +46,20 @@
 /* Mobile responsive sizing - smaller hexagons */
 @media (max-width: 480px) {
   .mood-tag {
-    width: 100px;
-    height: 108px;
-    gap: 6px;
     font-size: 10px;
+    gap: 6px;
+    height: 108px;
+    width: 100px;
   }
 }
 
 /* Very small screens - even smaller */
 @media (max-width: 360px) {
   .mood-tag {
-    width: 90px;
-    height: 98px;
-    gap: 4px;
     font-size: 9px;
+    gap: 4px;
+    height: 98px;
+    width: 90px;
   }
 }
 

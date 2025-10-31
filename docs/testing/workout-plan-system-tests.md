@@ -2,62 +2,63 @@
 
 ## Overview
 
-Comprehensive test suite for the Workout Plan System (Phase 3 & 4), covering all data layer operations, UI components, and timer integration. This document provides guidance on running, understanding, and maintaining these tests.
+Comprehensive test suite for the Workout Plan System (Phase 3 & 4), covering all data layer operations, UI components,
+and timer integration. This document provides guidance on running, understanding, and maintaining these tests.
 
 ## Test Files Created
 
 ### Unit Tests
 
 1. **`tests/unit/plan-storage.test.js`** (340+ lines)
-   - Tests plan CRUD operations
-   - Validates storage persistence
-   - Tests active plan management
-   - Validates plan data structure
-   - Tests usage tracking
+    - Tests plan CRUD operations
+    - Validates storage persistence
+    - Tests active plan management
+    - Validates plan data structure
+    - Tests usage tracking
 
 2. **`tests/unit/plan-presets.test.js`** (380+ lines)
-   - Tests all 12 built-in presets
-   - Validates preset structure
-   - Tests preset duplication
-   - Validates preset characteristics (warmup, cooldown, intensity, etc.)
+    - Tests all 12 built-in presets
+    - Validates preset structure
+    - Tests preset duplication
+    - Validates preset characteristics (warmup, cooldown, intensity, etc.)
 
 3. **`tests/unit/segment-types.test.js`** (420+ lines)
-   - Tests all segment type definitions
-   - Validates categories (preparation, work, rest, rounds, training-specific, completion)
-   - Tests intensity levels and sound cues
-   - Tests utility functions (getSegmentType, isValidSegmentType)
+    - Tests all segment type definitions
+    - Validates categories (preparation, work, rest, rounds, training-specific, completion)
+    - Tests intensity levels and sound cues
+    - Tests utility functions (getSegmentType, isValidSegmentType)
 
 4. **`tests/unit/timer.test.js`** (updated, +285 lines)
-   - Added new test group: "Timer Module - Segment Mode"
-   - Tests segment duration calculation
-   - Tests segment progression logic
-   - Tests display formatting for segments
-   - Tests segment mode detection
+    - Added new test group: "Timer Module - Segment Mode"
+    - Tests segment duration calculation
+    - Tests segment progression logic
+    - Tests display formatting for segments
+    - Tests segment mode detection
 
 ### E2E Tests
 
 1. **`tests/e2e/plan-selector.spec.js`** (500+ lines)
-   - Tests plan selector modal opening/closing
-   - Tests mode tab switching (Simple, Built-in Plans, My Plans)
-   - Tests plan selection and activation
-   - Tests active plan display updates
-   - Tests keyboard accessibility
+    - Tests plan selector modal opening/closing
+    - Tests mode tab switching (Simple, Built-in Plans, My Plans)
+    - Tests plan selection and activation
+    - Tests active plan display updates
+    - Tests keyboard accessibility
 
 2. **`tests/e2e/plan-builder.spec.js`** (600+ lines)
-   - Tests plan builder modal functionality
-   - Tests form fields and validation
-   - Tests segment management (add, remove, edit, reorder)
-   - Tests plan saving and updating
-   - Tests duplicate from preset feature
-   - Tests edit mode
+    - Tests plan builder modal functionality
+    - Tests form fields and validation
+    - Tests segment management (add, remove, edit, reorder)
+    - Tests plan saving and updating
+    - Tests duplicate from preset feature
+    - Tests edit mode
 
 3. **`tests/e2e/segment-timer.spec.js`** (450+ lines)
-   - Tests segment-based timer execution
-   - Tests display updates during segment progression
-   - Tests pause/resume in segment mode
-   - Tests reset functionality
-   - Tests simple mode compatibility
-   - Tests edge cases (single segment, many segments, short durations)
+    - Tests segment-based timer execution
+    - Tests display updates during segment progression
+    - Tests pause/resume in segment mode
+    - Tests reset functionality
+    - Tests simple mode compatibility
+    - Tests edge cases (single segment, many segments, short durations)
 
 ## Running the Tests
 
@@ -114,6 +115,7 @@ npm test -- --headed
 **Tests Created: 75+**
 
 Coverage Areas:
+
 - Basic CRUD operations (create, read, update, delete)
 - Active plan management (set, load, clear)
 - Validation (name, mode, segments, structure)
@@ -122,6 +124,7 @@ Coverage Areas:
 - LocalStorage persistence
 
 Key Test Groups:
+
 - "Plan Storage Module - Basic CRUD Operations" (14 tests)
 - "Plan Storage Module - Active Plan Management" (5 tests)
 - "Plan Storage Module - Validation" (8 tests)
@@ -133,6 +136,7 @@ Key Test Groups:
 **Tests Created: 65+**
 
 Coverage Areas:
+
 - All 12 built-in presets validation
 - Preset structure (required fields, segments, metadata)
 - Get preset by ID
@@ -141,6 +145,7 @@ Coverage Areas:
 - Specific preset validation (Tabata 20:10 timing, etc.)
 
 Key Test Groups:
+
 - "Plan Presets Module - Built-in Plans" (6 tests)
 - "Plan Presets Module - Specific Presets" (6 tests)
 - "Plan Presets Module - Get Preset by ID" (3 tests)
@@ -152,6 +157,7 @@ Key Test Groups:
 **Tests Created: 70+**
 
 Coverage Areas:
+
 - All segment type definitions (warmup, work, rest, rounds, training, completion)
 - Category assignments
 - Intensity levels (light, moderate, hard, very-hard, max)
@@ -161,6 +167,7 @@ Coverage Areas:
 - Integration scenarios
 
 Key Test Groups:
+
 - "Segment Types Module - Type Definitions" (7 tests)
 - "Segment Types Module - Categories" (2 tests)
 - "Segment Types Module - Intensity Levels" (2 tests)
@@ -174,6 +181,7 @@ Key Test Groups:
 **Tests Created: 10 additional**
 
 Coverage Areas:
+
 - Segment duration calculation
 - Segment index tracking
 - Segment progression logic
@@ -186,6 +194,7 @@ Coverage Areas:
 - Sound cue mapping
 
 Key Test Group:
+
 - "Timer Module - Segment Mode" (10 tests)
 
 ### Plan Selector UI (`/src/js/ui/plan-selector.js`)
@@ -193,6 +202,7 @@ Key Test Group:
 **Tests Created: 80+**
 
 Coverage Areas:
+
 - Modal opening and closing
 - Mode tab switching
 - Simple mode display and selection
@@ -204,6 +214,7 @@ Coverage Areas:
 - Active badges and visual indicators
 
 Key Test Groups:
+
 - "Plan Selector - Opening and Closing" (3 tests)
 - "Plan Selector - Mode Tabs" (6 tests)
 - "Plan Selector - Simple Mode" (3 tests)
@@ -217,6 +228,7 @@ Key Test Groups:
 **Tests Created: 95+**
 
 Coverage Areas:
+
 - Modal opening and closing (create vs edit mode)
 - Form fields (name, description, preset selector)
 - Segment management (add, remove, edit)
@@ -229,6 +241,7 @@ Coverage Areas:
 - Keyboard accessibility
 
 Key Test Groups:
+
 - "Plan Builder - Opening and Closing" (4 tests)
 - "Plan Builder - Form Fields" (6 tests)
 - "Plan Builder - Segment Management" (10 tests)
@@ -244,6 +257,7 @@ Key Test Groups:
 **Tests Created: 60+**
 
 Coverage Areas:
+
 - Basic segment execution flow
 - Display updates (segment name, counter, time)
 - Segment transitions
@@ -253,6 +267,7 @@ Coverage Areas:
 - Edge cases (single segment, many segments, short durations)
 
 Key Test Groups:
+
 - "Segment Timer - Basic Execution" (7 tests)
 - "Segment Timer - Display Updates" (3 tests)
 - "Segment Timer - Pause and Resume" (5 tests)
@@ -263,17 +278,17 @@ Key Test Groups:
 ## Total Test Count
 
 - **Unit Tests**: ~210 tests
-  - Plan Storage: 31 tests
-  - Plan Presets: 27 tests
-  - Segment Types: 26 tests
-  - Timer (segment mode): 10 tests
-  - Existing timer tests: ~11 tests
+    - Plan Storage: 31 tests
+    - Plan Presets: 27 tests
+    - Segment Types: 26 tests
+    - Timer (segment mode): 10 tests
+    - Existing timer tests: ~11 tests
 
 - **E2E Tests**: ~235 tests
-  - Plan Selector: 35 tests
-  - Plan Builder: 48 tests
-  - Segment Timer: 24 tests
-  - Existing E2E tests: ~128 tests
+    - Plan Selector: 35 tests
+    - Plan Builder: 48 tests
+    - Segment Timer: 24 tests
+    - Existing E2E tests: ~128 tests
 
 - **Grand Total**: ~445 tests (existing + new plan system tests)
 
@@ -331,6 +346,7 @@ test.describe("Feature - Specific Behavior", () => {
 ### Common Test Helpers Used
 
 From `tests/helpers/test-helpers.js`:
+
 - `waitForAppReady(page)` - Wait for app initialization
 - `clearStorage(page)` - Clear localStorage/sessionStorage
 - `wait(ms)` - Async delay
@@ -343,7 +359,8 @@ From `tests/helpers/test-helpers.js`:
 
 1. **Audio Testing**: Audio playback is mocked. Real audio testing requires manual verification.
 
-2. **Drag and Drop**: Segment reordering via drag-and-drop is tested via button clicks (move up/down) rather than actual drag events.
+2. **Drag and Drop**: Segment reordering via drag-and-drop is tested via button clicks (move up/down) rather than actual
+   drag events.
 
 3. **Timing Tests**: Segment timer tests use wait() with fixed durations. Tests may be flaky if system is slow.
 
@@ -356,20 +373,20 @@ From `tests/helpers/test-helpers.js`:
 ### Common Issues
 
 1. **Timing Issues**
-   - Symptoms: Test passes sometimes, fails other times
-   - Solution: Increase wait() durations, use waitForSelector() with longer timeouts
+    - Symptoms: Test passes sometimes, fails other times
+    - Solution: Increase wait() durations, use waitForSelector() with longer timeouts
 
 2. **Element Not Found**
-   - Symptoms: "Element not found" errors
-   - Solution: Verify selectors match actual HTML, check if element is in popover (not rendered until opened)
+    - Symptoms: "Element not found" errors
+    - Solution: Verify selectors match actual HTML, check if element is in popover (not rendered until opened)
 
 3. **Storage Persistence**
-   - Symptoms: Data not persisting between tests
-   - Solution: Ensure clearStorage() is called in beforeEach, check localStorage keys
+    - Symptoms: Data not persisting between tests
+    - Solution: Ensure clearStorage() is called in beforeEach, check localStorage keys
 
 4. **Module Import Failures**
-   - Symptoms: "Cannot find module" errors
-   - Solution: Verify import paths are correct, check that module is exported properly
+    - Symptoms: "Cannot find module" errors
+    - Solution: Verify import paths are correct, check that module is exported properly
 
 ### Debug Tools
 
@@ -456,6 +473,7 @@ jobs:
 - **Full suite** takes approximately 5-7 minutes
 
 To optimize test performance:
+
 - Run unit tests frequently during development
 - Run E2E tests before commits
 - Run full suite in CI/CD

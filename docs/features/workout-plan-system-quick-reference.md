@@ -5,6 +5,7 @@
 ### Data Layer (Phase 1-2)
 
 **Import Plans Module:**
+
 ```javascript
 import {
   // Storage
@@ -22,6 +23,7 @@ import {
 ```
 
 **Plan Object Structure:**
+
 ```javascript
 {
   id: "uuid",
@@ -51,6 +53,7 @@ import {
 ```
 
 **Common Operations:**
+
 ```javascript
 // Get all presets
 const presets = getAllPresets(); // Returns 12 built-in plans
@@ -88,12 +91,14 @@ const quickStart = createQuickStartPlan({
 ### UI Layer (Phase 3-4)
 
 **Import UI Modules:**
+
 ```javascript
 import {initPlanSelector, updateActivePlanDisplay} from "./ui/plan-selector.js";
 import {initPlanBuilder} from "./ui/plan-builder.js";
 ```
 
 **Initialize (in app.js):**
+
 ```javascript
 initPlanSelector();
 initPlanBuilder();
@@ -107,6 +112,7 @@ eventBus.on("plan:selected", (data) => {
 ```
 
 **Open Plan Builder Programmatically:**
+
 ```javascript
 // New plan
 eventBus.emit("plan-builder:open");
@@ -116,6 +122,7 @@ eventBus.emit("plan-builder:open", { planId: "uuid" });
 ```
 
 **Trigger Plan Selector:**
+
 ```javascript
 // Via HTML button
 <button popovertarget="planSelectorPopover">Select Plan</button>
@@ -127,6 +134,7 @@ document.getElementById("planSelectorPopover").showPopover();
 ### Timer Integration
 
 **Load Segments into Timer:**
+
 ```javascript
 const timer = getTimer();
 const plan = getPlanById(planId);
@@ -139,6 +147,7 @@ timer.start();
 ```
 
 **Timer Segment Methods:**
+
 ```javascript
 // Check current segment
 const segment = timer.getCurrentSegment();
@@ -154,12 +163,14 @@ timer.clearPlanSegments();
 ```
 
 **Timer Display:**
+
 - Simple mode: "Rep X / Y"
 - Segment mode: "Segment Name (X/Y)"
 
 ### Event Bus Events
 
 **Listen for Events:**
+
 ```javascript
 import {eventBus} from "./core/event-bus.js";
 
@@ -192,6 +203,7 @@ eventBus.on("timer:completed", (data) => {
 ### Segment Types Reference
 
 **Categories:**
+
 - `preparation` - Warmup, Movement Prep, Activation
 - `work` - HIIT Work, Tabata, VO2 Max, Threshold, Tempo
 - `rest` - Complete Rest, Active Recovery, Transition
@@ -200,6 +212,7 @@ eventBus.on("timer:completed", (data) => {
 - `completion` - Cooldown, Static Stretch, Mobility
 
 **Common Segment Types:**
+
 ```javascript
 SEGMENT_TYPES.WARMUP.id           // "warmup"
 SEGMENT_TYPES.HIIT_WORK.id        // "hiit-work"
@@ -210,6 +223,7 @@ SEGMENT_TYPES.COOLDOWN.id         // "cooldown"
 ```
 
 **Intensity Levels:**
+
 ```javascript
 INTENSITY_LEVELS.LIGHT      // "light"
 INTENSITY_LEVELS.MODERATE   // "moderate"
@@ -219,6 +233,7 @@ INTENSITY_LEVELS.MAX        // "max"
 ```
 
 **Sound Cues:**
+
 ```javascript
 SOUND_CUES.NONE           // "none" - Silent
 SOUND_CUES.ALERT          // "alert" - Beep (countdown)
@@ -230,6 +245,7 @@ SOUND_CUES.FINAL_COMPLETE // "final-complete" - Triple beep
 ### Analytics Tracking
 
 **Track Custom Events:**
+
 ```javascript
 import {analytics} from "./core/analytics.js";
 
@@ -259,6 +275,7 @@ analytics.track("segment:started", {
 **CSS Classes:**
 
 **Plan Display:**
+
 ```css
 .active-plan-display          /* Settings panel button */
 .active-plan-name             /* Plan name text */
@@ -266,6 +283,7 @@ analytics.track("segment:started", {
 ```
 
 **Plan Selector:**
+
 ```css
 .plan-selector-popover        /* Main modal */
 .plan-mode-tab                /* Mode tab button */
@@ -277,6 +295,7 @@ analytics.track("segment:started", {
 ```
 
 **Plan Builder:**
+
 ```css
 .plan-builder-popover         /* Main modal */
 .form-group                   /* Form field wrapper */
@@ -289,6 +308,7 @@ analytics.track("segment:started", {
 ```
 
 **Responsive Breakpoint:**
+
 ```css
 @media (max-width: 768px) {
   /* Mobile styles */
@@ -298,6 +318,7 @@ analytics.track("segment:started", {
 ### Testing Helpers
 
 **Create Test Plan:**
+
 ```javascript
 const testPlan = {
   id: crypto.randomUUID(),
@@ -330,6 +351,7 @@ const result = savePlan(testPlan);
 ```
 
 **Validation:**
+
 ```javascript
 import {validatePlan} from "./modules/plans/index.js";
 
@@ -340,6 +362,7 @@ if (!validation.isValid) {
 ```
 
 **Debug Mode:**
+
 ```javascript
 // Enable timer debug logging
 localStorage.setItem("timer_debug", "true");
@@ -359,11 +382,11 @@ window.enableTimerDebug();
 4. Optional: Select a preset to duplicate
 5. Click "Add Segment" for each workout phase
 6. Configure each segment:
-   - Type: Choose from dropdown
-   - Name: Descriptive name
-   - Duration: Seconds
-   - Intensity: Light → Maximum
-   - Sound: When segment ends
+    - Type: Choose from dropdown
+    - Name: Descriptive name
+    - Duration: Seconds
+    - Intensity: Light → Maximum
+    - Sound: When segment ends
 7. Reorder segments with ↑↓ buttons
 8. Remove unwanted segments with trash icon
 9. Review total duration
@@ -373,9 +396,9 @@ window.enableTimerDebug();
 
 1. Click "Active Plan" button
 2. Switch between tabs:
-   - **Simple:** Quick Start (classic mode)
-   - **Built-in Plans:** 12 preset plans
-   - **My Plans:** Your custom plans
+    - **Simple:** Quick Start (classic mode)
+    - **Built-in Plans:** 12 preset plans
+    - **My Plans:** Your custom plans
 3. Click plan card to select
 4. Modal closes, plan name updates
 
@@ -395,6 +418,7 @@ window.enableTimerDebug();
 ### Using Preset Plans
 
 **12 Built-in Plans:**
+
 1. **Beginner HIIT** - 15 min (gentle introduction)
 2. **Classic HIIT** - 20 min (40:20 intervals)
 3. **Advanced HIIT** - 25 min (45:15 intervals)
@@ -411,6 +435,7 @@ window.enableTimerDebug();
 ### During Workout
 
 **Segment Mode:**
+
 - Timer shows segment name
 - Progress shown as (X/Y)
 - Automatic transitions between segments
@@ -418,6 +443,7 @@ window.enableTimerDebug();
 - Different work/rest types
 
 **Simple Mode:**
+
 - Shows "Rep X / Y"
 - Classic timer behavior
 - Same sound cues
@@ -442,24 +468,29 @@ localStorage.getItem("cycleSettings")             // Simple mode settings
 ## File Locations
 
 **Data Layer:**
+
 - `/src/js/modules/plans/index.js` - Module exports
 - `/src/js/modules/plans/storage.js` - CRUD operations
 - `/src/js/modules/plans/presets.js` - 12 built-in plans
 - `/src/js/modules/plans/segment-types.js` - Type definitions
 
 **UI Layer:**
+
 - `/src/js/ui/plan-selector.js` - Selection interface
 - `/src/js/ui/plan-builder.js` - Creation/editing interface
 - `/src/partials/popovers/plan-selector.html` - Selector HTML
 - `/src/partials/popovers/plan-builder.html` - Builder HTML
 
 **Timer:**
+
 - `/src/js/modules/timer.js` - Execution logic (modified)
 
 **Styling:**
+
 - `/src/css/components/plans.css` - All plan styles
 
 **Documentation:**
+
 - `/docs/features/workout-plan-system-implementation.md` - Full spec
 - `/docs/features/workout-plan-system-phase-3-4-implementation-summary.md` - Implementation summary
 - `/docs/features/workout-plan-system-quick-reference.md` - This file

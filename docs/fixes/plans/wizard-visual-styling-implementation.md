@@ -9,16 +9,20 @@
 
 ## Overview
 
-Comprehensive visual styling added for the simplified plan builder wizard interface. All 13 core components now have complete CSS styling with smooth animations, responsive layouts, and accessibility features that match the app's cyberpunk aesthetic.
+Comprehensive visual styling added for the simplified plan builder wizard interface. All 13 core components now have
+complete CSS styling with smooth animations, responsive layouts, and accessibility features that match the app's
+cyberpunk aesthetic.
 
 ---
 
 ## Components Styled
 
 ### 1. Wizard Progress Indicator (Lines 1422-1512)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Horizontal stepper with 3 steps (Basics → Build → Review)
 - Circular step indicators with numbers/checkmarks
 - Connecting lines that transition colors
@@ -28,6 +32,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Responsive: stacks vertically on mobile with vertical connecting lines
 
 **Key Classes:**
+
 - `.wizard-progress` - Container
 - `.wizard-step` - Individual step wrapper
 - `.wizard-step-circle` - Circle indicator (48px → 56px when active)
@@ -36,14 +41,17 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - State classes: `.active`, `.completed`
 
 **Animations:**
+
 - `pulseGlowCyan` - Pulsing cyan glow on active step
 
 ---
 
 ### 2. Step Container & Transitions (Lines 1514-1546)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Smooth fade in/out between wizard steps
 - Slide animation (left/right) on step change
 - Min-height: 400px (300px mobile) to prevent jumping
@@ -51,19 +59,23 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Exiting animation support
 
 **Key Classes:**
+
 - `.wizard-step-container` - Main content area
 - `.wizard-step-container.exiting` - Applied during exit animation
 
 **Animations:**
+
 - `wizard-step-in` - Fade in + slide from right (0.3s)
 - `wizard-step-out` - Fade out + slide to left (0.3s)
 
 ---
 
 ### 3. Quick-Start Options (Lines 1548-1643)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Two large option cards side-by-side (grid layout)
 - Icon + heading + description text
 - Shimmer effect on hover (sweeps left to right)
@@ -73,11 +85,13 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Responsive: single column on mobile
 
 **Key Classes:**
+
 - `.quick-start-options` - Grid container (2 cols → 1 col mobile)
 - `.quick-start-option` - Individual option card
 - `.quick-start-option-text` - Text content wrapper
 
 **Effects:**
+
 - Shimmer sweep on hover
 - Gradient border animation (`borderFlow`)
 - Icon scales to 1.15 and rotates 5deg on hover
@@ -85,23 +99,26 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 4. Quick-Add Segment Buttons (Lines 1645-1751)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Grid layout: 2 columns (4 preset buttons + custom option)
 - Large buttons: 120px height (100px mobile)
 - Icon at top, label in middle, duration hint at bottom
 - Color-coded left borders (4px) matching segment type:
-  - **Warmup:** Cyan (#00ffc8)
-  - **Work:** Hot Pink (#ff0096)
-  - **Rest:** Purple (#6464ff)
-  - **Cooldown:** Blue (#00a8ff)
-  - **Custom:** Dashed cyan border
+    - **Warmup:** Cyan (#00ffc8)
+    - **Work:** Hot Pink (#ff0096)
+    - **Rest:** Purple (#6464ff)
+    - **Cooldown:** Blue (#00a8ff)
+    - **Custom:** Dashed cyan border
 - Hover: background color matches segment type, lift effect, glow
 - Icon scales to 1.15 on hover
 - Responsive: single column on mobile, 56px min touch target
 
 **Key Classes:**
+
 - `.quick-add-segments` - Grid container
 - `.quick-add-segment` - Individual button
 - `.quick-add-segment-label` - Button text
@@ -111,9 +128,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 5. Visual Timeline (Lines 1753-1821)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Horizontal scrollable container
 - Dark background with cyan border
 - Custom scrollbar (thin, cyan)
@@ -121,12 +140,14 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Timeline blocks container with flexbox gap
 
 **Key Classes:**
+
 - `.visual-timeline` - Outer container
 - `.timeline-scroll-container` - Scrollable wrapper
 - `.timeline-blocks` - Flex container for segment blocks
 - `.timeline-empty` - Empty state message
 
 **Empty State:**
+
 - Dashed cyan border
 - Floating icon animation (12px vertical movement)
 - Centered message
@@ -134,9 +155,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 6. Inline Segment Editor Panel (Lines 1823-2044)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Fixed overlay with backdrop blur
 - Slides in from right (desktop) or bottom (mobile)
 - 450px max width (desktop), full width (mobile)
@@ -146,6 +169,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Z-index: 100
 
 **Key Classes:**
+
 - `.segment-editor-panel` - Fixed overlay wrapper
 - `.segment-editor-backdrop` - Backdrop blur overlay
 - `.segment-editor-content` - Actual panel content
@@ -154,6 +178,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - State class: `.open`
 
 **Form Elements:**
+
 - `.intensity-slider` - Gradient track slider (purple → pink → orange)
 - `.intensity-slider::-webkit-slider-thumb` - Cyan thumb with glow
 - `.sound-cue-selector` - 3-column grid of sound options
@@ -163,6 +188,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - `.segment-quick-actions` - Duplicate/Delete buttons
 
 **Animations:**
+
 - Backdrop fades from transparent to blurred
 - Content slides with cubic-bezier(0.4, 0, 0.2, 1)
 - Mobile: slides up from bottom instead of right
@@ -170,9 +196,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 7. Segment Timeline Blocks (Lines 2046-2158)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Colored rectangles with rounded corners (8px)
 - Width proportional to duration (40px min, 300px max)
 - Height: 80px (70px mobile)
@@ -184,6 +212,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Hover: lifts 4px, enhanced shadow
 
 **Key Classes:**
+
 - `.timeline-block` - Individual segment block
 - `.timeline-block-label` - Segment name text
 - `.timeline-block-duration` - Duration badge
@@ -192,6 +221,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Data attribute: `data-type="warmup|work|rest|rounds|training|cooldown"`
 
 **Color Coding:**
+
 - Warmup: rgba(0, 255, 200, 0.2) + #00ffc8 border
 - Work: rgba(255, 0, 150, 0.2) + #ff0096 border
 - Rest: rgba(100, 100, 255, 0.2) + #6464ff border
@@ -202,9 +232,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 8. Review Screen (Lines 2160-2264)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Summary stats cards with large numbers (2-column grid, 1 col mobile)
 - Icon + value + label layout
 - Gradient background (cyan/purple)
@@ -213,6 +245,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Hover effects on segment items (translate right 4px)
 
 **Key Classes:**
+
 - `.review-stats` - Stats grid container
 - `.review-stat-card` - Individual stat card
 - `.review-stat-value` - Large number (3xl, 2xl mobile)
@@ -226,9 +259,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 9. Preset Selector Mini-Popover (Lines 2266-2314)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Dropdown-style list (max-height: 320px, scrollable)
 - Positioned below "Duplicate" button (absolute positioning)
 - Dark glassmorphic background
@@ -238,6 +273,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Max width: 300px
 
 **Key Classes:**
+
 - `.preset-selector-mini` - Popover container
 - `.preset-option` - Individual preset card
 - `.preset-option.selected` - Selected state
@@ -247,9 +283,11 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ---
 
 ### 10. Navigation Buttons (Lines 2316-2397)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Fixed footer with prev/next buttons
 - "Back" button: gray, left side
 - "Next/Save" button: cyan gradient, right side, flex-1 (max 384px)
@@ -259,21 +297,25 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Responsive: stacks vertically on mobile, full width buttons
 
 **Key Classes:**
+
 - `.wizard-navigation` - Footer container
 - `.wizard-back-btn` - Back button
 - `.wizard-next-btn` - Next/Save button
 - State classes: `:disabled`, `.loading`, `.success`
 
 **Animations:**
+
 - Loading: `spinGlow` animation on icon
 - Success: `checkmark-draw` animation
 
 ---
 
 ### 11. Smart Tips (Lines 2399-2434)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Toast-style notifications at top of wizard
 - Icon + message layout
 - Fade in from top animation
@@ -282,20 +324,24 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Compact design (padding: 16px)
 
 **Key Classes:**
+
 - `.smart-tip` - Base tip container
 - `.smart-tip.cyan` - Cyan variant
 - `.smart-tip.pink` - Pink variant
 - `.smart-tip.purple` - Purple variant
 
 **Animations:**
+
 - `tip-fade-in` - Fades in from 10px above (0.5s)
 
 ---
 
 ### 12. Empty States (Lines 1801-1821)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Centered icon + message + optional CTA
 - Dashed border outline
 - Floating icon animation (10px vertical movement, 3s loop)
@@ -303,15 +349,18 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Used in timeline empty state
 
 **Key Classes:**
+
 - `.timeline-empty` - Empty state wrapper
 - Icon with `float` animation
 
 ---
 
 ### 13. Validation & Errors (Lines 2436-2463)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Inline error messages below inputs
 - Red/pink color scheme (#ff0096)
 - Alert icon + error text
@@ -320,20 +369,24 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Error clears when field becomes valid
 
 **Key Classes:**
+
 - `.validation-error` - Error message container
 - `.form-group.error` - Applied to form group with error
 - Modified classes: `.form-group.error input/textarea/select`
 
 **Animations:**
+
 - `shake` - Horizontal shake (5px left/right, 0.3s)
 - `fadeIn` - Fade in error message (0.3s)
 
 ---
 
 ### 14. Success Feedback (Lines 2465-2494)
+
 **Status:** ✅ Complete
 
 **Features:**
+
 - Large checkmark icon (80px) with green glow
 - Centered success message
 - Heading with green gradient text shadow
@@ -341,12 +394,14 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 - Pulsing glow animation on checkmark
 
 **Key Classes:**
+
 - `.success-checkmark` - Checkmark icon
 - `.success-message` - Container
 - `.success-message h3` - Heading
 - `.success-message p` - Body text
 
 **Animations:**
+
 - `checkmark-draw` - SVG path drawing animation (0.8s)
 - `pulseGlowGreen` - Pulsing green glow (1.5s infinite)
 
@@ -371,6 +426,7 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ### Transition Properties
 
 **Standard Durations:**
+
 - Step transitions: 300ms ease-in-out
 - Segment operations: 200ms ease-out
 - Panel slides: 300ms cubic-bezier(0.4, 0, 0.2, 1)
@@ -384,40 +440,49 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ### Mobile (< 768px)
 
 **Progress Indicator:**
+
 - Stacks vertically
 - Connecting lines become vertical (0.5px wide, 48px high)
 
 **Quick Start Options:**
+
 - Single column layout
 - Min-height reduced to 150px
 
 **Quick Add Segments:**
+
 - Single column layout
 - Min-height reduced to 100px
 
 **Timeline:**
+
 - Block min-width increased to 60px (easier touch target)
 - Block height reduced to 70px
 
 **Editor Panel:**
+
 - Becomes bottom sheet (slides up from bottom)
 - Full width, max-height 80vh
 - Border radius only on top corners (20px)
 
 **Review Stats:**
+
 - Single column grid
 
 **Navigation:**
+
 - Stacks vertically
 - Full-width buttons
 - No max-width constraint
 
 **Touch Targets:**
+
 - All interactive elements minimum 56px (WCAG AAA compliance)
 
 ### Small Mobile (< 480px)
 
 **Additional Adjustments:**
+
 - Wizard container padding reduced to 16px
 - Quick start option height reduced to 130px
 - Quick start icons reduced to 48px
@@ -429,23 +494,28 @@ Comprehensive visual styling added for the simplified plan builder wizard interf
 ## Accessibility Features
 
 ### Focus-Visible States
+
 - 2px cyan outline on all interactive elements
 - 3px offset for buttons/cards
 - 2px offset for form inputs
 - Enhanced shadow on focus (25px cyan glow)
 
 ### Keyboard Navigation
+
 - All interactive elements focusable via tab
 - Clear visual focus indicators
 - Logical tab order maintained
 
 ### Color Contrast
+
 - All text meets WCAG AA standards (4.5:1 minimum)
 - Icon glows enhance visibility
 - Text shadows on colored backgrounds
 
 ### Reduced Motion Support
+
 All animations respect `prefers-reduced-motion` setting:
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -457,6 +527,7 @@ All animations respect `prefers-reduced-motion` setting:
 ```
 
 ### Screen Reader Support
+
 - Semantic HTML structure assumed
 - Visual state changes should have ARIA attributes
 - Icon-only buttons need aria-labels (handled in HTML)
@@ -467,14 +538,14 @@ All animations respect `prefers-reduced-motion` setting:
 
 ### Segment Type Colors (Consistent App-Wide)
 
-| Type | Background | Border | Usage |
-|------|------------|--------|-------|
-| Warmup | `rgba(0, 255, 200, 0.2)` | `#00ffc8` | Preparation phase |
-| Work | `rgba(255, 0, 150, 0.2)` | `#ff0096` | High intensity |
-| Rest | `rgba(100, 100, 255, 0.2)` | `#6464ff` | Recovery |
-| Rounds | `rgba(255, 107, 53, 0.2)` | `#ff6b35` | Circuit rounds |
-| Training | `rgba(0, 255, 136, 0.2)` | `#00ff88` | Active training |
-| Cooldown | `rgba(0, 168, 255, 0.2)` | `#00a8ff` | Wind down |
+| Type     | Background                 | Border    | Usage             |
+|----------|----------------------------|-----------|-------------------|
+| Warmup   | `rgba(0, 255, 200, 0.2)`   | `#00ffc8` | Preparation phase |
+| Work     | `rgba(255, 0, 150, 0.2)`   | `#ff0096` | High intensity    |
+| Rest     | `rgba(100, 100, 255, 0.2)` | `#6464ff` | Recovery          |
+| Rounds   | `rgba(255, 107, 53, 0.2)`  | `#ff6b35` | Circuit rounds    |
+| Training | `rgba(0, 255, 136, 0.2)`   | `#00ff88` | Active training   |
+| Cooldown | `rgba(0, 168, 255, 0.2)`   | `#00a8ff` | Wind down         |
 
 ### UI Element Colors
 
@@ -489,17 +560,21 @@ All animations respect `prefers-reduced-motion` setting:
 ## Performance Optimizations
 
 ### GPU Acceleration
+
 All animations use GPU-accelerated properties:
+
 - `transform` (translate, scale, rotate)
 - `opacity`
 - Avoids `left`, `top`, `width`, `height` where possible
 
 ### Efficient Selectors
+
 - Class-based selectors (fast)
 - Minimal nesting
 - No universal selectors in critical paths
 
 ### Smooth 60fps
+
 - Transitions optimized for consistent 60fps
 - No layout thrashing
 - Minimal repaints
@@ -522,6 +597,7 @@ From `/src/css/variables.css`:
 ### Required HTML Structure
 
 **Wizard Container:**
+
 ```html
 <div class="plan-builder-popover" popover>
   <div class="wizard-progress">
@@ -545,6 +621,7 @@ From `/src/css/variables.css`:
 ```
 
 **Timeline:**
+
 ```html
 <div class="visual-timeline">
   <h4>Your Workout</h4>
@@ -561,6 +638,7 @@ From `/src/css/variables.css`:
 ```
 
 **Segment Editor Panel:**
+
 ```html
 <div class="segment-editor-panel">
   <div class="segment-editor-backdrop"></div>
@@ -580,6 +658,7 @@ From `/src/css/variables.css`:
 ## Testing Checklist
 
 ### Visual Verification
+
 - [ ] Progress indicator updates correctly (inactive → active → completed)
 - [ ] Step transitions animate smoothly
 - [ ] Quick-start options shimmer on hover
@@ -594,6 +673,7 @@ From `/src/css/variables.css`:
 - [ ] Success feedback animates
 
 ### Responsive Testing
+
 - [ ] Mobile: progress indicator stacks vertically
 - [ ] Mobile: quick-start options single column
 - [ ] Mobile: editor becomes bottom sheet
@@ -602,6 +682,7 @@ From `/src/css/variables.css`:
 - [ ] Touch targets meet 56px minimum
 
 ### Accessibility Testing
+
 - [ ] All interactive elements keyboard accessible
 - [ ] Focus states clearly visible
 - [ ] Color contrast passes WCAG AA
@@ -609,6 +690,7 @@ From `/src/css/variables.css`:
 - [ ] Screen reader announces state changes
 
 ### Browser Testing
+
 - [ ] Chrome/Edge: All features work
 - [ ] Firefox: Scrollbar styles applied
 - [ ] Safari: Webkit-specific styles work
@@ -619,12 +701,14 @@ From `/src/css/variables.css`:
 ## Known Issues / Future Enhancements
 
 ### Current Limitations
+
 1. **Drag-and-drop not styled** - Only visual indicator provided (⋮⋮)
 2. **Confetti effect not included** - Optional success enhancement
 3. **Timeline width calculation** - Needs JS to set proportional widths
 4. **Swipe gestures not styled** - Mobile delete swipe needs JS
 
 ### Future Enhancements
+
 1. Add drag preview styling for timeline reordering
 2. Implement confetti particle system for success state
 3. Add haptic feedback support (vibration API)
@@ -657,6 +741,7 @@ From `/src/css/variables.css`:
 ## Conclusion
 
 All 13 wizard components now have complete, production-ready visual styling that:
+
 - ✅ Matches the app's cyberpunk aesthetic
 - ✅ Provides smooth 60fps animations
 - ✅ Responds perfectly to all screen sizes

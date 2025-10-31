@@ -3,7 +3,7 @@
  * 12 professionally designed workout plans covering various training styles
  */
 
-import { SEGMENT_TYPES, INTENSITY_LEVELS, SOUND_CUES } from "./segment-types.js";
+import {INTENSITY_LEVELS, SEGMENT_TYPES, SOUND_CUES} from "./segment-types.js";
 
 /**
  * Generate unique ID for preset plans
@@ -148,7 +148,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 8 rounds of 40s work / 20s rest
-      ...Array.from({ length: 8 }, (_, i) => [
+      ...Array.from({length: 8}, (_, i) => [
         {
           type: SEGMENT_TYPES.HIIT_WORK.id,
           duration: 40,
@@ -193,7 +193,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 10 rounds of 45s work / 15s rest
-      ...Array.from({ length: 10 }, (_, i) => [
+      ...Array.from({length: 10}, (_, i) => [
         {
           type: SEGMENT_TYPES.HIIT_WORK.id,
           duration: 45,
@@ -238,8 +238,8 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 3 Tabata blocks (8 rounds each) with 1 min rest between blocks
-      ...Array.from({ length: 3 }, (blockIndex) => [
-        ...Array.from({ length: 8 }, (_, i) => [
+      ...Array.from({length: 3}, (blockIndex) => [
+        ...Array.from({length: 8}, (_, i) => [
           {
             type: SEGMENT_TYPES.TABATA_WORK.id,
             duration: 20,
@@ -292,7 +292,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 5 rounds of 3 min work / 1 min rest
-      ...Array.from({ length: 5 }, (_, i) => [
+      ...Array.from({length: 5}, (_, i) => [
         {
           type: SEGMENT_TYPES.BOXING_ROUND.id,
           duration: 180,
@@ -372,7 +372,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 15 x 1-minute EMOM rounds
-      ...Array.from({ length: 15 }, (_, i) => ({
+      ...Array.from({length: 15}, (_, i) => ({
         type: SEGMENT_TYPES.EMOM_ROUND.id,
         duration: 60,
         intensity: INTENSITY_LEVELS.VERY_HARD,
@@ -408,7 +408,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 3 circuits of 5 minutes each with 2 min recovery
-      ...Array.from({ length: 3 }, (_, i) => [
+      ...Array.from({length: 3}, (_, i) => [
         {
           type: SEGMENT_TYPES.CIRCUIT_ROUND.id,
           duration: 300,
@@ -574,7 +574,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 6 rounds of Tabata (20s/10s)
-      ...Array.from({ length: 6 }, (_, i) => [
+      ...Array.from({length: 6}, (_, i) => [
         {
           type: SEGMENT_TYPES.TABATA_WORK.id,
           duration: 20,
@@ -619,7 +619,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // 4 rounds of 5 min tempo / 2 min active recovery
-      ...Array.from({ length: 4 }, (_, i) => [
+      ...Array.from({length: 4}, (_, i) => [
         {
           type: SEGMENT_TYPES.TEMPO.id,
           duration: 300,
@@ -694,7 +694,7 @@ export const WORKOUT_PRESETS = [
         soundCue: SOUND_CUES.NONE
       },
       // HIIT block
-      ...Array.from({ length: 5 }, (_, i) => [
+      ...Array.from({length: 5}, (_, i) => [
         {
           type: SEGMENT_TYPES.HIIT_WORK.id,
           duration: 40,
@@ -753,7 +753,7 @@ export function getAllPresets() {
  */
 export function getPresetById(presetId) {
   const preset = WORKOUT_PRESETS.find(p => p.id === presetId);
-  return preset ? { ...preset } : null;
+  return preset ? {...preset} : null;
 }
 
 /**
