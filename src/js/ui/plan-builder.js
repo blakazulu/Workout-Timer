@@ -465,18 +465,22 @@ function createSegmentCard(segment, index) {
   card.className = "segment-card";
   card.dataset.type = segment.type;
   card.dataset.index = index;
+  card.draggable = true;
 
   const typeName = SEGMENT_TYPE_DEFAULTS[segment.type]?.name || segment.type;
   const formattedDuration = formatDuration(segment.duration);
 
   card.innerHTML = `
+    <div class="segment-drag-handle">
+      <img alt="Drag" class="svg-icon" src="/svg-icons/more-menu/menu-01.svg"/>
+    </div>
     <div class="segment-info">
       <span class="segment-type-badge segment-type-${segment.type}">${typeName}</span>
       <span class="segment-duration">${formattedDuration}</span>
     </div>
     <div class="segment-actions">
       <button type="button" class="segment-edit-btn" data-index="${index}" aria-label="Edit segment">
-        <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/view.svg"/>
+        <img alt="Edit" class="svg-icon" src="/svg-icons/setting/setting-01.svg"/>
       </button>
       <button type="button" class="segment-delete-btn" data-index="${index}" aria-label="Delete segment">
         <img alt="Delete" class="svg-icon" src="/svg-icons/add-remove-delete/delete-01.svg"/>
@@ -495,6 +499,14 @@ function createSegmentCard(segment, index) {
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => deleteSegment(index));
   }
+
+  // Add drag event listeners
+  card.addEventListener("dragstart", handleDragStart);
+  card.addEventListener("dragend", handleDragEnd);
+  card.addEventListener("dragover", handleDragOver);
+  card.addEventListener("drop", handleDrop);
+  card.addEventListener("dragenter", handleDragEnter);
+  card.addEventListener("dragleave", handleDragLeave);
 
   return card;
 }
@@ -847,4 +859,70 @@ function showNotification(message, type = "info") {
   } else {
     console.log(`[${type.toUpperCase()}] ${message}`);
   }
+}
+
+// ========== DRAG AND DROP HANDLERS ==========
+
+let draggedElement = null;
+let draggedIndex = null;
+
+function handleDragStart(e) {
+  draggedElement = e.currentTarget;
+  draggedIndex = parseInt(draggedElement.dataset.index);
+  e.currentTarget.classList.add("dragging");
+  e.dataTransfer.effectAllowed = "move";
+  e.dataTransfer.setData("text/html", e.currentTarget.innerHTML);
+}
+
+function handleDragEnd(e) {
+  e.currentTarget.classList.remove("dragging");
+
+  // Remove all drag-over classes
+  const cards = document.querySelectorAll(".segment-card");
+  cards.forEach(card => card.classList.remove("drag-over"));
+}
+
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.dataTransfer.dropEffect = "move";
+  return false;
+}
+
+function handleDragEnter(e) {
+  if (e.currentTarget !== draggedElement) {
+    e.currentTarget.classList.add("drag-over");
+  }
+}
+
+function handleDragLeave(e) {
+  e.currentTarget.classList.remove("drag-over");
+}
+
+function handleDrop(e) {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
+  const dropTarget = e.currentTarget;
+  const dropIndex = parseInt(dropTarget.dataset.index);
+
+  if (draggedIndex !== dropIndex && draggedElement !== dropTarget) {
+    // Reorder segments array
+    const segment = builderState.segments[draggedIndex];
+    builderState.segments.splice(draggedIndex, 1);
+    builderState.segments.splice(dropIndex, 0, segment);
+
+    // Re-render the list
+    renderSegmentsList();
+
+    // Track analytics
+    analytics.track("plan_builder:segments_reordered", {
+      fromIndex: draggedIndex,
+      toIndex: dropIndex
+    });
+  }
+
+  return false;
 }
