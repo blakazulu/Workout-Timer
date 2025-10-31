@@ -204,3 +204,23 @@ function optimizeThumbnails(history) {
 
   console.log(`Thumbnails kept for ${thumbnailWhitelist.size} songs`);
 }
+
+// ===== Workout Plans Integration =====
+// Re-export plan functions for convenience (can also import directly from plans module)
+
+export {
+  loadPlans,
+  getPlanById,
+  savePlan,
+  deletePlan,
+  loadActivePlan,
+  setActivePlan,
+  incrementPlanUsage,
+  PLANS_STORAGE_KEY,
+  ACTIVE_PLAN_KEY
+} from "./plans/storage.js";
+
+export {
+  getAllPresets,
+  getPresetById
+} from "./plans/presets.js";

@@ -1,0 +1,1688 @@
+/**
+ * Workout Plan System - Complete Cyberpunk Design
+ * Enhanced visual styling with animations, neon effects, and responsive design
+ */
+
+/* ========================================
+   CSS VARIABLES & COLOR SYSTEM
+   ======================================== */
+
+:root {
+  /* Segment Type Colors */
+  --plan-color-prepare: #6464ff;
+  --plan-color-prepare-glow: rgba(100, 100, 255, 0.5);
+  --plan-color-warmup: #ff9600;
+  --plan-color-warmup-glow: rgba(255, 150, 0, 0.5);
+  --plan-color-work: #ff0096;
+  --plan-color-work-glow: rgba(255, 0, 150, 0.5);
+  --plan-color-rest: #00ffc8;
+  --plan-color-rest-glow: rgba(0, 255, 200, 0.5);
+  --plan-color-cooldown: #64c8ff;
+  --plan-color-cooldown-glow: rgba(100, 200, 255, 0.5);
+
+  /* Primary Palette */
+  --plan-primary-cyan: #00ffc8;
+  --plan-primary-pink: #ff0096;
+  --plan-primary-purple: #6464ff;
+  --plan-primary-orange: #ff9600;
+  --plan-primary-green: #00ff88;
+
+  /* Background & Surface Colors */
+  --plan-bg-primary: rgba(10, 10, 10, 0.98);
+  --plan-bg-secondary: rgba(0, 0, 0, 0.3);
+  --plan-bg-elevated: rgba(255, 255, 255, 0.05);
+  --plan-bg-hover: rgba(255, 255, 255, 0.08);
+
+  /* Border Colors */
+  --plan-border-primary: rgba(100, 100, 255, 0.3);
+  --plan-border-secondary: rgba(255, 255, 255, 0.1);
+  --plan-border-active: rgba(0, 255, 200, 0.6);
+
+  /* Text Colors */
+  --plan-text-primary: #ffffff;
+  --plan-text-secondary: rgba(255, 255, 255, 0.7);
+  --plan-text-muted: rgba(255, 255, 255, 0.5);
+  --plan-text-accent: #00ffc8;
+}
+
+/* ========================================
+   ACTIVE PLAN DISPLAY (Settings Panel)
+   ======================================== */
+
+.active-plan-display {
+  @apply w-full mb-6;
+}
+
+.active-plan-display button {
+  @apply w-full flex items-center justify-between p-4 rounded-xl relative overflow-hidden;
+  @apply transition-all duration-300;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.08) 0%, rgba(255, 0, 150, 0.08) 100%);
+  border: 2px solid rgba(100, 100, 255, 0.3);
+  cursor: pointer;
+  min-height: 60px;
+}
+
+.active-plan-display button::before {
+  background: linear-gradient(135deg, #6464ff, #ff0096, #00ffc8);
+  background-size: 200% 200%;
+  content: '';
+  inset: -2px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+.active-plan-display button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.active-plan-display button:hover::before {
+  opacity: 0.3;
+}
+
+.active-plan-display button:hover::after {
+  transform: translateX(100%);
+}
+
+.active-plan-display button:hover {
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.15) 0%, rgba(255, 0, 150, 0.15) 100%);
+  border-color: rgba(100, 100, 255, 0.6);
+  box-shadow:
+    0 0 30px rgba(100, 100, 255, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(100, 100, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.active-plan-display button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.active-plan-info {
+  @apply flex items-center gap-3;
+}
+
+.active-plan-info .svg-icon {
+  @apply w-6 h-6;
+  filter: drop-shadow(0 0 8px rgba(100, 100, 255, 0.6));
+  transition: all 0.3s ease;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.active-plan-display button:hover .svg-icon {
+  filter: drop-shadow(0 0 12px rgba(100, 100, 255, 0.9));
+  transform: scale(1.1) rotate(5deg);
+}
+
+.active-plan-text {
+  @apply flex flex-col items-start;
+}
+
+.active-plan-label {
+  @apply text-xs uppercase tracking-wide;
+  color: rgba(100, 100, 255, 0.7);
+  font-family: var(--font-family-display);
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.active-plan-name {
+  @apply text-base font-bold;
+  color: #00ffc8;
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+
+/* ========================================
+   PLAN SELECTOR POPOVER
+   ======================================== */
+
+.plan-selector-popover {
+  @apply hidden flex-col m-auto max-h-[650px] overflow-hidden p-0;
+  @apply rounded-xl border-2 border-solid text-white;
+  @apply transition-all duration-300;
+  backdrop-filter: blur(20px);
+  background: rgba(10, 10, 10, 0.98);
+  border-color: rgba(100, 100, 255, 0.5);
+  box-shadow:
+    0 0 60px rgba(100, 100, 255, 0.4),
+    0 12px 48px rgba(0, 0, 0, 0.9),
+    inset 0 0 100px rgba(100, 100, 255, 0.05);
+  width: min(550px, 92vw);
+}
+
+.plan-selector-popover:popover-open {
+  @apply flex opacity-100 scale-100;
+  animation: modalEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.plan-selector-header {
+  @apply flex items-center justify-between p-5 shrink-0;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.1) 0%, rgba(255, 0, 150, 0.1) 100%);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+  position: relative;
+}
+
+.plan-selector-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--plan-primary-cyan),
+    var(--plan-primary-pink),
+    transparent
+  );
+  animation: gradientFlow 3s linear infinite;
+}
+
+.plan-selector-header h3 {
+  @apply text-xl font-bold m-0;
+  background: linear-gradient(135deg, #00ffc8 0%, #ff0096 50%, #6464ff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--font-family-display);
+  letter-spacing: 2px;
+  animation: gradientFlow 5s ease infinite;
+}
+
+.plan-selector-close {
+  @apply w-10 h-10 flex items-center justify-center rounded-lg;
+  @apply transition-all duration-300 cursor-pointer;
+  background: rgba(255, 0, 150, 0.1);
+  border: 1px solid rgba(255, 0, 150, 0.3);
+  color: #ff0096;
+}
+
+.plan-selector-close:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.6);
+  box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.plan-selector-close .svg-icon {
+  @apply w-5 h-5;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 150, 0.6));
+}
+
+/* ========================================
+   MODE TABS
+   ======================================== */
+
+.plan-mode-tabs {
+  @apply flex gap-2 px-5 py-4 shrink-0;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.15);
+}
+
+.plan-mode-tab {
+  @apply flex-1 flex flex-col items-center gap-2 px-4 py-3 rounded-lg;
+  @apply transition-all duration-300 cursor-pointer relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(100, 100, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.plan-mode-tab::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-purple));
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.plan-mode-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(100, 100, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.plan-mode-tab.active {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
+  border-color: rgba(0, 255, 200, 0.6);
+  color: var(--plan-primary-cyan);
+  box-shadow:
+    0 0 20px rgba(0, 255, 200, 0.3),
+    inset 0 0 20px rgba(0, 255, 200, 0.1);
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.5);
+}
+
+.plan-mode-tab.active::before {
+  opacity: 0.2;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+.plan-mode-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--plan-primary-cyan), transparent);
+  border-radius: 3px;
+  box-shadow: 0 0 10px var(--plan-primary-cyan);
+}
+
+.plan-mode-icon {
+  @apply w-6 h-6;
+  filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.3));
+  transition: all 0.3s ease;
+}
+
+.plan-mode-tab:hover .plan-mode-icon {
+  filter: drop-shadow(0 0 8px rgba(100, 100, 255, 0.5));
+  transform: scale(1.1);
+}
+
+.plan-mode-tab.active .plan-mode-icon {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.6));
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+/* ========================================
+   PLAN LIST CONTAINER
+   ======================================== */
+
+.plan-list-container {
+  @apply flex-1 overflow-y-auto p-5;
+  background: rgba(0, 0, 0, 0.2);
+  min-height: 300px;
+  max-height: 400px;
+}
+
+.plan-list-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.plan-list-container::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.1);
+  border-radius: 5px;
+  margin: 4px;
+}
+
+.plan-list-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6464ff, #ff0096);
+  border-radius: 5px;
+  border: 2px solid rgba(10, 10, 10, 0.5);
+}
+
+.plan-list-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffc8, #6464ff, #ff0096);
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+
+.plan-list {
+  @apply flex flex-col gap-3;
+}
+
+/* ========================================
+   PLAN CARDS
+   ======================================== */
+
+.plan-card {
+  @apply flex flex-col gap-3 p-4 rounded-lg relative overflow-hidden;
+  @apply transition-all duration-300 cursor-pointer;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 2px solid rgba(100, 100, 255, 0.3);
+  min-height: 100px;
+}
+
+.plan-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-pink));
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.plan-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.plan-card:hover::before {
+  opacity: 0.3;
+}
+
+.plan-card:hover::after {
+  transform: translateX(100%);
+}
+
+.plan-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow:
+    0 0 25px rgba(0, 255, 200, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba(0, 255, 200, 0.05);
+  transform: translateY(-3px) scale(1.01);
+}
+
+.plan-card:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.plan-card.active {
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow:
+    0 0 30px rgba(0, 255, 200, 0.5),
+    inset 0 0 40px rgba(0, 255, 200, 0.1);
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.1) 0%, rgba(100, 100, 255, 0.1) 100%);
+}
+
+.plan-card.active::before {
+  opacity: 0.4;
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+/* Plan Card Header */
+.plan-card-header {
+  @apply flex items-start justify-between gap-3;
+}
+
+.plan-card-info {
+  @apply flex-1 flex flex-col gap-1;
+}
+
+.plan-card-title {
+  @apply text-base font-bold m-0;
+  color: var(--plan-text-primary);
+  font-family: var(--font-family-display);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.plan-card:hover .plan-card-title {
+  color: var(--plan-primary-cyan);
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+
+.plan-card-description {
+  @apply text-sm m-0;
+  color: var(--plan-text-secondary);
+  line-height: 1.4;
+}
+
+/* Plan Card Badges */
+.plan-card-badges {
+  @apply flex flex-wrap items-center gap-2 shrink-0;
+}
+
+.plan-badge {
+  @apply px-2 py-1 rounded-md text-xs font-bold;
+  font-family: var(--font-family-display);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.plan-badge-preset {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 0, 150, 0.2));
+  border: 1px solid rgba(255, 107, 53, 0.5);
+  color: #ff6b35;
+  text-shadow: 0 0 5px rgba(255, 107, 53, 0.5);
+}
+
+.plan-badge-custom {
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.2), rgba(0, 255, 200, 0.2));
+  border: 1px solid rgba(100, 100, 255, 0.5);
+  color: #6464ff;
+  text-shadow: 0 0 5px rgba(100, 100, 255, 0.5);
+}
+
+.plan-badge-active {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 200, 0.3));
+  border: 1px solid rgba(0, 255, 136, 0.6);
+  color: #00ff88;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Plan Card Stats */
+.plan-card-stats {
+  @apply flex items-center gap-4 pt-2;
+  border-top: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.plan-stat {
+  @apply flex items-center gap-2;
+}
+
+.plan-stat .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.4));
+  transition: all 0.3s ease;
+}
+
+.plan-card:hover .plan-stat .svg-icon {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 200, 0.6));
+}
+
+.plan-stat-label {
+  @apply text-xs;
+  color: var(--plan-text-muted);
+  font-weight: 600;
+}
+
+.plan-stat-value {
+  @apply text-sm font-bold;
+  color: var(--plan-primary-cyan);
+  font-family: var(--font-family-display);
+  text-shadow: 0 0 6px rgba(0, 255, 200, 0.4);
+}
+
+/* Plan Card Actions */
+.plan-card-actions {
+  @apply flex items-center gap-2 mt-2;
+}
+
+.plan-action-btn {
+  @apply flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg;
+  @apply transition-all duration-300 cursor-pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.plan-action-btn:hover {
+  background: rgba(0, 255, 200, 0.1);
+  border-color: rgba(0, 255, 200, 0.5);
+  color: var(--plan-primary-cyan);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+  transform: translateY(-2px);
+}
+
+.plan-action-btn.btn-primary {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
+  border-color: rgba(0, 255, 200, 0.5);
+  color: var(--plan-primary-cyan);
+}
+
+.plan-action-btn.btn-primary:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.3), rgba(100, 100, 255, 0.3));
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+}
+
+.plan-action-btn.btn-danger {
+  background: rgba(255, 0, 150, 0.1);
+  border-color: rgba(255, 0, 150, 0.3);
+  color: var(--plan-primary-pink);
+}
+
+.plan-action-btn.btn-danger:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.6);
+  box-shadow: 0 0 20px rgba(255, 0, 150, 0.4);
+}
+
+.plan-action-btn .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.4));
+}
+
+/* ========================================
+   LOADING & EMPTY STATES
+   ======================================== */
+
+.plan-loading,
+.plan-empty {
+  @apply flex flex-col items-center justify-center gap-4 py-12;
+  color: var(--plan-text-muted);
+  text-align: center;
+}
+
+.plan-loading .svg-icon,
+.plan-empty .svg-icon {
+  @apply w-16 h-16;
+  filter: drop-shadow(0 0 15px rgba(100, 100, 255, 0.4));
+  opacity: 0.6;
+}
+
+.plan-loading .svg-icon {
+  animation: spin 2s linear infinite;
+}
+
+.plan-empty .svg-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+.plan-loading p,
+.plan-empty p {
+  @apply text-base font-bold m-0;
+  color: var(--plan-text-secondary);
+  font-family: var(--font-family-display);
+}
+
+.plan-empty .empty-hint {
+  @apply text-sm;
+  color: var(--plan-text-muted);
+  max-width: 300px;
+}
+
+/* ========================================
+   PLAN SELECTOR FOOTER
+   ======================================== */
+
+.plan-selector-footer {
+  @apply flex items-center justify-center p-5 shrink-0;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.create-custom-plan-btn {
+  @apply flex items-center justify-center gap-2 px-6 py-3 rounded-lg w-full;
+  @apply transition-all duration-300 cursor-pointer relative overflow-hidden;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
+  border: 2px solid rgba(0, 255, 200, 0.5);
+  color: var(--plan-primary-cyan);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.4);
+}
+
+.create-custom-plan-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--plan-primary-cyan), var(--plan-primary-purple));
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.create-custom-plan-btn:hover::before {
+  opacity: 0.3;
+  animation: borderGlow 2s ease-in-out infinite;
+}
+
+.create-custom-plan-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(100, 100, 255, 0.25));
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow:
+    0 0 30px rgba(0, 255, 200, 0.5),
+    inset 0 0 30px rgba(0, 255, 200, 0.1);
+  transform: translateY(-2px);
+}
+
+.create-custom-plan-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.create-custom-plan-btn .svg-icon {
+  @apply w-5 h-5;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 200, 0.6));
+  transition: all 0.3s ease;
+}
+
+.create-custom-plan-btn:hover .svg-icon {
+  filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ========================================
+   PLAN BUILDER POPOVER - REBUILT
+   ======================================== */
+
+/* Popover Container */
+.plan-builder-popover {
+  @apply hidden flex-col m-auto p-0;
+  width: min(550px, 92vw);
+  max-height: 85vh;
+  background: rgba(10, 10, 10, 0.98);
+  border: 2px solid rgba(100, 100, 255, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 60px rgba(100, 100, 255, 0.4),
+    0 12px 48px rgba(0, 0, 0, 0.9);
+  color: white;
+  overflow: hidden;
+}
+
+.plan-builder-popover:popover-open {
+  @apply flex;
+  animation: popoverSlideIn 0.3s ease-out;
+}
+
+@keyframes popoverSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header */
+.plan-builder-header {
+  @apply flex items-center justify-between p-4 shrink-0;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.1), rgba(255, 0, 150, 0.1));
+  border-bottom: 1px solid rgba(100, 100, 255, 0.3);
+}
+
+.plan-builder-header h2 {
+  @apply text-lg font-bold m-0;
+  background: linear-gradient(135deg, #00ffc8, #ff0096, #6464ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-family-display);
+  letter-spacing: 1px;
+}
+
+.plan-builder-close {
+  @apply w-9 h-9 flex items-center justify-center rounded-lg;
+  background: rgba(255, 0, 150, 0.1);
+  border: 1px solid rgba(255, 0, 150, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plan-builder-close:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.6);
+  transform: rotate(90deg);
+}
+
+.plan-builder-close .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.6));
+}
+
+/* Step Container */
+.plan-builder-step {
+  @apply flex flex-col;
+  height: calc(85vh - 80px);
+  max-height: 600px;
+  min-height: 400px;
+}
+
+/* Step Header */
+.step-header {
+  @apply p-4 shrink-0;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.step-header h3 {
+  @apply text-base font-bold m-0 mb-1;
+  color: #00ffc8;
+  font-family: var(--font-family-display);
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.5);
+}
+
+.step-header p {
+  @apply text-sm m-0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.add-segment-section, .segments-list-container, .total-duration-display, .step-navigation {
+  @apply p-4 shrink-0;
+}
+
+/* Step Body (Scrollable) */
+.step-body {
+  @apply flex-1 overflow-y-auto p-4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.step-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.step-body::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.1);
+}
+
+.step-body::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 255, 0.4);
+  border-radius: 3px;
+}
+
+/* Step Footer */
+.step-footer {
+  @apply p-4 shrink-0;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(100, 100, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ========================================
+   STEP 1: ADD SEGMENT BUTTON & FORM
+   ======================================== */
+
+/* Add Segment Section (fixed at top, relative container for dropdown) */
+.add-segment-section {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0);
+  padding-bottom: 1rem;
+}
+
+/* Add Segment Button */
+.add-segment-btn {
+  @apply w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15), rgba(100, 100, 255, 0.15));
+  border: 2px solid rgba(0, 255, 200, 0.5);
+  color: #00ffc8;
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-segment-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.25), rgba(100, 100, 255, 0.25));
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.4);
+  transform: translateY(-1px);
+}
+
+.add-segment-btn .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(0, 255, 200, 0.6));
+}
+
+/* Segment Form (Dropdown overlay anchored below button) */
+.segment-form {
+  @apply p-4 rounded-lg;
+  position: absolute;
+  top: calc(100% + 0.5rem); /* Position below button with 0.5rem gap */
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.25), rgba(255, 0, 150, 0.15));
+  border: 2px solid rgba(100, 100, 255, 0.6);
+  border-radius: 12px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(100, 100, 255, 0.4),
+    inset 0 0 30px rgba(100, 100, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: dropdownSlideIn 0.3s ease;
+}
+
+.segment-form[hidden] {
+  display: none;
+}
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Layout */
+.form-row {
+  @apply flex gap-3;
+}
+
+.form-field {
+  @apply flex flex-col gap-1 flex-1;
+}
+
+.form-field label {
+  @apply text-xs font-bold;
+  color: rgba(100, 100, 255, 0.9);
+  font-family: var(--font-family-display);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  @apply px-3 py-2 rounded-lg text-sm;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  color: white;
+  font-family: var(--font-family-base);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Select dropdown styling */
+.form-field select {
+  cursor: pointer;
+}
+
+.form-field select option {
+  background: rgba(10, 10, 10, 0.98);
+  color: white;
+  padding: 8px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+}
+
+.form-field small {
+  @apply text-xs;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.required {
+  color: #ff0096;
+}
+
+.error-message {
+  @apply text-xs;
+  color: #ff0096;
+  display: none;
+}
+
+.error-message:not(:empty) {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Form Actions */
+.form-actions {
+  @apply flex gap-2 mt-3;
+}
+
+.btn-secondary {
+  @apply flex-1 px-4 py-2 rounded-lg text-sm font-bold;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary {
+  @apply flex-1 px-4 py-2 rounded-lg text-sm font-bold;
+  background: linear-gradient(135deg, #00ffc8, #6464ff);
+  border: none;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SEGMENTS SECTION
+   ======================================== */
+
+.segments-section {
+  @apply p-4 rounded-lg;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.segments-header {
+  @apply flex items-center justify-between mb-3 pb-2;
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.segments-title {
+  @apply text-sm font-bold;
+  color: rgba(100, 100, 255, 0.9);
+  font-family: var(--font-family-display);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.segments-count {
+  @apply text-xs font-bold px-2 py-1 rounded-full;
+  background: rgba(0, 255, 200, 0.15);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  color: #00ffc8;
+}
+
+.segments-list {
+  @apply flex flex-col gap-2;
+  min-height: 100px;
+}
+
+.segments-empty {
+  @apply flex flex-col items-center justify-center gap-2 py-8;
+  text-align: center;
+}
+
+.segments-empty .svg-icon {
+  @apply w-10 h-10;
+  opacity: 0.4;
+  filter: drop-shadow(0 0 8px rgba(100, 100, 255, 0.3));
+}
+
+.segments-empty p {
+  @apply text-sm m-0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Segment Card */
+.segment-card {
+  @apply flex items-center justify-between p-3 rounded-lg relative overflow-hidden;
+  @apply transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  min-height: 60px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.segment-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  transition: all 0.3s ease;
+}
+
+.segment-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 255, 200, 0.5);
+  box-shadow:
+    0 0 15px rgba(0, 255, 200, 0.2),
+    inset 0 0 20px rgba(0, 255, 200, 0.05);
+  transform: translateX(4px);
+}
+
+.segment-info {
+  @apply flex items-center gap-3;
+}
+
+.segment-type-badge {
+  @apply px-3 py-1 rounded-full text-xs font-bold relative overflow-hidden;
+  font-family: var(--font-family-display);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.segment-type-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.segment-card:hover .segment-type-badge::before {
+  transform: translateX(100%);
+}
+
+/* Segment Type Colors */
+.segment-type-prepare {
+  background: rgba(100, 100, 255, 0.2);
+  border: 1px solid rgba(100, 100, 255, 0.5);
+  color: #6464ff;
+  text-shadow: 0 0 5px rgba(100, 100, 255, 0.5);
+}
+
+.segment-card:has(.segment-type-prepare)::before {
+  background: linear-gradient(180deg, #6464ff, transparent);
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.5);
+}
+
+.segment-type-warmup {
+  background: rgba(255, 150, 0, 0.2);
+  border: 1px solid rgba(255, 150, 0, 0.5);
+  color: #ff9600;
+  text-shadow: 0 0 5px rgba(255, 150, 0, 0.5);
+}
+
+.segment-card:has(.segment-type-warmup)::before {
+  background: linear-gradient(180deg, #ff9600, transparent);
+  box-shadow: 0 0 10px rgba(255, 150, 0, 0.5);
+}
+
+.segment-type-work {
+  background: rgba(255, 0, 150, 0.2);
+  border: 1px solid rgba(255, 0, 150, 0.5);
+  color: #ff0096;
+  text-shadow: 0 0 5px rgba(255, 0, 150, 0.5);
+}
+
+.segment-card:has(.segment-type-work)::before {
+  background: linear-gradient(180deg, #ff0096, transparent);
+  box-shadow: 0 0 10px rgba(255, 0, 150, 0.5);
+}
+
+.segment-type-rest {
+  background: rgba(0, 255, 200, 0.2);
+  border: 1px solid rgba(0, 255, 200, 0.5);
+  color: #00ffc8;
+  text-shadow: 0 0 5px rgba(0, 255, 200, 0.5);
+}
+
+.segment-card:has(.segment-type-rest)::before {
+  background: linear-gradient(180deg, #00ffc8, transparent);
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+}
+
+.segment-type-cooldown {
+  background: rgba(100, 200, 255, 0.2);
+  border: 1px solid rgba(100, 200, 255, 0.5);
+  color: #64c8ff;
+  text-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
+}
+
+.segment-card:has(.segment-type-cooldown)::before {
+  background: linear-gradient(180deg, #64c8ff, transparent);
+  box-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+}
+
+.segment-duration {
+  @apply text-sm font-bold;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-family-base);
+}
+
+.segment-actions {
+  @apply flex items-center gap-2;
+}
+
+.segment-edit-btn,
+.segment-delete-btn {
+  @apply w-8 h-8 flex items-center justify-center rounded-lg;
+  @apply transition-all duration-300 cursor-pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.segment-edit-btn:hover {
+  background: rgba(100, 100, 255, 0.2);
+  border-color: rgba(100, 100, 255, 0.6);
+  box-shadow: 0 0 15px rgba(100, 100, 255, 0.4);
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.segment-delete-btn:hover {
+  background: rgba(255, 0, 150, 0.2);
+  border-color: rgba(255, 0, 150, 0.6);
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.4);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.segment-edit-btn .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(100, 100, 255, 0.5));
+  transition: all 0.3s ease;
+}
+
+.segment-delete-btn .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 4px rgba(255, 0, 150, 0.5));
+  transition: all 0.3s ease;
+}
+
+.segment-edit-btn:hover .svg-icon {
+  filter: drop-shadow(0 0 8px rgba(100, 100, 255, 0.8));
+}
+
+.segment-delete-btn:hover .svg-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 0, 150, 0.8));
+}
+
+/* ========================================
+   STEP FOOTER
+   ======================================== */
+
+.step-footer {
+  @apply shrink-0 flex items-center justify-between p-4 gap-4;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(100, 100, 255, 0.3);
+}
+
+/* Total Duration Display */
+.total-duration {
+  @apply flex items-center gap-2;
+}
+
+.total-duration .svg-icon {
+  @apply w-4 h-4;
+  filter: drop-shadow(0 0 6px rgba(0, 255, 200, 0.5));
+}
+
+.total-duration span {
+  @apply text-sm;
+  color: rgba(0, 255, 200, 0.8);
+  font-family: var(--font-family-display);
+}
+
+.total-duration strong {
+  @apply text-base font-bold;
+  color: var(--plan-primary-cyan);
+  font-family: var(--font-family-display);
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.6);
+}
+
+/* Step Actions (Button Container) */
+.step-actions {
+  @apply flex items-center gap-3;
+}
+
+/* ========================================
+   FORM STYLING (Step 2)
+   ======================================== */
+
+.form-field label {
+  @apply text-sm font-bold;
+  color: rgba(100, 100, 255, 0.9);
+  font-family: var(--font-family-display);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.required {
+  color: var(--plan-primary-pink);
+  text-shadow: 0 0 5px rgba(255, 0, 150, 0.5);
+}
+
+.form-field small {
+  @apply text-xs;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.error-message {
+  @apply text-xs;
+  color: var(--plan-primary-pink);
+  font-weight: 600;
+  display: none;
+  text-shadow: 0 0 5px rgba(255, 0, 150, 0.4);
+}
+
+.error-message[role="alert"] {
+  display: block;
+  animation: shake 0.4s ease;
+}
+
+.input-error {
+  border-color: var(--plan-primary-pink) !important;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.4) !important;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ========================================
+   STEP NAVIGATION
+   ======================================== */
+
+.step-navigation {
+  @apply flex items-center justify-between gap-3;
+}
+
+.btn-cancel,
+.btn-back {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg;
+  @apply transition-all duration-300 cursor-pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-family-display);
+  font-weight: 600;
+}
+
+.btn-cancel:hover,
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-cancel:active,
+.btn-back:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-next,
+.btn-save {
+  @apply flex items-center gap-2 px-6 py-2 rounded-lg relative overflow-hidden;
+  @apply transition-all duration-300 cursor-pointer;
+  background: linear-gradient(135deg, #00ffc8, #6464ff);
+  border: none;
+  color: #000;
+  font-family: var(--font-family-display);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: none;
+}
+
+.btn-next::before,
+.btn-save::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-next:hover:not(:disabled)::before,
+.btn-save:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-next:hover:not(:disabled),
+.btn-save:hover:not(:disabled) {
+  box-shadow:
+    0 0 25px rgba(0, 255, 200, 0.6),
+    0 0 50px rgba(0, 255, 200, 0.3),
+    inset 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-next:active:not(:disabled),
+.btn-save:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.btn-next .svg-icon,
+.btn-save .svg-icon,
+.btn-back .svg-icon {
+  @apply w-5 h-5;
+  transition: all 0.3s ease;
+}
+
+.btn-next:hover:not(:disabled) .svg-icon,
+.btn-save:hover:not(:disabled) .svg-icon {
+  transform: scale(1.1);
+}
+
+.save-success {
+  animation: successPulse 0.6s ease;
+}
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 40px rgba(0, 255, 200, 0.8),
+      0 0 80px rgba(0, 255, 200, 0.4);
+  }
+}
+
+/* ========================================
+   ANIMATIONS & KEYFRAMES
+   ======================================== */
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.2;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.4;
+  }
+}
+
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 200, 0.8);
+    opacity: 0.9;
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 200, 0.5));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.8));
+  }
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(0, 255, 200, 0.9);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes scanline {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes modalEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 255, 136, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .plan-selector-popover,
+  .plan-builder-popover {
+    width: 95vw;
+  }
+
+  .plan-mode-tabs {
+    @apply flex-wrap;
+  }
+
+  .plan-mode-tab {
+    min-width: 100px;
+  }
+
+  .plan-card-stats {
+    flex-wrap: wrap;
+  }
+
+  .plan-card-actions {
+    flex-direction: column;
+  }
+
+  .plan-action-btn {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .plan-selector-popover,
+  .plan-builder-popover {
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .plan-selector-header h3,
+  .plan-builder-header h2 {
+    @apply text-base;
+  }
+
+  .plan-mode-tabs {
+    @apply flex-col gap-2;
+  }
+
+  .plan-mode-tab {
+    @apply flex-row justify-start;
+    width: 100%;
+  }
+
+  .plan-builder-step {
+    padding: var(--spacing-md);
+  }
+
+  .add-segment-btn,
+  .btn-next,
+  .btn-save {
+    min-height: 44px;
+    font-size: var(--font-size-sm);
+  }
+
+  .segment-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .segment-actions {
+    @apply w-full justify-end;
+  }
+
+  .step-navigation {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-back,
+  .btn-next,
+  .btn-save {
+    @apply w-full justify-center;
+  }
+
+  .plan-card-header {
+    flex-direction: column;
+  }
+
+  .plan-card-badges {
+    @apply w-full;
+  }
+
+  .total-duration-display {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .plan-selector-header,
+  .plan-builder-header {
+    padding: var(--spacing-md);
+  }
+
+  .plan-list-container {
+    padding: var(--spacing-md);
+  }
+
+  .segment-type-badge {
+    @apply px-2 py-0.5;
+    font-size: 10px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Focus states for keyboard navigation */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--plan-primary-cyan);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .plan-card,
+  .segment-card,
+  .plan-mode-tab {
+    border-width: 2px;
+  }
+
+  .plan-card-title,
+  .segment-type-badge,
+  .duration-value {
+    font-weight: 900;
+  }
+}
+
+/* Dark mode adjustments (if needed) */
+@media (prefers-color-scheme: dark) {
+  .plan-selector-popover,
+  .plan-builder-popover {
+    background: rgba(5, 5, 5, 0.99);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .plan-selector-popover,
+  .plan-builder-popover {
+    display: none !important;
+  }
+}

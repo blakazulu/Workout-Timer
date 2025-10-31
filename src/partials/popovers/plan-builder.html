@@ -1,0 +1,136 @@
+<!-- Plan Builder Popover - Clean 2-Step Workflow -->
+<div class="plan-builder-popover" id="planBuilderPopover" popover>
+  <!-- Header -->
+  <div class="plan-builder-header">
+    <h2 id="planBuilderTitle">Create Custom Plan</h2>
+    <button class="plan-builder-close" popovertarget="planBuilderPopover" popovertargetaction="hide" aria-label="Close">
+      <img alt="Close" class="svg-icon" src="/svg-icons/add-remove-delete/cancel-01.svg"/>
+    </button>
+  </div>
+
+  <!-- Step 1: Build Segments -->
+  <div class="plan-builder-step" id="stepSegments">
+    <!-- Header -->
+    <div class="step-header">
+      <h3>Build Your Workout</h3>
+      <p>Add segments to create your custom workout plan</p>
+    </div>
+
+    <!-- Body -->
+    <div class="step-body">
+      <!-- Add Segment Section (relative container for dropdown) -->
+      <div class="add-segment-section">
+        <!-- Add Segment Button -->
+        <button type="button" id="addSegmentBtn" class="add-segment-btn">
+          <img alt="Add" class="svg-icon" src="/svg-icons/add-remove-delete/remove-01.svg"/>
+          <span>Add Segment</span>
+        </button>
+
+        <!-- Segment Form (dropdown below button) -->
+        <div id="segmentForm" class="segment-form" hidden>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="segmentTypeSelect">Type</label>
+            <select id="segmentTypeSelect">
+              <option value="">Choose...</option>
+              <option value="prepare">Prepare</option>
+              <option value="warmup">Warm-up</option>
+              <option value="work">Work</option>
+              <option value="rest">Rest</option>
+              <option value="cooldown">Cool-down</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="segmentDuration">Duration (sec)</label>
+            <input type="number" id="segmentDuration" min="1" max="3600" placeholder="30"/>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancelSegmentBtn" class="btn-secondary">Cancel</button>
+          <button type="button" id="confirmSegmentBtn" class="btn-primary" disabled>Add</button>
+        </div>
+        </div>
+      </div>
+
+      <!-- Segments List -->
+      <div class="segments-section">
+        <div class="segments-header">
+          <span class="segments-title">Segments</span>
+          <span id="segmentCount" class="segments-count">0</span>
+        </div>
+        <div id="segmentsList" class="segments-list">
+          <div id="segmentsEmpty" class="segments-empty">
+            <img alt="Timer" class="svg-icon" src="/svg-icons/date-and-time/timer-01.svg"/>
+            <p>No segments yet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="step-footer">
+      <div class="total-duration">
+        <img alt="Clock" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
+        <span>Total:</span>
+        <strong id="totalDuration">0:00</strong>
+      </div>
+      <div class="step-actions">
+        <button type="button" id="cancelStep1Btn" class="btn-cancel" popovertarget="planBuilderPopover" popovertargetaction="hide">Cancel</button>
+        <button type="button" id="nextToStep2Btn" class="btn-next" disabled>
+          <span>Next</span>
+          <img alt="Next" class="svg-icon" src="/svg-icons/arrows-round/arrow-right-01-round.svg"/>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Plan Details -->
+  <div class="plan-builder-step" id="stepDetails" hidden>
+    <!-- Header -->
+    <div class="step-header">
+      <h3>Plan Details</h3>
+      <p>Name your plan and configure settings</p>
+    </div>
+
+    <!-- Body -->
+    <div class="step-body">
+      <div class="form-field">
+        <label for="planName">Plan Name <span class="required">*</span></label>
+        <input type="text" id="planName" placeholder="e.g., Morning HIIT" maxlength="100" required/>
+        <span id="nameError" class="error-message"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="planDescription">Description</label>
+        <textarea id="planDescription" placeholder="Describe your workout..." rows="3" maxlength="500"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="planRepetitions">Repetitions</label>
+          <input type="number" id="planRepetitions" min="1" max="99" value="1"/>
+          <small>Times to repeat</small>
+        </div>
+        <div class="form-field">
+          <label for="planAlertTime">Alert Time (sec)</label>
+          <input type="number" id="planAlertTime" min="0" max="60" value="3"/>
+          <small>Warning countdown</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="step-footer">
+      <div class="step-actions">
+        <button type="button" id="backToStep1Btn" class="btn-back">
+          <img alt="Back" class="svg-icon" src="/svg-icons/arrows-round/arrow-right-01-round.svg" style="transform: rotate(180deg)"/>
+          <span>Back</span>
+        </button>
+        <button type="button" id="savePlanBtn" class="btn-save">
+          <img alt="Save" class="svg-icon" src="/svg-icons/check-validation/checkmark-circle-01.svg"/>
+          <span>Save Plan</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

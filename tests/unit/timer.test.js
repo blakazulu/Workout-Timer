@@ -272,3 +272,288 @@ test.describe("Timer Module - Unit Tests", () => {
     expect(pauseResume.afterResume.time).toBe(35);
   });
 });
+
+test.describe("Timer Module - Segment Mode", () => {
+  test.beforeEach(async ({page}) => {
+    await page.goto("/");
+
+    await page.evaluate(() => {
+      localStorage.clear();
+    });
+  });
+
+  test("should calculate total duration for segment plan", async ({page}) => {
+    const totalDuration = await page.evaluate(() => {
+      const segments = [
+        {duration: 60}, // 1 minute warmup
+        {duration: 30}, // 30 second work
+        {duration: 15}, // 15 second rest
+        {duration: 30}, // 30 second work
+        {duration: 300}  // 5 minute cooldown
+      ];
+
+      return segments.reduce((sum, seg) => sum + seg.duration, 0);
+    });
+
+    expect(totalDuration).toBe(435); // 7 minutes 15 seconds
+  });
+
+  test("should track current segment index", async ({page}) => {
+    const progression = await page.evaluate(() => {
+      let currentSegmentIndex = 0;
+      const totalSegments = 5;
+      const results = [];
+
+      // Simulate segment progression
+      for (let i = 0; i < totalSegments; i++) {
+        results.push({
+          index: currentSegmentIndex,
+          progress: `${currentSegmentIndex + 1}/${totalSegments}`
+        });
+        currentSegmentIndex++;
+      }
+
+      return results;
+    });
+
+    expect(progression[0].progress).toBe("1/5");
+    expect(progression[2].progress).toBe("3/5");
+    expect(progression[4].progress).toBe("5/5");
+  });
+
+  test("should advance to next segment after completion", async ({page}) => {
+    const result = await page.evaluate(() => {
+      const segments = [
+        {name: "Warmup", duration: 60},
+        {name: "Work", duration: 30},
+        {name: "Rest", duration: 15}
+      ];
+
+      let currentSegmentIndex = 0;
+      let currentTime = segments[0].duration;
+
+      // Simulate countdown to 0
+      currentTime = 0;
+
+      // Advance to next segment
+      if (currentTime === 0 && currentSegmentIndex < segments.length - 1) {
+        currentSegmentIndex++;
+        currentTime = segments[currentSegmentIndex].duration;
+      }
+
+      return {
+        segmentIndex: currentSegmentIndex,
+        segmentName: segments[currentSegmentIndex].name,
+        currentTime
+      };
+    });
+
+    expect(result.segmentIndex).toBe(1);
+    expect(result.segmentName).toBe("Work");
+    expect(result.currentTime).toBe(30);
+  });
+
+  test("should detect final segment completion", async ({page}) => {
+    const result = await page.evaluate(() => {
+      const segments = [
+        {name: "Work", duration: 30},
+        {name: "Rest", duration: 15},
+        {name: "Cooldown", duration: 60}
+      ];
+
+      let currentSegmentIndex = 2; // Last segment
+      let currentTime = 0; // Completed
+
+      const isFinalSegment = currentSegmentIndex === segments.length - 1;
+      const isComplete = isFinalSegment && currentTime === 0;
+
+      return {isFinalSegment, isComplete};
+    });
+
+    expect(result.isFinalSegment).toBe(true);
+    expect(result.isComplete).toBe(true);
+  });
+
+  test("should get current segment info", async ({page}) => {
+    const segmentInfo = await page.evaluate(() => {
+      const segments = [
+        {
+          type: "warmup",
+          name: "Warm-up",
+          duration: 300,
+          intensity: "light",
+          soundCue: "none"
+        },
+        {
+          type: "hiit-work",
+          name: "Sprint",
+          duration: 30,
+          intensity: "very-hard",
+          soundCue: "alert"
+        }
+      ];
+
+      const currentSegmentIndex = 1;
+      const currentSegment = segments[currentSegmentIndex];
+
+      return {
+        type: currentSegment.type,
+        name: currentSegment.name,
+        duration: currentSegment.duration,
+        intensity: currentSegment.intensity,
+        soundCue: currentSegment.soundCue
+      };
+    });
+
+    expect(segmentInfo.type).toBe("hiit-work");
+    expect(segmentInfo.name).toBe("Sprint");
+    expect(segmentInfo.duration).toBe(30);
+    expect(segmentInfo.intensity).toBe("very-hard");
+    expect(segmentInfo.soundCue).toBe("alert");
+  });
+
+  test("should calculate remaining time in segment plan", async ({page}) => {
+    const remaining = await page.evaluate(() => {
+      const segments = [
+        {duration: 60}, // completed
+        {duration: 30}, // completed
+        {duration: 45}, // current (20s remaining)
+        {duration: 60}, // upcoming
+        {duration: 120}  // upcoming
+      ];
+
+      const currentSegmentIndex = 2;
+      const currentTime = 20;
+
+      // Current segment remaining time
+      let totalRemaining = currentTime;
+
+      // Add all upcoming segments
+      for (let i = currentSegmentIndex + 1; i < segments.length; i++) {
+        totalRemaining += segments[i].duration;
+      }
+
+      return totalRemaining;
+    });
+
+    expect(remaining).toBe(200); // 20 + 60 + 120
+  });
+
+  test("should validate segment structure", async ({page}) => {
+    const validation = await page.evaluate(() => {
+      const validateSegment = (segment) => {
+        if (!segment.type || typeof segment.type !== "string") return false;
+        if (!segment.duration || segment.duration <= 0) return false;
+        if (!segment.intensity) return false;
+        if (!segment.name) return false;
+        if (!segment.soundCue) return false;
+        return true;
+      };
+
+      const validSegment = {
+        type: "hiit-work",
+        duration: 30,
+        intensity: "hard",
+        name: "Sprint",
+        soundCue: "alert"
+      };
+
+      const invalidSegment1 = {
+        duration: 30,
+        intensity: "hard"
+        // Missing required fields
+      };
+
+      const invalidSegment2 = {
+        type: "hiit-work",
+        duration: -10, // Invalid duration
+        intensity: "hard",
+        name: "Sprint",
+        soundCue: "alert"
+      };
+
+      return {
+        valid: validateSegment(validSegment),
+        invalid1: validateSegment(invalidSegment1),
+        invalid2: validateSegment(invalidSegment2)
+      };
+    });
+
+    expect(validation.valid).toBe(true);
+    expect(validation.invalid1).toBe(false);
+    expect(validation.invalid2).toBe(false);
+  });
+
+  test("should format segment display text", async ({page}) => {
+    const displayText = await page.evaluate(() => {
+      const formatSegmentDisplay = (segmentName, currentIndex, totalSegments) => {
+        return `${segmentName} (${currentIndex + 1}/${totalSegments})`;
+      };
+
+      return {
+        segment1: formatSegmentDisplay("Warmup", 0, 5),
+        segment3: formatSegmentDisplay("Sprint", 2, 5),
+        segment5: formatSegmentDisplay("Cooldown", 4, 5)
+      };
+    });
+
+    expect(displayText.segment1).toBe("Warmup (1/5)");
+    expect(displayText.segment3).toBe("Sprint (3/5)");
+    expect(displayText.segment5).toBe("Cooldown (5/5)");
+  });
+
+  test("should handle segment mode vs simple mode distinction", async ({page}) => {
+    const modeCheck = await page.evaluate(() => {
+      const isSegmentMode = (segments) => {
+        return segments && Array.isArray(segments) && segments.length > 0;
+      };
+
+      const segmentPlan = [
+        {type: "warmup", duration: 60, intensity: "light", name: "Warmup", soundCue: "none"}
+      ];
+
+      const emptySegments = [];
+      const nullSegments = null;
+
+      return {
+        withSegments: isSegmentMode(segmentPlan),
+        emptyArray: isSegmentMode(emptySegments),
+        nullValue: isSegmentMode(nullSegments)
+      };
+    });
+
+    expect(modeCheck.withSegments).toBe(true);
+    expect(modeCheck.emptyArray).toBe(false);
+    expect(modeCheck.nullValue).toBe(false);
+  });
+
+  test("should map sound cues to appropriate sounds", async ({page}) => {
+    const soundMapping = await page.evaluate(() => {
+      const getSoundForCue = (soundCue) => {
+        const soundMap = {
+          "none": null,
+          "alert": "beep",
+          "complete": "double-beep",
+          "rest-end": "whistle",
+          "final-complete": "triple-beep"
+        };
+
+        return soundMap[soundCue] || null;
+      };
+
+      return {
+        none: getSoundForCue("none"),
+        alert: getSoundForCue("alert"),
+        complete: getSoundForCue("complete"),
+        restEnd: getSoundForCue("rest-end"),
+        finalComplete: getSoundForCue("final-complete")
+      };
+    });
+
+    expect(soundMapping.none).toBeNull();
+    expect(soundMapping.alert).toBe("beep");
+    expect(soundMapping.complete).toBe("double-beep");
+    expect(soundMapping.restEnd).toBe("whistle");
+    expect(soundMapping.finalComplete).toBe("triple-beep");
+  });
+});

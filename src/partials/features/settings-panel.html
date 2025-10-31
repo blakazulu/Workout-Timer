@@ -4,6 +4,20 @@
     <label>Timer Settings</label>
   </div>
 
+  <!-- Active Plan Display -->
+  <div class="active-plan-display">
+    <button id="selectPlanBtn" popovertarget="planSelectorPopover" aria-label="Select workout plan">
+      <div class="active-plan-info">
+        <img alt="Plan" class="svg-icon" src="/svg-icons/education/clipboard.svg"/>
+        <div class="active-plan-text">
+          <span class="active-plan-label">Active Plan</span>
+          <span class="active-plan-name" id="currentPlanName">Quick Start</span>
+        </div>
+      </div>
+      <img alt="Change" class="svg-icon plan-selector-arrow" src="/svg-icons/arrows-round/arrow-right-01-round.svg"/>
+    </button>
+  </div>
+
   <div class="settings-grid">
     <div class="setting-group">
       <label for="duration">Duration</label>

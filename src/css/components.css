@@ -32,6 +32,9 @@
 /* Favorites Components */
 @import './components/favorites.css';
 
+/* Workout Plan Components */
+@import './components/plans.css';
+
 /* SVG Icon Utilities */
 .svg-icon {
   display: inline-block;

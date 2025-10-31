@@ -29,6 +29,11 @@ export class Timer {
     this.targetEndTime = null;
     this.lastAlertSecond = null; // Track which second we last played alert for
 
+    // Segment-based plan support (Phase 3-4)
+    this.planSegments = null; // Array of plan segments
+    this.currentSegmentIndex = 0; // Current segment being executed
+    this.isSegmentMode = false; // Whether using segment-based plan
+
     // iOS-specific optimizations
     this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     this.backgroundStartTime = null; // Track when page went to background
@@ -75,6 +80,73 @@ export class Timer {
    */
   setYouTubePlayer(youtubePlayer) {
     this.youtube = youtubePlayer;
+  }
+
+  /**
+   * Load plan segments for segment-based execution
+   * @param {Array} segments - Array of segment objects from workout plan
+   */
+  loadPlanSegments(segments) {
+    if (!Array.isArray(segments) || segments.length === 0) {
+      console.warn("[Timer] Invalid segments, disabling segment mode");
+      this.planSegments = null;
+      this.isSegmentMode = false;
+      return;
+    }
+
+    this.planSegments = segments.map(seg => ({ ...seg }));
+    this.currentSegmentIndex = 0;
+    this.isSegmentMode = true;
+
+    console.log(`[Timer] Loaded ${segments.length} segments for plan-based execution`);
+
+    if (this.debugMode) {
+      console.log("[Timer] Plan segments:", this.planSegments);
+    }
+  }
+
+  /**
+   * Clear plan segments and return to simple mode
+   */
+  clearPlanSegments() {
+    this.planSegments = null;
+    this.currentSegmentIndex = 0;
+    this.isSegmentMode = false;
+    console.log("[Timer] Cleared plan segments, returning to simple mode");
+  }
+
+  /**
+   * Get current segment being executed
+   * @returns {Object|null} Current segment or null if not in segment mode
+   */
+  getCurrentSegment() {
+    if (!this.isSegmentMode || !this.planSegments) return null;
+    if (this.currentSegmentIndex < 0 || this.currentSegmentIndex >= this.planSegments.length) return null;
+    return this.planSegments[this.currentSegmentIndex];
+  }
+
+  /**
+   * Advance to next segment
+   * @returns {boolean} True if advanced, false if no more segments
+   */
+  advanceToNextSegment() {
+    if (!this.isSegmentMode || !this.planSegments) return false;
+
+    this.currentSegmentIndex++;
+
+    if (this.currentSegmentIndex >= this.planSegments.length) {
+      // All segments complete
+      return false;
+    }
+
+    const nextSegment = this.getCurrentSegment();
+    if (nextSegment) {
+      this.currentTime = nextSegment.duration;
+      console.log(`[Timer] Advanced to segment ${this.currentSegmentIndex + 1}/${this.planSegments.length}: ${nextSegment.name}`);
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -169,7 +241,23 @@ export class Timer {
 
       // Initialize timer if starting fresh
       if (isFreshStart) {
-        this.currentTime = this.duration;
+        // Check if using segment-based plan
+        if (this.isSegmentMode && this.planSegments && this.planSegments.length > 0) {
+          // Start from first segment
+          this.currentSegmentIndex = 0;
+          const firstSegment = this.getCurrentSegment();
+          if (firstSegment) {
+            this.currentTime = firstSegment.duration;
+            console.log(`[Timer] Starting segment mode: ${firstSegment.name} (${firstSegment.duration}s)`);
+          } else {
+            // Fallback to simple mode
+            this.currentTime = this.duration;
+          }
+        } else {
+          // Simple mode
+          this.currentTime = this.duration;
+        }
+
         this.currentRep = 1;
         this.isResting = false;
       }
@@ -444,6 +532,74 @@ export class Timer {
     // Pause the interval while sound plays
     clearInterval(this.interval);
 
+    // SEGMENT MODE: Handle segment-based execution
+    if (this.isSegmentMode && this.planSegments) {
+      const currentSegment = this.getCurrentSegment();
+      const hasNextSegment = this.currentSegmentIndex < this.planSegments.length - 1;
+
+      if (hasNextSegment) {
+        // Advance to next segment
+        if (this.debugMode) {
+          console.log(`[Timer] Segment ${currentSegment?.name} complete, advancing...`);
+        }
+
+        // Play appropriate sound based on current segment's soundCue
+        this.playSegmentSound(currentSegment?.soundCue || "complete", () => {
+          if (!this.isRunning) {
+            this.transitionInProgress = false;
+            return;
+          }
+
+          // Advance to next segment
+          const advanced = this.advanceToNextSegment();
+          if (advanced) {
+            // Update timestamp for next segment
+            const now = Date.now();
+            this.startTimestamp = now;
+            this.targetEndTime = now + (this.currentTime * 1000);
+            this.lastAlertSecond = null;
+
+            this.updateDisplay();
+
+            // Emit segment started event
+            const nextSegment = this.getCurrentSegment();
+            if (nextSegment) {
+              eventBus.emit("segment:started", {
+                segmentType: nextSegment.type,
+                segmentName: nextSegment.name,
+                duration: nextSegment.duration,
+                index: this.currentSegmentIndex
+              });
+            }
+
+            // Restart interval
+            this.interval = setInterval(() => this.tick(), 1000);
+            this.transitionInProgress = false;
+          }
+        });
+        return;
+      } else {
+        // All segments complete - workout finished
+        if (this.debugMode) {
+          console.log("[Timer] All plan segments complete, playing final sound...");
+        }
+
+        this.repCounter.textContent = "✓ Complete!";
+
+        this.audio.playFinalComplete(() => {
+          this.stop();
+          this.transitionInProgress = false;
+
+          eventBus.emit("timer:completed", {
+            mode: "segment",
+            totalSegments: this.planSegments.length
+          });
+        });
+        return;
+      }
+    }
+
+    // SIMPLE MODE: Original behavior for backward compatibility
     if (this.isResting) {
       // Rest period ended, start next rep
       if (this.debugMode) {
@@ -616,12 +772,24 @@ export class Timer {
     // Update timer value
     this.timerValue.textContent = formatTime(this.currentTime);
 
-    // Update rep counter with rest indicator
+    // Update rep counter with rest indicator or segment info
     if (this.isRunning) {
-      if (this.isResting) {
-        this.repCounter.textContent = `REST - Next: Rep ${this.currentRep + 1} / ${this.repetitions}`;
+      // Segment mode: show current segment name and progress
+      if (this.isSegmentMode && this.planSegments) {
+        const currentSegment = this.getCurrentSegment();
+        if (currentSegment) {
+          const progress = `${this.currentSegmentIndex + 1}/${this.planSegments.length}`;
+          this.repCounter.textContent = `${currentSegment.name} (${progress})`;
+        } else {
+          this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
+        }
       } else {
-        this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
+        // Simple mode: show rep counter
+        if (this.isResting) {
+          this.repCounter.textContent = `REST - Next: Rep ${this.currentRep + 1} / ${this.repetitions}`;
+        } else {
+          this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
+        }
       }
     } else {
       this.repCounter.textContent = "Ready";
@@ -666,6 +834,39 @@ export class Timer {
         removeClass(this.timerDisplay, "resting");
         removeClass(this.timerValue, "rest-mode");
       }
+    }
+  }
+
+  /**
+   * Play segment sound based on sound cue type
+   * @param {string} soundCue - Sound cue type (none, alert, complete, rest-end, final-complete)
+   * @param {Function} callback - Callback to execute after sound plays
+   */
+  playSegmentSound(soundCue, callback) {
+    switch (soundCue) {
+      case "alert":
+        this.audio.playAlert();
+        // Alert is short, callback immediately
+        if (callback) setTimeout(callback, 150);
+        break;
+
+      case "complete":
+        this.audio.playComplete(callback);
+        break;
+
+      case "rest-end":
+        this.audio.playRestEnd(callback);
+        break;
+
+      case "final-complete":
+        this.audio.playFinalComplete(callback);
+        break;
+
+      case "none":
+      default:
+        // No sound, immediate callback
+        if (callback) setTimeout(callback, 50);
+        break;
     }
   }
 }

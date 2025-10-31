@@ -18,6 +18,7 @@ import {initFavoritesUI, updateFavoriteButton, updateFavoritesBadge} from "./mod
 import {showNotification} from "./core/notifications.js";
 import {initPWAInstall} from "./core/pwa-install.js";
 import {setupGestures} from "./core/gesture-handler.js";
+import {eventBus} from "./core/event-bus.js";
 import {setupEventListeners} from "./ui/event-handlers.js";
 import {setupMusicTooltipPositioning} from "./ui/tooltip-handler.js";
 import {setupMusicLibrary} from "./ui/library-ui.js";
@@ -28,6 +29,10 @@ import {analytics} from "./core/analytics.js";
 import {initAnalyticsTracking} from "./core/analytics-tracker.js";
 // Import icon color enhancer
 import {initIconColorEnhancer} from "./utils/icon-color-enhancer.js";
+// Import plan system modules
+import {initPlanSelector, updateActivePlanDisplay} from "./ui/plan-selector.js";
+import {initPlanBuilder} from "./ui/plan-builder.js";
+import {loadActivePlan, getPlanById} from "./modules/plans/index.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -118,6 +123,36 @@ async function handleEmbeddingError(errorMessage) {
 }
 
 /**
+ * Load and apply active workout plan to timer
+ */
+function loadAndApplyActivePlan() {
+  const activePlanId = loadActivePlan();
+
+  if (!activePlanId) {
+    console.log("[App] No active plan, using simple mode");
+    return;
+  }
+
+  const activePlan = getPlanById(activePlanId);
+  if (!activePlan) {
+    console.warn(`[App] Active plan not found: ${activePlanId}`);
+    return;
+  }
+
+  console.log(`[App] Applying active plan: ${activePlan.name}`);
+
+  // Apply plan segments to timer
+  const timer = getTimer();
+  if (timer && activePlan.segments) {
+    timer.loadPlanSegments(activePlan.segments);
+    console.log(`[App] Loaded ${activePlan.segments.length} segments into timer`);
+  }
+
+  // Update active plan display
+  updateActivePlanDisplay();
+}
+
+/**
  * Initialize the application
  */
 function init() {
@@ -166,6 +201,24 @@ function init() {
 
   // Initialize favorites badge
   updateFavoritesBadge();
+
+  // Initialize plan system
+  initPlanSelector();
+  initPlanBuilder();
+
+  // Load and apply active workout plan
+  loadAndApplyActivePlan();
+
+  // Listen for plan selection to reload plan into timer
+  eventBus.on("plan:selected", (data) => {
+    if (data && data.plan) {
+      const timer = getTimer();
+      if (timer && data.plan.segments) {
+        timer.loadPlanSegments(data.plan.segments);
+        console.log(`[App] Reloaded plan segments: ${data.plan.name}`);
+      }
+    }
+  });
 
   // Start version checking (checks every 5 minutes)
   startVersionChecking();

@@ -1,0 +1,44 @@
+<!-- Plan Selector Popover -->
+<div class="plan-selector-popover" id="planSelectorPopover" popover>
+  <div class="plan-selector-header">
+    <h3>Select Workout Plan</h3>
+    <button class="plan-selector-close" popovertarget="planSelectorPopover" popovertargetaction="hide" aria-label="Close plan selector">
+      <img alt="Close" class="svg-icon" src="/svg-icons/add-remove-delete/cancel-01.svg"/>
+    </button>
+  </div>
+
+  <!-- Mode Tabs -->
+  <div class="plan-mode-tabs">
+    <button class="plan-mode-tab active" data-mode="simple" aria-label="Simple mode">
+      <img alt="Quick Start" class="plan-mode-icon svg-icon" src="/svg-icons/media/play.svg"/>
+      <span>Simple</span>
+    </button>
+    <button class="plan-mode-tab" data-mode="preset" aria-label="Built-in plans">
+      <img alt="Built-in Plans" class="plan-mode-icon svg-icon" src="/svg-icons/bookmark-favorite/star.svg"/>
+      <span>Built-in Plans</span>
+    </button>
+    <button class="plan-mode-tab" data-mode="custom" aria-label="My custom plans">
+      <img alt="My Plans" class="plan-mode-icon svg-icon" src="/svg-icons/users/user.svg"/>
+      <span>My Plans</span>
+    </button>
+  </div>
+
+  <!-- Plan List Container (dynamically populated) -->
+  <div class="plan-list-container">
+    <div class="plan-list" id="planList">
+      <!-- Plan cards will be rendered here by JavaScript -->
+      <div class="plan-loading">
+        <img alt="Loading" class="svg-icon spin" src="/svg-icons/mouse-and-courses/loading-01.svg"/>
+        <p>Loading plans...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="plan-selector-footer">
+    <button class="create-custom-plan-btn" id="createCustomPlanBtn" aria-label="Create new custom plan">
+      <img alt="Add" class="svg-icon" src="/svg-icons/users/user-add-01.svg"/>
+      <span>Create Custom Plan</span>
+    </button>
+  </div>
+</div>
