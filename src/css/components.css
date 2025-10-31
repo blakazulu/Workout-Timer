@@ -117,7 +117,7 @@
 /* White - Default, Neutral */
 .svg-icon.icon-white,
 .svg-icon.icon-neutral {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) !important;
   /* Result: #ffffff white */
 }
 

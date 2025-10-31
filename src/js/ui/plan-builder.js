@@ -6,6 +6,7 @@
 import { savePlan, validatePlan, getPlanById } from "../modules/plans/index.js";
 import { eventBus } from "../core/event-bus.js";
 import { analytics } from "../core/analytics.js";
+import Sortable from "sortablejs";
 
 // ========== CONSTANTS ==========
 
@@ -34,6 +35,8 @@ const builderState = {
   currentPlanId: null,
   listenersSetup: false // Track if listeners have been set up
 };
+
+let sortableInstance = null;
 
 // ========== INITIALIZATION ==========
 
@@ -437,6 +440,12 @@ function renderSegmentsList() {
     const cards = listEl.querySelectorAll(".segment-card");
     cards.forEach(card => card.remove());
 
+    // Destroy sortable instance
+    if (sortableInstance) {
+      sortableInstance.destroy();
+      sortableInstance = null;
+    }
+
     return;
   }
 
@@ -452,6 +461,48 @@ function renderSegmentsList() {
     const card = createSegmentCard(segment, index);
     listEl.appendChild(card);
   });
+
+  // Initialize or reinitialize SortableJS
+  if (sortableInstance) {
+    sortableInstance.destroy();
+  }
+
+  sortableInstance = new Sortable(listEl, {
+    animation: 150,
+    handle: ".segment-drag-handle",
+    ghostClass: "segment-ghost",
+    dragClass: "segment-dragging",
+    chosenClass: "segment-chosen",
+    filter: ".segments-empty",
+    onEnd: (evt) => {
+      if (evt.oldIndex !== evt.newIndex) {
+        // Reorder segments array to match new DOM order
+        const movedSegment = builderState.segments.splice(evt.oldIndex, 1)[0];
+        builderState.segments.splice(evt.newIndex, 0, movedSegment);
+
+        // Update data-index attributes without re-rendering
+        const cards = listEl.querySelectorAll(".segment-card");
+        cards.forEach((card, index) => {
+          card.dataset.index = index;
+
+          // Update button indices
+          const editBtn = card.querySelector(".segment-edit-btn");
+          const deleteBtn = card.querySelector(".segment-delete-btn");
+          if (editBtn) editBtn.dataset.index = index;
+          if (deleteBtn) deleteBtn.dataset.index = index;
+        });
+
+        // Update total duration
+        calculateTotalDuration();
+
+        // Track analytics
+        analytics.track("plan_builder:segments_reordered", {
+          fromIndex: evt.oldIndex,
+          toIndex: evt.newIndex
+        });
+      }
+    }
+  });
 }
 
 /**
@@ -465,7 +516,6 @@ function createSegmentCard(segment, index) {
   card.className = "segment-card";
   card.dataset.type = segment.type;
   card.dataset.index = index;
-  card.draggable = true;
 
   const typeName = SEGMENT_TYPE_DEFAULTS[segment.type]?.name || segment.type;
   const formattedDuration = formatDuration(segment.duration);
@@ -480,7 +530,7 @@ function createSegmentCard(segment, index) {
     </div>
     <div class="segment-actions">
       <button type="button" class="segment-edit-btn" data-index="${index}" aria-label="Edit segment">
-        <img alt="Edit" class="svg-icon" src="/svg-icons/setting/setting-01.svg"/>
+        <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
       </button>
       <button type="button" class="segment-delete-btn" data-index="${index}" aria-label="Delete segment">
         <img alt="Delete" class="svg-icon" src="/svg-icons/add-remove-delete/delete-01.svg"/>
@@ -488,7 +538,7 @@ function createSegmentCard(segment, index) {
     </div>
   `;
 
-  // Add event listeners
+  // Add event listeners for edit/delete
   const editBtn = card.querySelector(".segment-edit-btn");
   const deleteBtn = card.querySelector(".segment-delete-btn");
 
@@ -499,14 +549,6 @@ function createSegmentCard(segment, index) {
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => deleteSegment(index));
   }
-
-  // Add drag event listeners
-  card.addEventListener("dragstart", handleDragStart);
-  card.addEventListener("dragend", handleDragEnd);
-  card.addEventListener("dragover", handleDragOver);
-  card.addEventListener("drop", handleDrop);
-  card.addEventListener("dragenter", handleDragEnter);
-  card.addEventListener("dragleave", handleDragLeave);
 
   return card;
 }
@@ -861,68 +903,5 @@ function showNotification(message, type = "info") {
   }
 }
 
-// ========== DRAG AND DROP HANDLERS ==========
-
-let draggedElement = null;
-let draggedIndex = null;
-
-function handleDragStart(e) {
-  draggedElement = e.currentTarget;
-  draggedIndex = parseInt(draggedElement.dataset.index);
-  e.currentTarget.classList.add("dragging");
-  e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData("text/html", e.currentTarget.innerHTML);
-}
-
-function handleDragEnd(e) {
-  e.currentTarget.classList.remove("dragging");
-
-  // Remove all drag-over classes
-  const cards = document.querySelectorAll(".segment-card");
-  cards.forEach(card => card.classList.remove("drag-over"));
-}
-
-function handleDragOver(e) {
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.dataTransfer.dropEffect = "move";
-  return false;
-}
-
-function handleDragEnter(e) {
-  if (e.currentTarget !== draggedElement) {
-    e.currentTarget.classList.add("drag-over");
-  }
-}
-
-function handleDragLeave(e) {
-  e.currentTarget.classList.remove("drag-over");
-}
-
-function handleDrop(e) {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-
-  const dropTarget = e.currentTarget;
-  const dropIndex = parseInt(dropTarget.dataset.index);
-
-  if (draggedIndex !== dropIndex && draggedElement !== dropTarget) {
-    // Reorder segments array
-    const segment = builderState.segments[draggedIndex];
-    builderState.segments.splice(draggedIndex, 1);
-    builderState.segments.splice(dropIndex, 0, segment);
-
-    // Re-render the list
-    renderSegmentsList();
-
-    // Track analytics
-    analytics.track("plan_builder:segments_reordered", {
-      fromIndex: draggedIndex,
-      toIndex: dropIndex
-    });
-  }
-
-  return false;
-}
+// SortableJS handles all drag and drop functionality
+// No manual handlers needed - configured in renderSegmentsList()
