@@ -236,10 +236,15 @@ function createPlanCard(plan, mode) {
       <div class="plan-card-actions">
         ${mode === "custom" ? `
           <button class="plan-edit-btn" data-plan-id="${plan.id}" aria-label="Edit plan" title="Edit plan">
-            <img alt="Edit" class="svg-icon" src="/svg-icons/setting/setting-01.svg"/>
+            <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
           </button>
           <button class="plan-delete-btn" data-plan-id="${plan.id}" aria-label="Delete plan" title="Delete plan">
             <img alt="Delete" class="svg-icon" src="/svg-icons/add-remove-delete/delete-01.svg"/>
+          </button>
+        ` : mode === "preset" ? `
+          <button class="plan-info-btn" data-plan-id="${plan.id}" aria-label="View plan details" title="View plan details">
+            <img alt="Info" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
+            <span>View Details</span>
           </button>
         ` : ""}
       </div>
@@ -249,7 +254,7 @@ function createPlanCard(plan, mode) {
   // Click handler to select plan
   card.addEventListener("click", (e) => {
     // Don't select if clicking on action buttons
-    if (e.target.closest(".plan-edit-btn") || e.target.closest(".plan-delete-btn")) {
+    if (e.target.closest(".plan-edit-btn") || e.target.closest(".plan-delete-btn") || e.target.closest(".plan-info-btn")) {
       return;
     }
     selectPlan(plan.id);
@@ -270,6 +275,17 @@ function createPlanCard(plan, mode) {
       deleteBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         deletePlanWithConfirmation(plan.id);
+      });
+    }
+  }
+
+  // Info button handler (preset plans only)
+  if (mode === "preset") {
+    const infoBtn = card.querySelector(".plan-info-btn");
+    if (infoBtn) {
+      infoBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        viewPlanDetails(plan.id);
       });
     }
   }
@@ -350,6 +366,26 @@ function editPlan(planId) {
 
   // Track analytics
   analytics.track("plan:edit_started", {planId});
+}
+
+/**
+ * View plan details (read-only for preset plans)
+ * @param {string} planId - Plan ID to view
+ */
+function viewPlanDetails(planId) {
+  console.log(`[PlanSelector] Viewing plan details: ${planId}`);
+
+  // Close selector
+  const selectorPopover = $("#planSelectorPopover");
+  if (selectorPopover) {
+    selectorPopover.hidePopover();
+  }
+
+  // Open builder in view mode (read-only)
+  eventBus.emit("plan-builder:open", {planId, viewOnly: true});
+
+  // Track analytics
+  analytics.track("plan:view_details", {planId});
 }
 
 /**

@@ -167,6 +167,20 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   pointer-events: none;
 }
 
+/* View-only mode (hide editing controls for preset plan details) */
+.plan-builder-popover[data-view-only="true"] .add-segment-section,
+.plan-builder-popover[data-view-only="true"] #stepDetails,
+.plan-builder-popover[data-view-only="true"] #nextToStep2Btn,
+.plan-builder-popover[data-view-only="true"] .segment-edit-btn,
+.plan-builder-popover[data-view-only="true"] .segment-delete-btn,
+.plan-builder-popover[data-view-only="true"] .segment-drag-handle {
+  display: none !important;
+}
+
+.plan-builder-popover[data-view-only="true"] #cancelStep1Btn {
+  margin-left: auto;
+}
+
 .plan-selector-popover {
   @apply hidden flex-col m-auto h-[80dvh] overflow-hidden p-0;
   @apply rounded-xl border-2 border-solid text-white;
@@ -401,7 +415,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
    ======================================== */
 
 .plan-card {
-  @apply flex flex-col gap-3 p-4 rounded-lg relative overflow-hidden;
+  @apply flex flex-col gap-4 p-5 rounded-lg relative overflow-hidden;
   @apply transition-all duration-300 cursor-pointer;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 2px solid rgba(100, 100, 255, 0.3);
@@ -476,11 +490,12 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 .plan-card-title {
-  @apply text-base font-bold m-0;
+  @apply text-lg font-bold m-0;
   color: var(--plan-text-primary);
   font-family: var(--font-family-display);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
+  letter-spacing: 0.5px;
 }
 
 .plan-card:hover .plan-card-title {
@@ -491,7 +506,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-card-description {
   @apply text-sm m-0;
   color: var(--plan-text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
+  margin-top: 0.25rem;
 }
 
 /* Plan Card Badges */
@@ -564,7 +580,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* Plan Card Actions */
 .plan-card-actions {
-  @apply flex items-center gap-2 mt-2;
+  @apply flex flex-row items-center gap-2;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(100, 100, 255, 0.15);
 }
 
 .plan-action-btn {

@@ -32,6 +32,7 @@ const builderState = {
     alertTime: 3
   },
   isEditMode: false,
+  isViewOnly: false, // Read-only mode for preset plans
   currentPlanId: null,
   listenersSetup: false // Track if listeners have been set up
 };
@@ -48,7 +49,7 @@ export function initPlanBuilder() {
 
   // Listen for open builder event
   eventBus.on("plan-builder:open", (data = {}) => {
-    openPlanBuilder(data.planId);
+    openPlanBuilder(data);
   });
 
   // Note: Listeners are set up when popover is first opened (in openPlanBuilder)
@@ -143,17 +144,20 @@ function setupStep2Listeners() {
 
 /**
  * Open plan builder
- * @param {string|null} planId - Plan ID to edit (null for new plan)
+ * @param {Object} options - Options object
+ * @param {string|null} options.planId - Plan ID to edit (null for new plan)
+ * @param {boolean} options.viewOnly - Read-only mode for viewing preset plans
  */
-export function openPlanBuilder(planId = null) {
-  console.log(`[PlanBuilder] Opening${planId ? ` for plan: ${planId}` : " (new plan)"}`);
+export function openPlanBuilder({planId = null, viewOnly = false} = {}) {
+  console.log(`[PlanBuilder] Opening${planId ? ` for plan: ${planId}` : " (new plan)"}${viewOnly ? " (view only)" : ""}`);
 
   // Reset state
   builderState.currentStep = 1;
   builderState.segments = [];
   builderState.isAddingSegment = false;
   builderState.editingSegmentIndex = null;
-  builderState.isEditMode = !!planId;
+  builderState.isEditMode = !!planId && !viewOnly;
+  builderState.isViewOnly = viewOnly;
   builderState.currentPlanId = planId;
   builderState.planDetails = {
     name: "",
@@ -165,11 +169,11 @@ export function openPlanBuilder(planId = null) {
   // Update title
   const titleEl = document.getElementById("planBuilderTitle");
   if (titleEl) {
-    titleEl.textContent = builderState.isEditMode ? "Edit Custom Plan" : "Create Custom Plan";
+    titleEl.textContent = viewOnly ? "Plan Details" : (builderState.isEditMode ? "Edit Custom Plan" : "Create Custom Plan");
   }
 
-  // Load existing plan if editing
-  if (builderState.isEditMode && planId) {
+  // Load existing plan if editing or viewing
+  if ((builderState.isEditMode || viewOnly) && planId) {
     const plan = getPlanById(planId);
     if (plan) {
       builderState.segments = plan.segments.map(seg => ({...seg}));
@@ -186,6 +190,13 @@ export function openPlanBuilder(planId = null) {
   // Show popover
   const builderPopover = document.getElementById("planBuilderPopover");
   if (builderPopover) {
+    // Set view-only attribute for CSS
+    if (viewOnly) {
+      builderPopover.setAttribute("data-view-only", "true");
+    } else {
+      builderPopover.removeAttribute("data-view-only");
+    }
+
     builderPopover.showPopover();
 
     // Setup listeners after popover is shown (elements now accessible)
@@ -195,6 +206,29 @@ export function openPlanBuilder(planId = null) {
       setupStep1Listeners();
       setupStep2Listeners();
       builderState.listenersSetup = true;
+    }
+
+    // Update UI for view-only mode
+    if (viewOnly) {
+      // Update step header with plan name and description
+      const stepHeaderTitle = document.querySelector("#stepSegments .step-header h3");
+      const stepHeaderDesc = document.querySelector("#stepSegments .step-header p");
+      if (stepHeaderTitle) {
+        stepHeaderTitle.textContent = builderState.planDetails.name;
+      }
+      if (stepHeaderDesc) {
+        stepHeaderDesc.textContent = builderState.planDetails.description || "View plan segments and details";
+      }
+
+      // Change Cancel button to Back
+      const cancelBtn = document.getElementById("cancelStep1Btn");
+      if (cancelBtn) {
+        cancelBtn.textContent = "Back";
+      }
+
+      // Render segments
+      renderSegmentsList();
+      calculateTotalDuration();
     }
   }
 
