@@ -48,40 +48,67 @@ if (!hasPrevious && hasNext) {
 
 ### Solution
 
-Removed the confusing slot reassignment logic entirely. Each DOM element now directly corresponds to its logical segment:
+Implemented a **"rolodex" design pattern** where the current (active) segment rotates through visible positions as the workout progresses, maximizing visual space usage:
 
 ```javascript
-// Update previous segment
-if (hasPrevious) {
-  const prevSegment = this.planSegments[prevIndex];
-  this.updateSegmentItem(this.segmentPrevious, prevSegment, "previous");
-  removeClass(this.segmentPrevious, "hidden");
-} else {
-  addClass(this.segmentPrevious, "hidden");
-}
-
-// Update current segment (always visible)
-if (currentIndex >= 0 && currentIndex < this.planSegments.length) {
-  const currentSegment = this.planSegments[currentIndex];
-  this.updateSegmentItem(this.segmentCurrent, currentSegment, "current");
-  removeClass(this.segmentCurrent, "hidden");
-}
-
-// Update next segment
-if (hasNext) {
-  const nextSegment = this.planSegments[nextIndex];
-  this.updateSegmentItem(this.segmentNext, nextSegment, "next");
-  removeClass(this.segmentNext, "hidden");
-} else {
+// CASE 1: First segment (no previous) - Current at TOP, Next in MIDDLE
+if (!hasPrevious && hasNext) {
+  this.updateSegmentItem(this.segmentPrevious, currentSegment, "current");
+  this.updateSegmentItem(this.segmentCurrent, nextSegment, "next");
   addClass(this.segmentNext, "hidden");
+}
+// CASE 2: Last segment (no next) - Previous at TOP, Current at BOTTOM
+else if (!hasNext && hasPrevious) {
+  this.updateSegmentItem(this.segmentPrevious, prevSegment, "previous");
+  this.updateSegmentItem(this.segmentNext, currentSegment, "current");
+  addClass(this.segmentCurrent, "hidden");
+}
+// CASE 3: Middle segment - Previous at TOP, Current in MIDDLE, Next at BOTTOM
+else {
+  this.updateSegmentItem(this.segmentPrevious, prevSegment, "previous");
+  this.updateSegmentItem(this.segmentCurrent, currentSegment, "current");
+  this.updateSegmentItem(this.segmentNext, nextSegment, "next");
 }
 ```
 
-**Benefits**:
-- Clear, direct mapping: one element per logical segment
-- No variable aliasing conflicts
-- Natural hide/show behavior
-- Only one segment can have "current" styling
+**Visual Layout**:
+
+```
+First Segment (no previous):
+┌═════════════════════════════════┐
+│ [🔥] Warm Up        2:00        │ ← Current at TOP (active styling)
+├─────────────────────────────────┤
+│ [💪] Work Interval  0:30        │ ← Next in MIDDLE
+└─────────────────────────────────┘
+                                   ← Bottom hidden
+
+Middle Segment:
+┌─────────────────────────────────┐
+│ [✓] Warm Up         2:00        │ ← Previous at TOP
+├═════════════════════════════════┤
+│ [💪] Work Interval  0:30        │ ← Current in MIDDLE (active styling)
+├─────────────────────────────────┤
+│ [⏸] Rest            0:15        │ ← Next at BOTTOM
+└─────────────────────────────────┘
+
+Last Segment (no next):
+┌─────────────────────────────────┐
+│ [✓] Work Interval   0:30        │ ← Previous at TOP
+├─────────────────────────────────┤
+│ [🎯] Cool Down      2:00        │ ← Current at BOTTOM (active styling)
+└─────────────────────────────────┘
+                                   ← Middle hidden
+```
+
+**Benefits of Rolodex Pattern**:
+- **Natural progression**: Active segment rotates TOP → MIDDLE → BOTTOM like flipping through a rolodex
+- **Space efficiency**: No empty slots when current segment is visible
+- **Visual hierarchy**:
+  - Start: Current at top (beginning position)
+  - Middle: Current centered (balanced context)
+  - End: Current at bottom (completion position)
+- **Intuitive UX**: Position indicates progress through workout
+- **Clear focus**: Only one segment can have active styling at any time
 
 ---
 
@@ -204,11 +231,17 @@ This ensures Quick Start always uses current settings, regardless of how they ch
 1. **`src/js/modules/timer.js`**
    - Lines 5-10: Added imports for `loadActivePlan`, `createQuickStartPlan`
    - Lines 283-300: Added Quick Start validation before timer start
-   - Lines 956-999: Simplified segment timeline update logic
+   - Lines 976-1057: Enhanced segment timeline with rolodex pattern slot assignment
+   - Lines 1071-1092: Added `clearSegmentSlot()` helper to properly hide/clear unused slots
 
 2. **`src/js/ui/event-handlers.js`**
    - Lines 6-9: Added imports for `loadActivePlan`, `createQuickStartPlan`
    - Lines 347-376: Enhanced `setupSettingsAutoSave()` to regenerate Quick Start on change
+
+3. **`src/css/components/timer.css`**
+   - Lines 169-203: Unified `.segment-previous` and `.segment-next` styles (both faded/inactive)
+   - Lines 205-257: `.segment-current` remains distinct with animations and vibrant styling
+   - Removed duplicate `.segment-next` styles (line 259)
 
 ---
 
@@ -218,8 +251,10 @@ This ensures Quick Start always uses current settings, regardless of how they ch
 
 **Bug 1 (Timeline)**:
 - Multiple segments could appear active simultaneously
+- Previous/next segments had different colors (cyan vs purple)
+- Previous segments had strikethrough text decoration
 - Visual confusion during workouts
-- Inconsistent UI state
+- Inconsistent inactive segment appearance
 
 **Bug 2 (Settings)**:
 - Settings changes ignored by timer
@@ -231,8 +266,11 @@ This ensures Quick Start always uses current settings, regardless of how they ch
 
 **Bug 1 (Timeline)**:
 - Only one segment has active styling at any time
+- Previous and next segments now look identical (unified neutral gray)
+- No strikethrough on previous segments
+- Clear visual hierarchy: faded inactive vs glowing active
 - Clean, predictable visual state
-- Proper segment transitions
+- Proper segment transitions with rolodex pattern
 
 **Bug 2 (Settings)**:
 - Settings instantly update Quick Start plan
@@ -249,23 +287,29 @@ This ensures Quick Start always uses current settings, regardless of how they ch
 
 ✅ **Scenario 1**: First segment (no previous)
 - Start any plan with 3+ segments
-- Verify only current segment is highlighted
-- Previous slot should be hidden
+- Verify current segment appears at TOP with active styling
+- Next segment appears in MIDDLE with preview styling
+- Bottom slot is hidden
 
 ✅ **Scenario 2**: Middle segment
 - Advance to segment 2 or 3
-- Verify only current segment is highlighted
+- Verify current segment appears in MIDDLE with active styling
+- Previous segment at TOP with completed styling
+- Next segment at BOTTOM with preview styling
 - All 3 slots visible
 
 ✅ **Scenario 3**: Last segment (no next)
 - Advance to final segment
-- Verify only current segment is highlighted
-- Next slot should be hidden
+- Verify current segment appears at BOTTOM with active styling
+- Previous segment at TOP with completed styling
+- Middle slot is hidden
 
 ✅ **Scenario 4**: Segment transitions
-- Watch transitions between segments
-- Verify active class moves smoothly from one segment to next
+- Watch transitions from first → middle → last
+- Verify active segment moves: TOP → MIDDLE → BOTTOM
+- Verify only one segment has active styling at any time
 - No overlap or double-highlighting
+- Natural flow as workout progresses
 
 ### Test Bug 2 Fix (Settings Update)
 
@@ -314,10 +358,12 @@ This ensures Quick Start always uses current settings, regardless of how they ch
 
 ## Related Code
 
-### Segment Timeline
-- `src/js/modules/timer.js:956-999` - `updateSegmentTimeline()`
-- `src/js/modules/timer.js:1002-1050` - `updateSegmentItem()`
-- DOM elements: `#segmentPrevious`, `#segmentCurrent`, `#segmentNext`
+### Segment Timeline (Rolodex Pattern)
+- `src/js/modules/timer.js:976-1049` - `updateSegmentTimeline()` with rolodex logic
+- `src/js/modules/timer.js:1051-1082` - `updateSegmentItem()` applies position-based styling
+- DOM elements: `#segmentPrevious` (top), `#segmentCurrent` (middle), `#segmentNext` (bottom)
+- CSS classes: `.segment-previous`, `.segment-current`, `.segment-next` (applied dynamically)
+- **Design pattern**: Active segment rotates through positions like a rolodex card system
 
 ### Settings Synchronization
 - `src/js/ui/event-handlers.js:347-376` - Settings change handler

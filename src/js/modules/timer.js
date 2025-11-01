@@ -967,17 +967,16 @@ export class Timer {
   }
 
   /**
-   * Update segment timeline display (3-segment view: previous, current, next)
-   * Dynamically positions current segment based on availability:
-   * - First segment: Current shown at top (no previous)
-   * - Last segment: Current shown at bottom (no next)
-   * - Middle segments: Current shown in middle (prev + next visible)
+   * Update segment timeline display - Always shows 3 segments
+   * Dynamic positioning:
+   * - First segment: Active in TOP slot (no previous)
+   * - Middle segments: Active in MIDDLE slot (has prev + next)
+   * - Last segment: Active in BOTTOM slot (no next)
    */
   updateSegmentTimeline() {
     if (!this.isSegmentMode || !this.planSegments || !this.segmentTimeline) {
       // Hide timeline in simple mode
       if (this.segmentTimeline) {
-        removeClass(this.segmentTimeline, "hidden");
         addClass(this.segmentTimeline, "hidden");
       }
       return;
@@ -992,48 +991,129 @@ export class Timer {
 
     const hasPrevious = prevIndex >= 0;
     const hasNext = nextIndex < this.planSegments.length;
+    const currentSegment = this.planSegments[currentIndex];
 
-    // Update previous segment
-    if (hasPrevious) {
-      const prevSegment = this.planSegments[prevIndex];
-      this.updateSegmentItem(this.segmentPrevious, prevSegment, "previous");
+    // Safety check
+    if (!currentSegment) {
+      console.error("[Timer] Current segment not found at index", currentIndex);
+      return;
+    }
+
+    // CASE 1: First segment - Active in TOP slot
+    if (!hasPrevious) {
+      // TOP SLOT - Current segment (ACTIVE)
+      this.updateSegmentItem(this.segmentPrevious, currentSegment, true);
       removeClass(this.segmentPrevious, "hidden");
-    } else {
-      addClass(this.segmentPrevious, "hidden");
-    }
 
-    // Update current segment (always visible)
-    if (currentIndex >= 0 && currentIndex < this.planSegments.length) {
-      const currentSegment = this.planSegments[currentIndex];
-      this.updateSegmentItem(this.segmentCurrent, currentSegment, "current");
+      // MIDDLE SLOT - Next segment (if exists)
+      if (hasNext) {
+        const nextSegment = this.planSegments[nextIndex];
+        this.updateSegmentItem(this.segmentCurrent, nextSegment, false);
+        removeClass(this.segmentCurrent, "hidden");
+
+        // BOTTOM SLOT - Next+1 segment (if exists)
+        if (nextIndex + 1 < this.planSegments.length) {
+          const nextNext = this.planSegments[nextIndex + 1];
+          this.updateSegmentItem(this.segmentNext, nextNext, false);
+          removeClass(this.segmentNext, "hidden");
+        } else {
+          // Show "Complete" placeholder
+          this.updateSegmentItem(this.segmentNext, {
+            name: "Complete",
+            duration: 0,
+            type: "cooldown"
+          }, false);
+          removeClass(this.segmentNext, "hidden");
+        }
+      } else {
+        // Only one segment in entire plan
+        addClass(this.segmentCurrent, "hidden");
+        addClass(this.segmentNext, "hidden");
+      }
+    }
+    // CASE 2: Last segment - Active in BOTTOM slot
+    else if (!hasNext) {
+      // TOP SLOT - Previous-1 segment (if exists)
+      if (prevIndex - 1 >= 0) {
+        const prevPrev = this.planSegments[prevIndex - 1];
+        this.updateSegmentItem(this.segmentPrevious, prevPrev, false);
+        removeClass(this.segmentPrevious, "hidden");
+      } else {
+        // Show "Start" placeholder
+        this.updateSegmentItem(this.segmentPrevious, {
+          name: "Start",
+          duration: 0,
+          type: "prepare"
+        }, false);
+        removeClass(this.segmentPrevious, "hidden");
+      }
+
+      // MIDDLE SLOT - Previous segment
+      const prevSegment = this.planSegments[prevIndex];
+      this.updateSegmentItem(this.segmentCurrent, prevSegment, false);
       removeClass(this.segmentCurrent, "hidden");
-    }
 
-    // Update next segment
-    if (hasNext) {
-      const nextSegment = this.planSegments[nextIndex];
-      this.updateSegmentItem(this.segmentNext, nextSegment, "next");
+      // BOTTOM SLOT - Current segment (ACTIVE)
+      this.updateSegmentItem(this.segmentNext, currentSegment, true);
       removeClass(this.segmentNext, "hidden");
-    } else {
-      addClass(this.segmentNext, "hidden");
     }
+    // CASE 3: Middle segment - Active in MIDDLE slot
+    else {
+      // TOP SLOT - Previous segment
+      const prevSegment = this.planSegments[prevIndex];
+      this.updateSegmentItem(this.segmentPrevious, prevSegment, false);
+      removeClass(this.segmentPrevious, "hidden");
+
+      // MIDDLE SLOT - Current segment (ACTIVE)
+      this.updateSegmentItem(this.segmentCurrent, currentSegment, true);
+      removeClass(this.segmentCurrent, "hidden");
+
+      // BOTTOM SLOT - Next segment
+      const nextSegment = this.planSegments[nextIndex];
+      this.updateSegmentItem(this.segmentNext, nextSegment, false);
+      removeClass(this.segmentNext, "hidden");
+    }
+  }
+
+  /**
+   * Clear and hide a segment slot
+   * @param {HTMLElement} element - Segment element to clear
+   */
+  clearSegmentSlot(element) {
+    if (!element) return;
+
+    // Remove all position classes
+    removeClass(element, "segment-previous");
+    removeClass(element, "segment-current");
+    removeClass(element, "segment-next");
+
+    // Hide the element
+    addClass(element, "hidden");
+
+    // Clear content to prevent visual artifacts
+    const segmentName = element.querySelector(".segment-name");
+    const segmentDuration = element.querySelector(".segment-duration");
+
+    if (segmentName) segmentName.textContent = "";
+    if (segmentDuration) segmentDuration.textContent = "";
   }
 
   /**
    * Update individual segment item in timeline
    * @param {HTMLElement} element - Segment element
    * @param {Object} segment - Segment data
-   * @param {string} position - Position (previous, current, next)
+   * @param {boolean} isActive - Whether this is the currently active segment
    */
-  updateSegmentItem(element, segment, position) {
+  updateSegmentItem(element, segment, isActive) {
     if (!element || !segment) return;
 
-    // CRITICAL: Remove all position classes and add the correct one
-    // This ensures visual styling matches the segment's actual role
-    removeClass(element, "segment-previous");
-    removeClass(element, "segment-current");
-    removeClass(element, "segment-next");
-    addClass(element, `segment-${position}`);
+    // Simple approach: only add .active class to the current segment
+    // All segments have same base styling, only active gets special treatment
+    if (isActive) {
+      addClass(element, "active");
+    } else {
+      removeClass(element, "active");
+    }
 
     const segmentName = element.querySelector(".segment-name");
     const segmentDuration = element.querySelector(".segment-duration");
@@ -1047,8 +1127,8 @@ export class Timer {
       segmentDuration.textContent = formatTime(segment.duration);
     }
 
-    // Update icon based on segment type and position
-    if (segmentIcon && position === "current") {
+    // Update icon for all segments (not just active)
+    if (segmentIcon && segment.type) {
       const iconPath = this.getSegmentIcon(segment.type);
       if (iconPath) {
         segmentIcon.src = iconPath;
