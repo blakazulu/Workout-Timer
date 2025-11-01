@@ -11,11 +11,11 @@ import Sortable from "sortablejs";
 // ========== CONSTANTS ==========
 
 const SEGMENT_TYPE_DEFAULTS = {
-  prepare: {duration: 120, name: "Prepare"},
-  warmup: {duration: 300, name: "Warm-up"},
-  work: {duration: 30, name: "Work"},
-  rest: {duration: 15, name: "Rest"},
-  cooldown: {duration: 300, name: "Cool-down"}
+  prepare: {duration: 120, name: "Prepare", soundCue: "none"},
+  warmup: {duration: 300, name: "Warm-up", soundCue: "none"},
+  work: {duration: 30, name: "Work", soundCue: "alert"},
+  rest: {duration: 15, name: "Rest", soundCue: "rest-end"},
+  cooldown: {duration: 300, name: "Cool-down", soundCue: "none"} // Will be overridden to "final-complete" if last segment
 };
 
 // ========== STATE MANAGEMENT ==========
@@ -416,12 +416,13 @@ function confirmSegment() {
     return;
   }
 
-  // Create segment with required fields
+  // Create segment with required fields including soundCue
   const typeDefaults = SEGMENT_TYPE_DEFAULTS[type];
   const segment = {
     type,
     duration,
-    name: typeDefaults?.name || type
+    name: typeDefaults?.name || type,
+    soundCue: typeDefaults?.soundCue || "alert" // Default to alert if no default found
   };
 
   // Add or update segment

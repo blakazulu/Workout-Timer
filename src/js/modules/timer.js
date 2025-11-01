@@ -635,8 +635,28 @@ export class Timer {
           console.log(`[Timer] Segment ${currentSegment?.name} complete, advancing...`);
         }
 
+        // Determine sound cue with backward compatibility and last-segment detection
+        let soundCue = currentSegment?.soundCue;
+
+        // Backward compatibility: Infer soundCue from segment type if missing
+        if (!soundCue && currentSegment) {
+          const segmentType = currentSegment.type?.toLowerCase() || "";
+          if (segmentType.includes("warm") || segmentType.includes("prepare") ||
+              segmentType.includes("cool") || segmentType.includes("recovery") ||
+              segmentType.includes("transition")) {
+            soundCue = "none";
+          } else if (segmentType.includes("rest")) {
+            soundCue = "rest-end";
+          } else {
+            soundCue = "alert"; // Default for work/exercise segments
+          }
+        }
+
+        // Fallback to "complete" if still no soundCue
+        soundCue = soundCue || "complete";
+
         // Play appropriate sound based on current segment's soundCue
-        this.playSegmentSound(currentSegment?.soundCue || "complete", () => {
+        this.playSegmentSound(soundCue, () => {
           if (!this.isRunning) {
             this.transitionInProgress = false;
             return;
