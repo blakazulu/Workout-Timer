@@ -7,6 +7,7 @@ import {formatTime} from "../utils/time.js";
 import {getAudio} from "./audio.js";
 import {eventBus} from "../core/event-bus.js";
 import {getWakeLock} from "../utils/wake-lock.js";
+import {loadActivePlan, createQuickStartPlan} from "./plans/storage.js";
 
 export class Timer {
   constructor(options = {}) {
@@ -55,6 +56,12 @@ export class Timer {
     this.clearAllBtn = $("#clearAllBtn");
     this.settings = $("#settings");
     this.youtubeSection = $(".youtube-section");
+
+    // Segment timeline elements
+    this.segmentTimeline = $("#segmentTimeline");
+    this.segmentPrevious = $("#segmentPrevious");
+    this.segmentCurrent = $("#segmentCurrent");
+    this.segmentNext = $("#segmentNext");
 
     // Audio manager
     this.audio = getAudio();
@@ -123,6 +130,43 @@ export class Timer {
     if (!this.isSegmentMode || !this.planSegments) return null;
     if (this.currentSegmentIndex < 0 || this.currentSegmentIndex >= this.planSegments.length) return null;
     return this.planSegments[this.currentSegmentIndex];
+  }
+
+  /**
+   * Get round/set information for current segment
+   * @returns {Object} Object with currentRound, totalRounds, currentSet
+   */
+  getSegmentRoundInfo() {
+    if (!this.isSegmentMode || !this.planSegments) {
+      return { currentRound: 1, totalRounds: 1, currentSet: 1 };
+    }
+
+    // Count work segments to determine total rounds
+    const workSegments = this.planSegments.filter(seg =>
+      seg.type === 'hiit-work' || seg.type === 'cardio-moderate' || seg.type === 'strength-training'
+    );
+    const totalRounds = workSegments.length;
+
+    // Count how many work segments we've passed (including current if it's a work segment)
+    let currentRound = 0;
+    for (let i = 0; i <= this.currentSegmentIndex && i < this.planSegments.length; i++) {
+      const seg = this.planSegments[i];
+      if (seg.type === 'hiit-work' || seg.type === 'cardio-moderate' || seg.type === 'strength-training') {
+        currentRound++;
+      }
+    }
+
+    // If current segment is rest, we're still "in" the previous round
+    const currentSegment = this.getCurrentSegment();
+    const currentSet = currentSegment && (currentSegment.type === 'complete-rest' || currentSegment.type === 'active-recovery')
+      ? currentRound
+      : currentRound;
+
+    return {
+      currentRound: Math.max(1, currentRound),
+      totalRounds: Math.max(1, totalRounds),
+      currentSet: Math.max(1, currentSet)
+    };
   }
 
   /**
@@ -236,11 +280,41 @@ export class Timer {
         $("#alertTime").value = this.alertTime;
       }
 
+      // If Quick Start is active, validate that segments match current settings
+      // If mismatch detected, regenerate plan with current settings
+      const activePlanId = loadActivePlan();
+      if (activePlanId === "quick-start" && this.isSegmentMode && this.planSegments) {
+        // Check if first segment duration matches current duration setting
+        const firstSegment = this.planSegments[0];
+        if (firstSegment && firstSegment.duration !== this.duration) {
+          // Settings have changed, regenerate Quick Start plan
+          const quickStart = createQuickStartPlan({
+            duration: this.duration,
+            alertTime: this.alertTime,
+            repetitions: this.repetitions,
+            restTime: this.restTime
+          });
+          this.loadPlanSegments(quickStart.segments);
+          console.log("[Timer] Regenerated Quick Start plan - settings changed");
+        }
+      }
+
       // Track if this is a fresh start or resume
-      const isFreshStart = !this.currentTime;
+      // Fresh start if currentTime is 0 OR if we're at the end of segments
+      const isAtEnd = this.isSegmentMode && this.currentSegmentIndex >= this.planSegments?.length;
+      const isFreshStart = !this.currentTime || isAtEnd;
 
       // Initialize timer if starting fresh
       if (isFreshStart) {
+        // Clear all CSS state classes from previous run
+        removeClass(this.timerDisplay, "alert");
+        removeClass(this.timerDisplay, "resting");
+        removeClass(this.timerValue, "warning");
+        removeClass(this.timerValue, "rest-mode");
+
+        // Reset transition flag
+        this.transitionInProgress = false;
+
         // Check if using segment-based plan
         if (this.isSegmentMode && this.planSegments && this.planSegments.length > 0) {
           // Start from first segment
@@ -360,12 +434,19 @@ export class Timer {
     // Clear timestamps
     this.startTimestamp = null;
     this.targetEndTime = null;
+    this.lastAlertSecond = null;
 
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
 
     // Release wake lock when stopped
     this.wakeLock.release();
+
+    // Clear all CSS state classes
+    removeClass(this.timerDisplay, "alert");
+    removeClass(this.timerDisplay, "resting");
+    removeClass(this.timerValue, "warning");
+    removeClass(this.timerValue, "rest-mode");
 
     // Hide NEW TIMER and CLEAR ALL buttons when returning to home
     if (this.resetBtn) addClass(this.resetBtn, "hidden");
@@ -393,12 +474,23 @@ export class Timer {
     // Clear timestamps
     this.startTimestamp = null;
     this.targetEndTime = null;
+    this.lastAlertSecond = null;
+
+    // Reset segment state
+    this.currentSegmentIndex = 0;
+    this.transitionInProgress = false;
 
     // Re-enable body scrolling on mobile
     document.body.classList.remove("timer-active");
 
     // Ensure wake lock is released
     this.wakeLock.release();
+
+    // Clear all CSS state classes
+    removeClass(this.timerDisplay, "alert");
+    removeClass(this.timerDisplay, "resting");
+    removeClass(this.timerValue, "warning");
+    removeClass(this.timerValue, "rest-mode");
 
     // Restore normal volume if we were in alert state
     if (this.isAlertActive && this.youtube) {
@@ -778,11 +870,15 @@ export class Timer {
       if (this.isSegmentMode && this.planSegments) {
         const currentSegment = this.getCurrentSegment();
         if (currentSegment) {
-          const progress = `${this.currentSegmentIndex + 1}/${this.planSegments.length}`;
+          const { currentRound, totalRounds } = this.getSegmentRoundInfo();
+          const progress = `${currentRound}/${totalRounds}`;
           this.repCounter.textContent = `${currentSegment.name} (${progress})`;
         } else {
           this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
         }
+
+        // Update segment timeline (3-segment view)
+        this.updateSegmentTimeline();
       } else {
         // Simple mode: show rep counter
         if (this.isResting) {
@@ -868,6 +964,117 @@ export class Timer {
         if (callback) setTimeout(callback, 50);
         break;
     }
+  }
+
+  /**
+   * Update segment timeline display (3-segment view: previous, current, next)
+   * Dynamically positions current segment based on availability:
+   * - First segment: Current shown at top (no previous)
+   * - Last segment: Current shown at bottom (no next)
+   * - Middle segments: Current shown in middle (prev + next visible)
+   */
+  updateSegmentTimeline() {
+    if (!this.isSegmentMode || !this.planSegments || !this.segmentTimeline) {
+      // Hide timeline in simple mode
+      if (this.segmentTimeline) {
+        removeClass(this.segmentTimeline, "hidden");
+        addClass(this.segmentTimeline, "hidden");
+      }
+      return;
+    }
+
+    // Show timeline in segment mode
+    removeClass(this.segmentTimeline, "hidden");
+
+    const prevIndex = this.currentSegmentIndex - 1;
+    const currentIndex = this.currentSegmentIndex;
+    const nextIndex = this.currentSegmentIndex + 1;
+
+    const hasPrevious = prevIndex >= 0;
+    const hasNext = nextIndex < this.planSegments.length;
+
+    // Update previous segment
+    if (hasPrevious) {
+      const prevSegment = this.planSegments[prevIndex];
+      this.updateSegmentItem(this.segmentPrevious, prevSegment, "previous");
+      removeClass(this.segmentPrevious, "hidden");
+    } else {
+      addClass(this.segmentPrevious, "hidden");
+    }
+
+    // Update current segment (always visible)
+    if (currentIndex >= 0 && currentIndex < this.planSegments.length) {
+      const currentSegment = this.planSegments[currentIndex];
+      this.updateSegmentItem(this.segmentCurrent, currentSegment, "current");
+      removeClass(this.segmentCurrent, "hidden");
+    }
+
+    // Update next segment
+    if (hasNext) {
+      const nextSegment = this.planSegments[nextIndex];
+      this.updateSegmentItem(this.segmentNext, nextSegment, "next");
+      removeClass(this.segmentNext, "hidden");
+    } else {
+      addClass(this.segmentNext, "hidden");
+    }
+  }
+
+  /**
+   * Update individual segment item in timeline
+   * @param {HTMLElement} element - Segment element
+   * @param {Object} segment - Segment data
+   * @param {string} position - Position (previous, current, next)
+   */
+  updateSegmentItem(element, segment, position) {
+    if (!element || !segment) return;
+
+    // CRITICAL: Remove all position classes and add the correct one
+    // This ensures visual styling matches the segment's actual role
+    removeClass(element, "segment-previous");
+    removeClass(element, "segment-current");
+    removeClass(element, "segment-next");
+    addClass(element, `segment-${position}`);
+
+    const segmentName = element.querySelector(".segment-name");
+    const segmentDuration = element.querySelector(".segment-duration");
+    const segmentIcon = element.querySelector(".segment-icon .svg-icon");
+
+    if (segmentName) {
+      segmentName.textContent = segment.name || "Unnamed Segment";
+    }
+
+    if (segmentDuration) {
+      segmentDuration.textContent = formatTime(segment.duration);
+    }
+
+    // Update icon based on segment type and position
+    if (segmentIcon && position === "current") {
+      const iconPath = this.getSegmentIcon(segment.type);
+      if (iconPath) {
+        segmentIcon.src = iconPath;
+      }
+    }
+  }
+
+  /**
+   * Get icon path for segment type
+   * @param {string} segmentType - Segment type
+   * @returns {string} Icon path
+   */
+  getSegmentIcon(segmentType) {
+    const iconMap = {
+      "warmup": "/svg-icons/energy/fire.svg",
+      "cooldown": "/svg-icons/energy/energy.svg",
+      "hiit-work": "/svg-icons/gym-and-fitness/dumbbell-01.svg",
+      "complete-rest": "/svg-icons/media/pause.svg",
+      "active-rest": "/svg-icons/media/pause.svg",
+      "prepare": "/svg-icons/alert-notification/alert-01.svg",
+      "cardio": "/svg-icons/game-and-sports/dart.svg",
+      "strength": "/svg-icons/gym-and-fitness/dumbbell-01.svg",
+      "flexibility": "/svg-icons/gym-and-fitness/wellness.svg"
+    };
+
+    return iconMap[segmentType] || "/svg-icons/energy/fire.svg";
   }
 }
 

@@ -174,7 +174,7 @@ function renderSimpleMode(container) {
           Rest Time
         </span>
       </div>
-      ${isActive ? '<span class="active-badge">Active</span>' : ''}
+      ${isActive ? "<span class=\"active-badge\">Active</span>" : ""}
     </div>
   `;
 

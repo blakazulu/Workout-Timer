@@ -137,3 +137,170 @@
     @apply hidden;
   }
 }
+
+/* ========================================
+   SEGMENT TIMELINE (3-Segment View)
+   ======================================== */
+
+.segment-timeline {
+  @apply relative flex flex-col gap-3 mt-6;
+  z-index: 10;
+}
+
+.segment-timeline.hidden {
+  @apply hidden;
+}
+
+/* Segment Item Base */
+.segment-item {
+  @apply flex items-center gap-3 p-3 rounded-lg relative overflow-hidden;
+  @apply transition-all duration-500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.segment-item::before {
+  @apply absolute inset-0;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.05), rgba(255, 0, 150, 0.05));
+  content: '';
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Previous Segment - Faded, completed look */
+.segment-previous {
+  background: rgba(0, 255, 200, 0.03);
+  border-color: rgba(0, 255, 200, 0.2);
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.segment-previous .segment-icon {
+  @apply flex items-center justify-center w-10 h-10 rounded-lg;
+  background: rgba(0, 255, 200, 0.1);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+}
+
+.segment-previous .segment-icon .svg-icon {
+  @apply w-5 h-5;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(44%) saturate(2627%) hue-rotate(120deg) brightness(101%) contrast(101%);
+  opacity: 0.6;
+}
+
+.segment-previous .segment-name {
+  @apply text-sm;
+  color: rgba(0, 255, 200, 0.6);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.segment-previous .segment-duration {
+  @apply text-xs;
+  color: rgba(0, 255, 200, 0.4);
+}
+
+/* Current Segment - Active, prominent */
+.segment-current {
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.15), rgba(255, 0, 150, 0.15));
+  border: 2px solid rgba(100, 100, 255, 0.6);
+  box-shadow: 0 0 30px rgba(100, 100, 255, 0.4),
+    inset 0 0 30px rgba(100, 100, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.segment-current::before {
+  animation: borderGlow 3s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.3), rgba(255, 0, 150, 0.3));
+  opacity: 1;
+}
+
+.segment-current::after {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  content: '';
+  animation: shimmer 3s linear infinite;
+}
+
+.segment-current .segment-icon {
+  @apply flex items-center justify-center w-12 h-12 rounded-lg relative;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.3), rgba(255, 0, 150, 0.3));
+  border: 2px solid rgba(100, 100, 255, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.segment-current .segment-icon .svg-icon {
+  @apply w-7 h-7;
+  filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(100, 100, 255, 0.8));
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.segment-current .segment-name {
+  @apply text-base font-bold;
+  color: var(--plan-primary-cyan);
+  font-family: var(--font-family-display);
+  text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.segment-current .segment-duration {
+  @apply text-sm font-semibold;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Next Segment - Faded, preview look */
+.segment-next {
+  background: rgba(100, 100, 255, 0.03);
+  border-color: rgba(100, 100, 255, 0.2);
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.segment-next .segment-icon {
+  @apply flex items-center justify-center w-10 h-10 rounded-lg;
+  background: rgba(100, 100, 255, 0.1);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+}
+
+.segment-next .segment-icon .svg-icon {
+  @apply w-5 h-5;
+  filter: brightness(0) saturate(100%) invert(45%) sepia(89%) saturate(1200%) hue-rotate(200deg) brightness(110%) contrast(105%);
+  opacity: 0.6;
+}
+
+.segment-next .segment-name {
+  @apply text-sm;
+  color: rgba(100, 100, 255, 0.7);
+  opacity: 0.8;
+}
+
+.segment-next .segment-duration {
+  @apply text-xs;
+  color: rgba(100, 100, 255, 0.5);
+}
+
+/* Segment Info Layout */
+.segment-info {
+  @apply flex-1 flex flex-col gap-1 relative;
+  z-index: 1;
+}
+
+/* Hide previous/next when they don't exist */
+.segment-previous:empty,
+.segment-next:empty {
+  @apply hidden;
+}
+
+/* Animations */
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

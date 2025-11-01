@@ -127,16 +127,29 @@ async function handleEmbeddingError(errorMessage) {
  * Load and apply active workout plan to timer
  */
 function loadAndApplyActivePlan() {
-  const activePlanId = loadActivePlan();
+  let activePlanId = loadActivePlan();
 
+  // Default to Quick Start if no active plan
   if (!activePlanId) {
-    console.log("[App] No active plan, using simple mode");
-    return;
+    console.log("[App] No active plan, defaulting to Quick Start");
+    activePlanId = "quick-start";
+    setActivePlan(activePlanId);
   }
 
   const activePlan = getPlanById(activePlanId);
   if (!activePlan) {
-    console.warn(`[App] Active plan not found: ${activePlanId}`);
+    console.warn(`[App] Active plan not found: ${activePlanId}, defaulting to Quick Start`);
+    // Fallback to Quick Start
+    const quickStart = getPlanById("quick-start");
+    if (quickStart) {
+      setActivePlan("quick-start");
+      const timer = getTimer();
+      if (timer && quickStart.segments) {
+        timer.loadPlanSegments(quickStart.segments);
+        console.log(`[App] Loaded ${quickStart.segments.length} segments into timer (Quick Start)`);
+      }
+      updateActivePlanDisplay();
+    }
     return;
   }
 

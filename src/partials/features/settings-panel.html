@@ -2,7 +2,8 @@
 <div class="settings" id="settings">
   <div class="settings-header">
     <label>Plan Settings</label>
-    <button aria-label="Select workout plan" class="settings-plan-btn" id="settingsPlanBtn" popovertarget="planSelectorPopover">
+    <button aria-label="Select workout plan" class="settings-plan-btn" id="settingsPlanBtn"
+            popovertarget="planSelectorPopover">
       <span>Choose Plan</span>
       <img alt="Plan" class="svg-icon" src="/svg-icons/education/clipboard.svg"/>
       <img alt="Change" class="svg-icon plan-selector-arrow" src="/svg-icons/arrows-round/arrow-right-01-round.svg"/>
@@ -33,7 +34,7 @@
   </div>
 
   <!-- Built-in Plan Layout (read-only view) -->
-  <div class="plan-card-container" id="presetSettings" hidden>
+  <div class="plan-card-container" hidden id="presetSettings">
     <div class="plan-card active-plan" id="presetPlanCard">
       <div class="plan-card-header">
         <h4 class="plan-name" id="presetPlanName"></h4>
@@ -52,7 +53,8 @@
           </span>
         </div>
         <div class="plan-card-actions">
-          <button class="plan-info-btn" id="viewPresetDetailsBtn" aria-label="View plan details" title="View plan details">
+          <button aria-label="View plan details" class="plan-info-btn" id="viewPresetDetailsBtn"
+                  title="View plan details">
             <img alt="Info" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
             <span>View Details</span>
           </button>
@@ -75,7 +77,7 @@
   </div>
 
   <!-- Custom Plan Layout (editable) -->
-  <div class="plan-card-container" id="customSettings" hidden>
+  <div class="plan-card-container" hidden id="customSettings">
     <div class="plan-card active-plan" id="customPlanCard">
       <div class="plan-card-header">
         <h4 class="plan-name" id="customPlanName"></h4>
@@ -94,7 +96,7 @@
           </span>
         </div>
         <div class="plan-card-actions">
-          <button class="plan-edit-btn" id="editCustomPlanBtn" aria-label="Edit plan" title="Edit plan">
+          <button aria-label="Edit plan" class="plan-edit-btn" id="editCustomPlanBtn" title="Edit plan">
             <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
           </button>
         </div>

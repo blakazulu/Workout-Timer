@@ -162,8 +162,8 @@
 /* Delete Confirmation Modal */
 .delete-confirmation-modal {
   @apply hidden m-auto p-0 rounded-xl border-2;
-  background: rgba(10, 10, 10, 0.98);
   backdrop-filter: blur(20px);
+  background: rgba(10, 10, 10, 0.98);
   border-color: rgba(255, 100, 0, 0.5);
   box-shadow: 0 0 30px rgba(255, 100, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.5);
   max-width: 400px;
@@ -172,16 +172,16 @@
 }
 
 .delete-confirmation-modal:popover-open {
-  display: block;
   animation: modalSlideIn 0.3s ease;
+  display: block;
 }
 
 .delete-confirmation-modal::backdrop {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
   animation: fadeIn 0.3s ease;
-  z-index: 2000 !important;
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.6);
   pointer-events: auto !important;
+  z-index: 2000 !important;
 }
 
 /* Keep plan selector open when delete modal is showing */
@@ -242,8 +242,8 @@
 .delete-modal-actions .btn-cancel:hover {
   background: rgba(0, 255, 200, 0.1);
   border-color: rgba(0, 255, 200, 0.5);
-  color: var(--plan-primary-cyan);
   box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+  color: var(--plan-primary-cyan);
 }
 
 .delete-modal-actions .btn-delete {
@@ -263,8 +263,8 @@
 .delete-modal-actions .btn-delete:hover {
   background: linear-gradient(135deg, rgba(255, 100, 0, 0.3), rgba(255, 0, 150, 0.3));
   border-color: rgba(255, 100, 0, 0.8);
-  color: #ff8c00;
   box-shadow: 0 0 15px rgba(255, 100, 0, 0.5);
+  color: #ff8c00;
   transform: translateY(-1px);
 }
 
@@ -557,10 +557,10 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .quick-start-card::after {
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    transparent 100%
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.15) 50%,
+          transparent 100%
   );
   content: '';
   inset: 0;
@@ -581,8 +581,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   background: linear-gradient(135deg, rgba(100, 100, 255, 0.2) 0%, rgba(255, 0, 150, 0.2) 100%);
   border-color: rgba(100, 100, 255, 0.7);
   box-shadow: 0 0 40px rgba(100, 100, 255, 0.5),
-    0 8px 24px rgba(0, 0, 0, 0.6),
-    inset 0 0 40px rgba(100, 100, 255, 0.15);
+  0 8px 24px rgba(0, 0, 0, 0.6),
+  inset 0 0 40px rgba(100, 100, 255, 0.15);
   transform: translateY(-4px) scale(1.02);
 }
 
@@ -594,7 +594,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   background: linear-gradient(135deg, rgba(0, 255, 200, 0.15) 0%, rgba(100, 100, 255, 0.15) 100%);
   border-color: rgba(0, 255, 200, 0.8);
   box-shadow: 0 0 40px rgba(0, 255, 200, 0.6),
-    inset 0 0 50px rgba(0, 255, 200, 0.15);
+  inset 0 0 50px rgba(0, 255, 200, 0.15);
 }
 
 .quick-start-card.active::before {
@@ -672,8 +672,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .quick-start-card:hover .feature-item {
   background: rgba(0, 255, 200, 0.08);
   border-color: rgba(0, 255, 200, 0.4);
-  color: var(--plan-primary-cyan);
   box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+  color: var(--plan-primary-cyan);
 }
 
 .feature-item .svg-icon {
@@ -775,10 +775,10 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   @apply text-xl font-bold m-0;
   color: var(--plan-text-primary);
   font-family: var(--font-family-display);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
   letter-spacing: 0.8px;
   line-height: 1.3;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
 .plan-card:hover .plan-name {
@@ -799,9 +799,9 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   @apply text-xl font-bold m-0;
   color: var(--plan-text-primary);
   font-family: var(--font-family-display);
+  letter-spacing: 0.8px;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   transition: all 0.3s ease;
-  letter-spacing: 0.8px;
 }
 
 .plan-card:hover .plan-card-title {
@@ -918,14 +918,14 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 .active-badge {
   @apply px-2 py-1 rounded-md text-xs font-bold;
+  animation: badgePulse 2s ease-in-out infinite;
   background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 200, 0.2));
   border: 1px solid rgba(0, 255, 136, 0.5);
   color: #00ff88;
-  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
-  animation: badgePulse 2s ease-in-out infinite;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
   font-family: var(--font-family-display);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+  text-transform: uppercase;
 }
 
 /* Plan Card Actions */
@@ -956,8 +956,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-edit-btn:hover {
   background: rgba(0, 255, 200, 0.15);
   border-color: rgba(0, 255, 200, 0.5);
-  color: var(--plan-primary-cyan);
   box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+  color: var(--plan-primary-cyan);
   transform: translateY(-1px);
 }
 
@@ -965,8 +965,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-delete-btn:hover {
   background: rgba(255, 0, 150, 0.15);
   border-color: rgba(255, 0, 150, 0.5);
-  color: var(--plan-primary-pink);
   box-shadow: 0 0 10px rgba(255, 0, 150, 0.3);
+  color: var(--plan-primary-pink);
   transform: translateY(-1px);
 }
 
@@ -978,8 +978,8 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 .plan-info-btn:hover {
   background: rgba(100, 100, 255, 0.15);
   border-color: rgba(100, 100, 255, 0.5);
-  color: #6464ff;
   box-shadow: 0 0 10px rgba(100, 100, 255, 0.3);
+  color: #6464ff;
   transform: translateY(-1px);
 }
 

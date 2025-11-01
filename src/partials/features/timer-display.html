@@ -2,5 +2,42 @@
 <div class="timer-display hidden" id="timerDisplay">
   <div class="timer-value" id="timerValue">00:00</div>
   <div class="rep-counter" id="repCounter">Ready</div>
+
+  <!-- Segment Timeline (shown in segment mode) -->
+  <div class="segment-timeline hidden" id="segmentTimeline">
+    <!-- Previous Segment -->
+    <div class="segment-item segment-previous" id="segmentPrevious">
+      <div class="segment-icon">
+        <img alt="Previous" class="svg-icon" src="/svg-icons/check-validation/checkmark-circle-01.svg"/>
+      </div>
+      <div class="segment-info">
+        <span class="segment-name">Warm Up</span>
+        <span class="segment-duration">2:00</span>
+      </div>
+    </div>
+
+    <!-- Current Segment -->
+    <div class="segment-item segment-current" id="segmentCurrent">
+      <div class="segment-icon">
+        <img alt="Current" class="svg-icon" id="segmentCurrentIcon" src="/svg-icons/energy/fire.svg"/>
+      </div>
+      <div class="segment-info">
+        <span class="segment-name">Work Interval</span>
+        <span class="segment-duration">0:30</span>
+      </div>
+    </div>
+
+    <!-- Next Segment -->
+    <div class="segment-item segment-next" id="segmentNext">
+      <div class="segment-icon">
+        <img alt="Next" class="svg-icon" src="/svg-icons/media/pause.svg"/>
+      </div>
+      <div class="segment-info">
+        <span class="segment-name">Rest</span>
+        <span class="segment-duration">0:15</span>
+      </div>
+    </div>
+  </div>
+
   <div class="gesture-hint">Double tap to start • Swipe down for new timer</div>
 </div>

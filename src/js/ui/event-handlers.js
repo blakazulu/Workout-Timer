@@ -6,6 +6,7 @@
 import {$} from "../utils/dom.js";
 import {getTimer} from "../modules/timer.js";
 import {saveSettings} from "../modules/storage.js";
+import {loadActivePlan, createQuickStartPlan} from "../modules/plans/storage.js";
 
 /**
  * Set up all event listeners
@@ -349,12 +350,26 @@ function setupSettingsAutoSave() {
     const input = $(selector);
     if (input) {
       input.addEventListener("change", () => {
-        saveSettings({
+        const newSettings = {
           duration: parseInt($("#duration").value),
           alertTime: parseInt($("#alertTime").value),
           repetitions: parseInt($("#repetitions").value),
           restTime: parseInt($("#restTime").value)
-        });
+        };
+
+        // Save settings to localStorage
+        saveSettings(newSettings);
+
+        // If Quick Start is the active plan, regenerate its segments with new settings
+        const activePlanId = loadActivePlan();
+        if (activePlanId === "quick-start") {
+          const quickStart = createQuickStartPlan(newSettings);
+          const timer = getTimer();
+          if (timer && quickStart.segments) {
+            timer.loadPlanSegments(quickStart.segments);
+            console.log("[Settings] Regenerated Quick Start plan with new settings");
+          }
+        }
       });
     }
   });

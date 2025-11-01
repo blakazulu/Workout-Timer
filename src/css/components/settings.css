@@ -52,10 +52,10 @@
 
 .settings-plan-btn::after {
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          transparent 100%
   );
   content: '';
   inset: 0;
@@ -76,8 +76,8 @@
   background: linear-gradient(135deg, rgba(100, 100, 255, 0.15) 0%, rgba(255, 0, 150, 0.15) 100%);
   border-color: rgba(100, 100, 255, 0.6);
   box-shadow: 0 0 30px rgba(100, 100, 255, 0.4),
-    0 4px 16px rgba(0, 0, 0, 0.6),
-    inset 0 0 30px rgba(100, 100, 255, 0.1);
+  0 4px 16px rgba(0, 0, 0, 0.6),
+  inset 0 0 30px rgba(100, 100, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -89,8 +89,8 @@
   @apply w-5 h-5;
   animation: iconPulse 2s ease-in-out infinite;
   filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(100, 100, 255, 0.6));
-  transition: all 0.3s ease;
   position: relative;
+  transition: all 0.3s ease;
   z-index: 1;
 }
 

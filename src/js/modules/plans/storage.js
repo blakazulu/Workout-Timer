@@ -6,6 +6,7 @@
 import {eventBus} from "../../core/event-bus.js";
 import {getAllPresets} from "./presets.js";
 import {isValidSegmentType} from "./segment-types.js";
+import {loadSettings} from "../storage.js";
 
 // Storage keys
 export const PLANS_STORAGE_KEY = "workout-timer-plans";
@@ -44,7 +45,7 @@ export function loadPlans() {
 }
 
 /**
- * Get plan by ID (checks both custom plans and presets)
+ * Get plan by ID (checks quick-start, custom plans, and presets)
  * @param {string} planId - Plan ID
  * @returns {Object|null} Plan object or null if not found
  */
@@ -52,7 +53,13 @@ export function getPlanById(planId) {
   if (!planId) return null;
 
   try {
-    // Check custom plans first
+    // Check for Quick Start plan
+    if (planId === "quick-start") {
+      const settings = loadSettings();
+      return createQuickStartPlan(settings);
+    }
+
+    // Check custom plans
     const customPlans = loadPlans();
     const customPlan = customPlans.find(p => p.id === planId);
     if (customPlan) {
@@ -477,27 +484,42 @@ export function importPlanFromJSON(jsonString) {
 export function createQuickStartPlan(settings) {
   const {duration = 30, restTime = 10, repetitions = 3, alertTime = 3} = settings;
 
+  // Generate all segments for all repetitions
+  const segments = [];
+
+  for (let i = 0; i < repetitions; i++) {
+    // Work segment for this round
+    segments.push({
+      type: "hiit-work",
+      duration: duration,
+      intensity: "very-hard",
+      name: `Work - Round ${i + 1}`,
+      soundCue: "alert"
+    });
+
+    // Rest segment (skip after final round if needed)
+    if (restTime > 0 && i < repetitions - 1) {
+      segments.push({
+        type: "complete-rest",
+        duration: restTime,
+        intensity: "light",
+        name: `Rest - Round ${i + 1}`,
+        soundCue: "rest-end"
+      });
+    }
+  }
+
+  // Set final segment sound to completion
+  if (segments.length > 0) {
+    segments[segments.length - 1].soundCue = "final-complete";
+  }
+
   return {
     id: "quick-start",
     name: "Quick Start",
     description: "Classic simple timer mode - quick setup for immediate workouts",
     mode: "simple",
-    segments: [
-      {
-        type: "hiit-work",
-        duration: duration,
-        intensity: "very-hard",
-        name: `Work - ${duration}s`,
-        soundCue: "alert"
-      },
-      ...(restTime > 0 ? [{
-        type: "complete-rest",
-        duration: restTime,
-        intensity: "light",
-        name: `Rest - ${restTime}s`,
-        soundCue: "rest-end"
-      }] : [])
-    ],
+    segments: segments,
     duration: duration,
     restTime: restTime,
     repetitions: repetitions,

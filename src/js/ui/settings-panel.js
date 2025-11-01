@@ -6,7 +6,6 @@
 import {getPlanById, loadActivePlan} from "../modules/plans/index.js";
 import {eventBus} from "../core/event-bus.js";
 import {formatTime} from "../utils/time.js";
-import {SEGMENT_TYPES} from "../modules/plans/segment-types.js";
 
 /**
  * Initialize settings panel
