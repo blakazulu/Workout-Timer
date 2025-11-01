@@ -531,6 +531,167 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 }
 
 /* ========================================
+   QUICK START CARD (Simple Mode)
+   ======================================== */
+
+.quick-start-card {
+  @apply flex items-center gap-6 p-6 rounded-xl relative overflow-hidden;
+  @apply transition-all duration-300 cursor-pointer;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.12) 0%, rgba(255, 0, 150, 0.12) 100%);
+  border: 2px solid rgba(100, 100, 255, 0.4);
+  min-height: 180px;
+}
+
+.quick-start-card::before {
+  animation: borderGlow 3s ease-in-out infinite;
+  background: linear-gradient(135deg, #6464ff, #ff0096, #00ffc8);
+  background-size: 200% 200%;
+  border-radius: 14px;
+  content: '';
+  inset: -2px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.quick-start-card::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  content: '';
+  inset: 0;
+  position: absolute;
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+
+.quick-start-card:hover::before {
+  opacity: 0.3;
+}
+
+.quick-start-card:hover::after {
+  transform: translateX(100%);
+}
+
+.quick-start-card:hover {
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.2) 0%, rgba(255, 0, 150, 0.2) 100%);
+  border-color: rgba(100, 100, 255, 0.7);
+  box-shadow: 0 0 40px rgba(100, 100, 255, 0.5),
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(100, 100, 255, 0.15);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.quick-start-card:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+.quick-start-card.active {
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.15) 0%, rgba(100, 100, 255, 0.15) 100%);
+  border-color: rgba(0, 255, 200, 0.8);
+  box-shadow: 0 0 40px rgba(0, 255, 200, 0.6),
+    inset 0 0 50px rgba(0, 255, 200, 0.15);
+}
+
+.quick-start-card.active::before {
+  opacity: 0.4;
+}
+
+.quick-start-icon {
+  @apply flex items-center justify-center shrink-0;
+  @apply w-24 h-24 rounded-full relative;
+  background: linear-gradient(135deg, rgba(100, 100, 255, 0.2), rgba(255, 0, 150, 0.2));
+  border: 2px solid rgba(100, 100, 255, 0.5);
+}
+
+.quick-start-icon::before {
+  animation: pulse 2s ease-in-out infinite;
+  background: rgba(100, 100, 255, 0.3);
+  border-radius: 50%;
+  content: '';
+  inset: -8px;
+  position: absolute;
+  z-index: -1;
+}
+
+.quick-start-icon .svg-icon {
+  @apply w-12 h-12;
+  animation: iconPulse 2s ease-in-out infinite;
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(100, 100, 255, 0.8));
+  transition: all 0.3s ease;
+}
+
+.quick-start-card:hover .quick-start-icon .svg-icon {
+  filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(100, 100, 255, 1));
+  transform: scale(1.15) rotate(5deg);
+}
+
+.quick-start-content {
+  @apply flex-1 flex flex-col gap-3 relative;
+}
+
+.quick-start-content h3 {
+  @apply text-2xl font-bold m-0;
+  color: var(--plan-text-primary);
+  font-family: var(--font-family-display);
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.quick-start-card:hover .quick-start-content h3 {
+  color: var(--plan-primary-cyan);
+  text-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
+}
+
+.quick-start-content p {
+  @apply text-base m-0;
+  color: var(--plan-text-secondary);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.quick-start-features {
+  @apply flex flex-wrap gap-3 mt-2;
+}
+
+.feature-item {
+  @apply flex items-center gap-2 px-3 py-2 rounded-lg;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.quick-start-card:hover .feature-item {
+  background: rgba(0, 255, 200, 0.08);
+  border-color: rgba(0, 255, 200, 0.4);
+  color: var(--plan-primary-cyan);
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+}
+
+.feature-item .svg-icon {
+  @apply w-4 h-4;
+  filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(100, 100, 255, 0.6));
+  transition: all 0.3s ease;
+}
+
+.quick-start-card:hover .feature-item .svg-icon {
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(0, 255, 200, 0.8));
+}
+
+.quick-start-content .active-badge {
+  @apply absolute top-0 right-0;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* ========================================
    PLAN CARDS
    ======================================== */
 

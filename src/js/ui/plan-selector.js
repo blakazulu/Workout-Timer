@@ -138,8 +138,52 @@ function renderSimpleMode(container) {
   const settings = loadSettings();
   const quickStartPlan = createQuickStartPlan(settings);
 
-  const planCard = createPlanCard(quickStartPlan, "simple");
-  container.appendChild(planCard);
+  // Check if this is the active plan
+  const activePlanId = loadActivePlan();
+  const isActive = !activePlanId || activePlanId === quickStartPlan.id;
+
+  // Create beautiful Quick Start card
+  const quickStartCard = document.createElement("div");
+  quickStartCard.className = "quick-start-card";
+  if (isActive) {
+    quickStartCard.classList.add("active");
+  }
+
+  quickStartCard.innerHTML = `
+    <div class="quick-start-icon">
+      <img alt="Quick Start" class="svg-icon" src="/svg-icons/space-galaxy/rocket-01.svg"/>
+    </div>
+    <div class="quick-start-content">
+      <h3>Quick Start</h3>
+      <p>Jump right in with full control over your workout parameters</p>
+      <div class="quick-start-features">
+        <span class="feature-item">
+          <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/timer-01.svg"/>
+          Duration
+        </span>
+        <span class="feature-item">
+          <img alt="Alert" class="svg-icon" src="/svg-icons/alert-notification/alert-01.svg"/>
+          Alert Time
+        </span>
+        <span class="feature-item">
+          <img alt="Repetitions" class="svg-icon" src="/svg-icons/arrows-round/circle-arrow-reload-01-round.svg"/>
+          Repetitions
+        </span>
+        <span class="feature-item">
+          <img alt="Rest" class="svg-icon" src="/svg-icons/media/pause.svg"/>
+          Rest Time
+        </span>
+      </div>
+      ${isActive ? '<span class="active-badge">Active</span>' : ''}
+    </div>
+  `;
+
+  // Click handler to select Quick Start
+  quickStartCard.addEventListener("click", () => {
+    selectPlan(quickStartPlan.id);
+  });
+
+  container.appendChild(quickStartCard);
 }
 
 /**
