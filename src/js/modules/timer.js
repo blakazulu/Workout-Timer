@@ -7,7 +7,7 @@ import {formatTime} from "../utils/time.js";
 import {getAudio} from "./audio.js";
 import {eventBus} from "../core/event-bus.js";
 import {getWakeLock} from "../utils/wake-lock.js";
-import {loadActivePlan, createQuickStartPlan} from "./plans/storage.js";
+import {loadActivePlan, createQuickStartPlan, getPlanById} from "./plans/storage.js";
 
 export class Timer {
   constructor(options = {}) {
@@ -92,8 +92,9 @@ export class Timer {
   /**
    * Load plan segments for segment-based execution
    * @param {Array} segments - Array of segment objects from workout plan
+   * @param {number} repetitions - Number of times to repeat the plan (default: 1)
    */
-  loadPlanSegments(segments) {
+  loadPlanSegments(segments, repetitions = 1) {
     if (!Array.isArray(segments) || segments.length === 0) {
       console.warn("[Timer] Invalid segments, disabling segment mode");
       this.planSegments = null;
@@ -101,11 +102,31 @@ export class Timer {
       return;
     }
 
-    this.planSegments = segments.map(seg => ({...seg}));
+    // Validate repetitions (min: 1, max: 99)
+    repetitions = Math.max(1, Math.min(99, parseInt(repetitions) || 1));
+
+    // Multiply segments by repetitions
+    const expandedSegments = [];
+
+    for (let rep = 0; rep < repetitions; rep++) {
+      segments.forEach((seg, index) => {
+        const segmentCopy = {...seg};
+
+        // Store round information separately (not in name)
+        if (repetitions > 1) {
+          segmentCopy.roundNumber = rep + 1;
+          segmentCopy.totalRounds = repetitions;
+        }
+
+        expandedSegments.push(segmentCopy);
+      });
+    }
+
+    this.planSegments = expandedSegments;
     this.currentSegmentIndex = 0;
     this.isSegmentMode = true;
 
-    console.log(`[Timer] Loaded ${segments.length} segments for plan-based execution`);
+    console.log(`[Timer] Loaded ${segments.length} segments × ${repetitions} repetition(s) = ${expandedSegments.length} total segments`);
 
     if (this.debugMode) {
       console.log("[Timer] Plan segments:", this.planSegments);
@@ -269,10 +290,23 @@ export class Timer {
   start() {
     if (!this.isRunning) {
       // Read settings from input fields
+      // For repetitions, read from the appropriate input based on active plan mode
+      const activePlanId = loadActivePlan();
+      const activePlan = getPlanById(activePlanId);
+
       this.duration = parseInt($("#duration").value);
       this.alertTime = parseInt($("#alertTime").value);
-      this.repetitions = parseInt($("#repetitions").value);
       this.restTime = parseInt($("#restTime").value);
+
+      // Read repetitions from appropriate input based on plan mode
+      if (activePlan?.mode === "preset") {
+        this.repetitions = parseInt($("#repetitionsPreset")?.value || 3);
+      } else if (activePlan?.mode === "custom") {
+        this.repetitions = parseInt($("#repetitionsCustom")?.value || 3);
+      } else {
+        // Simple/Quick Start mode
+        this.repetitions = parseInt($("#repetitions").value);
+      }
 
       // Validate alert time doesn't exceed duration
       if (this.alertTime > this.duration) {
@@ -280,22 +314,35 @@ export class Timer {
         $("#alertTime").value = this.alertTime;
       }
 
-      // If Quick Start is active, validate that segments match current settings
-      // If mismatch detected, regenerate plan with current settings
-      const activePlanId = loadActivePlan();
-      if (activePlanId === "quick-start" && this.isSegmentMode && this.planSegments) {
-        // Check if first segment duration matches current duration setting
-        const firstSegment = this.planSegments[0];
-        if (firstSegment && firstSegment.duration !== this.duration) {
-          // Settings have changed, regenerate Quick Start plan
-          const quickStart = createQuickStartPlan({
-            duration: this.duration,
-            alertTime: this.alertTime,
-            repetitions: this.repetitions,
-            restTime: this.restTime
-          });
-          this.loadPlanSegments(quickStart.segments);
-          console.log("[Timer] Regenerated Quick Start plan - settings changed");
+      // Handle plan regeneration when settings change
+      if (this.isSegmentMode && this.planSegments && activePlan) {
+        if (activePlanId === "quick-start") {
+          // Quick Start: Check if duration OR repetitions changed
+          const firstSegment = this.planSegments[0];
+          // Calculate expected segment count for Quick Start
+          const expectedSegments = this.restTime > 0 ? this.repetitions * 2 - 1 : this.repetitions;
+          const durationChanged = firstSegment && firstSegment.duration !== this.duration;
+          const repetitionsChanged = this.planSegments.length !== expectedSegments;
+
+          if (durationChanged || repetitionsChanged) {
+            // Settings have changed, regenerate Quick Start plan
+            const quickStart = createQuickStartPlan({
+              duration: this.duration,
+              alertTime: this.alertTime,
+              repetitions: this.repetitions,
+              restTime: this.restTime
+            });
+            this.loadPlanSegments(quickStart.segments);
+            console.log("[Timer] Regenerated Quick Start plan - settings changed");
+          }
+        } else if (activePlan.mode === "preset" || activePlan.mode === "custom") {
+          // Preset/Custom: Check if repetitions changed (compare total segments)
+          const expectedSegments = activePlan.segments.length * this.repetitions;
+          if (this.planSegments.length !== expectedSegments) {
+            // Repetitions changed, reload segments with new repetitions
+            this.loadPlanSegments(activePlan.segments, this.repetitions);
+            console.log(`[Timer] Reloaded ${activePlan.mode} plan with ${this.repetitions} repetitions`);
+          }
         }
       }
 
@@ -890,9 +937,16 @@ export class Timer {
       if (this.isSegmentMode && this.planSegments) {
         const currentSegment = this.getCurrentSegment();
         if (currentSegment) {
-          const { currentRound, totalRounds } = this.getSegmentRoundInfo();
-          const progress = `${currentRound}/${totalRounds}`;
-          this.repCounter.textContent = `${currentSegment.name} (${progress})`;
+          // Show actual segment index out of total segments
+          const currentIndex = this.currentSegmentIndex + 1;
+          const totalSegments = this.planSegments.length;
+
+          // Add round info if repetitions > 1
+          const roundInfo = currentSegment.roundNumber && currentSegment.totalRounds > 1
+            ? ` - Round ${currentSegment.roundNumber}/${currentSegment.totalRounds}`
+            : '';
+
+          this.repCounter.textContent = `${currentSegment.name}${roundInfo} (${currentIndex}/${totalSegments})`;
         } else {
           this.repCounter.textContent = `Rep ${this.currentRep} / ${this.repetitions}`;
         }

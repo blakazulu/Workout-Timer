@@ -145,8 +145,9 @@ function loadAndApplyActivePlan() {
       setActivePlan("quick-start");
       const timer = getTimer();
       if (timer && quickStart.segments) {
-        timer.loadPlanSegments(quickStart.segments);
-        console.log(`[App] Loaded ${quickStart.segments.length} segments into timer (Quick Start)`);
+        const repetitions = parseInt($("#repetitions")?.value || 1);
+        timer.loadPlanSegments(quickStart.segments, repetitions);
+        console.log(`[App] Loaded ${quickStart.segments.length} segments into timer (Quick Start, ${repetitions}x)`);
       }
       updateActivePlanDisplay();
     }
@@ -155,11 +156,21 @@ function loadAndApplyActivePlan() {
 
   console.log(`[App] Applying active plan: ${activePlan.name}`);
 
-  // Apply plan segments to timer
+  // Apply plan segments to timer with appropriate repetitions
   const timer = getTimer();
   if (timer && activePlan.segments) {
-    timer.loadPlanSegments(activePlan.segments);
-    console.log(`[App] Loaded ${activePlan.segments.length} segments into timer`);
+    // Read repetitions from appropriate input based on plan mode
+    let repetitions = 1;
+    if (activePlan.mode === "preset") {
+      repetitions = parseInt($("#repetitionsPreset")?.value || 1);
+    } else if (activePlan.mode === "custom") {
+      repetitions = parseInt($("#repetitionsCustom")?.value || 1);
+    } else if (activePlan.mode === "simple" || activePlanId === "quick-start") {
+      repetitions = parseInt($("#repetitions")?.value || 1);
+    }
+
+    timer.loadPlanSegments(activePlan.segments, repetitions);
+    console.log(`[App] Loaded ${activePlan.segments.length} segments × ${repetitions} = ${activePlan.segments.length * repetitions} total segments into timer`);
   }
 
   // Update active plan display
@@ -229,8 +240,18 @@ function init() {
     if (data && data.plan) {
       const timer = getTimer();
       if (timer && data.plan.segments) {
-        timer.loadPlanSegments(data.plan.segments);
-        console.log(`[App] Reloaded plan segments: ${data.plan.name}`);
+        // Read repetitions from appropriate input based on plan mode
+        let repetitions = 1;
+        if (data.plan.mode === "preset") {
+          repetitions = parseInt($("#repetitionsPreset")?.value || 1);
+        } else if (data.plan.mode === "custom") {
+          repetitions = parseInt($("#repetitionsCustom")?.value || 1);
+        } else if (data.plan.mode === "simple" || data.plan.id === "quick-start") {
+          repetitions = parseInt($("#repetitions")?.value || 1);
+        }
+
+        timer.loadPlanSegments(data.plan.segments, repetitions);
+        console.log(`[App] Reloaded plan segments: ${data.plan.name} (${repetitions}x repetitions)`);
       }
     }
   });

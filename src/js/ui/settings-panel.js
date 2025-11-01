@@ -47,6 +47,32 @@ export function initSettingsPanel() {
     });
   }
 
+  // Setup repetitions input change handlers
+  const repetitionsPresetInput = document.getElementById("repetitionsPreset");
+  const repetitionsCustomInput = document.getElementById("repetitionsCustom");
+
+  if (repetitionsPresetInput) {
+    repetitionsPresetInput.addEventListener("change", () => {
+      console.log("[SettingsPanel] Preset repetitions changed, reloading plan");
+      const activePlanId = loadActivePlan();
+      const plan = getPlanById(activePlanId);
+      if (plan) {
+        eventBus.emit("plan:selected", {plan});
+      }
+    });
+  }
+
+  if (repetitionsCustomInput) {
+    repetitionsCustomInput.addEventListener("change", () => {
+      console.log("[SettingsPanel] Custom repetitions changed, reloading plan");
+      const activePlanId = loadActivePlan();
+      const plan = getPlanById(activePlanId);
+      if (plan) {
+        eventBus.emit("plan:selected", {plan});
+      }
+    });
+  }
+
   // Initialize with current active plan
   refreshSettingsPanel();
 
