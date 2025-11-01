@@ -37,41 +37,53 @@ By default, popovers use `popover="auto"` which means:
 
 ## Solution
 
-Accept the Popover API's auto-dismiss behavior and reopen the plan selector after the modal closes with a small delay:
-
-```javascript
-const reopenSelector = () => {
-  if (selectorPopover) {
-    setTimeout(() => {
-      selectorPopover.showPopover();
-    }, 100);
-  }
-};
-```
+Two-part fix: Add missing CSS to show the modal, and use `requestAnimationFrame` for smooth reopening:
 
 ### What Changed
 
-1. **Reverted Modal to Auto Mode** (`index.html`):
-   - Keep using `popover` (auto mode) - the default behavior
-   - Auto popovers will close the plan selector when opened
-   - But we handle this gracefully by reopening it
+1. **Added Missing CSS Rule** (`src/css/components/plans.css:174-177`):
+   ```css
+   .delete-confirmation-modal:popover-open {
+     display: block;
+     animation: modalSlideIn 0.3s ease;
+   }
+   ```
+   - **Critical fix!** The modal had `display: none` but no `:popover-open` state
+   - Without this, JavaScript called `showPopover()` successfully but nothing appeared
+   - Now the modal actually becomes visible when opened
 
-2. **Updated JavaScript Logic** (`src/js/ui/plan-selector.js`):
-   - Added `reopenSelector()` helper function to reopen plan selector after modal closes
-   - Call `reopenSelector()` after clicking Delete or Cancel
-   - Added delay (100ms) to ensure modal fully closes before reopening selector
-   - Added separate delay (150ms) for re-rendering plan list after deletion
-   - Added extensive console logging for debugging
+2. **Modal Popover Mode** (`index.html:35`):
+   ```html
+   <div id="deleteConfirmationModal" popover="manual">
+   ```
+   - Using `popover="manual"` for better control
+   - Note: Even manual popovers trigger light dismiss on parent auto popovers
+   - We accept this and reopen the selector smoothly
 
-3. **Delete Flow**:
+3. **Optimized Reopen Logic** (`src/js/ui/plan-selector.js:444-511`):
+   ```javascript
+   const reopenSelector = () => {
+     if (selectorPopover) {
+       requestAnimationFrame(() => {
+         selectorPopover.showPopover();
+       });
+     }
+   };
+   ```
+   - Uses `requestAnimationFrame` instead of `setTimeout` for smoother timing
+   - Reopens selector immediately after modal closes
+   - Re-renders plan list in the next frame for smooth updates
+   - Added backdrop click handler for manual popovers
+
+4. **Delete Flow**:
    ```javascript
    // When confirm delete is clicked:
-   modal.hidePopover();           // Close modal
-   reopenSelector();              // Reopen plan selector after 100ms
-   setTimeout(() => {             // After 150ms total:
-     renderPlanList(currentMode); //   Refresh the plan list
-     updateActivePlanDisplay();   //   Update active plan display
-   }, 150);
+   modal.hidePopover();                    // Close modal
+   reopenSelector();                       // Reopen selector (next frame)
+   requestAnimationFrame(() => {           // After reopen:
+     renderPlanList(currentMode);          //   Refresh the list
+     updateActivePlanDisplay();            //   Update display
+   });
    ```
 
 ## Testing
@@ -104,21 +116,30 @@ Added comprehensive E2E tests to verify the fix:
 
 ## Benefits
 
-1. **Better UX**: Plan selector reopens automatically after delete/cancel
-2. **Works with Standard API**: Uses auto popovers as intended by the spec
-3. **Simple Implementation**: Straightforward setTimeout-based reopen logic
-4. **Fully Tested**: Comprehensive test coverage for all user flows
-5. **Good Logging**: Extensive console logs for debugging
+1. **Modal is Visible**: The missing CSS rule is now added - modal appears correctly
+2. **Smooth Reopen**: Using `requestAnimationFrame` instead of `setTimeout` feels more natural
+3. **No Delays**: Immediate action on user input, smooth re-rendering
+4. **Proper Cleanup**: Backdrop click handler properly cleans up event listeners
+5. **Fully Tested**: Comprehensive test coverage for all user flows
+6. **Good Logging**: Extensive console logs for debugging
 
-## Trade-offs
+## Key Insights
 
-This approach accepts a brief visual transition:
-- Modal opens → Plan selector auto-closes (Popover API behavior)
-- User clicks Delete/Cancel → Modal closes
-- After 100ms → Plan selector reopens
-- After 150ms → Plan list refreshes (if deleted)
+1. **CSS Issue**: The modal had `display: none` but was missing the `:popover-open { display: block }` rule:
+   - JavaScript successfully called `modal.showPopover()`
+   - The Popover API marked it as open
+   - But CSS never changed it from `display: none` to visible
+   - Console logs showed success, but nothing appeared on screen
 
-The transition is quick enough (100-150ms) that it feels natural and intentional rather than jarring.
+2. **Popover API Limitation**: Manual popovers still trigger light dismiss on auto popovers:
+   - The Popover API spec causes any popover (even manual) to close parent auto popovers
+   - CSS tricks like `display: flex !important` don't work because the `:popover-open` state is removed
+   - Solution: Accept the close and reopen smoothly with `requestAnimationFrame`
+
+3. **Performance**: Using `requestAnimationFrame` instead of `setTimeout`:
+   - Syncs with browser's paint cycle for smoother animations
+   - Feels more responsive than arbitrary millisecond delays
+   - Browser optimizes when to execute the callback
 
 ## Related Files
 

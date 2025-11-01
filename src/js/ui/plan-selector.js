@@ -441,14 +441,14 @@ function deletePlanWithConfirmation(planId) {
   confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
   cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
 
-  // Helper to reopen plan selector after modal closes
+  // Helper to reopen plan selector smoothly
   const reopenSelector = () => {
     if (selectorPopover) {
-      // Small delay to allow modal to fully close first
-      setTimeout(() => {
+      // Use requestAnimationFrame for smooth timing
+      requestAnimationFrame(() => {
         selectorPopover.showPopover();
         console.log("[PlanSelector] Reopened plan selector");
-      }, 100);
+      });
     }
   };
 
@@ -463,14 +463,14 @@ function deletePlanWithConfirmation(planId) {
       // Close modal
       modal.hidePopover();
 
-      // Reopen plan selector
+      // Reopen selector immediately
       reopenSelector();
 
-      // Re-render plan list after selector reopens
-      setTimeout(() => {
+      // Re-render plan list after a frame
+      requestAnimationFrame(() => {
         renderPlanList(currentMode);
         updateActivePlanDisplay();
-      }, 150);
+      });
 
       // Track analytics
       analytics.track("plan:deleted", {planId, planName: plan.name});
@@ -489,7 +489,18 @@ function deletePlanWithConfirmation(planId) {
     reopenSelector();
   });
 
-  // Show modal (this will close the plan selector due to auto popover behavior)
+  // Handle backdrop click to close modal (manual popovers need this)
+  const handleBackdropClick = (e) => {
+    if (e.target === modal) {
+      console.log("[PlanSelector] Backdrop clicked, closing modal");
+      modal.hidePopover();
+      modal.removeEventListener("click", handleBackdropClick);
+      reopenSelector();
+    }
+  };
+  modal.addEventListener("click", handleBackdropClick);
+
+  // Show modal (this will close the plan selector even in manual mode)
   console.log("[PlanSelector] Showing delete confirmation modal");
   try {
     modal.showPopover();
