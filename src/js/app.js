@@ -32,6 +32,7 @@ import {initIconColorEnhancer} from "./utils/icon-color-enhancer.js";
 // Import plan system modules
 import {initPlanSelector, updateActivePlanDisplay} from "./ui/plan-selector.js";
 import {initPlanBuilder} from "./ui/plan-builder.js";
+import {initSettingsPanel} from "./ui/settings-panel.js";
 import {getPlanById, loadActivePlan} from "./modules/plans/index.js";
 
 // Lazy loaded modules
@@ -205,6 +206,7 @@ function init() {
   // Initialize plan system
   initPlanSelector();
   initPlanBuilder();
+  initSettingsPanel();
 
   // Load and apply active workout plan
   loadAndApplyActivePlan();

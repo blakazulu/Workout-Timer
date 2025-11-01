@@ -237,11 +237,11 @@ function createPlanCard(plan, mode) {
       <div class="plan-meta">
         <span class="plan-duration">
           <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
-          ${durationDisplay}
+          Total Duration - ${durationDisplay}
         </span>
         <span class="plan-segments">
           <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
-          ${plan.segments.length} ${plan.segments.length === 1 ? "segment" : "segments"}
+          total - ${plan.segments.length} ${plan.segments.length === 1 ? "segment" : "segments"}
         </span>
         ${usageDisplay}
       </div>

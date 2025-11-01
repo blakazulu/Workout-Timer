@@ -49,25 +49,22 @@
     </div>
 
     <div class="plan-info-meta">
-      <div class="plan-meta-item">
-        <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
-        <span>
-          <strong>Total Duration:</strong>
+      <div class="plan-meta-left">
+        <div class="plan-meta-item">
+          <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
           <span id="presetPlanDuration"></span>
-        </span>
-      </div>
-      <div class="plan-meta-item">
-        <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
-        <span>
-          <strong>Segments:</strong>
+        </div>
+        <div class="plan-meta-item">
+          <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
           <span id="presetPlanSegments"></span>
-        </span>
+        </div>
       </div>
-    </div>
-
-    <!-- Plan Builder in read-only mode -->
-    <div class="plan-segments-preview" id="presetSegmentsContainer">
-      <!-- Segments will be rendered here -->
+      <div class="plan-meta-right">
+        <button class="view-details-button" id="viewPresetDetailsBtn" aria-label="View plan details">
+          <img alt="View" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
+          <span>View Details</span>
+        </button>
+      </div>
     </div>
 
     <!-- Alert time and Repetitions inputs -->
@@ -89,32 +86,25 @@
     <div class="plan-info-header">
       <h3 id="customPlanName"></h3>
       <p id="customPlanDescription"></p>
-      <button class="edit-plan-button" id="editCustomPlanBtn" aria-label="Edit plan">
-        <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
-        <span>Edit Plan</span>
-      </button>
     </div>
 
     <div class="plan-info-meta">
-      <div class="plan-meta-item">
-        <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
-        <span>
-          <strong>Total Duration:</strong>
+      <div class="plan-meta-left">
+        <div class="plan-meta-item">
+          <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
           <span id="customPlanDuration"></span>
-        </span>
-      </div>
-      <div class="plan-meta-item">
-        <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
-        <span>
-          <strong>Segments:</strong>
+        </div>
+        <div class="plan-meta-item">
+          <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
           <span id="customPlanSegments"></span>
-        </span>
+        </div>
       </div>
-    </div>
-
-    <!-- Plan Builder in edit mode -->
-    <div class="plan-segments-preview" id="customSegmentsContainer">
-      <!-- Segments will be rendered here -->
+      <div class="plan-meta-right">
+        <button class="edit-plan-button" id="editCustomPlanBtn" aria-label="Edit plan">
+          <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
+          <span>Edit Plan</span>
+        </button>
+      </div>
     </div>
 
     <!-- Alert time and Repetitions inputs -->
