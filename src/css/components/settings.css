@@ -65,91 +65,15 @@
   margin-top: var(--spacing-lg);
 }
 
-/* Plan Info Container */
-.plan-info-container {
+/* Plan Card Container in Settings */
+.plan-card-container {
   @apply flex flex-col;
-  gap: var(--spacing-lg);
+  gap: 8px;
 }
 
-.plan-info-header {
-  @apply relative;
-}
-
-.plan-info-header h3 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #00ffc8;
-  margin: 0 0 var(--spacing-xs) 0;
-}
-
-.plan-info-header p {
-  font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 var(--spacing-md) 0;
-  line-height: 1.5;
-}
-
-/* Plan Meta Info - Left/Right Layout */
-.plan-info-meta {
-  @apply flex items-start justify-between;
-  gap: var(--spacing-lg);
-}
-
-.plan-meta-left {
-  @apply flex flex-col;
-  gap: var(--spacing-xs);
-}
-
-.plan-meta-right {
-  @apply flex items-center;
-}
-
-.plan-meta-item {
-  @apply flex items-center;
-  gap: var(--spacing-sm);
-  font-size: var(--font-size-sm);
-}
-
-.plan-meta-item .svg-icon {
-  width: 20px;
-  height: 20px;
-  opacity: 0.7;
-}
-
-.plan-meta-item strong {
-  color: rgba(255, 255, 255, 0.9);
-  margin-right: var(--spacing-xs);
-}
-
-.plan-meta-item span {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* View Details / Edit Plan Button */
-.view-details-button,
-.edit-plan-button {
-  @apply flex items-center gap-2 px-4 py-2 border border-solid transition-all duration-300;
-  background: rgba(0, 255, 200, 0.1);
-  border-color: rgba(0, 255, 200, 0.3);
-  border-radius: var(--radius-md);
-  color: #00ffc8;
-  cursor: pointer;
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.view-details-button:hover,
-.edit-plan-button:hover {
-  background: rgba(0, 255, 200, 0.2);
-  border-color: #00ffc8;
-  box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
-}
-
-.view-details-button .svg-icon,
-.edit-plan-button .svg-icon {
-  width: 16px;
-  height: 16px;
+/* Plan card within settings inherits from plans.css but may need minor adjustments */
+.settings .plan-card {
+  margin-bottom: 0;
 }
 
 /* YouTube Section */

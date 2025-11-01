@@ -535,7 +535,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
    ======================================== */
 
 .plan-card {
-  @apply flex flex-col gap-4 p-5 rounded-lg relative overflow-hidden;
+  @apply flex flex-col gap-2 p-2 rounded-lg relative overflow-hidden;
   @apply transition-all duration-300 cursor-pointer;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 2px solid rgba(100, 100, 255, 0.3);
@@ -627,7 +627,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* Plan Description - Smaller, Muted */
 .plan-description {
-  @apply text-sm m-0 mb-3;
+  @apply text-sm m-0;
   color: var(--plan-text-secondary);
   line-height: 1.6;
   opacity: 0.8;

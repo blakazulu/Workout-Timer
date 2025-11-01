@@ -42,28 +42,30 @@
   </div>
 
   <!-- Built-in Plan Layout (read-only view) -->
-  <div class="plan-info-container" id="presetSettings" hidden>
-    <div class="plan-info-header">
-      <h3 id="presetPlanName"></h3>
-      <p id="presetPlanDescription"></p>
-    </div>
-
-    <div class="plan-info-meta">
-      <div class="plan-meta-left">
-        <div class="plan-meta-item">
-          <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
-          <span id="presetPlanDuration"></span>
-        </div>
-        <div class="plan-meta-item">
-          <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
-          <span id="presetPlanSegments"></span>
-        </div>
+  <div class="plan-card-container" id="presetSettings" hidden>
+    <div class="plan-card active-plan" id="presetPlanCard">
+      <div class="plan-card-header">
+        <h4 class="plan-name" id="presetPlanName"></h4>
+        <span class="active-badge">Active</span>
       </div>
-      <div class="plan-meta-right">
-        <button class="view-details-button" id="viewPresetDetailsBtn" aria-label="View plan details">
-          <img alt="View" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
-          <span>View Details</span>
-        </button>
+      <p class="plan-description" id="presetPlanDescription"></p>
+      <div class="plan-card-footer">
+        <div class="plan-meta">
+          <span class="plan-duration">
+            <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
+            <span id="presetPlanDuration"></span>
+          </span>
+          <span class="plan-segments">
+            <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
+            <span id="presetPlanSegments"></span>
+          </span>
+        </div>
+        <div class="plan-card-actions">
+          <button class="plan-info-btn" id="viewPresetDetailsBtn" aria-label="View plan details" title="View plan details">
+            <img alt="Info" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
+            <span>View Details</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -82,28 +84,29 @@
   </div>
 
   <!-- Custom Plan Layout (editable) -->
-  <div class="plan-info-container" id="customSettings" hidden>
-    <div class="plan-info-header">
-      <h3 id="customPlanName"></h3>
-      <p id="customPlanDescription"></p>
-    </div>
-
-    <div class="plan-info-meta">
-      <div class="plan-meta-left">
-        <div class="plan-meta-item">
-          <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
-          <span id="customPlanDuration"></span>
-        </div>
-        <div class="plan-meta-item">
-          <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
-          <span id="customPlanSegments"></span>
-        </div>
+  <div class="plan-card-container" id="customSettings" hidden>
+    <div class="plan-card active-plan" id="customPlanCard">
+      <div class="plan-card-header">
+        <h4 class="plan-name" id="customPlanName"></h4>
+        <span class="active-badge">Active</span>
       </div>
-      <div class="plan-meta-right">
-        <button class="edit-plan-button" id="editCustomPlanBtn" aria-label="Edit plan">
-          <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
-          <span>Edit Plan</span>
-        </button>
+      <p class="plan-description" id="customPlanDescription"></p>
+      <div class="plan-card-footer">
+        <div class="plan-meta">
+          <span class="plan-duration">
+            <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
+            <span id="customPlanDuration"></span>
+          </span>
+          <span class="plan-segments">
+            <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
+            <span id="customPlanSegments"></span>
+          </span>
+        </div>
+        <div class="plan-card-actions">
+          <button class="plan-edit-btn" id="editCustomPlanBtn" aria-label="Edit plan" title="Edit plan">
+            <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
+          </button>
+        </div>
       </div>
     </div>
 
