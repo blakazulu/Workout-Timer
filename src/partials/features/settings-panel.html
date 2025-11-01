@@ -1,7 +1,7 @@
 <!-- Timer Settings Panel -->
 <div class="settings" id="settings">
   <div class="settings-header">
-    <label>Timer Settings</label>
+    <label>Plan Settings</label>
   </div>
 
   <!-- Active Plan Display -->
@@ -18,7 +18,8 @@
     </button>
   </div>
 
-  <div class="settings-grid">
+  <!-- Simple Plan Layout (default) -->
+  <div class="settings-grid" id="simpleSettings">
     <div class="setting-group">
       <label for="duration">Duration</label>
       <input id="duration" max="3600" min="5" type="number" value="30">
@@ -37,6 +38,96 @@
     <div class="setting-group">
       <label for="restTime">Rest Time</label>
       <input id="restTime" max="300" min="0" type="number" value="10">
+    </div>
+  </div>
+
+  <!-- Built-in Plan Layout (read-only view) -->
+  <div class="plan-info-container" id="presetSettings" hidden>
+    <div class="plan-info-header">
+      <h3 id="presetPlanName"></h3>
+      <p id="presetPlanDescription"></p>
+    </div>
+
+    <div class="plan-info-meta">
+      <div class="plan-meta-item">
+        <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
+        <span>
+          <strong>Total Duration:</strong>
+          <span id="presetPlanDuration"></span>
+        </span>
+      </div>
+      <div class="plan-meta-item">
+        <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
+        <span>
+          <strong>Segments:</strong>
+          <span id="presetPlanSegments"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Plan Builder in read-only mode -->
+    <div class="plan-segments-preview" id="presetSegmentsContainer">
+      <!-- Segments will be rendered here -->
+    </div>
+
+    <!-- Alert time and Repetitions inputs -->
+    <div class="settings-grid settings-grid-compact">
+      <div class="setting-group">
+        <label for="alertTimePreset">Alert Time</label>
+        <input id="alertTimePreset" max="60" min="1" type="number" value="3">
+      </div>
+
+      <div class="setting-group">
+        <label for="repetitionsPreset">Repetitions</label>
+        <input id="repetitionsPreset" max="99" min="1" type="number" value="3">
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Plan Layout (editable) -->
+  <div class="plan-info-container" id="customSettings" hidden>
+    <div class="plan-info-header">
+      <h3 id="customPlanName"></h3>
+      <p id="customPlanDescription"></p>
+      <button class="edit-plan-button" id="editCustomPlanBtn" aria-label="Edit plan">
+        <img alt="Edit" class="svg-icon" src="/svg-icons/edit-formatting/edit-01.svg"/>
+        <span>Edit Plan</span>
+      </button>
+    </div>
+
+    <div class="plan-info-meta">
+      <div class="plan-meta-item">
+        <img alt="Duration" class="svg-icon" src="/svg-icons/date-and-time/clock-01.svg"/>
+        <span>
+          <strong>Total Duration:</strong>
+          <span id="customPlanDuration"></span>
+        </span>
+      </div>
+      <div class="plan-meta-item">
+        <img alt="Segments" class="svg-icon" src="/svg-icons/bookmark-favorite/tag-01.svg"/>
+        <span>
+          <strong>Segments:</strong>
+          <span id="customPlanSegments"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Plan Builder in edit mode -->
+    <div class="plan-segments-preview" id="customSegmentsContainer">
+      <!-- Segments will be rendered here -->
+    </div>
+
+    <!-- Alert time and Repetitions inputs -->
+    <div class="settings-grid settings-grid-compact">
+      <div class="setting-group">
+        <label for="alertTimeCustom">Alert Time</label>
+        <input id="alertTimeCustom" max="60" min="1" type="number" value="3">
+      </div>
+
+      <div class="setting-group">
+        <label for="repetitionsCustom">Repetitions</label>
+        <input id="repetitionsCustom" max="99" min="1" type="number" value="3">
+      </div>
     </div>
   </div>
 </div>

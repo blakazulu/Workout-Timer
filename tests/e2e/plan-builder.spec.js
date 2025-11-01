@@ -358,24 +358,9 @@ test.describe("Plan Builder - Step 2: Plan Details", () => {
   test("should show Step 2 form fields", async ({page}) => {
     const planName = page.locator("#planName");
     const planDescription = page.locator("#planDescription");
-    const planRepetitions = page.locator("#planRepetitions");
-    const planAlertTime = page.locator("#planAlertTime");
 
     await expect(planName).toBeVisible();
     await expect(planDescription).toBeVisible();
-    await expect(planRepetitions).toBeVisible();
-    await expect(planAlertTime).toBeVisible();
-  });
-
-  test("should have default values for repetitions and alert time", async ({page}) => {
-    const planRepetitions = page.locator("#planRepetitions");
-    const planAlertTime = page.locator("#planAlertTime");
-
-    const repValue = await planRepetitions.inputValue();
-    const alertValue = await planAlertTime.inputValue();
-
-    expect(repValue).toBe("1");
-    expect(alertValue).toBe("3");
   });
 
   test("should allow going back to Step 1", async ({page}) => {
@@ -420,8 +405,8 @@ test.describe("Plan Builder - Step 2: Plan Details", () => {
 
     // Plan should be saved
     const savedPlans = await page.evaluate(async () => {
-      const {getAllCustomPlans} = await import("/src/js/modules/plans/storage.js");
-      return getAllCustomPlans();
+      const {loadPlans} = await import("/src/js/modules/plans/storage.js");
+      return loadPlans();
     });
 
     expect(savedPlans.length).toBeGreaterThan(0);
@@ -502,9 +487,6 @@ test.describe("Plan Builder - Complete Workflow", () => {
     const planDescription = page.locator("#planDescription");
     await planDescription.fill("High intensity interval training with rest periods");
 
-    const planRepetitions = page.locator("#planRepetitions");
-    await planRepetitions.fill("3");
-
     // Save plan
     const saveBtn = page.locator("#savePlanBtn");
     await saveBtn.click();
@@ -512,13 +494,12 @@ test.describe("Plan Builder - Complete Workflow", () => {
 
     // Verify plan saved
     const savedPlans = await page.evaluate(async () => {
-      const {getAllCustomPlans} = await import("/src/js/modules/plans/storage.js");
-      return getAllCustomPlans();
+      const {loadPlans} = await import("/src/js/modules/plans/storage.js");
+      return loadPlans();
     });
 
     expect(savedPlans.length).toBe(1);
     expect(savedPlans[0].name).toBe("Complete HIIT Workout");
     expect(savedPlans[0].segments.length).toBe(3);
-    expect(savedPlans[0].repetitions).toBe(3);
   });
 });

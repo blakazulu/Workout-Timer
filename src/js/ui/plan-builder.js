@@ -27,9 +27,7 @@ const builderState = {
   editingSegmentIndex: null, // Index when editing existing segment
   planDetails: {
     name: "",
-    description: "",
-    repetitions: 1,
-    alertTime: 3
+    description: ""
   },
   isEditMode: false,
   isViewOnly: false, // Read-only mode for preset plans
@@ -161,9 +159,7 @@ export function openPlanBuilder({planId = null, viewOnly = false} = {}) {
   builderState.currentPlanId = planId;
   builderState.planDetails = {
     name: "",
-    description: "",
-    repetitions: 1,
-    alertTime: 3
+    description: ""
   };
 
   // Update title
@@ -179,8 +175,6 @@ export function openPlanBuilder({planId = null, viewOnly = false} = {}) {
       builderState.segments = plan.segments.map(seg => ({...seg}));
       builderState.planDetails.name = plan.name;
       builderState.planDetails.description = plan.description || "";
-      builderState.planDetails.repetitions = plan.repetitions || 1;
-      builderState.planDetails.alertTime = plan.alertTime || 3;
     } else {
       console.error(`[PlanBuilder] Plan not found: ${planId}`);
       return;
@@ -711,13 +705,9 @@ function goToStep2() {
 function populateStep2Form() {
   const planName = document.getElementById("planName");
   const planDescription = document.getElementById("planDescription");
-  const planRepetitions = document.getElementById("planRepetitions");
-  const planAlertTime = document.getElementById("planAlertTime");
 
   if (planName) planName.value = builderState.planDetails.name;
   if (planDescription) planDescription.value = builderState.planDetails.description;
-  if (planRepetitions) planRepetitions.value = builderState.planDetails.repetitions;
-  if (planAlertTime) planAlertTime.value = builderState.planDetails.alertTime;
 
   // Focus plan name
   setTimeout(() => planName?.focus(), 100);
@@ -730,13 +720,9 @@ function backToStep1() {
   // Save current form values
   const planName = document.getElementById("planName");
   const planDescription = document.getElementById("planDescription");
-  const planRepetitions = document.getElementById("planRepetitions");
-  const planAlertTime = document.getElementById("planAlertTime");
 
   if (planName) builderState.planDetails.name = planName.value.trim();
   if (planDescription) builderState.planDetails.description = planDescription.value.trim();
-  if (planRepetitions) builderState.planDetails.repetitions = parseInt(planRepetitions.value) || 1;
-  if (planAlertTime) builderState.planDetails.alertTime = parseInt(planAlertTime.value) || 3;
 
   // Track analytics
   analytics.track("plan_builder:step_back", {from: 2, to: 1});
@@ -751,12 +737,8 @@ function backToStep1() {
  */
 function validatePlanDetails() {
   const planName = document.getElementById("planName");
-  const planRepetitions = document.getElementById("planRepetitions");
-  const planAlertTime = document.getElementById("planAlertTime");
 
   const name = planName?.value.trim() || "";
-  const repetitions = parseInt(planRepetitions?.value) || 1;
-  const alertTime = parseInt(planAlertTime?.value) || 3;
 
   // Validate name
   if (!name) {
@@ -765,16 +747,6 @@ function validatePlanDetails() {
 
   if (name.length < 3) {
     return {isValid: false, field: "name", message: "Plan name must be at least 3 characters"};
-  }
-
-  // Validate repetitions
-  if (repetitions < 1 || repetitions > 99) {
-    return {isValid: false, field: "repetitions", message: "Repetitions must be between 1 and 99"};
-  }
-
-  // Validate alert time
-  if (alertTime < 0 || alertTime > 60) {
-    return {isValid: false, field: "alertTime", message: "Alert time must be between 0 and 60 seconds"};
   }
 
   return {isValid: true};
@@ -789,13 +761,9 @@ function handleSavePlan() {
   // Get form values
   const planName = document.getElementById("planName");
   const planDescription = document.getElementById("planDescription");
-  const planRepetitions = document.getElementById("planRepetitions");
-  const planAlertTime = document.getElementById("planAlertTime");
 
   const name = planName?.value.trim() || "";
   const description = planDescription?.value.trim() || "";
-  const repetitions = parseInt(planRepetitions?.value) || 1;
-  const alertTime = parseInt(planAlertTime?.value) || 3;
 
   // Validate
   const validation = validatePlanDetails();
@@ -809,9 +777,7 @@ function handleSavePlan() {
     name,
     description,
     mode: "custom",
-    segments: builderState.segments,
-    repetitions,
-    alertTime
+    segments: builderState.segments
   };
 
   // If editing, preserve ID and metadata
@@ -867,8 +833,7 @@ function handleSavePlan() {
       planId: result.planId,
       planName: planData.name,
       segmentCount: builderState.segments.length,
-      totalDuration,
-      repetitions
+      totalDuration
     });
   } else {
     const errorMessage = result.errors?.join("\n") || "Unknown error";
