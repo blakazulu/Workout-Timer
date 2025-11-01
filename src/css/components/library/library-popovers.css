@@ -91,7 +91,7 @@
   overflow: hidden;
   padding: 0;
   transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
-  width: min(460px, 92vw);
+  width: min(480px, 92vw);
 }
 
 .mood-popover:popover-open {
@@ -180,7 +180,7 @@
   overflow: hidden;
   padding: 0;
   transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s allow-discrete, overlay 0.3s allow-discrete;
-  width: min(460px, 92vw);
+  width: min(480px, 92vw);
 }
 
 .genre-popover:popover-open {

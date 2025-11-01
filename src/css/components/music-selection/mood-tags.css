@@ -131,11 +131,56 @@
 }
 
 .mood-icon {
-  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.6));
   font-size: 38px;
   position: relative;
   transition: all 0.3s ease;
   z-index: 1;
+}
+
+/* Individual icon colors - Using CSS filter technique with !important to override global .svg-icon */
+.mood-tag:nth-child(1) .mood-icon {
+  /* Beast Mode - Electric Purple (#a855f7) */
+  filter: brightness(0) saturate(100%) invert(53%) sepia(77%) saturate(2944%) hue-rotate(239deg) brightness(99%) contrast(97%) drop-shadow(0 0 10px rgba(168, 85, 247, 0.6)) !important;
+}
+
+.mood-tag:nth-child(2) .mood-icon {
+  /* Intense - Bright Red (#ff0000) */
+  filter: brightness(0) saturate(100%) invert(12%) sepia(100%) saturate(7497%) hue-rotate(2deg) brightness(107%) contrast(117%) drop-shadow(0 0 10px rgba(255, 0, 0, 0.6)) !important;
+}
+
+.mood-tag:nth-child(3) .mood-icon {
+  /* Energetic - Bright Yellow (#ffd700) */
+  filter: brightness(0) saturate(100%) invert(82%) sepia(61%) saturate(1184%) hue-rotate(359deg) brightness(104%) contrast(104%) drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)) !important;
+}
+
+.mood-tag:nth-child(4) .mood-icon {
+  /* Power - Neon Pink (#ff1493) */
+  filter: brightness(0) saturate(100%) invert(17%) sepia(99%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%) drop-shadow(0 0 10px rgba(255, 20, 147, 0.6)) !important;
+}
+
+.mood-tag:nth-child(5) .mood-icon {
+  /* Aggressive - Dark Orange (#ff6600) */
+  filter: brightness(0) saturate(100%) invert(45%) sepia(99%) saturate(2801%) hue-rotate(360deg) brightness(104%) contrast(107%) drop-shadow(0 0 10px rgba(255, 102, 0, 0.6)) !important;
+}
+
+.mood-tag:nth-child(6) .mood-icon {
+  /* Pump Up - Lime Green (#32cd32) */
+  filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1205%) hue-rotate(72deg) brightness(96%) contrast(86%) drop-shadow(0 0 10px rgba(50, 205, 50, 0.6)) !important;
+}
+
+.mood-tag:nth-child(7) .mood-icon {
+  /* Focus - Sky Blue (#00bfff) */
+  filter: brightness(0) saturate(100%) invert(53%) sepia(100%) saturate(1976%) hue-rotate(169deg) brightness(104%) contrast(106%) drop-shadow(0 0 10px rgba(0, 191, 255, 0.6)) !important;
+}
+
+.mood-tag:nth-child(8) .mood-icon {
+  /* Motivated - Coral (#ff7f50) */
+  filter: brightness(0) saturate(100%) invert(70%) sepia(77%) saturate(2978%) hue-rotate(327deg) brightness(101%) contrast(104%) drop-shadow(0 0 10px rgba(255, 127, 80, 0.6)) !important;
+}
+
+.mood-tag:nth-child(9) .mood-icon {
+  /* Steady - Teal (#00ffc8) */
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 10px rgba(0, 255, 200, 0.6)) !important;
 }
 
 /* Mobile responsive icon sizing */
@@ -152,8 +197,44 @@
 }
 
 .mood-tag:hover .mood-icon {
-  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 1));
   transform: scale(1.15) rotate(5deg);
+}
+
+/* Individual hover colors - Enhanced glow */
+.mood-tag:nth-child(1):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(53%) sepia(77%) saturate(2944%) hue-rotate(239deg) brightness(99%) contrast(97%) drop-shadow(0 0 20px rgba(168, 85, 247, 1)) !important;
+}
+
+.mood-tag:nth-child(2):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(100%) saturate(7497%) hue-rotate(2deg) brightness(107%) contrast(117%) drop-shadow(0 0 20px rgba(255, 0, 0, 1)) !important;
+}
+
+.mood-tag:nth-child(3):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(61%) saturate(1184%) hue-rotate(359deg) brightness(104%) contrast(104%) drop-shadow(0 0 20px rgba(255, 215, 0, 1)) !important;
+}
+
+.mood-tag:nth-child(4):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(99%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%) drop-shadow(0 0 20px rgba(255, 20, 147, 1)) !important;
+}
+
+.mood-tag:nth-child(5):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(99%) saturate(2801%) hue-rotate(360deg) brightness(104%) contrast(107%) drop-shadow(0 0 20px rgba(255, 102, 0, 1)) !important;
+}
+
+.mood-tag:nth-child(6):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(64%) sepia(98%) saturate(1205%) hue-rotate(72deg) brightness(96%) contrast(86%) drop-shadow(0 0 20px rgba(50, 205, 50, 1)) !important;
+}
+
+.mood-tag:nth-child(7):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(53%) sepia(100%) saturate(1976%) hue-rotate(169deg) brightness(104%) contrast(106%) drop-shadow(0 0 20px rgba(0, 191, 255, 1)) !important;
+}
+
+.mood-tag:nth-child(8):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(70%) sepia(77%) saturate(2978%) hue-rotate(327deg) brightness(101%) contrast(104%) drop-shadow(0 0 20px rgba(255, 127, 80, 1)) !important;
+}
+
+.mood-tag:nth-child(9):hover .mood-icon {
+  filter: brightness(0) saturate(100%) invert(89%) sepia(36%) saturate(2561%) hue-rotate(102deg) brightness(104%) contrast(101%) drop-shadow(0 0 20px rgba(0, 255, 200, 1)) !important;
 }
 
 .mood-tag span:last-child {

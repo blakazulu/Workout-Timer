@@ -184,6 +184,136 @@ test.describe("UI Interactions", () => {
     expect(count).toBeGreaterThan(0);
   });
 
+  test("should display mood icons with unique colors", async ({page}) => {
+    const moodButton = page.locator(SELECTORS.moodModeBtn);
+    await moodButton.click();
+    await wait(500);
+
+    // Get all mood icons
+    const moodIcons = page.locator(".mood-icon");
+    const iconCount = await moodIcons.count();
+
+    expect(iconCount).toBe(9); // Should have 9 mood icons
+
+    // Check that each icon has a filter style applied
+    for (let i = 0; i < iconCount; i++) {
+      const icon = moodIcons.nth(i);
+      const filterStyle = await icon.evaluate(el => {
+        return window.getComputedStyle(el).filter;
+      });
+
+      // Each icon should have a complex filter (not just 'none')
+      expect(filterStyle).not.toBe("none");
+      expect(filterStyle).toContain("brightness");
+    }
+
+    // Verify each icon has a different filter (unique colors)
+    const filters = [];
+    for (let i = 0; i < iconCount; i++) {
+      const icon = moodIcons.nth(i);
+      const filterStyle = await icon.evaluate(el => {
+        return window.getComputedStyle(el).filter;
+      });
+      filters.push(filterStyle);
+    }
+
+    // All filters should be unique
+    const uniqueFilters = new Set(filters);
+    expect(uniqueFilters.size).toBe(iconCount);
+  });
+
+  test("should display genre icons with unique colors", async ({page}) => {
+    const genreButton = page.locator(SELECTORS.genreModeBtn);
+    await genreButton.click();
+    await wait(500);
+
+    // Get all genre icons
+    const genreIcons = page.locator(".genre-icon");
+    const iconCount = await genreIcons.count();
+
+    expect(iconCount).toBe(9); // Should have 9 genre icons
+
+    // Check that each icon has a filter style applied
+    for (let i = 0; i < iconCount; i++) {
+      const icon = genreIcons.nth(i);
+      const filterStyle = await icon.evaluate(el => {
+        return window.getComputedStyle(el).filter;
+      });
+
+      // Each icon should have a complex filter (not just 'none')
+      expect(filterStyle).not.toBe("none");
+      expect(filterStyle).toContain("brightness");
+    }
+
+    // Verify each icon has a different filter (unique colors)
+    const filters = [];
+    for (let i = 0; i < iconCount; i++) {
+      const icon = genreIcons.nth(i);
+      const filterStyle = await icon.evaluate(el => {
+        return window.getComputedStyle(el).filter;
+      });
+      filters.push(filterStyle);
+    }
+
+    // All filters should be unique
+    const uniqueFilters = new Set(filters);
+    expect(uniqueFilters.size).toBe(iconCount);
+  });
+
+  test("should enhance mood icon filters on hover", async ({page}) => {
+    const moodButton = page.locator(SELECTORS.moodModeBtn);
+    await moodButton.click();
+    await wait(500);
+
+    // Get first mood tag
+    const firstMoodTag = page.locator(".mood-tag").first();
+    const firstMoodIcon = firstMoodTag.locator(".mood-icon");
+
+    // Get initial filter
+    const initialFilter = await firstMoodIcon.evaluate(el => {
+      return window.getComputedStyle(el).filter;
+    });
+
+    // Hover over the mood tag
+    await firstMoodTag.hover();
+    await wait(300);
+
+    // Get hover filter
+    const hoverFilter = await firstMoodIcon.evaluate(el => {
+      return window.getComputedStyle(el).filter;
+    });
+
+    // Filter should contain drop-shadow with enhanced glow
+    expect(hoverFilter).toContain("drop-shadow");
+  });
+
+  test("should enhance genre icon filters on hover", async ({page}) => {
+    const genreButton = page.locator(SELECTORS.genreModeBtn);
+    await genreButton.click();
+    await wait(500);
+
+    // Get first genre tag
+    const firstGenreTag = page.locator(".genre-tag").first();
+    const firstGenreIcon = firstGenreTag.locator(".genre-icon");
+
+    // Get initial filter
+    const initialFilter = await firstGenreIcon.evaluate(el => {
+      return window.getComputedStyle(el).filter;
+    });
+
+    // Hover over the genre tag
+    await firstGenreTag.hover();
+    await wait(300);
+
+    // Get hover filter
+    const hoverFilter = await firstGenreIcon.evaluate(el => {
+      return window.getComputedStyle(el).filter;
+    });
+
+    // Filter should contain drop-shadow with enhanced glow
+    expect(hoverFilter).toContain("drop-shadow");
+  });
+
   test("should navigate between library tabs", async ({page}) => {
     // Open library using helper
     await openMusicLibrary(page);

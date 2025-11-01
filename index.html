@@ -31,6 +31,29 @@
 <%- include('src/partials/popovers/plan-selector.html') %>
 <%- include('src/partials/popovers/plan-builder.html') %>
 
+<!-- Delete Confirmation Modal -->
+<div class="delete-confirmation-modal" id="deleteConfirmationModal" popover>
+  <div class="delete-modal-content">
+    <div class="delete-modal-header">
+      <img alt="Warning" class="svg-icon icon-orange" src="/svg-icons/alert-notification/alert-circle.svg"/>
+      <h3>Delete Plan?</h3>
+    </div>
+    <div class="delete-modal-body">
+      <p class="plan-name-to-delete" id="planNameToDelete"></p>
+      <p class="warning-text">This action cannot be undone.</p>
+    </div>
+    <div class="delete-modal-actions">
+      <button class="btn-cancel" id="cancelDeleteBtn">
+        Cancel
+      </button>
+      <button class="btn-delete" id="confirmDeleteBtn">
+        <img alt="Delete" class="svg-icon" src="/svg-icons/add-remove-delete/delete-01.svg"/>
+        <span>Delete Plan</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

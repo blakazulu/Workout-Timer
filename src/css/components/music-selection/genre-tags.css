@@ -132,11 +132,56 @@
 }
 
 .genre-icon {
-  filter: drop-shadow(0 0 10px rgba(255, 50, 50, 0.6));
   font-size: 38px;
   position: relative;
   transition: all 0.3s ease;
   z-index: 1;
+}
+
+/* Individual icon colors - Using CSS filter technique with !important to override global .svg-icon */
+.genre-tag:nth-child(1) .genre-icon {
+  /* EDM - Electric Blue (#1e90ff) */
+  filter: brightness(0) saturate(100%) invert(47%) sepia(97%) saturate(1848%) hue-rotate(196deg) brightness(105%) contrast(106%) drop-shadow(0 0 10px rgba(30, 144, 255, 0.6)) !important;
+}
+
+.genre-tag:nth-child(2) .genre-icon {
+  /* Rock - Fiery Red (#ff3232) */
+  filter: brightness(0) saturate(100%) invert(28%) sepia(99%) saturate(6498%) hue-rotate(352deg) brightness(106%) contrast(108%) drop-shadow(0 0 10px rgba(255, 50, 50, 0.6)) !important;
+}
+
+.genre-tag:nth-child(3) .genre-icon {
+  /* Hip Hop - Gold (#ffd700) */
+  filter: brightness(0) saturate(100%) invert(82%) sepia(61%) saturate(1184%) hue-rotate(359deg) brightness(104%) contrast(104%) drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)) !important;
+}
+
+.genre-tag:nth-child(4) .genre-icon {
+  /* Metal - Bright Silver/White (#f0f0f0) */
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) drop-shadow(0 0 10px rgba(240, 240, 240, 0.6)) !important;
+}
+
+.genre-tag:nth-child(5) .genre-icon {
+  /* Dubstep - Indigo (#4b0082) */
+  filter: brightness(0) saturate(100%) invert(11%) sepia(94%) saturate(6731%) hue-rotate(274deg) brightness(81%) contrast(134%) drop-shadow(0 0 10px rgba(75, 0, 130, 0.6)) !important;
+}
+
+.genre-tag:nth-child(6) .genre-icon {
+  /* Hardstyle - Hot Pink (#ff1493) */
+  filter: brightness(0) saturate(100%) invert(17%) sepia(99%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%) drop-shadow(0 0 10px rgba(255, 20, 147, 0.6)) !important;
+}
+
+.genre-tag:nth-child(7) .genre-icon {
+  /* Techno - Cyan (#00ffff) */
+  filter: brightness(0) saturate(100%) invert(87%) sepia(96%) saturate(7466%) hue-rotate(138deg) brightness(106%) contrast(106%) drop-shadow(0 0 10px rgba(0, 255, 255, 0.6)) !important;
+}
+
+.genre-tag:nth-child(8) .genre-icon {
+  /* Phonk - Magenta (#ff00ff) */
+  filter: brightness(0) saturate(100%) invert(13%) sepia(99%) saturate(7495%) hue-rotate(321deg) brightness(118%) contrast(119%) drop-shadow(0 0 10px rgba(255, 0, 255, 0.6)) !important;
+}
+
+.genre-tag:nth-child(9) .genre-icon {
+  /* Tabata - Orange (#ff8c00) */
+  filter: brightness(0) saturate(100%) invert(58%) sepia(99%) saturate(2597%) hue-rotate(6deg) brightness(104%) contrast(107%) drop-shadow(0 0 10px rgba(255, 140, 0, 0.6)) !important;
 }
 
 /* Mobile responsive icon sizing */
@@ -153,8 +198,44 @@
 }
 
 .genre-tag:hover .genre-icon {
-  filter: drop-shadow(0 0 20px rgba(255, 50, 50, 1));
   transform: scale(1.15) rotate(5deg);
+}
+
+/* Individual hover colors - Enhanced glow */
+.genre-tag:nth-child(1):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(47%) sepia(97%) saturate(1848%) hue-rotate(196deg) brightness(105%) contrast(106%) drop-shadow(0 0 20px rgba(30, 144, 255, 1)) !important;
+}
+
+.genre-tag:nth-child(2):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(28%) sepia(99%) saturate(6498%) hue-rotate(352deg) brightness(106%) contrast(108%) drop-shadow(0 0 20px rgba(255, 50, 50, 1)) !important;
+}
+
+.genre-tag:nth-child(3):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(61%) saturate(1184%) hue-rotate(359deg) brightness(104%) contrast(104%) drop-shadow(0 0 20px rgba(255, 215, 0, 1)) !important;
+}
+
+.genre-tag:nth-child(4):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) drop-shadow(0 0 20px rgba(240, 240, 240, 1)) !important;
+}
+
+.genre-tag:nth-child(5):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(11%) sepia(94%) saturate(6731%) hue-rotate(274deg) brightness(81%) contrast(134%) drop-shadow(0 0 20px rgba(75, 0, 130, 1)) !important;
+}
+
+.genre-tag:nth-child(6):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(99%) saturate(7471%) hue-rotate(322deg) brightness(103%) contrast(108%) drop-shadow(0 0 20px rgba(255, 20, 147, 1)) !important;
+}
+
+.genre-tag:nth-child(7):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(96%) saturate(7466%) hue-rotate(138deg) brightness(106%) contrast(106%) drop-shadow(0 0 20px rgba(0, 255, 255, 1)) !important;
+}
+
+.genre-tag:nth-child(8):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(99%) saturate(7495%) hue-rotate(321deg) brightness(118%) contrast(119%) drop-shadow(0 0 20px rgba(255, 0, 255, 1)) !important;
+}
+
+.genre-tag:nth-child(9):hover .genre-icon {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(99%) saturate(2597%) hue-rotate(6deg) brightness(104%) contrast(107%) drop-shadow(0 0 20px rgba(255, 140, 0, 1)) !important;
 }
 
 .genre-tag span {

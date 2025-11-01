@@ -359,8 +359,8 @@ test.describe("Plan Selector - My Plans Mode", () => {
     await page.locator(".plan-mode-tab[data-mode='custom']").click();
     await wait(300);
 
-    const editBtn = page.locator(".edit-plan-btn").first();
-    const deleteBtn = page.locator(".delete-plan-btn").first();
+    const editBtn = page.locator(".plan-edit-btn").first();
+    const deleteBtn = page.locator(".plan-delete-btn").first();
 
     const editVisible = await editBtn.isVisible();
     const deleteVisible = await deleteBtn.isVisible();
@@ -387,7 +387,7 @@ test.describe("Plan Selector - My Plans Mode", () => {
     await wait(300);
 
     // Click edit button
-    const editBtn = page.locator(".edit-plan-btn").first();
+    const editBtn = page.locator(".plan-edit-btn").first();
     await editBtn.click();
     await wait(500);
 
@@ -398,6 +398,162 @@ test.describe("Plan Selector - My Plans Mode", () => {
     // Title should indicate edit mode
     const title = await page.locator("#planBuilderTitle").textContent();
     expect(title).toContain("Edit");
+  });
+
+  test("should show delete confirmation modal when clicking delete", async ({page}) => {
+    // Create a custom plan
+    await page.evaluate(async () => {
+      const {savePlan} = await import("/src/js/modules/plans/storage.js");
+      savePlan({
+        name: "Delete Me",
+        mode: "custom",
+        segments: []
+      });
+    });
+
+    // Reload list
+    await page.locator(".plan-mode-tab[data-mode='simple']").click();
+    await wait(100);
+    await page.locator(".plan-mode-tab[data-mode='custom']").click();
+    await wait(300);
+
+    // Click delete button
+    const deleteBtn = page.locator(".plan-delete-btn").first();
+    await deleteBtn.click();
+    await wait(300);
+
+    // Confirmation modal should be open
+    const modal = page.locator("#deleteConfirmationModal");
+    const isOpen = await modal.evaluate(el => el.matches(":popover-open"));
+    expect(isOpen).toBe(true);
+
+    // Plan selector should remain open
+    const selectorPopover = page.locator("#planSelectorPopover");
+    const selectorOpen = await selectorPopover.evaluate(el => el.matches(":popover-open"));
+    expect(selectorOpen).toBe(true);
+  });
+
+  test("should keep plan selector open when canceling delete", async ({page}) => {
+    // Create a custom plan
+    await page.evaluate(async () => {
+      const {savePlan} = await import("/src/js/modules/plans/storage.js");
+      savePlan({
+        name: "Cancel Delete",
+        mode: "custom",
+        segments: []
+      });
+    });
+
+    // Reload list
+    await page.locator(".plan-mode-tab[data-mode='simple']").click();
+    await wait(100);
+    await page.locator(".plan-mode-tab[data-mode='custom']").click();
+    await wait(300);
+
+    // Click delete button
+    const deleteBtn = page.locator(".plan-delete-btn").first();
+    await deleteBtn.click();
+    await wait(300);
+
+    // Click cancel
+    const cancelBtn = page.locator("#cancelDeleteBtn");
+    await cancelBtn.click();
+    await wait(300);
+
+    // Modal should be closed
+    const modal = page.locator("#deleteConfirmationModal");
+    const modalOpen = await modal.evaluate(el => el.matches(":popover-open"));
+    expect(modalOpen).toBe(false);
+
+    // Plan selector should still be open
+    const selectorPopover = page.locator("#planSelectorPopover");
+    const selectorOpen = await selectorPopover.evaluate(el => el.matches(":popover-open"));
+    expect(selectorOpen).toBe(true);
+
+    // Plan should still exist
+    const planList = page.locator("#planList");
+    const content = await planList.textContent();
+    expect(content).toContain("Cancel Delete");
+  });
+
+  test("should delete plan and keep selector open when confirming", async ({page}) => {
+    // Create a custom plan
+    await page.evaluate(async () => {
+      const {savePlan} = await import("/src/js/modules/plans/storage.js");
+      savePlan({
+        name: "Confirm Delete",
+        mode: "custom",
+        segments: []
+      });
+    });
+
+    // Reload list
+    await page.locator(".plan-mode-tab[data-mode='simple']").click();
+    await wait(100);
+    await page.locator(".plan-mode-tab[data-mode='custom']").click();
+    await wait(300);
+
+    // Click delete button
+    const deleteBtn = page.locator(".plan-delete-btn").first();
+    await deleteBtn.click();
+    await wait(300);
+
+    // Click confirm
+    const confirmBtn = page.locator("#confirmDeleteBtn");
+    await confirmBtn.click();
+    await wait(500);
+
+    // Modal should be closed
+    const modal = page.locator("#deleteConfirmationModal");
+    const modalOpen = await modal.evaluate(el => el.matches(":popover-open"));
+    expect(modalOpen).toBe(false);
+
+    // Plan selector should still be open
+    const selectorPopover = page.locator("#planSelectorPopover");
+    const selectorOpen = await selectorPopover.evaluate(el => el.matches(":popover-open"));
+    expect(selectorOpen).toBe(true);
+
+    // Plan should be removed from list
+    const planList = page.locator("#planList");
+    const content = await planList.textContent();
+    expect(content).not.toContain("Confirm Delete");
+  });
+
+  test("should close modal when clicking outside (backdrop)", async ({page}) => {
+    // Create a custom plan
+    await page.evaluate(async () => {
+      const {savePlan} = await import("/src/js/modules/plans/storage.js");
+      savePlan({
+        name: "Backdrop Test",
+        mode: "custom",
+        segments: []
+      });
+    });
+
+    // Reload list
+    await page.locator(".plan-mode-tab[data-mode='simple']").click();
+    await wait(100);
+    await page.locator(".plan-mode-tab[data-mode='custom']").click();
+    await wait(300);
+
+    // Click delete button
+    const deleteBtn = page.locator(".plan-delete-btn").first();
+    await deleteBtn.click();
+    await wait(300);
+
+    // Click on modal backdrop (the modal element itself, not its content)
+    const modal = page.locator("#deleteConfirmationModal");
+    await modal.click({position: {x: 5, y: 5}});
+    await wait(300);
+
+    // Modal should be closed
+    const modalOpen = await modal.evaluate(el => el.matches(":popover-open"));
+    expect(modalOpen).toBe(false);
+
+    // Plan selector should still be open
+    const selectorPopover = page.locator("#planSelectorPopover");
+    const selectorOpen = await selectorPopover.evaluate(el => el.matches(":popover-open"));
+    expect(selectorOpen).toBe(true);
   });
 });
 

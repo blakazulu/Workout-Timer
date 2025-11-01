@@ -63,6 +63,18 @@ export function initPlanSelector() {
     updateActivePlanDisplay();
   });
 
+  // Listen for request to open selector in custom mode (after creating a plan)
+  eventBus.on("plan-selector:open-custom-mode", () => {
+    // Switch to custom mode
+    switchMode("custom");
+
+    // Open the plan selector popover
+    const selectorPopover = $("#planSelectorPopover");
+    if (selectorPopover) {
+      selectorPopover.showPopover();
+    }
+  });
+
   // Render initial plan list for simple mode
   renderPlanList("simple");
 
@@ -393,27 +405,97 @@ function viewPlanDetails(planId) {
  * @param {string} planId - Plan ID to delete
  */
 function deletePlanWithConfirmation(planId) {
+  console.log(`[PlanSelector] Delete requested for plan: ${planId}`);
+
   const plan = getPlanById(planId);
-  if (!plan) return;
+  if (!plan) {
+    console.error(`[PlanSelector] Plan not found: ${planId}`);
+    return;
+  }
 
-  const confirmDelete = confirm(`Delete plan "${plan.name}"?\n\nThis action cannot be undone.`);
-  if (!confirmDelete) return;
+  // Show custom confirmation modal
+  const modal = document.getElementById("deleteConfirmationModal");
+  const planNameEl = document.getElementById("planNameToDelete");
+  const confirmBtn = document.getElementById("confirmDeleteBtn");
+  const cancelBtn = document.getElementById("cancelDeleteBtn");
+  const selectorPopover = document.getElementById("planSelectorPopover");
 
-  const success = deletePlan(planId);
-  if (success) {
-    console.log(`[PlanSelector] Plan deleted: ${planId}`);
+  if (!modal || !planNameEl || !confirmBtn || !cancelBtn) {
+    console.error("[PlanSelector] Delete modal elements not found", {
+      modal: !!modal,
+      planNameEl: !!planNameEl,
+      confirmBtn: !!confirmBtn,
+      cancelBtn: !!cancelBtn
+    });
+    return;
+  }
 
-    // Re-render plan list
-    renderPlanList(currentMode);
+  console.log("[PlanSelector] Modal elements found, setting up handlers");
 
-    // Update active plan display
-    updateActivePlanDisplay();
+  // Set plan name in modal
+  planNameEl.textContent = `"${plan.name}"`;
 
-    // Track analytics
-    analytics.track("plan:deleted", {planId, planName: plan.name});
-  } else {
-    console.error(`[PlanSelector] Failed to delete plan: ${planId}`);
-    alert("Failed to delete plan. Please try again.");
+  // Remove any existing listeners by cloning
+  const newConfirmBtn = confirmBtn.cloneNode(true);
+  const newCancelBtn = cancelBtn.cloneNode(true);
+  confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+  cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+  // Helper to reopen plan selector after modal closes
+  const reopenSelector = () => {
+    if (selectorPopover) {
+      // Small delay to allow modal to fully close first
+      setTimeout(() => {
+        selectorPopover.showPopover();
+        console.log("[PlanSelector] Reopened plan selector");
+      }, 100);
+    }
+  };
+
+  // Add click handler for confirmation
+  newConfirmBtn.addEventListener("click", () => {
+    console.log(`[PlanSelector] Confirm delete clicked for: ${planId}`);
+    const success = deletePlan(planId);
+
+    if (success) {
+      console.log(`[PlanSelector] Plan deleted successfully: ${planId}`);
+
+      // Close modal
+      modal.hidePopover();
+
+      // Reopen plan selector
+      reopenSelector();
+
+      // Re-render plan list after selector reopens
+      setTimeout(() => {
+        renderPlanList(currentMode);
+        updateActivePlanDisplay();
+      }, 150);
+
+      // Track analytics
+      analytics.track("plan:deleted", {planId, planName: plan.name});
+    } else {
+      console.error(`[PlanSelector] Failed to delete plan: ${planId}`);
+      // Close modal and reopen selector
+      modal.hidePopover();
+      reopenSelector();
+    }
+  });
+
+  // Handle cancel button - close modal and reopen selector
+  newCancelBtn.addEventListener("click", () => {
+    console.log("[PlanSelector] Cancel delete clicked");
+    modal.hidePopover();
+    reopenSelector();
+  });
+
+  // Show modal (this will close the plan selector due to auto popover behavior)
+  console.log("[PlanSelector] Showing delete confirmation modal");
+  try {
+    modal.showPopover();
+    console.log("[PlanSelector] Modal shown successfully");
+  } catch (error) {
+    console.error("[PlanSelector] Error showing modal:", error);
   }
 }
 

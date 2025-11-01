@@ -847,9 +847,12 @@ function handleSavePlan() {
       setTimeout(() => saveBtn.classList.remove("save-success"), 600);
     }
 
-    // Close builder
+    // Close builder and reopen selector in My Plans mode
     setTimeout(() => {
       closePlanBuilder();
+
+      // Emit event to reopen plan selector in custom mode
+      eventBus.emit("plan-selector:open-custom-mode");
     }, 600);
 
     // Emit event to refresh plan selector
