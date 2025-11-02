@@ -73,6 +73,32 @@ export function initSettingsPanel() {
     });
   }
 
+  // Setup smart repetition checkbox change handlers
+  const smartRepetitionPresetCheckbox = document.getElementById("smartRepetitionPreset");
+  const smartRepetitionCustomCheckbox = document.getElementById("smartRepetitionCustom");
+
+  if (smartRepetitionPresetCheckbox) {
+    smartRepetitionPresetCheckbox.addEventListener("change", () => {
+      console.log("[SettingsPanel] Preset smart repetition changed, reloading plan");
+      const activePlanId = loadActivePlan();
+      const plan = getPlanById(activePlanId);
+      if (plan) {
+        eventBus.emit("plan:selected", {plan});
+      }
+    });
+  }
+
+  if (smartRepetitionCustomCheckbox) {
+    smartRepetitionCustomCheckbox.addEventListener("change", () => {
+      console.log("[SettingsPanel] Custom smart repetition changed, reloading plan");
+      const activePlanId = loadActivePlan();
+      const plan = getPlanById(activePlanId);
+      if (plan) {
+        eventBus.emit("plan:selected", {plan});
+      }
+    });
+  }
+
   // Initialize with current active plan
   refreshSettingsPanel();
 

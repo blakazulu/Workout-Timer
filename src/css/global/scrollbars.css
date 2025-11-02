@@ -1,0 +1,359 @@
+/* ============================================
+   SCROLLBAR STYLES - GLOBAL & COMPONENTS
+   ============================================ */
+
+/* ============================================
+   GLOBAL SCROLLBAR DEFAULTS
+   ============================================ */
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 255, 0.6) transparent;
+}
+
+/* Webkit (Chrome, Safari, Edge) scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.4) 0%,
+    rgba(100, 100, 255, 0.7) 50%,
+    rgba(255, 0, 150, 0.6) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.8) 0%,
+    rgba(100, 100, 255, 1) 50%,
+    rgba(255, 0, 150, 0.9) 100%
+  );
+  box-shadow: 0 0 8px rgba(100, 100, 255, 0.5);
+}
+
+/* ============================================
+   COMPONENT-SPECIFIC SCROLLBARS
+   ============================================ */
+
+/* Main Content Area - Subtle blue gradient */
+.app-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.3) 0%,
+    rgba(100, 100, 255, 0.6) 100%
+  );
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.7) 0%,
+    rgba(100, 100, 255, 0.9) 100%
+  );
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.6);
+}
+
+/* Plan List Container - Blue to pink gradient */
+.plan-list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.plan-list-container::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.plan-list-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    #6464ff 0%,
+    #ff0096 100%
+  );
+  border-radius: 3px;
+  border: 1px solid rgba(10, 10, 10, 0.3);
+  transition: all 0.3s ease;
+}
+
+.plan-list-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    #00ffc8 0%,
+    #6464ff 50%,
+    #ff0096 100%
+  );
+  box-shadow: 0 0 12px rgba(100, 100, 255, 0.6);
+  border: 1px solid rgba(100, 100, 255, 0.3);
+}
+
+/* Plan Builder Step Body - Subtle blue */
+.step-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.step-body::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.05);
+  border-radius: 3px;
+}
+
+.step-body::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 255, 0.4);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.step-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 255, 0.7);
+  box-shadow: 0 0 8px rgba(100, 100, 255, 0.4);
+}
+
+/* Music Selection Content - Cyan to blue gradient */
+.music-selection-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.music-selection-content::-webkit-scrollbar-track {
+  background: rgba(0, 255, 200, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.music-selection-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    #00ffc8 0%,
+    #6464ff 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.music-selection-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    #00ffc8 0%,
+    #ff0096 100%
+  );
+  box-shadow: 0 0 12px rgba(0, 255, 200, 0.6);
+}
+
+/* Genre Popover - Pink theme */
+.genre-popover-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.genre-popover-content::-webkit-scrollbar-track {
+  background: rgba(255, 0, 150, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.genre-popover-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(255, 0, 150, 0.6) 0%,
+    rgba(255, 0, 150, 0.9) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.genre-popover-content::-webkit-scrollbar-thumb:hover {
+  background: #ff0096;
+  box-shadow: 0 0 12px rgba(255, 0, 150, 0.7);
+}
+
+/* Mood Popover - Cyan theme */
+.mood-popover-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mood-popover-content::-webkit-scrollbar-track {
+  background: rgba(0, 255, 200, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.mood-popover-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(0, 255, 200, 0.6) 0%,
+    rgba(0, 255, 200, 0.9) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.mood-popover-content::-webkit-scrollbar-thumb:hover {
+  background: #00ffc8;
+  box-shadow: 0 0 12px rgba(0, 255, 200, 0.7);
+}
+
+/* History Content - Blue theme */
+.history-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.history-content::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.history-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.6) 0%,
+    rgba(100, 100, 255, 0.9) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.history-content::-webkit-scrollbar-thumb:hover {
+  background: #6464ff;
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.7);
+}
+
+/* YouTube Search Dropdown - Pink theme */
+.youtube-search-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.youtube-search-dropdown::-webkit-scrollbar-track {
+  background: rgba(255, 0, 150, 0.05);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.youtube-search-dropdown::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(255, 0, 150, 0.7) 0%,
+    #ff0096 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.youtube-search-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #ff0096;
+  box-shadow: 0 0 12px rgba(255, 0, 150, 0.8);
+}
+
+/* Music Tooltip - Pink theme */
+.music-tooltip::-webkit-scrollbar {
+  width: 5px;
+}
+
+.music-tooltip::-webkit-scrollbar-track {
+  background: rgba(100, 100, 255, 0.05);
+  border-radius: 3px;
+  margin: 2px 0;
+}
+
+.music-tooltip::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(255, 0, 150, 0.7) 0%,
+    #ff0096 100%
+  );
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.music-tooltip::-webkit-scrollbar-thumb:hover {
+  background: #ff0096;
+  box-shadow: 0 0 10px rgba(255, 0, 150, 0.8);
+}
+
+/* Admin Dashboard - Activity List */
+.activity-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.activity-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.activity-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.6) 0%,
+    rgba(100, 100, 255, 0.9) 100%
+  );
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.activity-list::-webkit-scrollbar-thumb:hover {
+  background: #6464ff;
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.6);
+}
+
+/* Admin Dashboard - Table Container */
+.table-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(100, 100, 255, 0.6) 0%,
+    rgba(100, 100, 255, 0.9) 100%
+  );
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #6464ff;
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.6);
+}
+
+/* ============================================
+   FIREFOX SPECIFIC OVERRIDES
+   ============================================ */
+
+.app-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 255, 0.6) transparent;
+}
+
+.plan-list-container {
+  scrollbar-width: thin;
+  scrollbar-color: #6464ff rgba(100, 100, 255, 0.05);
+}
+
+.music-selection-content {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffc8 rgba(0, 255, 200, 0.05);
+}
+
+.genre-popover-content,
+.youtube-search-dropdown,
+.music-tooltip {
+  scrollbar-width: thin;
+  scrollbar-color: #ff0096 rgba(255, 0, 150, 0.05);
+}
+
+.mood-popover-content {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffc8 rgba(0, 255, 200, 0.05);
+}
+
+.history-content,
+.step-body,
+.activity-list,
+.table-container {
+  scrollbar-width: thin;
+  scrollbar-color: #6464ff rgba(100, 100, 255, 0.05);
+}

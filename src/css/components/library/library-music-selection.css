@@ -76,24 +76,6 @@
   padding: 12px;
 }
 
-.music-selection-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.music-selection-content::-webkit-scrollbar-track {
-  background: rgba(0, 255, 200, 0.1);
-  border-radius: 4px;
-}
-
-.music-selection-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00ffc8, #6464ff);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
-}
-
-.music-selection-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00ffc8, #ff0096);
-  box-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
-}
+/* Scrollbar styles moved to global/scrollbars.css */
 
 /* Note: Song card styles have been moved to song-card.css for reusability */

@@ -155,6 +155,17 @@ export const SEGMENT_TYPES = {
     icon: "arrow-reload-horizontal-round"
   },
 
+  ROUND_RECOVERY: {
+    id: "round-recovery",
+    name: "Round Recovery",
+    description: "Auto-inserted recovery between workout rounds",
+    category: SEGMENT_CATEGORIES.REST,
+    defaultDuration: 30, // 30 seconds between rounds
+    defaultIntensity: INTENSITY_LEVELS.LIGHT,
+    icon: "smile",
+    soundCue: SOUND_CUES.REST_END // Whistle when recovery ends
+  },
+
   // === ROUNDS ===
   BOXING_ROUND: {
     id: "boxing-round",

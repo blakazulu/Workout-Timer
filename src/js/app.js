@@ -33,7 +33,7 @@ import {initIconColorEnhancer} from "./utils/icon-color-enhancer.js";
 import {initPlanSelector, updateActivePlanDisplay} from "./ui/plan-selector.js";
 import {initPlanBuilder} from "./ui/plan-builder.js";
 import {initSettingsPanel} from "./ui/settings-panel.js";
-import {getPlanById, loadActivePlan} from "./modules/plans/index.js";
+import {getPlanById, loadActivePlan, setActivePlan} from "./modules/plans/index.js";
 
 // Lazy loaded modules
 let youtubeModule = null;
@@ -146,7 +146,7 @@ function loadAndApplyActivePlan() {
       const timer = getTimer();
       if (timer && quickStart.segments) {
         const repetitions = parseInt($("#repetitions")?.value || 1);
-        timer.loadPlanSegments(quickStart.segments, repetitions);
+        timer.loadPlanSegments(quickStart.segments, repetitions, false); // Quick Start uses full repetition
         console.log(`[App] Loaded ${quickStart.segments.length} segments into timer (Quick Start, ${repetitions}x)`);
       }
       updateActivePlanDisplay();
@@ -161,16 +161,21 @@ function loadAndApplyActivePlan() {
   if (timer && activePlan.segments) {
     // Read repetitions from appropriate input based on plan mode
     let repetitions = 1;
+    let smartRepetition = true; // Default to smart repetition
+
     if (activePlan.mode === "preset") {
       repetitions = parseInt($("#repetitionsPreset")?.value || 1);
+      smartRepetition = $("#smartRepetitionPreset")?.checked ?? true;
     } else if (activePlan.mode === "custom") {
       repetitions = parseInt($("#repetitionsCustom")?.value || 1);
+      smartRepetition = $("#smartRepetitionCustom")?.checked ?? true;
     } else if (activePlan.mode === "simple" || activePlanId === "quick-start") {
       repetitions = parseInt($("#repetitions")?.value || 1);
+      smartRepetition = false; // Quick Start always uses full repetition
     }
 
-    timer.loadPlanSegments(activePlan.segments, repetitions);
-    console.log(`[App] Loaded ${activePlan.segments.length} segments × ${repetitions} = ${activePlan.segments.length * repetitions} total segments into timer`);
+    timer.loadPlanSegments(activePlan.segments, repetitions, smartRepetition);
+    console.log(`[App] Loaded ${activePlan.segments.length} segments × ${repetitions} (smart: ${smartRepetition}) into timer`);
   }
 
   // Update active plan display
@@ -242,16 +247,21 @@ function init() {
       if (timer && data.plan.segments) {
         // Read repetitions from appropriate input based on plan mode
         let repetitions = 1;
+        let smartRepetition = true; // Default to smart repetition
+
         if (data.plan.mode === "preset") {
           repetitions = parseInt($("#repetitionsPreset")?.value || 1);
+          smartRepetition = $("#smartRepetitionPreset")?.checked ?? true;
         } else if (data.plan.mode === "custom") {
           repetitions = parseInt($("#repetitionsCustom")?.value || 1);
+          smartRepetition = $("#smartRepetitionCustom")?.checked ?? true;
         } else if (data.plan.mode === "simple" || data.plan.id === "quick-start") {
           repetitions = parseInt($("#repetitions")?.value || 1);
+          smartRepetition = false; // Quick Start always uses full repetition
         }
 
-        timer.loadPlanSegments(data.plan.segments, repetitions);
-        console.log(`[App] Reloaded plan segments: ${data.plan.name} (${repetitions}x repetitions)`);
+        timer.loadPlanSegments(data.plan.segments, repetitions, smartRepetition);
+        console.log(`[App] Reloaded plan segments: ${data.plan.name} (${repetitions}x, smart: ${smartRepetition})`);
       }
     }
   });

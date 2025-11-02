@@ -803,22 +803,9 @@ section {
 .activity-list {
   max-height: 400px;
   overflow-y: auto;
-  scrollbar-color: var(--primary-500) transparent;
-  scrollbar-width: thin;
 }
 
-.activity-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.activity-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.activity-list::-webkit-scrollbar-thumb {
-  background: var(--primary-500);
-  border-radius: var(--radius-full);
-}
+/* Scrollbar styles moved to global/scrollbars.css */
 
 /* ========================================
    SYSTEM SECTION
@@ -1468,22 +1455,9 @@ section {
 .table-container {
   max-height: 400px;
   overflow-y: auto;
-  scrollbar-color: var(--primary-500) transparent;
-  scrollbar-width: thin;
 }
 
-.table-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background: var(--primary-500);
-  border-radius: var(--radius-full);
-}
+/* Scrollbar styles moved to global/scrollbars.css */
 
 .users-table,
 .events-table {

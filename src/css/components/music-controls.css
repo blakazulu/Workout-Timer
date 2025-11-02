@@ -112,25 +112,7 @@
   }
 }
 
-/* Keep scrollbar styling as vendor-specific CSS */
-.music-tooltip::-webkit-scrollbar {
-  @apply w-1.5;
-}
-
-.music-tooltip::-webkit-scrollbar-track {
-  @apply rounded;
-  background: rgba(100, 100, 255, 0.1);
-}
-
-.music-tooltip::-webkit-scrollbar-thumb {
-  @apply rounded;
-  background: #ff0096;
-}
-
-.music-tooltip::-webkit-scrollbar-thumb:hover {
-  background: #ff0096;
-  box-shadow: 0 0 10px rgba(255, 0, 150, 0.8);
-}
+/* Scrollbar styles moved to global/scrollbars.css */
 
 .music-tooltip-title {
   @apply break-words font-bold;

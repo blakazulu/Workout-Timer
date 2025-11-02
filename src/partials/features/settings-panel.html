@@ -74,6 +74,25 @@
         <input id="repetitionsPreset" max="99" min="1" type="number" value="3">
       </div>
     </div>
+
+    <!-- Smart Repetition Toggle -->
+    <div class="setting-group checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="smartRepetitionPreset" checked>
+        <span>Smart repetition (warmup/cooldown once)</span>
+        <button type="button" class="info-icon" popovertarget="smart-rep-info-preset" aria-label="Info about smart repetition">
+          <img alt="Info" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
+        </button>
+      </label>
+    </div>
+
+    <!-- Info Popover -->
+    <div popover id="smart-rep-info-preset" class="info-popover">
+      <strong>Smart Repetition</strong>
+      <p>Warmup and cooldown run once, only workout segments repeat with 30s recovery between rounds.</p>
+      <p><strong>Recommended</strong> for most workouts - saves time and prevents redundant warmups.</p>
+      <p>Uncheck to repeat entire plan including warmup/cooldown.</p>
+    </div>
   </div>
 
   <!-- Custom Plan Layout (editable) -->
@@ -114,6 +133,25 @@
         <label for="repetitionsCustom">Repetitions</label>
         <input id="repetitionsCustom" max="99" min="1" type="number" value="3">
       </div>
+    </div>
+
+    <!-- Smart Repetition Toggle -->
+    <div class="setting-group checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="smartRepetitionCustom" checked>
+        <span>Smart repetition (warmup/cooldown once)</span>
+        <button type="button" class="info-icon" popovertarget="smart-rep-info-custom" aria-label="Info about smart repetition">
+          <img alt="Info" class="svg-icon" src="/svg-icons/alert-notification/information-circle.svg"/>
+        </button>
+      </label>
+    </div>
+
+    <!-- Info Popover -->
+    <div popover id="smart-rep-info-custom" class="info-popover">
+      <strong>Smart Repetition</strong>
+      <p>Warmup and cooldown run once, only workout segments repeat with 30s recovery between rounds.</p>
+      <p><strong>Recommended</strong> for most workouts - saves time and prevents redundant warmups.</p>
+      <p>Uncheck to repeat entire plan including warmup/cooldown.</p>
     </div>
   </div>
 </div>

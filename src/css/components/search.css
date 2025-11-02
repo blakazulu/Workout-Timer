@@ -15,25 +15,7 @@
   @apply hidden opacity-0 -translate-y-2.5;
 }
 
-.youtube-search-dropdown::-webkit-scrollbar {
-  @apply w-1.5;
-}
-
-.youtube-search-dropdown::-webkit-scrollbar-track {
-  @apply rounded;
-  background: rgba(255, 0, 150, 0.1);
-}
-
-.youtube-search-dropdown::-webkit-scrollbar-thumb {
-  @apply rounded;
-  background: #ff0096;
-  box-shadow: 0 0 8px rgba(255, 0, 150, 0.5);
-}
-
-.youtube-search-dropdown::-webkit-scrollbar-thumb:hover {
-  background: #ff0096;
-  box-shadow: 0 0 12px rgba(255, 0, 150, 0.8);
-}
+/* Scrollbar styles moved to global/scrollbars.css */
 
 /* Dropdown Header */
 .search-dropdown-header {

@@ -14,6 +14,9 @@
 /* PWA and mobile responsive styles */
 @import './global/responsive.css';
 
+/* Custom scrollbar styles */
+@import './global/scrollbars.css';
+
 /* Tailwind Theme Configuration */
 @theme {
   /* Spacing scale - matches existing CSS variables */

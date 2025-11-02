@@ -8,6 +8,7 @@ import {getAudio} from "./audio.js";
 import {eventBus} from "../core/event-bus.js";
 import {getWakeLock} from "../utils/wake-lock.js";
 import {loadActivePlan, createQuickStartPlan, getPlanById} from "./plans/storage.js";
+import {SEGMENT_TYPES, SEGMENT_CATEGORIES, SOUND_CUES, getSegmentType} from "./plans/segment-types.js";
 
 export class Timer {
   constructor(options = {}) {
@@ -90,11 +91,79 @@ export class Timer {
   }
 
   /**
+   * Apply smart repetition to plan segments
+   * Runs warmup/cooldown once, repeats workout portion, adds recovery between rounds
+   * @param {Array} segments - Original plan segments
+   * @param {number} repetitions - Number of times to repeat
+   * @returns {Array} Smart-repeated segments
+   */
+  applySmartRepetition(segments, repetitions) {
+    if (repetitions <= 1) return segments;
+
+    // Separate segments by category
+    const preparationSegments = [];
+    const workoutSegments = [];
+    const completionSegments = [];
+
+    segments.forEach(seg => {
+      const segmentType = getSegmentType(seg.type);
+      const category = segmentType?.category || SEGMENT_CATEGORIES.WORK;
+
+      if (category === SEGMENT_CATEGORIES.PREPARATION) {
+        preparationSegments.push(seg);
+      } else if (category === SEGMENT_CATEGORIES.COMPLETION) {
+        completionSegments.push(seg);
+      } else {
+        // Everything else is part of the workout (work, rest, rounds, training-specific)
+        workoutSegments.push(seg);
+      }
+    });
+
+    // Build smart plan
+    const smartPlan = [
+      ...preparationSegments // Run warmup once at start
+    ];
+
+    // Repeat workout portion with recovery between rounds
+    // Only process if there are workout segments to repeat
+    if (workoutSegments.length > 0) {
+      for (let rep = 0; rep < repetitions; rep++) {
+        workoutSegments.forEach(seg => {
+          smartPlan.push({
+            ...seg,
+            roundNumber: rep + 1,
+            totalRounds: repetitions
+          });
+        });
+
+        // Add 30s recovery between rounds (except after last round)
+        if (rep < repetitions - 1) {
+          smartPlan.push({
+            type: SEGMENT_TYPES.ROUND_RECOVERY.id,
+            name: "Round Recovery",
+            duration: 30,
+            intensity: "light",
+            category: SEGMENT_CATEGORIES.REST,
+            soundCue: SOUND_CUES.REST_END,
+            isAutoInserted: true // Mark as auto-inserted
+          });
+        }
+      }
+    }
+
+    // Add completion segments once at end
+    smartPlan.push(...completionSegments);
+
+    return smartPlan;
+  }
+
+  /**
    * Load plan segments for segment-based execution
    * @param {Array} segments - Array of segment objects from workout plan
    * @param {number} repetitions - Number of times to repeat the plan (default: 1)
+   * @param {boolean} smartRepetition - Use smart repetition (default: true)
    */
-  loadPlanSegments(segments, repetitions = 1) {
+  loadPlanSegments(segments, repetitions = 1, smartRepetition = true) {
     if (!Array.isArray(segments) || segments.length === 0) {
       console.warn("[Timer] Invalid segments, disabling segment mode");
       this.planSegments = null;
@@ -105,28 +174,35 @@ export class Timer {
     // Validate repetitions (min: 1, max: 99)
     repetitions = Math.max(1, Math.min(99, parseInt(repetitions) || 1));
 
-    // Multiply segments by repetitions
-    const expandedSegments = [];
+    // Apply smart repetition or full repetition based on flag
+    let expandedSegments;
 
-    for (let rep = 0; rep < repetitions; rep++) {
-      segments.forEach((seg, index) => {
-        const segmentCopy = {...seg};
+    if (smartRepetition && repetitions > 1) {
+      // Smart repetition: warmup/cooldown once, workout repeats with recovery
+      expandedSegments = this.applySmartRepetition(segments, repetitions);
+      console.log(`[Timer] Smart repetition: ${segments.length} base segments → ${expandedSegments.length} total (warmup/cooldown once)`);
+    } else {
+      // Full repetition: entire plan repeats N times (original behavior)
+      expandedSegments = [];
+      for (let rep = 0; rep < repetitions; rep++) {
+        segments.forEach((seg, index) => {
+          const segmentCopy = {...seg};
 
-        // Store round information separately (not in name)
-        if (repetitions > 1) {
-          segmentCopy.roundNumber = rep + 1;
-          segmentCopy.totalRounds = repetitions;
-        }
+          // Store round information separately (not in name)
+          if (repetitions > 1) {
+            segmentCopy.roundNumber = rep + 1;
+            segmentCopy.totalRounds = repetitions;
+          }
 
-        expandedSegments.push(segmentCopy);
-      });
+          expandedSegments.push(segmentCopy);
+        });
+      }
+      console.log(`[Timer] Full repetition: ${segments.length} segments × ${repetitions} = ${expandedSegments.length} total`);
     }
 
     this.planSegments = expandedSegments;
     this.currentSegmentIndex = 0;
     this.isSegmentMode = true;
-
-    console.log(`[Timer] Loaded ${segments.length} segments × ${repetitions} repetition(s) = ${expandedSegments.length} total segments`);
 
     if (this.debugMode) {
       console.log("[Timer] Plan segments:", this.planSegments);
