@@ -2426,7 +2426,7 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   }
 
   .plan-card-footer {
-    @apply flex-col gap-2;
+    @apply gap-2;
   }
 
   .plan-card-meta {
