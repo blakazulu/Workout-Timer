@@ -2326,22 +2326,167 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   .plan-selector-popover,
   .plan-builder-popover {
     border-radius: 0;
-    max-height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
     width: 100vw;
   }
 
   .plan-selector-header h3,
   .plan-builder-header h2 {
-    @apply text-base;
+    @apply text-sm;
+    letter-spacing: 1px;
+  }
+
+  .plan-selector-header,
+  .plan-builder-header {
+    @apply p-3;
+  }
+
+  .plan-selector-close,
+  .plan-builder-close {
+    @apply w-8 h-8;
+  }
+
+  .plan-selector-close .svg-icon,
+  .plan-builder-close .svg-icon {
+    @apply w-4 h-4;
   }
 
   .plan-mode-tabs {
-    @apply flex-col gap-2;
+    @apply flex-row gap-1 px-2 py-2;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .plan-mode-tab {
-    @apply flex-row justify-start;
-    width: 100%;
+    @apply flex-col items-center gap-1 px-2 py-2;
+    min-width: 80px;
+    flex-shrink: 0;
+    font-size: 10px;
+  }
+
+  .plan-mode-tab span {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .plan-mode-icon {
+    @apply w-5 h-5;
+  }
+
+  .plan-list-container {
+    @apply p-3;
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .quick-start-card {
+    @apply p-4 gap-3;
+    min-height: 120px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quick-start-icon {
+    @apply w-14 h-14;
+  }
+
+  .quick-start-icon .svg-icon {
+    @apply w-7 h-7;
+  }
+
+  .quick-start-content h4 {
+    @apply text-base;
+  }
+
+  .quick-start-content .feature-list {
+    gap: 6px;
+  }
+
+  .feature-item {
+    @apply text-xs px-2 py-1;
+  }
+
+  .plan-card {
+    @apply p-3;
+    min-height: auto;
+  }
+
+  .plan-name,
+  .plan-card-title {
+    @apply text-base;
+    letter-spacing: 0.5px;
+  }
+
+  .plan-description,
+  .plan-card-description {
+    @apply text-xs;
+  }
+
+  .plan-card-footer {
+    @apply flex-col gap-2;
+  }
+
+  .plan-card-meta {
+    @apply flex-wrap gap-2;
+  }
+
+  .plan-card-meta span {
+    @apply text-xs;
+  }
+
+  .plan-card-meta .svg-icon {
+    @apply w-3 h-3;
+  }
+
+  .plan-card-actions {
+    @apply gap-2;
+  }
+
+  .plan-info-btn,
+  .plan-edit-btn,
+  .plan-delete-btn,
+  .plan-action-btn {
+    @apply px-2 py-1.5 text-xs;
+    min-height: 32px;
+  }
+
+  .plan-info-btn .svg-icon,
+  .plan-edit-btn .svg-icon,
+  .plan-delete-btn .svg-icon,
+  .plan-action-btn .svg-icon {
+    @apply w-3.5 h-3.5;
+  }
+
+  .plan-info-btn span,
+  .plan-edit-btn span,
+  .plan-action-btn span {
+    display: none;
+  }
+
+  .active-badge {
+    @apply px-2 py-0.5 text-xs;
+    font-size: 10px;
+  }
+
+  .plan-selector-footer,
+  .plan-builder-footer {
+    @apply p-3;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  .create-custom-plan-btn {
+    @apply px-4 py-2.5 text-sm;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .create-custom-plan-btn .svg-icon {
+    @apply w-4 h-4;
   }
 
   .plan-builder-step {
@@ -2391,15 +2536,130 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   }
 }
 
-/* Small Mobile */
+/* Small Mobile - Extra Compact */
 @media (max-width: 480px) {
   .plan-selector-header,
   .plan-builder-header {
-    padding: var(--spacing-md);
+    @apply p-2;
+  }
+
+  .plan-selector-header h3,
+  .plan-builder-header h2 {
+    @apply text-xs;
+    letter-spacing: 0.5px;
+  }
+
+  .plan-selector-close,
+  .plan-builder-close {
+    @apply w-7 h-7;
+  }
+
+  .plan-mode-tabs {
+    @apply px-1.5 py-1.5;
+    gap: 4px;
+  }
+
+  .plan-mode-tab {
+    @apply px-1.5 py-1.5;
+    min-width: 70px;
+    font-size: 9px;
+  }
+
+  .plan-mode-tab span {
+    font-size: 9px;
+  }
+
+  .plan-mode-icon {
+    @apply w-4 h-4;
   }
 
   .plan-list-container {
-    padding: var(--spacing-md);
+    @apply p-2;
+  }
+
+  .quick-start-card {
+    @apply p-3;
+    min-height: 100px;
+  }
+
+  .quick-start-icon {
+    @apply w-12 h-12;
+  }
+
+  .quick-start-icon .svg-icon {
+    @apply w-6 h-6;
+  }
+
+  .quick-start-content h4 {
+    @apply text-sm;
+  }
+
+  .feature-item {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .feature-item .svg-icon {
+    @apply w-3 h-3;
+  }
+
+  .plan-card {
+    @apply p-2.5;
+  }
+
+  .plan-name,
+  .plan-card-title {
+    @apply text-sm;
+    letter-spacing: 0.3px;
+  }
+
+  .plan-description,
+  .plan-card-description {
+    font-size: 11px;
+  }
+
+  .plan-card-meta span {
+    font-size: 11px;
+  }
+
+  .plan-card-actions {
+    gap: 6px;
+  }
+
+  .plan-info-btn,
+  .plan-edit-btn,
+  .plan-delete-btn,
+  .plan-action-btn {
+    @apply px-1.5 py-1;
+    min-height: 28px;
+    font-size: 11px;
+  }
+
+  .plan-info-btn .svg-icon,
+  .plan-edit-btn .svg-icon,
+  .plan-delete-btn .svg-icon,
+  .plan-action-btn .svg-icon {
+    @apply w-3 h-3;
+  }
+
+  .active-badge {
+    @apply px-1.5 py-0.5;
+    font-size: 9px;
+  }
+
+  .plan-selector-footer,
+  .plan-builder-footer {
+    @apply p-2;
+  }
+
+  .create-custom-plan-btn {
+    @apply px-3 py-2;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .create-custom-plan-btn .svg-icon {
+    @apply w-3.5 h-3.5;
   }
 
   .segment-type-badge {
@@ -2410,6 +2670,11 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   .form-group input,
   .form-group textarea {
     font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Ensure footer is always visible */
+  .plan-selector-footer {
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
   }
 }
 
