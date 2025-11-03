@@ -2489,8 +2489,51 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
     @apply w-4 h-4;
   }
 
+  .plan-builder-popover {
+    border-radius: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    width: 100vw;
+  }
+
+  .plan-builder-header {
+    @apply p-3;
+  }
+
+  .plan-builder-header h2 {
+    @apply text-sm;
+    letter-spacing: 1px;
+  }
+
+  .plan-builder-close {
+    @apply w-8 h-8;
+  }
+
+  .plan-builder-close .svg-icon {
+    @apply w-4 h-4;
+  }
+
   .plan-builder-step {
-    padding: var(--spacing-md);
+    padding: 0;                    /* Remove padding for full height */
+    height: 100%;                  /* Take full popover height */
+    max-height: none;              /* Remove max-height constraint */
+    min-height: auto;              /* Remove min-height */
+  }
+
+  .step-header h3 {
+    @apply text-base;
+  }
+
+  .step-header p {
+    @apply text-xs;
+  }
+
+  .step-body {
+    @apply p-2 pt-0;              /* Reduced from p-3 */
+  }
+
+  .add-segment-section {
+    @apply p-2;                   /* Reduced from p-3 */
   }
 
   .add-segment-btn,
@@ -2500,14 +2543,97 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
     min-height: 44px;
   }
 
+  .segments-section {
+    @apply p-0;                   /* REMOVED padding - let segments fill space */
+    background: transparent;       /* Remove background box */
+    border: none;                  /* Remove border */
+  }
+
+  .segments-header {
+    @apply px-2 mb-2;             /* Add minimal horizontal padding */
+  }
+
+  .segments-list {
+    gap: 6px;                      /* Reduced gap for more segments visible */
+    @apply px-2;                   /* Add minimal horizontal padding */
+    padding-bottom: 4rem;          /* Space for sticky footer */
+  }
+
+  .step-footer {
+    @apply p-3;
+    position: sticky;              /* Make footer stick to bottom */
+    bottom: 0;
+    z-index: 20;                   /* Ensure it's above content */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5); /* Add shadow for visibility */
+  }
+
+  .total-duration {
+    @apply text-sm gap-1;
+  }
+
+  .total-duration .svg-icon {
+    @apply w-4 h-4;
+  }
+
   .segment-card {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    @apply p-2 gap-2;
+    align-items: center;           /* Keep horizontal on mobile */
+    flex-direction: row;           /* Horizontal layout */
+    min-height: 50px;              /* Increased for better touch target */
+  }
+
+  .segment-card::before {
+    width: 2px;                    /* Thinner left border */
+  }
+
+  .segment-drag-handle {
+    display: none;                 /* Hide drag handle on mobile */
+  }
+
+  .segment-info {
+    @apply flex-1 flex-row gap-2;
+    align-items: center;
+  }
+
+  .segment-type-badge {
+    @apply px-2 py-1;
+    font-size: 11px;               /* Larger for 50px height */
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .segment-duration {
+    font-size: 13px;               /* Larger for 50px height */
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-left: auto;             /* Push to right */
   }
 
   .segment-actions {
-    @apply w-full justify-end;
+    @apply flex gap-1.5;
+    flex-shrink: 0;
+  }
+
+  .segment-edit-btn,
+  .segment-delete-btn {
+    @apply w-8 h-8;
+    min-height: 32px;              /* Larger for 50px segments */
+  }
+
+  .segment-edit-btn .svg-icon,
+  .segment-delete-btn .svg-icon {
+    @apply w-4 h-4;                /* Larger icons */
+  }
+
+  /* View-only mode (no edit buttons) */
+  .plan-builder-popover[data-view-only="true"] .segment-card {
+    @apply p-2;
+    min-height: 48px;              /* Slightly smaller without buttons */
+  }
+
+  .plan-builder-popover[data-view-only="true"] .segment-info {
+    @apply w-full;
   }
 
   .step-navigation {
@@ -2662,9 +2788,116 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
     @apply w-3.5 h-3.5;
   }
 
+  .segment-card {
+    @apply p-2 gap-2;
+    min-height: 50px;              /* Consistent 50px across all mobile */
+  }
+
+  .segment-card::before {
+    width: 2px;                    /* Keep thin border */
+  }
+
   .segment-type-badge {
-    @apply px-2 py-0.5;
+    @apply px-2 py-1;
+    font-size: 11px;               /* Same as larger mobile */
+    letter-spacing: 0.3px;
+  }
+
+  .segment-duration {
+    font-size: 13px;               /* Same as larger mobile */
+    font-weight: 600;
+  }
+
+  .segment-edit-btn,
+  .segment-delete-btn {
+    @apply w-8 h-8;
+    min-height: 32px;              /* Same as larger mobile */
+  }
+
+  .segment-edit-btn .svg-icon,
+  .segment-delete-btn .svg-icon {
+    @apply w-4 h-4;                /* Same as larger mobile */
+  }
+
+  .segments-header {
+    @apply text-xs;
+  }
+
+  .segments-count {
     font-size: 10px;
+  }
+
+  .segments-list {
+    gap: 4px;                      /* Tighter gaps */
+  }
+
+  /* View-only mode on small mobile */
+  .plan-builder-popover[data-view-only="true"] .segment-card {
+    min-height: 48px;              /* Consistent with larger mobile */
+  }
+
+  .plan-builder-header {
+    @apply p-2;
+  }
+
+  .plan-builder-header h2 {
+    @apply text-xs;
+    letter-spacing: 0.5px;
+  }
+
+  .plan-builder-close {
+    @apply w-7 h-7;
+  }
+
+  .plan-builder-step {
+    padding: 0;                    /* Remove padding for full height */
+    height: 100%;                  /* Take full popover height */
+    max-height: none;              /* Remove max-height constraint */
+    min-height: auto;              /* Remove min-height */
+  }
+
+  .step-header h3 {
+    @apply text-sm;
+  }
+
+  .step-header p {
+    font-size: 11px;
+  }
+
+  .step-body {
+    @apply p-1 pt-0;              /* Reduced from p-2 */
+  }
+
+  .add-segment-section {
+    @apply p-1;                   /* Reduced from p-2 */
+  }
+
+  .segments-section {
+    @apply p-0;                   /* REMOVED padding - maximize space */
+    background: transparent;       /* Remove background box */
+    border: none;                  /* Remove border */
+  }
+
+  .segments-header {
+    @apply px-1 mb-1;             /* Add minimal horizontal padding */
+  }
+
+  .segments-list {
+    gap: 4px;                      /* Tighter gaps */
+    @apply px-1;                   /* Add minimal horizontal padding */
+    padding-bottom: 3rem;          /* Space for sticky footer (smaller on tiny screens) */
+  }
+
+  .step-footer {
+    @apply p-2;
+    position: sticky;              /* Make footer stick to bottom */
+    bottom: 0;
+    z-index: 20;                   /* Ensure it's above content */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5); /* Add shadow for visibility */
+  }
+
+  .total-duration {
+    font-size: 12px;
   }
 
   .form-group input,
