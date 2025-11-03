@@ -68,7 +68,8 @@
       "Bash(bash:*)",
       "Bash(do echo \"Checking $dir:\")",
       "Bash(git rm:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

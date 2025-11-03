@@ -506,6 +506,18 @@ function renderSegmentsList() {
     dragClass: "segment-dragging",
     chosenClass: "segment-chosen",
     filter: ".segments-empty",
+
+    // Mobile touch support
+    delay: 100,                     // 100ms delay before drag starts
+    delayOnTouchOnly: true,         // Only apply delay on touch devices
+    touchStartThreshold: 3,         // px movement before cancel
+
+    // Smooth scrolling
+    scroll: true,                   // Enable auto-scroll
+    scrollSensitivity: 50,          // px from edge to start scroll
+    scrollSpeed: 10,                // Scroll speed
+    bubbleScroll: true,             // Auto-scroll in nested containers
+
     onEnd: (evt) => {
       if (evt.oldIndex !== evt.newIndex) {
         // Reorder segments array to match new DOM order

@@ -1546,11 +1546,16 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
 /* SortableJS Drag States */
 
-/* Ghost element (the element being dragged) */
+/* Ghost element (the element being dragged - follows cursor) */
 .segment-ghost {
-  background: linear-gradient(135deg, rgba(0, 255, 200, 0.2), rgba(100, 100, 255, 0.2));
-  border: 2px solid rgba(0, 255, 200, 0.6);
-  opacity: 0.4;
+  background: linear-gradient(135deg, rgba(0, 255, 200, 0.3), rgba(100, 100, 255, 0.3));
+  border: 2px solid rgba(0, 255, 200, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 255, 200, 0.4),
+              0 0 20px rgba(100, 100, 255, 0.3);
+  opacity: 0.9;                  /* More visible while dragging */
+  transform: rotate(2deg);       /* Slight tilt for dynamic feel */
+  cursor: grabbing !important;
+  transition: none;              /* Remove transition for immediate feedback */
 }
 
 /* Chosen element (element when first grabbed) */
@@ -1558,13 +1563,16 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   border-color: rgba(0, 255, 200, 0.8);
   box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
   transform: scale(1.02);
+  transition: all 0.2s ease;     /* Smooth pickup animation */
 }
 
-/* Dragging element (placeholder in original position) */
+/* Dragging element (placeholder showing drop position) */
 .segment-dragging {
-  background: rgba(100, 100, 255, 0.05);
-  border: 2px dashed rgba(100, 100, 255, 0.5);
-  opacity: 0.2;
+  background: rgba(100, 100, 255, 0.08);
+  border: 2px dashed rgba(0, 255, 200, 0.6);
+  opacity: 0.5;
+  transform: scale(0.95);        /* Slightly smaller placeholder */
+  transition: transform 0.2s ease;
 }
 
 @keyframes slideUp {
@@ -2587,7 +2595,14 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
   }
 
   .segment-drag-handle {
-    display: none;                 /* Hide drag handle on mobile */
+    display: flex;                 /* SHOW drag handle on mobile for reordering */
+    @apply w-8 h-8;
+    opacity: 0.7;                  /* More visible on mobile */
+    padding: 0.25rem;
+  }
+
+  .segment-drag-handle .svg-icon {
+    @apply w-5 h-5;                /* Larger icon for mobile touch */
   }
 
   .segment-info {
@@ -2795,6 +2810,17 @@ body:has(.plan-builder-popover:popover-open) #startBtn {
 
   .segment-card::before {
     width: 2px;                    /* Keep thin border */
+  }
+
+  .segment-drag-handle {
+    display: flex;                 /* SHOW drag handle on small mobile too */
+    @apply w-8 h-8;
+    opacity: 0.7;
+    padding: 0.25rem;
+  }
+
+  .segment-drag-handle .svg-icon {
+    @apply w-5 h-5;                /* Consistent with larger mobile */
   }
 
   .segment-type-badge {
