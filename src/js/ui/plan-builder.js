@@ -519,13 +519,44 @@ function renderSegmentsList() {
     bubbleScroll: true,             // Auto-scroll in nested containers
 
     onEnd: (evt) => {
-      if (evt.oldIndex !== evt.newIndex) {
+      try {
+        // Validate indices
+        if (evt.oldIndex === evt.newIndex) {
+          return; // No movement
+        }
+
+        // Validate array bounds
+        if (evt.oldIndex < 0 || evt.oldIndex >= builderState.segments.length) {
+          console.error("[PlanBuilder] Invalid oldIndex:", evt.oldIndex);
+          return;
+        }
+
+        if (evt.newIndex < 0 || evt.newIndex > builderState.segments.length) {
+          console.error("[PlanBuilder] Invalid newIndex:", evt.newIndex);
+          return;
+        }
+
         // Reorder segments array to match new DOM order
         const movedSegment = builderState.segments.splice(evt.oldIndex, 1)[0];
+
+        // Validate segment was successfully extracted
+        if (!movedSegment) {
+          console.error("[PlanBuilder] Failed to extract segment at index:", evt.oldIndex);
+          // Re-render to fix DOM/state mismatch
+          renderSegmentsList();
+          return;
+        }
+
         builderState.segments.splice(evt.newIndex, 0, movedSegment);
 
         // Update data-index attributes without re-rendering
         const cards = listEl.querySelectorAll(".segment-card");
+        if (cards.length !== builderState.segments.length) {
+          console.warn("[PlanBuilder] DOM/state mismatch, re-rendering");
+          renderSegmentsList();
+          return;
+        }
+
         cards.forEach((card, index) => {
           card.dataset.index = index;
 
@@ -542,8 +573,19 @@ function renderSegmentsList() {
         // Track analytics
         analytics.track("plan_builder:segments_reordered", {
           fromIndex: evt.oldIndex,
-          toIndex: evt.newIndex
+          toIndex: evt.newIndex,
+          segmentType: movedSegment.type
         });
+
+        console.log("[PlanBuilder] Segment reordered:", {
+          from: evt.oldIndex,
+          to: evt.newIndex,
+          type: movedSegment.type
+        });
+      } catch (error) {
+        console.error("[PlanBuilder] Error during segment reorder:", error);
+        // Re-render to recover from error state
+        renderSegmentsList();
       }
     }
   });

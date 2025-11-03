@@ -112,7 +112,9 @@ async function forceUpdate(oldVersion, newVersion) {
     const preserveKeys = [
       "workout-timer-settings",      // Timer settings
       "workout-timer-favorites",     // Favorite songs
-      "workout-timer-song-history"   // Song history
+      "workout-timer-song-history",  // Song history
+      "workout-timer-plans",         // Custom workout plans (CRITICAL!)
+      "workout-timer-active-plan"    // Currently selected plan
     ];
     const dataToPreserve = {};
     preserveKeys.forEach(key => {
