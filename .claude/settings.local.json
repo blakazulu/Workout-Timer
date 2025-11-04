@@ -69,7 +69,8 @@
       "Bash(do echo \"Checking $dir:\")",
       "Bash(git rm:*)",
       "Bash(lsof:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:vite-pwa-org.netlify.app)"
     ],
     "deny": [],
     "ask": []

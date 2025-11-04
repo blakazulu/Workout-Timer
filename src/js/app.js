@@ -11,6 +11,8 @@ import {getRandomSong} from "./data/music-library.js";
 import {getVersionInfo, startVersionChecking} from "./utils/version-check.js";
 // Import PWA service worker registration
 import {registerSW} from "virtual:pwa-register";
+// Import storage persistence safeguards
+import {initStoragePersistence} from "./utils/storage-persistence.js";
 // Import favorites functionality
 import {initFavoritesUI, updateFavoriteButton, updateFavoritesBadge} from "./modules/favorites-ui.js";
 
@@ -195,6 +197,20 @@ function init() {
 
   // Initialize icon color enhancement
   initIconColorEnhancer();
+
+  // Initialize storage persistence (CRITICAL for iOS - prevent 7-day eviction)
+  initStoragePersistence().then(result => {
+    // Log storage status
+    if (result.riskLevel.risk === "high") {
+      console.warn("[App] ⚠️ Storage at risk:", result.riskLevel.message);
+    }
+
+    // Optionally notify user if storage is at risk
+    if (result.riskLevel.risk === "high" && !result.installed) {
+      // Could show a notification encouraging PWA install
+      // showNotification("Install to home screen to protect your data", "info");
+    }
+  });
 
   // Initialize PWA install handlers
   initPWAInstall();
