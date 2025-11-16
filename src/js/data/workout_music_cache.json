@@ -2,13 +2,13 @@
   "_meta": {
     "version": 1,
     "createdAt": "2025-10-16T12:19:15.734Z",
-    "lastRunAt": "2025-11-09T03:15:04.096Z",
-    "budgetUsedUnits": 0,
+    "lastRunAt": "2025-11-16T03:20:21.399Z",
+    "budgetUsedUnits": 1818,
     "budgetLimitUnits": 9000
   },
   "categories": {
     "beast mode workout music": {
-      "updatedAt": "2025-10-16T12:19:17.129Z",
+      "updatedAt": "2025-11-16T03:20:01.789Z",
       "items": [
         {
           "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
@@ -17,7 +17,7 @@
           "duration": 3870,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.788Z"
         },
         {
           "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
@@ -26,7 +26,7 @@
           "duration": 5225,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.788Z"
         },
         {
           "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
@@ -35,7 +35,7 @@
           "duration": 3438,
           "channel": "WoundedDuck",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.788Z"
         },
         {
           "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
@@ -44,7 +44,7 @@
           "duration": 3577,
           "channel": "Bjorth",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.788Z"
         },
         {
           "title": "Gangster Trap Mix 2023 👑 Best Hip Hop & Trap Music 2023 👑 Music That Make You Feel BADASS",
@@ -53,7 +53,7 @@
           "duration": 6597,
           "channel": "Trap Dose",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         },
         {
           "title": "❤ Best Workout Music 2017 Hip Hop Workout Music Mix 2017 / Gym Training Motivation Music",
@@ -62,7 +62,7 @@
           "duration": 3901,
           "channel": "Nanako Mori",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         },
         {
           "title": "Workout Music Mix 2025 💪 Best Gym Music Playlist 🏋️‍♂️ Training Music Playlist 🏃‍♂️ Gym Motivation",
@@ -71,7 +71,7 @@
           "duration": 4334,
           "channel": "Revive Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         },
         {
           "title": "Songs to feel like the protagonist entering GOD-MODE 💎☠️",
@@ -80,7 +80,7 @@
           "duration": 3357,
           "channel": "INTREPID EGO",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         },
         {
           "title": "Aggressive Hip Hop Motivation Music #1 (Instrumental Mix)",
@@ -89,7 +89,7 @@
           "duration": 3420,
           "channel": "RTTWLR - Topic",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         },
         {
           "title": "Music that makes you feel like a BADASS MAFIA 🎧 EDM Remix of Popular Songs 🎧 Bass Boosted Music Mix",
@@ -98,22 +98,13 @@
           "duration": 4827,
           "channel": "Magic Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:17.129Z"
+          "_fetchedAt": "2025-11-16T03:20:01.789Z"
         }
       ]
     },
     "intense workout music": {
-      "updatedAt": "2025-10-16T12:19:18.628Z",
+      "updatedAt": "2025-11-16T03:20:02.980Z",
       "items": [
-        {
-          "title": "30 min Full Body Fat Burn HIIT (NO JUMPING) - Ab, Core, Arm, Back, Leg, Thigh & Cardio ~ Emi",
-          "url": "https://www.youtube.com/watch?v=W4eKVKwf3rQ",
-          "thumbnail": "https://img.youtube.com/vi/W4eKVKwf3rQ/mqdefault.jpg",
-          "duration": 1855,
-          "channel": "emi wong",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
-        },
         {
           "title": "30 MIN WALKING CARDIO WORKOUT | Intense Full Body Fat Burn at Home ~ Emi",
           "url": "https://www.youtube.com/watch?v=ow3hpYJqYEI",
@@ -121,7 +112,7 @@
           "duration": 1817,
           "channel": "emi wong",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
@@ -130,16 +121,7 @@
           "duration": 3870,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
-        },
-        {
-          "title": "2-Hours Epic Music Mix | THE POWER OF EPIC MUSIC - Full Mix Vol. 2",
-          "url": "https://www.youtube.com/watch?v=DeXoACwOT1o",
-          "thumbnail": "https://img.youtube.com/vi/DeXoACwOT1o/mqdefault.jpg",
-          "duration": 7025,
-          "channel": "Pandora Journey",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
@@ -148,7 +130,7 @@
           "duration": 5481,
           "channel": "The Grand Sound",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "Half An Hour Weight Loss - 30 Min Home Workout To Burn Fat",
@@ -157,7 +139,7 @@
           "duration": 1916,
           "channel": "Roberta's Gym",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
@@ -166,16 +148,7 @@
           "duration": 3318,
           "channel": "Musique d'entraînement",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
-        },
-        {
-          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
-          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
-          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
-          "duration": 3743,
-          "channel": "Vyanah Music - For Meditation & Inner Balance",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
@@ -184,7 +157,7 @@
           "duration": 5225,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
@@ -193,57 +166,16 @@
           "duration": 3634,
           "channel": "NoCopyrightSounds",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:18.628Z"
-        }
-      ]
-    },
-    "energetic workout music": {
-      "updatedAt": "2025-10-16T12:19:19.832Z",
-      "items": [
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "Summer songs to dance ~ Best songs that make you dance",
-          "url": "https://www.youtube.com/watch?v=hOyn0bCydZo",
-          "thumbnail": "https://img.youtube.com/vi/hOyn0bCydZo/mqdefault.jpg",
-          "duration": 3257,
-          "channel": "A.C Vibes",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
         },
         {
           "title": "1 Hour of Dark & Powerful Viking Music",
@@ -252,7 +184,102 @@
           "duration": 3501,
           "channel": "Danheim",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
+          "_fetchedAt": "2025-11-16T03:20:02.979Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:02.980Z"
+        }
+      ]
+    },
+    "energetic workout music": {
+      "updatedAt": "2025-11-16T03:20:04.094Z",
+      "items": [
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
+          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
+          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
+          "duration": 5481,
+          "channel": "The Grand Sound",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "||BEST DANCE SONGS||💁💁 TOP HINDI BOLLYWOOD 1 HOUR NON STOP DANCE||",
+          "url": "https://www.youtube.com/watch?v=9TqXiT_bLCs",
+          "thumbnail": "https://img.youtube.com/vi/9TqXiT_bLCs/mqdefault.jpg",
+          "duration": 3570,
+          "channel": "Swarno's playlist",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
+          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
+          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
+          "duration": 3743,
+          "channel": "Vyanah Music - For Meditation & Inner Balance",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "Summer songs to dance ~ Best songs that make you dance",
+          "url": "https://www.youtube.com/watch?v=hOyn0bCydZo",
+          "thumbnail": "https://img.youtube.com/vi/hOyn0bCydZo/mqdefault.jpg",
+          "duration": 3257,
+          "channel": "A.C Vibes",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
+          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
+          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
+          "duration": 3634,
+          "channel": "NoCopyrightSounds",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
+        },
+        {
+          "title": "1 Hour of Dark & Powerful Viking Music",
+          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
+          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
+          "duration": 3501,
+          "channel": "Danheim",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
         },
         {
           "title": "Best of Bollywood Hindi lofi / chill mix playlist | 1 hour non-stop to relax, drive, study, sleep 💙🎵",
@@ -261,39 +288,12 @@
           "duration": 3601,
           "channel": "aMeth Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "1 Hour of Pop Workout Songs ♫",
-          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
-          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
-          "duration": 3672,
-          "channel": "Epidemic Pop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "Nonstop Punjabi Mashup 2024 (1 Hrs) | Shubh ft. Sonam Bajwa | Nain Tere Chain Mere Jukebox | DJ AKSH",
-          "url": "https://www.youtube.com/watch?v=r6aYQ2a9o2c",
-          "thumbnail": "https://img.youtube.com/vi/r6aYQ2a9o2c/mqdefault.jpg",
-          "duration": 3019,
-          "channel": "AKSH MUSIC",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
-        },
-        {
-          "title": "1 Hour Upbeat Background Music (Best MBB Music Collection) Free Download, No Copyright",
-          "url": "https://www.youtube.com/watch?v=DC7Y6sC7Ae4",
-          "thumbnail": "https://img.youtube.com/vi/DC7Y6sC7Ae4/mqdefault.jpg",
-          "duration": 4047,
-          "channel": "Music & Gene",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:19.832Z"
+          "_fetchedAt": "2025-11-16T03:20:04.094Z"
         }
       ]
     },
     "power workout music": {
-      "updatedAt": "2025-10-16T12:19:21.150Z",
+      "updatedAt": "2025-11-16T03:20:05.290Z",
       "items": [
         {
           "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
@@ -302,7 +302,7 @@
           "duration": 5225,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
           "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
@@ -311,7 +311,16 @@
           "duration": 3438,
           "channel": "WoundedDuck",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
+        },
+        {
+          "title": "1 Hour of Pop Workout Songs ♫",
+          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
+          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
+          "duration": 3672,
+          "channel": "Epidemic Pop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
           "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
@@ -320,7 +329,16 @@
           "duration": 3577,
           "channel": "Bjorth",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
+        },
+        {
+          "title": "Workout Music Mix 2025 💪 Best Gym Music Playlist 🏋️‍♂️ Training Music Playlist 🏃‍♂️ Gym Motivation",
+          "url": "https://www.youtube.com/watch?v=ld8nm6rcOm0",
+          "thumbnail": "https://img.youtube.com/vi/ld8nm6rcOm0/mqdefault.jpg",
+          "duration": 4334,
+          "channel": "Revive Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
           "title": "Trap & Rap Gym Workout Music Mix (LilBaby, Kendrick Lamar, Dababy)",
@@ -329,7 +347,16 @@
           "duration": 2525,
           "channel": "808seoul",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
+        },
+        {
+          "title": "Power Hour!! 60MIN NO REPEAT Workout (Full Body // Dumbbells)",
+          "url": "https://www.youtube.com/watch?v=HLDRwI4OnQU",
+          "thumbnail": "https://img.youtube.com/vi/HLDRwI4OnQU/mqdefault.jpg",
+          "duration": 4096,
+          "channel": "Heather Robertson",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
           "title": "1 Hour No Repeat Mash Up// Strength + Cardio Workout",
@@ -338,7 +365,7 @@
           "duration": 4192,
           "channel": "Heather Robertson",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
           "title": "1 Hour Viking Music Vol 1 | Aethyrien | Bodybuilding - Weightlifting - Gym - Workout - Training",
@@ -347,58 +374,22 @@
           "duration": 3600,
           "channel": "Aethyrien",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         },
         {
-          "title": "1 Hour - Most Epic Anime Mix - Fighting/Motivational Anime OST",
-          "url": "https://www.youtube.com/watch?v=pP725ZQkvvc",
-          "thumbnail": "https://img.youtube.com/vi/pP725ZQkvvc/mqdefault.jpg",
-          "duration": 3665,
-          "channel": "MathCaires",
+          "title": "1 hour I WILL NEVER QUIT| WHEN THE ZYZZ MUSIC KICKS IN| VEGETA MOTIVATIONAL SPEECH| TEVVEZ - LEGEND",
+          "url": "https://www.youtube.com/watch?v=Ronm37SygCI",
+          "thumbnail": "https://img.youtube.com/vi/Ronm37SygCI/mqdefault.jpg",
+          "duration": 3888,
+          "channel": "Anime Inspires Me",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
-        },
-        {
-          "title": "1 Hour Spartan Warrior Music for Intense Workouts (Bodybuilding & Gym Training)",
-          "url": "https://www.youtube.com/watch?v=wF3xCaiZ63k",
-          "thumbnail": "https://img.youtube.com/vi/wF3xCaiZ63k/mqdefault.jpg",
-          "duration": 3946,
-          "channel": "Nirajan Shah",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
-        },
-        {
-          "title": "*WARNING - Flashy Lights\" | 1 hour of Dragon Ball MOTIVATION for THE GYM! | Prince Vegeta Motivation",
-          "url": "https://www.youtube.com/watch?v=O7YTO6Ho76A",
-          "thumbnail": "https://img.youtube.com/vi/O7YTO6Ho76A/mqdefault.jpg",
-          "duration": 3332,
-          "channel": "Prince Vegeta Motivation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
-        },
-        {
-          "title": "Powerlifting Motivation 35 MINUTES Motivation #1 /GYM",
-          "url": "https://www.youtube.com/watch?v=qM_57hDc4Sg",
-          "thumbnail": "https://img.youtube.com/vi/qM_57hDc4Sg/mqdefault.jpg",
-          "duration": 2146,
-          "channel": "GYM Motivation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:21.150Z"
+          "_fetchedAt": "2025-11-16T03:20:05.290Z"
         }
       ]
     },
     "aggressive workout music": {
-      "updatedAt": "2025-10-16T12:19:22.329Z",
+      "updatedAt": "2025-11-16T03:20:06.490Z",
       "items": [
-        {
-          "title": "☠️2Pac Gangsta Rap Old School Mix July 2021☠️ Best 2Pac Rap / Hip Hop Music Mix ft. Eminem, Biggie",
-          "url": "https://www.youtube.com/watch?v=rvMSo0Oyw1M",
-          "thumbnail": "https://img.youtube.com/vi/rvMSo0Oyw1M/mqdefault.jpg",
-          "duration": 3202,
-          "channel": "Thug Radio",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
         {
           "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
           "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
@@ -406,25 +397,7 @@
           "duration": 3870,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "2-Hours Epic Music Mix | THE POWER OF EPIC MUSIC - Full Mix Vol. 2",
-          "url": "https://www.youtube.com/watch?v=DeXoACwOT1o",
-          "thumbnail": "https://img.youtube.com/vi/DeXoACwOT1o/mqdefault.jpg",
-          "duration": 7025,
-          "channel": "Pandora Journey",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
           "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
@@ -433,7 +406,7 @@
           "duration": 5225,
           "channel": "Workout Music",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
           "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
@@ -442,1102 +415,7 @@
           "duration": 3438,
           "channel": "WoundedDuck",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "1 Hour of Dark & Powerful Viking Music",
-          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
-          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
-          "duration": 3501,
-          "channel": "Danheim",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2025 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]*",
-          "url": "https://www.youtube.com/watch?v=0PmvcOSPI6A",
-          "thumbnail": "https://img.youtube.com/vi/0PmvcOSPI6A/mqdefault.jpg",
-          "duration": 3789,
-          "channel": "TAZZ PHONK",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        },
-        {
-          "title": "THE BEST BRAZILIAN PHONK 2023 | MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]",
-          "url": "https://www.youtube.com/watch?v=POXjRNVoncU",
-          "thumbnail": "https://img.youtube.com/vi/POXjRNVoncU/mqdefault.jpg",
-          "duration": 5560,
-          "channel": "CURSEDEVIL",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:22.329Z"
-        }
-      ]
-    },
-    "pump up workout music": {
-      "updatedAt": "2025-10-16T12:19:23.492Z",
-      "items": [
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "New Year Music Mix 2025 🎧 Best EDM Music 2024 Party Mix 🎧 Remixes of Popular Songs",
-          "url": "https://www.youtube.com/watch?v=BhrpaOP2IUM",
-          "thumbnail": "https://img.youtube.com/vi/BhrpaOP2IUM/mqdefault.jpg",
-          "duration": 46216,
-          "channel": "Magic Club",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "1 Hour of Pop Workout Songs ♫",
-          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
-          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
-          "duration": 3672,
-          "channel": "Epidemic Pop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
-          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
-          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
-          "duration": 3577,
-          "channel": "Bjorth",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2024 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]",
-          "url": "https://www.youtube.com/watch?v=Sh1zT2YDPOk",
-          "thumbnail": "https://img.youtube.com/vi/Sh1zT2YDPOk/mqdefault.jpg",
-          "duration": 2901,
-          "channel": "Phonk Time",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "2 Hour - Most Epic Anime Mix - Fighting/Motivational Anime OST",
-          "url": "https://www.youtube.com/watch?v=o0X0QUwU-no",
-          "thumbnail": "https://img.youtube.com/vi/o0X0QUwU-no/mqdefault.jpg",
-          "duration": 7400,
-          "channel": "MathCaires",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        },
-        {
-          "title": "Bollywood Workout Hits 🏋️‍♂️ | Apna Time Aayega, Dhaakad, Tera Baap Aaya, Jagga Jiteya | Gym Songs 💪",
-          "url": "https://www.youtube.com/watch?v=8afBXZawfQw",
-          "thumbnail": "https://img.youtube.com/vi/8afBXZawfQw/mqdefault.jpg",
-          "duration": 5742,
-          "channel": "Zee Music Company",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:23.492Z"
-        }
-      ]
-    },
-    "focus workout music": {
-      "updatedAt": "2025-10-16T12:19:24.744Z",
-      "items": [
-        {
-          "title": "White Noise Black Screen | Sleep, Study, Focus | 10 Hours",
-          "url": "https://www.youtube.com/watch?v=nMfPqeZjc2c",
-          "thumbnail": "https://img.youtube.com/vi/nMfPqeZjc2c/mqdefault.jpg",
-          "duration": 36000,
-          "channel": "Relaxing White Noise",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Study Music Alpha Waves: Relaxing Studying Music, Brain Power, Focus Concentration Music, ☯161",
-          "url": "https://www.youtube.com/watch?v=WPni755-Krg",
-          "thumbnail": "https://img.youtube.com/vi/WPni755-Krg/mqdefault.jpg",
-          "duration": 10798,
-          "channel": "Yellow Brick Cinema - Relaxing Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Beautiful Piano Music, Vol. 1 | Relaxing Music for Focus, Sleep & Relaxation by Peder B. Helland",
-          "url": "https://www.youtube.com/watch?v=lCOF9LN_Zxs",
-          "thumbnail": "https://img.youtube.com/vi/lCOF9LN_Zxs/mqdefault.jpg",
-          "duration": 3521,
-          "channel": "Soothing Relaxation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Focus Music for Work and Studying, Background Music for Concentration, Study Music",
-          "url": "https://www.youtube.com/watch?v=_4kHxtiuML0",
-          "thumbnail": "https://img.youtube.com/vi/_4kHxtiuML0/mqdefault.jpg",
-          "duration": 32933,
-          "channel": "Greenred Productions - Relaxing Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Ambient Study Music To Concentrate - 4 Hours of Music for Studying, Concentration and Memory",
-          "url": "https://www.youtube.com/watch?v=sjkrrmBnpGE",
-          "thumbnail": "https://img.youtube.com/vi/sjkrrmBnpGE/mqdefault.jpg",
-          "duration": 14272,
-          "channel": "Quiet Quest - Study Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Studying White Noise | Focus on Homework, Test Prep, School | 10 Hours Study Sound",
-          "url": "https://www.youtube.com/watch?v=yLOM8R6lbzg",
-          "thumbnail": "https://img.youtube.com/vi/yLOM8R6lbzg/mqdefault.jpg",
-          "duration": 36001,
-          "channel": "Relaxing White Noise",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "Yoga Music, Relaxing Music, Calming Music, Stress Relief Music, Peaceful Music, Relax, ✿2658C",
-          "url": "https://www.youtube.com/watch?v=2RTZNLL0wss",
-          "thumbnail": "https://img.youtube.com/vi/2RTZNLL0wss/mqdefault.jpg",
-          "duration": 10811,
-          "channel": "Yellow Brick Cinema - Relaxing Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
-          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
-          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
-          "duration": 3743,
-          "channel": "Vyanah Music - For Meditation & Inner Balance",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:24.744Z"
-        }
-      ]
-    },
-    "motivational workout music": {
-      "updatedAt": "2025-10-16T12:19:25.984Z",
-      "items": [
-        {
-          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
-          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
-          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
-          "duration": 3644,
-          "channel": "Dubstep Nation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "☠️2Pac Gangsta Rap Old School Mix July 2021☠️ Best 2Pac Rap / Hip Hop Music Mix ft. Eminem, Biggie",
-          "url": "https://www.youtube.com/watch?v=rvMSo0Oyw1M",
-          "thumbnail": "https://img.youtube.com/vi/rvMSo0Oyw1M/mqdefault.jpg",
-          "duration": 3202,
-          "channel": "Thug Radio",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
-          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
-          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
-          "duration": 3318,
-          "channel": "Musique d'entraînement",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "2010s roadtrip mix ~nostalgia playlist",
-          "url": "https://www.youtube.com/watch?v=0kXdYDeOc4U",
-          "thumbnail": "https://img.youtube.com/vi/0kXdYDeOc4U/mqdefault.jpg",
-          "duration": 4169,
-          "channel": "Roseate Mixes",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
-          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
-          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
-          "duration": 3743,
-          "channel": "Vyanah Music - For Meditation & Inner Balance",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "Summer songs to dance ~ Best songs that make you dance",
-          "url": "https://www.youtube.com/watch?v=hOyn0bCydZo",
-          "thumbnail": "https://img.youtube.com/vi/hOyn0bCydZo/mqdefault.jpg",
-          "duration": 3257,
-          "channel": "A.C Vibes",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:25.984Z"
-        }
-      ]
-    },
-    "steady workout music": {
-      "updatedAt": "2025-10-16T12:19:27.222Z",
-      "items": [
-        {
-          "title": "1 hour of Aesthetic Music | No Copyright",
-          "url": "https://www.youtube.com/watch?v=La9IzR_m6rs",
-          "thumbnail": "https://img.youtube.com/vi/La9IzR_m6rs/mqdefault.jpg",
-          "duration": 4032,
-          "channel": "Aesthetic Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "1 Hour FULL BODY WORKOUT at Home | No Jumping, No Equipment, No Repeat",
-          "url": "https://www.youtube.com/watch?v=BHNtFY-MSnU",
-          "thumbnail": "https://img.youtube.com/vi/BHNtFY-MSnU/mqdefault.jpg",
-          "duration": 3877,
-          "channel": "Caroline Girvan",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "1 Hour of U.S. Military Cadences (Studio Recorded) - Workout Playlist | Cadences Volumes 1, 2, & 3",
-          "url": "https://www.youtube.com/watch?v=bTVL3EBkzHU",
-          "thumbnail": "https://img.youtube.com/vi/bTVL3EBkzHU/mqdefault.jpg",
-          "duration": 4516,
-          "channel": "Jonathan",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "1 Hour Of Freestyle Rap Beats - Trap Beats Mix 2024",
-          "url": "https://www.youtube.com/watch?v=POH5DmNygI0",
-          "thumbnail": "https://img.youtube.com/vi/POH5DmNygI0/mqdefault.jpg",
-          "duration": 3641,
-          "channel": "FreeForProfit Type Beat",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "1 Hour of Trap Beats for Work and Focus | Enhance Concentration and Productivity",
-          "url": "https://www.youtube.com/watch?v=7VAUDImpqGQ",
-          "thumbnail": "https://img.youtube.com/vi/7VAUDImpqGQ/mqdefault.jpg",
-          "duration": 3877,
-          "channel": "IceDavid Beats",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "🔥8000 STEPS  WALKING WORKOUT🔥STEADY STATE CARDIO for WEIGHT LOSS🔥LOW INTENSITY🔥KNEE FRIENDLY🔥",
-          "url": "https://www.youtube.com/watch?v=9UcK05e-xwM",
-          "thumbnail": "https://img.youtube.com/vi/9UcK05e-xwM/mqdefault.jpg",
-          "duration": 4203,
-          "channel": "BurpeeGirl",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "🔥10.000 STEPS WEIGHT LOSS WORKOUT🔥STEADY STATE CARDIO🔥NO SQUATS/LUNGES🔥NO JUMPING🔥FULL BODY BURN🔥",
-          "url": "https://www.youtube.com/watch?v=TNgyKt40EJQ",
-          "thumbnail": "https://img.youtube.com/vi/TNgyKt40EJQ/mqdefault.jpg",
-          "duration": 5060,
-          "channel": "BurpeeGirl",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "🔥1 HOUR WALKING EXERCISE FOR WEIGHT LOSS🔥ALL STANDING🔥NO JUMPING🔥KNEE FRIENDLY🔥",
-          "url": "https://www.youtube.com/watch?v=zYDwq5r_SvY",
-          "thumbnail": "https://img.youtube.com/vi/zYDwq5r_SvY/mqdefault.jpg",
-          "duration": 3884,
-          "channel": "BurpeeGirl",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "🔥STEADY STATE CARDIO for WEIGHT LOSS🔥LOW INTENSITY WALKING WORKOUT🔥ALL STANDING🔥NO JUMPING🔥",
-          "url": "https://www.youtube.com/watch?v=dsP9u7WIDGI",
-          "thumbnail": "https://img.youtube.com/vi/dsP9u7WIDGI/mqdefault.jpg",
-          "duration": 4487,
-          "channel": "BurpeeGirl",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        },
-        {
-          "title": "🔥1 HOUR WALKING WORKOUT for WEIGHT LOSS🔥ALL STANDING🔥NO JUMPING🔥KNEE FRIENDLY🔥",
-          "url": "https://www.youtube.com/watch?v=wi3OXsTgcbk",
-          "thumbnail": "https://img.youtube.com/vi/wi3OXsTgcbk/mqdefault.jpg",
-          "duration": 4012,
-          "channel": "BurpeeGirl",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:27.222Z"
-        }
-      ]
-    },
-    "edm workout music": {
-      "updatedAt": "2025-10-16T12:19:28.376Z",
-      "items": [
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "BEST OF 2010s - MIX by JAURI",
-          "url": "https://www.youtube.com/watch?v=ZQ-3p-gCg9M",
-          "thumbnail": "https://img.youtube.com/vi/ZQ-3p-gCg9M/mqdefault.jpg",
-          "duration": 3502,
-          "channel": "JAURI",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "New Year Music Mix 2025 🎧 Best EDM Music 2024 Party Mix 🎧 Remixes of Popular Songs",
-          "url": "https://www.youtube.com/watch?v=BhrpaOP2IUM",
-          "thumbnail": "https://img.youtube.com/vi/BhrpaOP2IUM/mqdefault.jpg",
-          "duration": 46216,
-          "channel": "Magic Club",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
-          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
-          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
-          "duration": 3300,
-          "channel": "Monsterwolf Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "Music Mix 2024 🎧 EDM Remixes of Popular Songs 🎧 EDM Gaming Music Mix ​",
-          "url": "https://www.youtube.com/watch?v=sTmgaP2gYsk",
-          "thumbnail": "https://img.youtube.com/vi/sTmgaP2gYsk/mqdefault.jpg",
-          "duration": 10783,
-          "channel": "Infinity EDM",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        },
-        {
-          "title": "1 Hour of Pop Workout Songs ♫",
-          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
-          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
-          "duration": 3672,
-          "channel": "Epidemic Pop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:28.376Z"
-        }
-      ]
-    },
-    "rock workout music": {
-      "updatedAt": "2025-10-16T12:19:29.551Z",
-      "items": [
-        {
-          "title": "80s Mix I - Pop Rock | 🎵 Queen, Baltimora, Rick Astley, Michael Jackson, Pet Shop Boys, etc",
-          "url": "https://www.youtube.com/watch?v=WdhwU_JCINw",
-          "thumbnail": "https://img.youtube.com/vi/WdhwU_JCINw/mqdefault.jpg",
-          "duration": 2985,
-          "channel": "Alejandro Barrera Dj",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "AC/DC | ROCK",
-          "url": "https://www.youtube.com/watch?v=U_tyfMUSGo4",
-          "thumbnail": "https://img.youtube.com/vi/U_tyfMUSGo4/mqdefault.jpg",
-          "duration": 4401,
-          "channel": "bor zong",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
-          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
-          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
-          "duration": 3318,
-          "channel": "Musique d'entraînement",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "Music Mix 2024 🎧 EDM Remixes of Popular Songs 🎧 EDM Gaming Music Mix ​",
-          "url": "https://www.youtube.com/watch?v=sTmgaP2gYsk",
-          "thumbnail": "https://img.youtube.com/vi/sTmgaP2gYsk/mqdefault.jpg",
-          "duration": 10783,
-          "channel": "Infinity EDM",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "1 Hour of Pop Workout Songs ♫",
-          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
-          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
-          "duration": 3672,
-          "channel": "Epidemic Pop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        },
-        {
-          "title": "Top Hits 2025 ~ Summer Playlist 2025 ~ Top Songs 2025 Trending Music 🎶🎧",
-          "url": "https://www.youtube.com/watch?v=fTKqtvXjkvo",
-          "thumbnail": "https://img.youtube.com/vi/fTKqtvXjkvo/mqdefault.jpg",
-          "duration": 8982,
-          "channel": "Revive Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:29.551Z"
-        }
-      ]
-    },
-    "hip hop workout music": {
-      "updatedAt": "2025-10-16T12:19:30.736Z",
-      "items": [
-        {
-          "title": "90's Hip Hop Mix #01 | Best of Old School Rap Songs | Throwback Rap Classics | Westcoast | Eastcoast",
-          "url": "https://www.youtube.com/watch?v=rwYrEEka1mc",
-          "thumbnail": "https://img.youtube.com/vi/rwYrEEka1mc/mqdefault.jpg",
-          "duration": 3379,
-          "channel": "DJ Noize",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "☠️2Pac Gangsta Rap Old School Mix July 2021☠️ Best 2Pac Rap / Hip Hop Music Mix ft. Eminem, Biggie",
-          "url": "https://www.youtube.com/watch?v=rvMSo0Oyw1M",
-          "thumbnail": "https://img.youtube.com/vi/rvMSo0Oyw1M/mqdefault.jpg",
-          "duration": 3202,
-          "channel": "Thug Radio",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
-          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
-          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
-          "duration": 3318,
-          "channel": "Musique d'entraînement",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Hip Hop Mix 2000 💿 Best Music from The 2000s Hip Hop Playlist 💿 Top Throwback Songs 2000 Hip Hop",
-          "url": "https://www.youtube.com/watch?v=a07qXFXjEDI",
-          "thumbnail": "https://img.youtube.com/vi/a07qXFXjEDI/mqdefault.jpg",
-          "duration": 3365,
-          "channel": "Redlist Urban",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Best of Trap Nation Mix ♥️ Remixes of Popular Songs",
-          "url": "https://www.youtube.com/watch?v=TM2FtVMqymk",
-          "thumbnail": "https://img.youtube.com/vi/TM2FtVMqymk/mqdefault.jpg",
-          "duration": 3601,
-          "channel": "Hawnray",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "Best of 90s Hip Hop Summer Hits Clean Video Mix - Dj Shinski [2 pac, Notorious BIG, Snoop dogg, Dre]",
-          "url": "https://www.youtube.com/watch?v=tDxQo7ymHlI",
-          "thumbnail": "https://img.youtube.com/vi/tDxQo7ymHlI/mqdefault.jpg",
-          "duration": 4424,
-          "channel": "Dj Shinski",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:30.736Z"
-        }
-      ]
-    },
-    "metal workout music": {
-      "updatedAt": "2025-10-16T12:19:31.872Z",
-      "items": [
-        {
-          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
-          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
-          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
-          "duration": 3644,
-          "channel": "Dubstep Nation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
-          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
-          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
-          "duration": 3300,
-          "channel": "Monsterwolf Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "1 Hour of Pop Workout Songs ♫",
-          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
-          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
-          "duration": 3672,
-          "channel": "Epidemic Pop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
-          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
-          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
-          "duration": 3577,
-          "channel": "Bjorth",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "2 Hour - Most Epic Anime Mix - Fighting/Motivational Anime OST",
-          "url": "https://www.youtube.com/watch?v=o0X0QUwU-no",
-          "thumbnail": "https://img.youtube.com/vi/o0X0QUwU-no/mqdefault.jpg",
-          "duration": 7400,
-          "channel": "MathCaires",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        },
-        {
-          "title": "Doom - Workout Mix (The Only Thing They Fear Is You Edition)",
-          "url": "https://www.youtube.com/watch?v=AzfSrJXMKZ4",
-          "thumbnail": "https://img.youtube.com/vi/AzfSrJXMKZ4/mqdefault.jpg",
-          "duration": 6219,
-          "channel": "WorkGeekOut",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:31.872Z"
-        }
-      ]
-    },
-    "dubstep workout music": {
-      "updatedAt": "2025-10-16T12:19:32.988Z",
-      "items": [
-        {
-          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
-          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
-          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
-          "duration": 3644,
-          "channel": "Dubstep Nation",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "'The Journey' (2 Hour Drum & Bass Mix)",
-          "url": "https://www.youtube.com/watch?v=R8MWKsheHxk",
-          "thumbnail": "https://img.youtube.com/vi/R8MWKsheHxk/mqdefault.jpg",
-          "duration": 6861,
-          "channel": "SuicideSheeep",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
-          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
-          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
-          "duration": 3300,
-          "channel": "Monsterwolf Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "Amazing Top 10 Dubstep Songs!",
-          "url": "https://www.youtube.com/watch?v=PfrRJYC4z6I",
-          "thumbnail": "https://img.youtube.com/vi/PfrRJYC4z6I/mqdefault.jpg",
-          "duration": 2638,
-          "channel": "spacewave",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "Best of Trap Nation Mix ♥️ Remixes of Popular Songs",
-          "url": "https://www.youtube.com/watch?v=TM2FtVMqymk",
-          "thumbnail": "https://img.youtube.com/vi/TM2FtVMqymk/mqdefault.jpg",
-          "duration": 3601,
-          "channel": "Hawnray",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "\"Coming Home\" Wonderful Melodic Dubstep Mix",
-          "url": "https://www.youtube.com/watch?v=tPFz04LSa2U",
-          "thumbnail": "https://img.youtube.com/vi/tPFz04LSa2U/mqdefault.jpg",
-          "duration": 3601,
-          "channel": "Arctic Empire",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "1 Hour of Dark & Powerful Viking Music",
-          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
-          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
-          "duration": 3501,
-          "channel": "Danheim",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:32.988Z"
-        }
-      ]
-    },
-    "hardstyle workout music": {
-      "updatedAt": "2025-10-16T12:19:34.069Z",
-      "items": [
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
-          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
-          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
-          "duration": 3730,
-          "channel": "White Rabbit",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "1 HOUR BEST GAMING MIX {ELECTRO, HARD DANCE, DUBSTEP, DRUMSTEP}",
-          "url": "https://www.youtube.com/watch?v=vC2xJ3JDokk",
-          "thumbnail": "https://img.youtube.com/vi/vC2xJ3JDokk/mqdefault.jpg",
-          "duration": 3651,
-          "channel": "WILD YETIS",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "Best Brutal Dubstep Mix 2014",
-          "url": "https://www.youtube.com/watch?v=a4JlkKNA3yw",
-          "thumbnail": "https://img.youtube.com/vi/a4JlkKNA3yw/mqdefault.jpg",
-          "duration": 5761,
-          "channel": "GSN",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "Hip Hop/Trap Instrumental Beats Mix 2024  | 1 HOUR",
-          "url": "https://www.youtube.com/watch?v=CihmFK_vg_I",
-          "thumbnail": "https://img.youtube.com/vi/CihmFK_vg_I/mqdefault.jpg",
-          "duration": 3990,
-          "channel": "Nicop Records",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
-          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
-          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
-          "duration": 3577,
-          "channel": "Bjorth",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "[1 HOUR] Ultra Instinct Theme (Official Version)",
-          "url": "https://www.youtube.com/watch?v=GCspMiRl2C0",
-          "thumbnail": "https://img.youtube.com/vi/GCspMiRl2C0/mqdefault.jpg",
-          "duration": 3602,
-          "channel": "Hour Loop",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "Russian Hardbass Mix #1 (Hard Bass School/ DJ Blyatman)",
-          "url": "https://www.youtube.com/watch?v=iu24_PURGdQ",
-          "thumbnail": "https://img.youtube.com/vi/iu24_PURGdQ/mqdefault.jpg",
-          "duration": 1965,
-          "channel": "DeathmatcherTV",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        },
-        {
-          "title": "1 Hour of Chad Orthodox Chants to Redeem Your Soul",
-          "url": "https://www.youtube.com/watch?v=_xaj8QSJZ0E",
-          "thumbnail": "https://img.youtube.com/vi/_xaj8QSJZ0E/mqdefault.jpg",
-          "duration": 5044,
-          "channel": "Vlaspatta Karamazov",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:34.069Z"
-        }
-      ]
-    },
-    "techno workout music": {
-      "updatedAt": "2025-10-16T12:19:35.298Z",
-      "items": [
-        {
-          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
-          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
-          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
-          "duration": 3870,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "Vibey Deep House Mix",
-          "url": "https://www.youtube.com/watch?v=vXYXHHYdwTo",
-          "thumbnail": "https://img.youtube.com/vi/vXYXHHYdwTo/mqdefault.jpg",
-          "duration": 3320,
-          "channel": "ZEN",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
-          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
-          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
-          "duration": 5481,
-          "channel": "The Grand Sound",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "'The Journey' (2 Hour Drum & Bass Mix)",
-          "url": "https://www.youtube.com/watch?v=R8MWKsheHxk",
-          "thumbnail": "https://img.youtube.com/vi/R8MWKsheHxk/mqdefault.jpg",
-          "duration": 6861,
-          "channel": "SuicideSheeep",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "90's Megamix - Dance Hits of the 90s - Epic 2 Hour 90’s Dance Megamix!",
-          "url": "https://www.youtube.com/watch?v=BiZn4i92Z-Q",
-          "thumbnail": "https://img.youtube.com/vi/BiZn4i92Z-Q/mqdefault.jpg",
-          "duration": 6600,
-          "channel": "Alex K Official",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
-          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
-          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
-          "duration": 5225,
-          "channel": "Workout Music",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
-          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
-          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
-          "duration": 3438,
-          "channel": "WoundedDuck",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "Fisher Best Songs Mix 2020 (Tech House)",
-          "url": "https://www.youtube.com/watch?v=xYLH8lHFs6A",
-          "thumbnail": "https://img.youtube.com/vi/xYLH8lHFs6A/mqdefault.jpg",
-          "duration": 4455,
-          "channel": "Albert CT",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        },
-        {
-          "title": "Best of Trap Nation Mix ♥️ Remixes of Popular Songs",
-          "url": "https://www.youtube.com/watch?v=TM2FtVMqymk",
-          "thumbnail": "https://img.youtube.com/vi/TM2FtVMqymk/mqdefault.jpg",
-          "duration": 3601,
-          "channel": "Hawnray",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:35.298Z"
-        }
-      ]
-    },
-    "phonk workout music": {
-      "updatedAt": "2025-10-16T12:19:36.428Z",
-      "items": [
-        {
-          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
-          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
-          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
-          "duration": 3634,
-          "channel": "NoCopyrightSounds",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
           "title": "1 HOUR BEST BRAZILIAN PHONK for GYM / Viral Aggressive Phonk Mix",
@@ -1546,34 +424,7 @@
           "duration": 3714,
           "channel": "BRAZILIAN PHONK MADNESS",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
-        },
-        {
-          "title": "1 Hour of Dark & Powerful Viking Music",
-          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
-          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
-          "duration": 3501,
-          "channel": "Danheim",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
-        },
-        {
-          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2025 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]*",
-          "url": "https://www.youtube.com/watch?v=0PmvcOSPI6A",
-          "thumbnail": "https://img.youtube.com/vi/0PmvcOSPI6A/mqdefault.jpg",
-          "duration": 3789,
-          "channel": "TAZZ PHONK",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
-        },
-        {
-          "title": "THE BEST BRAZILIAN PHONK 2023 | MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]",
-          "url": "https://www.youtube.com/watch?v=POXjRNVoncU",
-          "thumbnail": "https://img.youtube.com/vi/POXjRNVoncU/mqdefault.jpg",
-          "duration": 5560,
-          "channel": "CURSEDEVIL",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
           "title": "AURA = ♾️ | 1 HOUR AURA MUSIC PLAYLIST 2025 🔥",
@@ -1582,34 +433,111 @@
           "duration": 3731,
           "channel": "EMPIRE PHONK",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
-          "title": "1 HOUR ABSOLUTE BRAZILIAN FUNK X KRUSHFUNK PLAYLIST 😈😈😈  AGRESSIVE Phonk TikTok | ТикТок Фонк 2024 👾",
-          "url": "https://www.youtube.com/watch?v=HcZw4UTfgmk",
-          "thumbnail": "https://img.youtube.com/vi/HcZw4UTfgmk/mqdefault.jpg",
-          "duration": 3605,
-          "channel": "TG:MUSICORE",
+          "title": "1 Hour of Dark & Powerful Viking Music",
+          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
+          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
+          "duration": 3501,
+          "channel": "Danheim",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
-          "title": "Phonk Music 2024 ※ Aggressive Drift Phonk ※ Фонка 2024",
-          "url": "https://www.youtube.com/watch?v=WPrhl0pFY_o",
-          "thumbnail": "https://img.youtube.com/vi/WPrhl0pFY_o/mqdefault.jpg",
-          "duration": 2831,
-          "channel": "Phonk Time",
+          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2025 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]*",
+          "url": "https://www.youtube.com/watch?v=0PmvcOSPI6A",
+          "thumbnail": "https://img.youtube.com/vi/0PmvcOSPI6A/mqdefault.jpg",
+          "duration": 3789,
+          "channel": "TAZZ PHONK",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
         },
         {
-          "title": "AGRESSIVE BRAZILIAN PHONK 2024 PLAYLIST FOR EDIT",
-          "url": "https://www.youtube.com/watch?v=mZsDE8pgIHA",
-          "thumbnail": "https://img.youtube.com/vi/mZsDE8pgIHA/mqdefault.jpg",
-          "duration": 3695,
-          "channel": "sayonaraあ",
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
+        },
+        {
+          "title": "Workout Motivation Music Mix ⚡️ Aggressive Trap & Heavy Drops 2018",
+          "url": "https://www.youtube.com/watch?v=Nr3mYq6Hsag",
+          "thumbnail": "https://img.youtube.com/vi/Nr3mYq6Hsag/mqdefault.jpg",
+          "duration": 1900,
+          "channel": "TRAP WORKOUT MUSIC",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
+        },
+        {
+          "title": "1 Hour of Pop Workout Songs ♫",
+          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
+          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
+          "duration": 3672,
+          "channel": "Epidemic Pop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:06.490Z"
+        }
+      ]
+    },
+    "pump up workout music": {
+      "updatedAt": "2025-11-16T03:20:07.704Z",
+      "items": [
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "1 Hour of Dark & Powerful Viking Music",
+          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
+          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
+          "duration": 3501,
+          "channel": "Danheim",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "1 Hour of Pop Workout Songs ♫",
+          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
+          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
+          "duration": 3672,
+          "channel": "Epidemic Pop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "1 Hour Upbeat Background Music (Best MBB Music Collection) Free Download, No Copyright",
+          "url": "https://www.youtube.com/watch?v=DC7Y6sC7Ae4",
+          "thumbnail": "https://img.youtube.com/vi/DC7Y6sC7Ae4/mqdefault.jpg",
+          "duration": 4047,
+          "channel": "Music & Gene",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
         },
         {
           "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
@@ -1618,12 +546,1084 @@
           "duration": 3577,
           "channel": "Bjorth",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:36.428Z"
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "Bollywood Workout Hits 🏋️‍♂️ | Apna Time Aayega, Dhaakad, Tera Baap Aaya, Jagga Jiteya | Gym Songs 💪",
+          "url": "https://www.youtube.com/watch?v=8afBXZawfQw",
+          "thumbnail": "https://img.youtube.com/vi/8afBXZawfQw/mqdefault.jpg",
+          "duration": 5742,
+          "channel": "Zee Music Company",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2024 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]",
+          "url": "https://www.youtube.com/watch?v=Sh1zT2YDPOk",
+          "thumbnail": "https://img.youtube.com/vi/Sh1zT2YDPOk/mqdefault.jpg",
+          "duration": 2901,
+          "channel": "Phonk Time",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        },
+        {
+          "title": "ADRENALINE 📈📈📈 | Playlist That Make you the Main Character [BRAZIL PHONK, FUNK, VIRAL]",
+          "url": "https://www.youtube.com/watch?v=2hFcy3S7Pbg",
+          "thumbnail": "https://img.youtube.com/vi/2hFcy3S7Pbg/mqdefault.jpg",
+          "duration": 3201,
+          "channel": "CURSEDEVIL",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:07.704Z"
+        }
+      ]
+    },
+    "focus workout music": {
+      "updatedAt": "2025-11-16T03:20:08.826Z",
+      "items": [
+        {
+          "title": "White Noise Black Screen | Sleep, Study, Focus | 10 Hours",
+          "url": "https://www.youtube.com/watch?v=nMfPqeZjc2c",
+          "thumbnail": "https://img.youtube.com/vi/nMfPqeZjc2c/mqdefault.jpg",
+          "duration": 36000,
+          "channel": "Relaxing White Noise",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Study Music Alpha Waves: Relaxing Studying Music, Brain Power, Focus Concentration Music, ☯161",
+          "url": "https://www.youtube.com/watch?v=WPni755-Krg",
+          "thumbnail": "https://img.youtube.com/vi/WPni755-Krg/mqdefault.jpg",
+          "duration": 10798,
+          "channel": "Yellow Brick Cinema - Relaxing Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Beautiful Piano Music, Vol. 1 | Relaxing Music for Focus, Sleep & Relaxation by Peder B. Helland",
+          "url": "https://www.youtube.com/watch?v=lCOF9LN_Zxs",
+          "thumbnail": "https://img.youtube.com/vi/lCOF9LN_Zxs/mqdefault.jpg",
+          "duration": 3521,
+          "channel": "Soothing Relaxation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Focus Music for Work and Studying, Background Music for Concentration, Study Music",
+          "url": "https://www.youtube.com/watch?v=_4kHxtiuML0",
+          "thumbnail": "https://img.youtube.com/vi/_4kHxtiuML0/mqdefault.jpg",
+          "duration": 32933,
+          "channel": "Greenred Productions - Relaxing Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Ambient Study Music To Concentrate - 4 Hours of Music for Studying, Concentration and Memory",
+          "url": "https://www.youtube.com/watch?v=sjkrrmBnpGE",
+          "thumbnail": "https://img.youtube.com/vi/sjkrrmBnpGE/mqdefault.jpg",
+          "duration": 14272,
+          "channel": "Quiet Quest - Study Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Deep Focus - Music For Studying, Concentration and Work",
+          "url": "https://www.youtube.com/watch?v=oPVte6aMprI",
+          "thumbnail": "https://img.youtube.com/vi/oPVte6aMprI/mqdefault.jpg",
+          "duration": 13938,
+          "channel": "Quiet Quest - Study Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "3 Hour Focus Music: Study Music, Alpha Waves, Calming Music, Concentration Music, ☯465",
+          "url": "https://www.youtube.com/watch?v=5LXhPbmoHmU",
+          "thumbnail": "https://img.youtube.com/vi/5LXhPbmoHmU/mqdefault.jpg",
+          "duration": 10811,
+          "channel": "Yellow Brick Cinema - Relaxing Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Studying White Noise | Focus on Homework, Test Prep, School | 10 Hours Study Sound",
+          "url": "https://www.youtube.com/watch?v=yLOM8R6lbzg",
+          "thumbnail": "https://img.youtube.com/vi/yLOM8R6lbzg/mqdefault.jpg",
+          "duration": 36001,
+          "channel": "Relaxing White Noise",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "Yoga Music, Relaxing Music, Calming Music, Stress Relief Music, Peaceful Music, Relax, ✿2658C",
+          "url": "https://www.youtube.com/watch?v=2RTZNLL0wss",
+          "thumbnail": "https://img.youtube.com/vi/2RTZNLL0wss/mqdefault.jpg",
+          "duration": 10811,
+          "channel": "Yellow Brick Cinema - Relaxing Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        },
+        {
+          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
+          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
+          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
+          "duration": 3743,
+          "channel": "Vyanah Music - For Meditation & Inner Balance",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:08.826Z"
+        }
+      ]
+    },
+    "motivational workout music": {
+      "updatedAt": "2025-11-16T03:20:10.077Z",
+      "items": [
+        {
+          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
+          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
+          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
+          "duration": 3644,
+          "channel": "Dubstep Nation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "☠️2Pac Gangsta Rap Old School Mix July 2021☠️ Best 2Pac Rap / Hip Hop Music Mix ft. Eminem, Biggie",
+          "url": "https://www.youtube.com/watch?v=rvMSo0Oyw1M",
+          "thumbnail": "https://img.youtube.com/vi/rvMSo0Oyw1M/mqdefault.jpg",
+          "duration": 3202,
+          "channel": "Thug Radio",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
+          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
+          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
+          "duration": 5481,
+          "channel": "The Grand Sound",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
+          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
+          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
+          "duration": 3318,
+          "channel": "Musique d'entraînement",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "2010s roadtrip mix ~nostalgia playlist",
+          "url": "https://www.youtube.com/watch?v=0kXdYDeOc4U",
+          "thumbnail": "https://img.youtube.com/vi/0kXdYDeOc4U/mqdefault.jpg",
+          "duration": 4169,
+          "channel": "Roseate Mixes",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "Hans Zimmer | ULTIMATE Soundtrack Compilation Mix",
+          "url": "https://www.youtube.com/watch?v=IqiTJK_uzUY",
+          "thumbnail": "https://img.youtube.com/vi/IqiTJK_uzUY/mqdefault.jpg",
+          "duration": 3493,
+          "channel": "Straals",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "1 HOUR Zen Music For Inner Balance, Stress Relief and Relaxation by Vyanah",
+          "url": "https://www.youtube.com/watch?v=dE_XVl7fwBQ",
+          "thumbnail": "https://img.youtube.com/vi/dE_XVl7fwBQ/mqdefault.jpg",
+          "duration": 3743,
+          "channel": "Vyanah Music - For Meditation & Inner Balance",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "Summer songs to dance ~ Best songs that make you dance",
+          "url": "https://www.youtube.com/watch?v=hOyn0bCydZo",
+          "thumbnail": "https://img.youtube.com/vi/hOyn0bCydZo/mqdefault.jpg",
+          "duration": 3257,
+          "channel": "A.C Vibes",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:10.077Z"
+        }
+      ]
+    },
+    "steady workout music": {
+      "updatedAt": "2025-11-16T03:20:11.262Z",
+      "items": [
+        {
+          "title": "1 hour of Aesthetic Music | No Copyright",
+          "url": "https://www.youtube.com/watch?v=La9IzR_m6rs",
+          "thumbnail": "https://img.youtube.com/vi/La9IzR_m6rs/mqdefault.jpg",
+          "duration": 4032,
+          "channel": "Aesthetic Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "1 Hour FULL BODY WORKOUT at Home | No Jumping, No Equipment, No Repeat",
+          "url": "https://www.youtube.com/watch?v=BHNtFY-MSnU",
+          "thumbnail": "https://img.youtube.com/vi/BHNtFY-MSnU/mqdefault.jpg",
+          "duration": 3877,
+          "channel": "Caroline Girvan",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "1 Hour of U.S. Military Cadences (Studio Recorded) - Workout Playlist | Cadences Volumes 1, 2, & 3",
+          "url": "https://www.youtube.com/watch?v=bTVL3EBkzHU",
+          "thumbnail": "https://img.youtube.com/vi/bTVL3EBkzHU/mqdefault.jpg",
+          "duration": 4516,
+          "channel": "Jonathan",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "1 Hour Of Freestyle Rap Beats - Trap Beats Mix 2024",
+          "url": "https://www.youtube.com/watch?v=POH5DmNygI0",
+          "thumbnail": "https://img.youtube.com/vi/POH5DmNygI0/mqdefault.jpg",
+          "duration": 3641,
+          "channel": "FreeForProfit Type Beat",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "1 Hour of Trap Beats for Work and Focus | Enhance Concentration and Productivity",
+          "url": "https://www.youtube.com/watch?v=7VAUDImpqGQ",
+          "thumbnail": "https://img.youtube.com/vi/7VAUDImpqGQ/mqdefault.jpg",
+          "duration": 3877,
+          "channel": "IceDavid Beats",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "Constant Distant Train ⨀ 12 Hours - Dark Screen in 1 Hour",
+          "url": "https://www.youtube.com/watch?v=ImRE9uel_iQ",
+          "thumbnail": "https://img.youtube.com/vi/ImRE9uel_iQ/mqdefault.jpg",
+          "duration": 43199,
+          "channel": "BlackAtom Productions",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "🔥8000 STEPS  WALKING WORKOUT🔥STEADY STATE CARDIO for WEIGHT LOSS🔥LOW INTENSITY🔥KNEE FRIENDLY🔥",
+          "url": "https://www.youtube.com/watch?v=9UcK05e-xwM",
+          "thumbnail": "https://img.youtube.com/vi/9UcK05e-xwM/mqdefault.jpg",
+          "duration": 4203,
+          "channel": "BurpeeGirl",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "🔥1 HOUR WALKING EXERCISE FOR WEIGHT LOSS🔥ALL STANDING🔥NO JUMPING🔥KNEE FRIENDLY🔥",
+          "url": "https://www.youtube.com/watch?v=uj40kHatFks",
+          "thumbnail": "https://img.youtube.com/vi/uj40kHatFks/mqdefault.jpg",
+          "duration": 4043,
+          "channel": "BurpeeGirl",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "🔥1 HOUR WALKING EXERCISE FOR WEIGHT LOSS🔥ALL STANDING🔥NO JUMPING🔥KNEE FRIENDLY🔥",
+          "url": "https://www.youtube.com/watch?v=zYDwq5r_SvY",
+          "thumbnail": "https://img.youtube.com/vi/zYDwq5r_SvY/mqdefault.jpg",
+          "duration": 3884,
+          "channel": "BurpeeGirl",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        },
+        {
+          "title": "🔥1 HOUR WALKING WORKOUT for WEIGHT LOSS🔥ALL STANDING🔥NO JUMPING🔥KNEE FRIENDLY🔥",
+          "url": "https://www.youtube.com/watch?v=wi3OXsTgcbk",
+          "thumbnail": "https://img.youtube.com/vi/wi3OXsTgcbk/mqdefault.jpg",
+          "duration": 4012,
+          "channel": "BurpeeGirl",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:11.262Z"
+        }
+      ]
+    },
+    "edm workout music": {
+      "updatedAt": "2025-11-16T03:20:12.464Z",
+      "items": [
+        {
+          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
+          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
+          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
+          "duration": 5481,
+          "channel": "The Grand Sound",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "New Year Music Mix 2025 🎧 Best EDM Music 2024 Party Mix 🎧 Remixes of Popular Songs",
+          "url": "https://www.youtube.com/watch?v=BhrpaOP2IUM",
+          "thumbnail": "https://img.youtube.com/vi/BhrpaOP2IUM/mqdefault.jpg",
+          "duration": 46216,
+          "channel": "Magic Club",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
+          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
+          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
+          "duration": 3634,
+          "channel": "NoCopyrightSounds",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "Music Mix 2024 🎧 EDM Remixes of Popular Songs 🎧 EDM Gaming Music Mix ​",
+          "url": "https://www.youtube.com/watch?v=sTmgaP2gYsk",
+          "thumbnail": "https://img.youtube.com/vi/sTmgaP2gYsk/mqdefault.jpg",
+          "duration": 10783,
+          "channel": "Infinity EDM",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "1 Hour of Pop Workout Songs ♫",
+          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
+          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
+          "duration": 3672,
+          "channel": "Epidemic Pop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "Summer Workout Mix 2025 🔥 Fitness & Gym Motivation 🔥 Best Deep House Music by Max Oazo",
+          "url": "https://www.youtube.com/watch?v=5mzRsKA-GPI",
+          "thumbnail": "https://img.youtube.com/vi/5mzRsKA-GPI/mqdefault.jpg",
+          "duration": 3464,
+          "channel": "MAX OAZO",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
+          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
+          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
+          "duration": 3577,
+          "channel": "Bjorth",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "Music Mix 2021 🎧 EDM Remixes of Popular Songs 🎧 EDM Best Music Mix",
+          "url": "https://www.youtube.com/watch?v=PO0vpohz53M",
+          "thumbnail": "https://img.youtube.com/vi/PO0vpohz53M/mqdefault.jpg",
+          "duration": 4932,
+          "channel": "Magic Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "Proximity - Best EDM of 2010-2019 (Decade Mix)",
+          "url": "https://www.youtube.com/watch?v=gnV-8pkILF0",
+          "thumbnail": "https://img.youtube.com/vi/gnV-8pkILF0/mqdefault.jpg",
+          "duration": 8223,
+          "channel": "Proximity",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        },
+        {
+          "title": "Running Mix 2020 | 135 - 160 BPM | Best Running Music",
+          "url": "https://www.youtube.com/watch?v=Yir4WyDi8rU",
+          "thumbnail": "https://img.youtube.com/vi/Yir4WyDi8rU/mqdefault.jpg",
+          "duration": 3603,
+          "channel": "Spinnin' Records",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:12.464Z"
+        }
+      ]
+    },
+    "rock workout music": {
+      "updatedAt": "2025-11-16T03:20:13.626Z",
+      "items": [
+        {
+          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
+          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
+          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
+          "duration": 3644,
+          "channel": "Dubstep Nation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "AC/DC | ROCK",
+          "url": "https://www.youtube.com/watch?v=U_tyfMUSGo4",
+          "thumbnail": "https://img.youtube.com/vi/U_tyfMUSGo4/mqdefault.jpg",
+          "duration": 4401,
+          "channel": "bor zong",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
+          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
+          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
+          "duration": 3318,
+          "channel": "Musique d'entraînement",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "'The Journey' (2 Hour Drum & Bass Mix)",
+          "url": "https://www.youtube.com/watch?v=R8MWKsheHxk",
+          "thumbnail": "https://img.youtube.com/vi/R8MWKsheHxk/mqdefault.jpg",
+          "duration": 6861,
+          "channel": "SuicideSheeep",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "Top Hits 2025 ~ Summer Playlist 2025 ~ Top Songs 2025 Trending Music 🎶🎧",
+          "url": "https://www.youtube.com/watch?v=fTKqtvXjkvo",
+          "thumbnail": "https://img.youtube.com/vi/fTKqtvXjkvo/mqdefault.jpg",
+          "duration": 8982,
+          "channel": "Revive Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        },
+        {
+          "title": "Music Mix 2024 🎧 EDM Remixes of Popular Songs 🎧 EDM Gaming Music Mix ​",
+          "url": "https://www.youtube.com/watch?v=sTmgaP2gYsk",
+          "thumbnail": "https://img.youtube.com/vi/sTmgaP2gYsk/mqdefault.jpg",
+          "duration": 10783,
+          "channel": "Infinity EDM",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:13.626Z"
+        }
+      ]
+    },
+    "hip hop workout music": {
+      "updatedAt": "2025-11-16T03:20:14.729Z",
+      "items": [
+        {
+          "title": "90's Hip Hop Mix #01 | Best of Old School Rap Songs | Throwback Rap Classics | Westcoast | Eastcoast",
+          "url": "https://www.youtube.com/watch?v=rwYrEEka1mc",
+          "thumbnail": "https://img.youtube.com/vi/rwYrEEka1mc/mqdefault.jpg",
+          "duration": 3379,
+          "channel": "DJ Noize",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "☠️2Pac Gangsta Rap Old School Mix July 2021☠️ Best 2Pac Rap / Hip Hop Music Mix ft. Eminem, Biggie",
+          "url": "https://www.youtube.com/watch?v=rvMSo0Oyw1M",
+          "thumbnail": "https://img.youtube.com/vi/rvMSo0Oyw1M/mqdefault.jpg",
+          "duration": 3202,
+          "channel": "Thug Radio",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Best Workout Music Mix 2024 💪 Gym Motivation Music 2024 💪 Workout Mix 2024",
+          "url": "https://www.youtube.com/watch?v=wtFPIOV2bWM",
+          "thumbnail": "https://img.youtube.com/vi/wtFPIOV2bWM/mqdefault.jpg",
+          "duration": 3318,
+          "channel": "Musique d'entraînement",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Hip Hop Mix 2000 💿 Best Music from The 2000s Hip Hop Playlist 💿 Top Throwback Songs 2000 Hip Hop",
+          "url": "https://www.youtube.com/watch?v=a07qXFXjEDI",
+          "thumbnail": "https://img.youtube.com/vi/a07qXFXjEDI/mqdefault.jpg",
+          "duration": 3365,
+          "channel": "Redlist Urban",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Best of Trap Nation Mix ♥️ Remixes of Popular Songs",
+          "url": "https://www.youtube.com/watch?v=TM2FtVMqymk",
+          "thumbnail": "https://img.youtube.com/vi/TM2FtVMqymk/mqdefault.jpg",
+          "duration": 3601,
+          "channel": "Hawnray",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "Best of 90s Hip Hop Summer Hits Clean Video Mix - Dj Shinski [2 pac, Notorious BIG, Snoop dogg, Dre]",
+          "url": "https://www.youtube.com/watch?v=tDxQo7ymHlI",
+          "thumbnail": "https://img.youtube.com/vi/tDxQo7ymHlI/mqdefault.jpg",
+          "duration": 4424,
+          "channel": "Dj Shinski",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:14.729Z"
+        }
+      ]
+    },
+    "metal workout music": {
+      "updatedAt": "2025-11-16T03:20:15.882Z",
+      "items": [
+        {
+          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
+          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
+          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
+          "duration": 3644,
+          "channel": "Dubstep Nation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "Best Workout Music 🔥 Best Gym Music 🔥 Best Trainings Music 2023",
+          "url": "https://www.youtube.com/watch?v=kf0Af6A5wW8",
+          "thumbnail": "https://img.youtube.com/vi/kf0Af6A5wW8/mqdefault.jpg",
+          "duration": 3870,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "2-Hours Epic Music Mix | THE POWER OF EPIC MUSIC - Full Mix Vol. 2",
+          "url": "https://www.youtube.com/watch?v=DeXoACwOT1o",
+          "thumbnail": "https://img.youtube.com/vi/DeXoACwOT1o/mqdefault.jpg",
+          "duration": 7025,
+          "channel": "Pandora Journey",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
+          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
+          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
+          "duration": 3300,
+          "channel": "Monsterwolf Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "1 Hour of Dark & Powerful Viking Music",
+          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
+          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
+          "duration": 3501,
+          "channel": "Danheim",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "1 Hour of Pop Workout Songs ♫",
+          "url": "https://www.youtube.com/watch?v=d8OL6m0ZblA",
+          "thumbnail": "https://img.youtube.com/vi/d8OL6m0ZblA/mqdefault.jpg",
+          "duration": 3672,
+          "channel": "Epidemic Pop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        },
+        {
+          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
+          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
+          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
+          "duration": 3577,
+          "channel": "Bjorth",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:15.882Z"
+        }
+      ]
+    },
+    "dubstep workout music": {
+      "updatedAt": "2025-11-16T03:20:16.911Z",
+      "items": [
+        {
+          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
+          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
+          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
+          "duration": 3644,
+          "channel": "Dubstep Nation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "Top 20 Most Popular Songs by NCS | Best of NCS | Most Viewed Songs",
+          "url": "https://www.youtube.com/watch?v=-ObdvMkCKws",
+          "thumbnail": "https://img.youtube.com/vi/-ObdvMkCKws/mqdefault.jpg",
+          "duration": 4367,
+          "channel": "Music Store",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "'The Journey' (2 Hour Drum & Bass Mix)",
+          "url": "https://www.youtube.com/watch?v=R8MWKsheHxk",
+          "thumbnail": "https://img.youtube.com/vi/R8MWKsheHxk/mqdefault.jpg",
+          "duration": 6861,
+          "channel": "SuicideSheeep",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
+          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
+          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
+          "duration": 3634,
+          "channel": "NoCopyrightSounds",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
+          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
+          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
+          "duration": 3300,
+          "channel": "Monsterwolf Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "Amazing Top 10 Dubstep Songs!",
+          "url": "https://www.youtube.com/watch?v=PfrRJYC4z6I",
+          "thumbnail": "https://img.youtube.com/vi/PfrRJYC4z6I/mqdefault.jpg",
+          "duration": 2638,
+          "channel": "spacewave",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "Best of Trap Nation Mix ♥️ Remixes of Popular Songs",
+          "url": "https://www.youtube.com/watch?v=TM2FtVMqymk",
+          "thumbnail": "https://img.youtube.com/vi/TM2FtVMqymk/mqdefault.jpg",
+          "duration": 3601,
+          "channel": "Hawnray",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "\"Coming Home\" Wonderful Melodic Dubstep Mix",
+          "url": "https://www.youtube.com/watch?v=tPFz04LSa2U",
+          "thumbnail": "https://img.youtube.com/vi/tPFz04LSa2U/mqdefault.jpg",
+          "duration": 3601,
+          "channel": "Arctic Empire",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        },
+        {
+          "title": "1 Hour of Dark & Powerful Viking Music",
+          "url": "https://www.youtube.com/watch?v=VhkfnPVQyaY",
+          "thumbnail": "https://img.youtube.com/vi/VhkfnPVQyaY/mqdefault.jpg",
+          "duration": 3501,
+          "channel": "Danheim",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:16.911Z"
+        }
+      ]
+    },
+    "hardstyle workout music": {
+      "updatedAt": "2025-11-16T03:20:17.988Z",
+      "items": [
+        {
+          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
+          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
+          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
+          "duration": 3634,
+          "channel": "NoCopyrightSounds",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "1 HOUR BEST GAMING MIX {ELECTRO, HARD DANCE, DUBSTEP, DRUMSTEP}",
+          "url": "https://www.youtube.com/watch?v=vC2xJ3JDokk",
+          "thumbnail": "https://img.youtube.com/vi/vC2xJ3JDokk/mqdefault.jpg",
+          "duration": 3651,
+          "channel": "WILD YETIS",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "Best Brutal Dubstep Mix 2014",
+          "url": "https://www.youtube.com/watch?v=a4JlkKNA3yw",
+          "thumbnail": "https://img.youtube.com/vi/a4JlkKNA3yw/mqdefault.jpg",
+          "duration": 5761,
+          "channel": "GSN",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
+          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
+          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
+          "duration": 3577,
+          "channel": "Bjorth",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "[1 HOUR] Ultra Instinct Theme (Official Version)",
+          "url": "https://www.youtube.com/watch?v=GCspMiRl2C0",
+          "thumbnail": "https://img.youtube.com/vi/GCspMiRl2C0/mqdefault.jpg",
+          "duration": 3602,
+          "channel": "Hour Loop",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "Russian Hardbass Mix #1 (Hard Bass School/ DJ Blyatman)",
+          "url": "https://www.youtube.com/watch?v=iu24_PURGdQ",
+          "thumbnail": "https://img.youtube.com/vi/iu24_PURGdQ/mqdefault.jpg",
+          "duration": 1965,
+          "channel": "DeathmatcherTV",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "Music Mix 2025 🎧 EDM Remixes Of Popular Songs 🎧 EDM Bass Boosted Music Mix",
+          "url": "https://www.youtube.com/watch?v=r_8Xm3XowCM",
+          "thumbnail": "https://img.youtube.com/vi/r_8Xm3XowCM/mqdefault.jpg",
+          "duration": 7602,
+          "channel": "EDM Sensei",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        },
+        {
+          "title": "1 Hour of Chad Orthodox Chants to Redeem Your Soul",
+          "url": "https://www.youtube.com/watch?v=_xaj8QSJZ0E",
+          "thumbnail": "https://img.youtube.com/vi/_xaj8QSJZ0E/mqdefault.jpg",
+          "duration": 5044,
+          "channel": "Vlaspatta Karamazov",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:17.988Z"
+        }
+      ]
+    },
+    "techno workout music": {
+      "updatedAt": "2025-11-16T03:20:19.114Z",
+      "items": [
+        {
+          "title": "Top Dubstep Drops - Epic Motivational Mix (Powered edition)",
+          "url": "https://www.youtube.com/watch?v=dLyH94jNau0",
+          "thumbnail": "https://img.youtube.com/vi/dLyH94jNau0/mqdefault.jpg",
+          "duration": 3644,
+          "channel": "Dubstep Nation",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "♫ Best Uplifting Trance Mix - All Time Favourites #1 ♫",
+          "url": "https://www.youtube.com/watch?v=iXAbte4QXKs",
+          "thumbnail": "https://img.youtube.com/vi/iXAbte4QXKs/mqdefault.jpg",
+          "duration": 5481,
+          "channel": "The Grand Sound",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "'The Journey' (2 Hour Drum & Bass Mix)",
+          "url": "https://www.youtube.com/watch?v=R8MWKsheHxk",
+          "thumbnail": "https://img.youtube.com/vi/R8MWKsheHxk/mqdefault.jpg",
+          "duration": 6861,
+          "channel": "SuicideSheeep",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "90's Megamix - Dance Hits of the 90s - Epic 2 Hour 90’s Dance Megamix!",
+          "url": "https://www.youtube.com/watch?v=BiZn4i92Z-Q",
+          "thumbnail": "https://img.youtube.com/vi/BiZn4i92Z-Q/mqdefault.jpg",
+          "duration": 6600,
+          "channel": "Alex K Official",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "Best Workout Music 2023 🔥 Gym Motivation Music Mix 2023",
+          "url": "https://www.youtube.com/watch?v=sD-tzrVZvrY",
+          "thumbnail": "https://img.youtube.com/vi/sD-tzrVZvrY/mqdefault.jpg",
+          "duration": 5225,
+          "channel": "Workout Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "EDM - 1 Hour MIX 🔥 | NCS - Copyright Free Music",
+          "url": "https://www.youtube.com/watch?v=MEkaqZecpUQ",
+          "thumbnail": "https://img.youtube.com/vi/MEkaqZecpUQ/mqdefault.jpg",
+          "duration": 3634,
+          "channel": "NoCopyrightSounds",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "Best Gaming Trap Mix 2017 🎮 Trap, Bass, EDM & Dubstep 🎮 Gaming Music Mix 2017 by DUBFELLAZ",
+          "url": "https://www.youtube.com/watch?v=nM-fsCabIPc",
+          "thumbnail": "https://img.youtube.com/vi/nM-fsCabIPc/mqdefault.jpg",
+          "duration": 3300,
+          "channel": "Monsterwolf Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "Fisher Best Songs Mix 2020 (Tech House)",
+          "url": "https://www.youtube.com/watch?v=xYLH8lHFs6A",
+          "thumbnail": "https://img.youtube.com/vi/xYLH8lHFs6A/mqdefault.jpg",
+          "duration": 4455,
+          "channel": "Albert CT",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        },
+        {
+          "title": "DAVID GUETTA MIX 2023 - Best Songs Of All Time",
+          "url": "https://www.youtube.com/watch?v=ahGjMyhmhwI",
+          "thumbnail": "https://img.youtube.com/vi/ahGjMyhmhwI/mqdefault.jpg",
+          "duration": 3879,
+          "channel": "Del Sol Music",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:19.114Z"
+        }
+      ]
+    },
+    "phonk workout music": {
+      "updatedAt": "2025-11-16T03:20:20.320Z",
+      "items": [
+        {
+          "title": "1 Hour Long Workout Motivational Speech/ Epic Music Mix",
+          "url": "https://www.youtube.com/watch?v=A6OwnNe9nMU",
+          "thumbnail": "https://img.youtube.com/vi/A6OwnNe9nMU/mqdefault.jpg",
+          "duration": 3438,
+          "channel": "WoundedDuck",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "AURA = ♾️ | 1 HOUR AURA MUSIC PLAYLIST 2025 🔥",
+          "url": "https://www.youtube.com/watch?v=Y_FnFdvKkV8",
+          "thumbnail": "https://img.youtube.com/vi/Y_FnFdvKkV8/mqdefault.jpg",
+          "duration": 3731,
+          "channel": "EMPIRE PHONK",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "1 HOUR BRAZILIAN PHONK / FUNK MIX 2025 ※ AGGRESSIVE PHONK ※ MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]*",
+          "url": "https://www.youtube.com/watch?v=0PmvcOSPI6A",
+          "thumbnail": "https://img.youtube.com/vi/0PmvcOSPI6A/mqdefault.jpg",
+          "duration": 3789,
+          "channel": "TAZZ PHONK",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "#1 ♫ Gaming Music Mix | Rock Mix【1 Hour】♫",
+          "url": "https://www.youtube.com/watch?v=lijFuLFI9RQ",
+          "thumbnail": "https://img.youtube.com/vi/lijFuLFI9RQ/mqdefault.jpg",
+          "duration": 3730,
+          "channel": "White Rabbit",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "THE BEST BRAZILIAN PHONK 2023 | MUSIC PLAYLIST [GYM, AGGRESSIVE, FUNK]",
+          "url": "https://www.youtube.com/watch?v=POXjRNVoncU",
+          "thumbnail": "https://img.youtube.com/vi/POXjRNVoncU/mqdefault.jpg",
+          "duration": 5560,
+          "channel": "CURSEDEVIL",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "𝗧𝗛𝗘 𝗨𝗟𝗧𝗜𝗠𝗔𝗧𝗘 𝟮𝟬𝟮𝟱 𝗕𝗥𝗔𝗭𝗜𝗟𝗜𝗔𝗡 𝗣𝗛𝗢𝗡𝗞 𝗠𝗜𝗫 🔥‼️ | 𝘪𝘯 𝘚𝘭𝘰𝘸𝘦𝘥 𝘢𝘯𝘥 𝘙𝘦𝘷𝘦𝘳𝘣 ⚡‼️",
+          "url": "https://www.youtube.com/watch?v=CdnaNh1_jks",
+          "thumbnail": "https://img.youtube.com/vi/CdnaNh1_jks/mqdefault.jpg",
+          "duration": 3229,
+          "channel": "𝐥𝐨𝐧𝐮𝐭",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "1 HOUR ABSOLUTE BRAZILIAN FUNK X KRUSHFUNK PLAYLIST 😈😈😈  AGRESSIVE Phonk TikTok | ТикТок Фонк 2024 👾",
+          "url": "https://www.youtube.com/watch?v=HcZw4UTfgmk",
+          "thumbnail": "https://img.youtube.com/vi/HcZw4UTfgmk/mqdefault.jpg",
+          "duration": 3605,
+          "channel": "MUSICORE PHONK",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "Phonk Music 2024 ※ Aggressive Drift Phonk ※ Фонка 2024",
+          "url": "https://www.youtube.com/watch?v=WPrhl0pFY_o",
+          "thumbnail": "https://img.youtube.com/vi/WPrhl0pFY_o/mqdefault.jpg",
+          "duration": 2831,
+          "channel": "Phonk Time",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "AGRESSIVE BRAZILIAN PHONK 2024 PLAYLIST FOR EDIT",
+          "url": "https://www.youtube.com/watch?v=mZsDE8pgIHA",
+          "thumbnail": "https://img.youtube.com/vi/mZsDE8pgIHA/mqdefault.jpg",
+          "duration": 3695,
+          "channel": "sayonaraあ",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
+        },
+        {
+          "title": "1 hour Viking Music for your Workout ( Bodybuilding & Training in the Gym ) by Bjorth",
+          "url": "https://www.youtube.com/watch?v=9WXsdApQIY4",
+          "thumbnail": "https://img.youtube.com/vi/9WXsdApQIY4/mqdefault.jpg",
+          "duration": 3577,
+          "channel": "Bjorth",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:20.320Z"
         }
       ]
     },
     "tabata workout music": {
-      "updatedAt": "2025-10-16T12:19:37.559Z",
+      "updatedAt": "2025-11-16T03:20:21.399Z",
       "items": [
         {
           "title": "Workout Music Source // Disco Dance Hits (130 BPM)",
@@ -1632,7 +1632,7 @@
           "duration": 3510,
           "channel": "Workout Music Source",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "1 HOUR FULL BODY FAT BURN HOME WORKOUT (Warm Up, Arm & Back, Cardio, Ab, Leg & Thigh, Stretch) ~ Emi",
@@ -1641,7 +1641,7 @@
           "duration": 3755,
           "channel": "emi wong",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "1 HOUR TOTAL body resistance and cardio workout/Low Impact//standing & no equipment options",
@@ -1650,16 +1650,7 @@
           "duration": 3376,
           "channel": "Body Project",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
-        },
-        {
-          "title": "Workout Music Source // 70's & 80's Hits Remixed (102-140 BPM)",
-          "url": "https://www.youtube.com/watch?v=ZmPFDnsKg0Q",
-          "thumbnail": "https://img.youtube.com/vi/ZmPFDnsKg0Q/mqdefault.jpg",
-          "duration": 8342,
-          "channel": "Workout Music Source",
-          "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "ZUMBA MUSIC I FOR ZUMBA DANCE [ WORKOUT MIX ]",
@@ -1668,7 +1659,7 @@
           "duration": 2483,
           "channel": "Robert Locke",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "TABATA / CLASE COMPLETA / FULL BODY WORKOUT",
@@ -1677,7 +1668,7 @@
           "duration": 2272,
           "channel": "CARDIO DANCE WITH CLAU & PATY",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "🔥 60-Minute Running Workout Music – 150 BPM / 32 Count",
@@ -1686,7 +1677,7 @@
           "duration": 3675,
           "channel": "Hard EDM Workout",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "Workout Music Source // Cardio Instrumental Workout Mix // 32 Count (140 BPM)",
@@ -1695,7 +1686,7 @@
           "duration": 3581,
           "channel": "Workout Music Source",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "Number #1 Christian Hits! (Workout / Dance Mix)",
@@ -1704,7 +1695,7 @@
           "duration": 8166,
           "channel": "Worship God",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         },
         {
           "title": "Workout Music Source // HIIT Tabata Training Session",
@@ -1713,7 +1704,16 @@
           "duration": 2490,
           "channel": "Workout Music Source",
           "type": "mix",
-          "_fetchedAt": "2025-10-16T12:19:37.559Z"
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
+        },
+        {
+          "title": "Workout Music Source // 180 BPM Running Workout Mix Vol. 2",
+          "url": "https://www.youtube.com/watch?v=8z6GKCwHZuE",
+          "thumbnail": "https://img.youtube.com/vi/8z6GKCwHZuE/mqdefault.jpg",
+          "duration": 3614,
+          "channel": "Workout Music Source",
+          "type": "mix",
+          "_fetchedAt": "2025-11-16T03:20:21.399Z"
         }
       ]
     }
