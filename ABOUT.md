@@ -254,7 +254,7 @@ CYCLE is a Progressive Web App (PWA):
 ## Get Started Today
 
 ### Web Browser
-Visit **[workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)** on any device
+Visit **[workout-timer.esekpo.co.il](https://workout-timer.esekpo.co.il)** on any device
 
 ### Install as App
 1. Open the website in your browser
@@ -326,7 +326,7 @@ Transform your workouts with:
 - 🎨 Immersive cyberpunk experience
 - 📱 Works anywhere, anytime
 
-**Start your best workout today at [workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)**
+**Start your best workout today at [workout-timer.esekpo.co.il](https://workout-timer.esekpo.co.il)**
 
 ---
 

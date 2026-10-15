@@ -90,7 +90,7 @@ Once you push to main, Netlify will automatically:
 
 ### 1. Test YouTube Integration
 
-1. Go to https://workouttimerpro.netlify.app
+1. Go to https://workout-timer.esekpo.co.il
 2. Open DevTools Console (F12)
 3. Paste a YouTube URL and click "Load"
 4. Check for errors - should see:

@@ -95,7 +95,7 @@ Netlify will auto-deploy in ~30 seconds.
 
 ### Step 2: Test on Live Site
 
-1. Open https://workouttimerpro.netlify.app
+1. Open https://workout-timer.esekpo.co.il
 2. Open browser DevTools (F12) → Console tab
 3. Paste a YouTube URL and click Load
 4. **Expected:** No CSP errors in console
@@ -130,7 +130,7 @@ Your error log shows:
 
 ```
 Error while trying to use the following icon from the Manifest:
-https://workouttimerpro.netlify.app/icons/icon-144x144.png
+https://workout-timer.esekpo.co.il/icons/icon-144x144.png
 ```
 
 **Status:** Icon exists locally in `public/icons/icon-144x144.png` (16KB)

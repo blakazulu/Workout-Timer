@@ -998,7 +998,7 @@ MIT License - See LICENSE file for details
 
 *Experience the future of workout timing with professional plans, immersive visuals, and a curated music library.*
 
-🔗 **Live Demo:** [https://workouttimerpro.netlify.app](https://workouttimerpro.netlify.app)
+🔗 **Live Demo:** [https://workout-timer.esekpo.co.il](https://workout-timer.esekpo.co.il)
 
 🎮 **Key Features:**
 

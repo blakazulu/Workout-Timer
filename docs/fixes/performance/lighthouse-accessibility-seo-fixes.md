@@ -1,7 +1,7 @@
 # Lighthouse Accessibility and SEO Fixes
 
 **Date**: October 13, 2025
-**Site**: https://workouttimerpro.netlify.app/
+**Site**: https://workout-timer.esekpo.co.il/
 
 ## Summary
 
@@ -152,7 +152,7 @@ search engine crawling.
 **Added**:
 
 ```html
-<link rel="canonical" href="https://workouttimerpro.netlify.app/">
+<link rel="canonical" href="https://workout-timer.esekpo.co.il/">
 ```
 
 **Impact**: Specifies the preferred URL for search engines, ensuring consistent indexing.
@@ -169,10 +169,10 @@ search engine crawling.
 
 ```html
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://workouttimerpro.netlify.app/">
+<meta property="og:url" content="https://workout-timer.esekpo.co.il/">
 <meta property="og:title" content="CYCLE - Workout Timer with Music">
 <meta property="og:description" content="A customizable interval workout timer with YouTube music integration. Set your duration, repetitions, and rest time for the perfect workout session with motivational music.">
-<meta property="og:image" content="https://workouttimerpro.netlify.app/icons/icon-512x512.png">
+<meta property="og:image" content="https://workout-timer.esekpo.co.il/icons/icon-512x512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:image:alt" content="CYCLE Workout Timer Logo">
@@ -194,10 +194,10 @@ search engine crawling.
 
 ```html
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://workouttimerpro.netlify.app/">
+<meta name="twitter:url" content="https://workout-timer.esekpo.co.il/">
 <meta name="twitter:title" content="CYCLE - Workout Timer with Music">
 <meta name="twitter:description" content="A customizable interval workout timer with YouTube music integration. Set your duration, repetitions, and rest time for the perfect workout session with motivational music.">
-<meta name="twitter:image" content="https://workouttimerpro.netlify.app/icons/icon-512x512.png">
+<meta name="twitter:image" content="https://workout-timer.esekpo.co.il/icons/icon-512x512.png">
 <meta name="twitter:image:alt" content="CYCLE Workout Timer Logo">
 ```
 

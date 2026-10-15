@@ -1,7 +1,7 @@
 # Lighthouse Performance Analysis (Mobile)
 
 **Date**: October 13, 2025
-**Site**: https://workouttimerpro.netlify.app/
+**Site**: https://workout-timer.esekpo.co.il/
 **Test Type**: Mobile (Moto G Power 2022, Slow 4G)
 **Lighthouse Version**: 12.8.2
 

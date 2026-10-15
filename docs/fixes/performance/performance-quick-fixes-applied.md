@@ -194,7 +194,7 @@ After deploying to Netlify:
 **C. PageSpeed Insights**
 
 - Visit: https://pagespeed.web.dev/
-- Enter: https://workouttimerpro.netlify.app/
+- Enter: https://workout-timer.esekpo.co.il/
 - Mobile score should be 92-95/100
 
 ---

@@ -95,7 +95,7 @@ Netlify auto-deploys in ~30 seconds.
 
 ### Step 2: Verify in Browser Console
 
-After deployment, open https://workouttimerpro.netlify.app and check console:
+After deployment, open https://workout-timer.esekpo.co.il and check console:
 
 **Expected (Fixed):**
 
@@ -153,7 +153,7 @@ Your error log shows **Real Error 150** - the API loaded fine, the specific vide
 ```
 Failed to execute 'postMessage' on 'DOMWindow': The target origin provided
 ('https://www.youtube.com') does not match the recipient window's origin
-('https://workouttimerpro.netlify.app').
+('https://workout-timer.esekpo.co.il').
 ```
 
 **Status:** ⚠️ Warning, not blocking
@@ -195,7 +195,7 @@ Banner not shown: beforeinstallpromptevent.preventDefault() called.
 - [x] Fix Permissions-Policy syntax in netlify.toml
 - [ ] Push changes to GitHub
 - [ ] Wait for Netlify deploy (~30 seconds)
-- [ ] Test on live site: https://workouttimerpro.netlify.app
+- [ ] Test on live site: https://workout-timer.esekpo.co.il
 - [ ] Test PWA: "New version available! Reload to update?"
 - [ ] Verify no Permissions-Policy errors in console
 - [ ] Test YouTube video embedding with workout music

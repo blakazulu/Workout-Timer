@@ -125,7 +125,7 @@ netlify deploy --prod
 
 ### 2. Check Browser Console
 
-After deployment, visit your main app: https://workouttimerpro.netlify.app
+After deployment, visit your main app: https://workout-timer.esekpo.co.il
 
 **Before fix:**
 
